@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coach Kenny Hin — SLAM! Nevada</title>
+  <meta name="description" content="Coach Kenny Hin — Athletic Director at SLAM! Nevada. Access SLAM Athletics and Space Reservations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --green:  #8CC63F;
+      --red:    #E31837;
+      --black:  #0B0B0B;
+      --dark:   #111318;
+      --card:   #16191f;
+      --border: rgba(140,198,63,0.2);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--black);
+      color: #e5e7eb;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(140,198,63,0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(227,24,55,0.07) 0%, transparent 60%);
+    }
+
+    /* animated green line top */
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--green), var(--red), var(--green), transparent);
+      background-size: 200% 100%;
+      animation: line-slide 3s linear infinite;
+    }
+    @keyframes line-slide {
+      0%   { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+
+    .bull-logo {
+      width: 140px; height: auto;
+      margin-bottom: 28px;
+      filter: drop-shadow(0 0 32px rgba(140,198,63,0.35));
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 12px;
+    }
+
+    .hero-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(56px, 10vw, 100px);
+      font-weight: 900; line-height: 0.9;
+      text-transform: uppercase; letter-spacing: 0.01em;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .hero-name span { color: var(--green); }
+
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.12em; color: #6b7280;
+      margin-bottom: 48px;
+    }
+
+    /* ── LINK CARDS ── */
+    .cards {
+      display: flex; gap: 20px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 80px;
+    }
+
+    .card {
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      align-items: flex-start; justify-content: flex-end;
+      width: 280px; min-height: 160px;
+      padding: 28px;
+      border-radius: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      cursor: pointer;
+    }
+    .card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(140,198,63,0.08) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(140,198,63,0.5); }
+    .card:hover::before { opacity: 1; }
+    .card:hover { box-shadow: 0 16px 48px rgba(140,198,63,0.18), 0 4px 16px rgba(0,0,0,0.4); }
+
+    .card.red-card { border-color: rgba(227,24,55,0.2); }
+    .card.red-card::before { background: linear-gradient(135deg, rgba(227,24,55,0.08) 0%, transparent 60%); }
+    .card.red-card:hover { border-color: rgba(227,24,55,0.5); box-shadow: 0 16px 48px rgba(227,24,55,0.18), 0 4px 16px rgba(0,0,0,0.4); }
+
+    .card-icon {
+      font-size: 32px; margin-bottom: 16px;
+      line-height: 1;
+    }
+    .card-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--green); margin-bottom: 6px;
+    }
+    .red-card .card-label { color: var(--red); }
+
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.02em;
+      color: #fff; line-height: 1; margin-bottom: 8px;
+    }
+    .card-sub {
+      font-size: 12px; color: #6b7280; line-height: 1.4;
+    }
+    .card-arrow {
+      position: absolute; top: 24px; right: 24px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: #6b7280;
+      transition: background 0.2s, color 0.2s;
+    }
+    .card:hover .card-arrow { background: var(--green); color: #000; }
+    .red-card:hover .card-arrow { background: var(--red); color: #fff; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 16px;
+      max-width: 560px; margin: 0 auto 60px; padding: 0 24px;
+    }
+    .divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+    .divider-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      color: #374151;
+    }
+
+    /* ── CONTACT FORM ── */
+    .contact {
+      position: relative; z-index: 1;
+      max-width: 560px; margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+
+    .contact-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 900; text-transform: uppercase;
+      letter-spacing: 0.02em; color: #fff;
+      margin-bottom: 8px; text-align: center;
+    }
+    .contact-heading span { color: var(--green); }
+    .contact-sub {
+      font-size: 14px; color: #6b7280; text-align: center;
+      margin-bottom: 36px; line-height: 1.6;
+    }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: #4b5563; margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%; padding: 14px 18px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: #e5e7eb; font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      resize: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(140,198,63,0.12);
+    }
+    .form-group textarea { min-height: 120px; }
+
+    .submit-btn {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, var(--green) 0%, #6fa832 100%);
+      color: #000; border: none; border-radius: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      cursor: pointer; margin-top: 8px;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      box-shadow: 0 4px 20px rgba(140,198,63,0.3);
+      position: relative; overflow: hidden;
+    }
+    .submit-btn::before {
+      content: '';
+      position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      animation: shimmer 2.5s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0% { left: -100%; } 100% { left: 150%; } }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(140,198,63,0.45); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* Success / Error messages */
+    .form-msg {
+      display: none; padding: 14px 18px;
+      border-radius: 10px; font-size: 14px;
+      margin-top: 16px; text-align: center;
+      font-weight: 500;
+    }
+    .form-msg.success {
+      background: rgba(140,198,63,0.12);
+      border: 1px solid rgba(140,198,63,0.3);
+      color: var(--green); display: block;
+    }
+    .form-msg.error {
+      background: rgba(227,24,55,0.1);
+      border: 1px solid rgba(227,24,55,0.3);
+      color: #f87171; display: block;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 24px;
+      text-align: center;
+      font-size: 12px; color: #374151;
+    }
+    footer img { height: 24px; opacity: 0.4; margin-bottom: 8px; display: inline-block; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .cards { flex-direction: column; align-items: center; }
+      .card  { width: 100%; max-width: 340px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="slam-bull.png" alt="SLAM!" class="bull-logo" />
+    <p class="hero-eyebrow">SLAM! Nevada · Athletic Department</p>
+    <h1 class="hero-name">Coach <span>Kenny</span></h1>
+    <p class="hero-title">Athletic Director &amp; Coach</p>
+
+    <div class="cards">
+      <!-- SLAM Athletics -->
+      <a href="https://slamnvathletics.org" target="_blank" class="card red-card">
+        <div class="card-arrow">↗</div>
+        <div class="card-icon">🏆</div>
+        <div class="card-label">Visit</div>
+        <div class="card-title">SLAM Athletics</div>
+        <div class="card-sub">Schedules, rosters, scores &amp; news</div>
+      </a>
+
+      <!-- Space Reservations -->
+      <a href="https://kennyhin.github.io/slam-space-reservations" target="_blank" class="card">
+        <div class="card-arrow">↗</div>
+        <div class="card-icon">📅</div>
+        <div class="card-label">Staff Portal</div>
+        <div class="card-title">Space Reservations</div>
+        <div class="card-sub">Reserve the cafegym, turf &amp; playground</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-text">Get in Touch</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- CONTACT FORM -->
+  <section class="contact">
+    <h2 class="contact-heading">Send Me a <span>Message</span></h2>
+    <p class="contact-sub">Have a question or need to reach me? Fill out the form below and I'll get back to you within 24 hours.</p>
+
+    <form id="contact-form">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="First Last" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="What's on your mind?" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn" id="submit-btn">Send Message</button>
+      <div class="form-msg" id="form-msg"></div>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="slam-logo.png" alt="SLAM! Nevada" /><br />
+    &copy; 2026 SLAM! Nevada Athletic Department &nbsp;·&nbsp; kenny.hin@slamnv.org
+  </footer>
+
+  <!-- WEB3FORMS — free email service, no backend needed -->
+  <!-- GET YOUR FREE KEY: go to web3forms.com, enter kenny.hin@slamnv.org, check your email -->
+  <script>
+    const form    = document.getElementById('contact-form');
+    const btn     = document.getElementById('submit-btn');
+    const msgEl   = document.getElementById('form-msg');
+
+    // ← PASTE YOUR WEB3FORMS KEY HERE after signing up at web3forms.com
+    const ACCESS_KEY = '7c27b5dc-c36d-466e-8b78-ffdba5bacc38';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      msgEl.className = 'form-msg';
+      msgEl.style.display = 'none';
+
+      const name    = document.getElementById('name').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            access_key:   ACCESS_KEY,
+            name:         name,
+            email:        email,
+            message:      message,
+            subject:      'New message from ' + name + ' — CoachKenny.org',
+            from_name:    'CoachKenny.org',
+            replyto:      email,
+            // Auto-reply to the sender
+            autoresponse: true,
+            autoresponse_subject: 'Got your message — Coach Kenny will reply within 24 hours',
+            autoresponse_message:
+              'Hi ' + name + ',\n\n' +
+              'Thanks for reaching out! I received your message and will get back to you within 24 hours.\n\n' +
+              'If you haven\'t heard back by then, feel free to send another message.\n\n' +
+              '— Coach Kenny Hin\n' +
+              'Athletic Director, SLAM! Nevada\n' +
+              'kenny.hin@slamnv.org',
+          }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          msgEl.textContent = '✅ Message sent! Check your inbox — I\'ll reply within 24 hours.';
+          msgEl.className = 'form-msg success';
+          msgEl.style.display = 'block';
+          form.reset();
+        } else {
+          throw new Error(data.message || 'Submission failed.');
+        }
+      } catch (err) {
+        msgEl.textContent = '❌ Something went wrong. Try emailing directly: kenny.hin@slamnv.org';
+        msgEl.className = 'form-msg error';
+        msgEl.style.display = 'block';
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
+    });
+  </script>
+</body>
+</html>
