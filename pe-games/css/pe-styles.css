@@ -1,0 +1,140 @@
+/* Shared styles for PE Games detail pages */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --green:  #8CC63F;
+  --red:    #E31837;
+  --black:  #0B0B0B;
+  --dark:   #111318;
+  --card:   #16191f;
+  --border: rgba(140,198,63,0.2);
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--black);
+  color: #e5e7eb;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.site-header {
+  position: relative; z-index: 10;
+  background: rgba(11,11,11,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 18px 24px;
+}
+.header-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; gap: 16px;
+}
+.back-link {
+  color: #6b7280; text-decoration: none; font-size: 14px;
+  display: flex; align-items: center; gap: 4px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--green); }
+.header-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.4rem; font-weight: 800;
+  color: #fff; text-decoration: none;
+}
+.header-logo span { color: var(--green); }
+.header-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--green); text-transform: uppercase;
+  letter-spacing: 0.08em; margin-left: auto;
+}
+
+.game-detail {
+  position: relative; z-index: 1;
+  max-width: 800px; margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+.game-detail-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(32px, 6vw, 52px);
+  font-weight: 900; text-transform: uppercase;
+  color: #fff; line-height: 1;
+}
+.game-detail-title span { color: var(--green); }
+.grade-range {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--green); text-transform: uppercase;
+  letter-spacing: 0.1em; margin-top: 4px;
+}
+.locomotor-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--green); text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.detail-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.detail-section h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.16em;
+  color: var(--green); margin-bottom: 14px;
+}
+.detail-section ul { list-style: none; padding: 0; }
+.detail-section li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 14px; color: #d1d5db;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.detail-section li:last-child { border-bottom: none; }
+.detail-section li::before {
+  content: '▸'; color: var(--green);
+  font-size: 12px; margin-top: 2px; flex-shrink: 0;
+}
+.detail-section li strong { color: #fff; }
+.detail-section p {
+  font-size: 14px; color: #d1d5db; line-height: 1.7;
+}
+
+.standard-highlight {
+  background: rgba(140,198,63,0.08);
+  border: 1px solid rgba(140,198,63,0.2);
+  border-radius: 12px;
+  padding: 16px; margin-top: 12px;
+}
+.standard-highlight strong {
+  color: var(--green); font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.standard-highlight p {
+  font-size: 13px; color: #9ca3af; margin-top: 6px;
+}
+
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 24px; text-align: center;
+  font-size: 12px; color: #374151;
+}
+
+@media (max-width: 600px) {
+  .header-title { display: none; }
+  .game-detail { padding: 24px 16px 40px; }
+  .detail-section { padding: 20px; }
+}
