@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📚 Memory Wiki — Coach Kenny & OWL</title>
+  <meta name="description" content="A browsable memory of everything Coach Kenny and OWL have worked on together — projects, conversations, daily logs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --green:  #8CC63F;
+      --red:    #E31837;
+      --black:  #0B0B0B;
+      --dark:   #111318;
+      --card:   #16191f;
+      --card-2: #1c1f28;
+      --border: rgba(140,198,63,0.15);
+      --border-strong: rgba(140,198,63,0.3);
+      --fg:     #e5e7eb;
+      --fg-muted:#9ca3af;
+      --fg-dim: #6b7280;
+      --accent: var(--green);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--black);
+      color: var(--fg);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: rgba(11,11,11,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 20px 32px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center; gap: 24px;
+    }
+    .home-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem; font-weight: 800;
+      color: #fff; text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s;
+    }
+    .home-link:hover { color: var(--green); }
+    .home-link span { color: var(--green); }
+    .page-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--green); text-transform: uppercase;
+      letter-spacing: 0.1em; text-align: center;
+    }
+    .header-stats {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px; color: var(--fg-dim);
+      text-align: right;
+    }
+
+    /* LAYOUT */
+    .main-layout {
+      max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 32px; padding: 32px;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: sticky; top: 100px;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    .sidebar-section {
+      margin-bottom: 28px;
+    }
+    .sidebar-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--fg-dim); margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .sidebar-nav { list-style: none; }
+    .sidebar-nav li { margin-bottom: 2px; }
+    .sidebar-nav a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px; border-radius: 8px;
+      color: var(--fg-muted); text-decoration: none;
+      font-size: 13px; font-weight: 500;
+      transition: all 0.15s;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active {
+      background: var(--card); color: var(--green);
+    }
+    .sidebar-nav a .count {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; color: var(--fg-dim);
+      background: rgba(255,255,255,0.04);
+      padding: 2px 6px; border-radius: 4px;
+    }
+    .sidebar-nav a:hover .count { color: var(--green); }
+
+    /* CONTENT */
+    .content { min-width: 0; }
+
+    /* SUBJECT CARDS */
+    .section-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--green); margin-bottom: 16px;
+    }
+    .subject-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px; margin-bottom: 40px;
+    }
+    .subject-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none; color: inherit;
+    }
+    .subject-card:hover {
+      border-color: var(--green);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(140,198,63,0.1);
+    }
+    .subject-icon { font-size: 28px; margin-bottom: 8px; }
+    .subject-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800;
+      text-transform: uppercase; color: #fff;
+      margin-bottom: 4px;
+    }
+    .subject-desc {
+      font-size: 12px; color: var(--fg-muted);
+      line-height: 1.5;
+    }
+    .subject-meta {
+      margin-top: 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; color: var(--fg-dim);
+      display: flex; gap: 8px;
+    }
+    .subject-meta span {
+      background: rgba(140,198,63,0.06);
+      padding: 2px 8px; border-radius: 4px;
+    }
+
+    /* DAILY LOGS */
+    .log-list { display: flex; flex-direction: column; gap: 8px; }
+    .log-entry {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none; color: inherit;
+    }
+    .log-entry:hover {
+      border-color: var(--green);
+    }
+    .log-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px; font-weight: 700;
+      color: var(--green); margin-bottom: 4px;
+    }
+    .log-title {
+      font-size: 14px; font-weight: 600; color: #fff;
+      margin-bottom: 4px;
+    }
+    .log-preview {
+      font-size: 12px; color: var(--fg-muted);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .log-tags {
+      margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px;
+    }
+    .log-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px;
+      background: rgba(140,198,63,0.08);
+      color: var(--green);
+    }
+
+    /* DETAIL PANEL */
+    .detail-panel {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .detail-panel.active { display: block; }
+    .detail-back {
+      background: none; border: none;
+      color: var(--fg-dim); font-size: 13px;
+      cursor: pointer; margin-bottom: 16px;
+      padding: 0; display: flex; align-items: center; gap: 6px;
+    }
+    .detail-back:hover { color: var(--green); }
+    .detail-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 900; text-transform: uppercase;
+      color: #fff; margin-bottom: 8px;
+    }
+    .detail-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px; color: var(--fg-dim);
+      margin-bottom: 24px;
+    }
+    .detail-section {
+      margin-bottom: 24px;
+    }
+    .detail-section h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--green); margin-bottom: 10px;
+    }
+    .detail-section p, .detail-section li {
+      font-size: 14px; color: var(--fg-muted); line-height: 1.7;
+    }
+    .detail-section ul { padding-left: 20px; }
+    .detail-section li { margin-bottom: 6px; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 6px; top: 0; bottom: 0;
+      width: 2px; background: var(--border);
+    }
+    .timeline-item {
+      position: relative; padding: 12px 0 12px 20px;
+    }
+    .timeline-item::before {
+      content: ''; position: absolute;
+      left: -20px; top: 18px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .timeline-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; font-weight: 700;
+      color: var(--green); margin-bottom: 4px;
+    }
+    .timeline-text { font-size: 13px; color: var(--fg-muted); line-height: 1.5; }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center; padding: 60px 20px;
+      color: var(--fg-dim);
+    }
+    .empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+    .empty-state h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 800;
+      text-transform: uppercase; color: var(--fg-muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 800px) {
+      .main-layout { grid-template-columns: 1fr; padding: 16px; }
+      .sidebar { position: static; max-height: none; }
+      .header-inner { grid-template-columns: 1fr; gap: 8px; text-align: center; }
+      .header-stats { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="home-link">📚 <span>Memory Wiki</span></a>
+      <div class="page-title">Coach Kenny &amp; OWL</div>
+      <div class="header-stats" id="header-stats">Loading...</div>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Browse</div>
+        <ul class="sidebar-nav">
+          <li><a href="#" onclick="showView('subjects'); return false;" class="active" data-view="subjects">📋 All Subjects <span class="count" id="subject-count">0</span></a></li>
+          <li><a href="#" onclick="showView('logs'); return false;" data-view="logs">📅 Daily Logs <span class="count" id="log-count">0</span></a></li>
+          <li><a href="#" onclick="showView('subjects'); return false;">🏗️ Projects</a></li>
+          <li><a href="#" onclick="showView('subjects'); return false;">🛠️ Tech Stack</a></li>
+          <li><a href="#" onclick="showView('subjects'); return false;">🐛 Bugs Fixed</a></li>
+          <li><a href="#" onclick="showView('subjects'); return false;">📏 Design Systems</a></li>
+        </ul>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Recent</div>
+        <ul class="sidebar-nav" id="recent-list">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+    </aside>
+
+    <main class="content">
+      <!-- SUBJECTS VIEW -->
+      <div id="view-subjects" class="view active">
+        <div class="section-heading">📋 All Subjects</div>
+        <div class="subject-grid" id="subject-grid">
+          <!-- Populated by JS -->
+        </div>
+        <div class="section-heading" style="margin-top:40px;">📅 Daily Logs</div>
+        <div class="log-list" id="log-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- LOGS VIEW -->
+      <div id="view-logs" class="view" style="display:none">
+        <div class="section-heading">📅 All Daily Logs</div>
+        <div class="log-list" id="log-list-full">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- DETAIL VIEW -->
+      <div id="view-detail" class="detail-panel">
+        <button class="detail-back" onclick="showView('subjects')">← Back</button>
+        <div id="detail-content"></div>
+      </div>
+
+      <!-- EMPTY -->
+      <div id="view-empty" class="empty-state" style="display:none">
+        <div class="icon">📭</div>
+        <h3>Nothing here yet</h3>
+        <p style="color: var(--fg-dim); margin-top:8px;">This section is being built as we work together.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer style="border-top:1px solid rgba(255,255,255,0.06); padding:24px 32px; text-align:center; font-size:12px; color:#374151;">
+    📚 Memory Wiki &middot; Coach Kenny &amp; OWL &middot; Last updated <span id="last-updated"></span>
+  </footer>
+
+  <script>
+  // ============================================
+  // Memory Wiki — Data
+  // ============================================
+  var WIKI = {
+    subjects: [
+      {
+        id: 'space-reservations',
+        icon: '📅',
+        title: 'Space Reservations',
+        desc: 'Staff-only web app for teachers to reserve shared school spaces — Cafegym, ES Turf, Kinder Playground.',
+        tags: ['GitHub Pages', 'GAS', 'Sheets', 'GIS Auth'],
+        tech: 'GitHub Pages + Google Apps Script + Google Sheets',
+        timeline: [
+          { date: 'Ongoing', text: 'Continuous maintenance and feature updates on kennyhin/slam-space-reservations.' }
+        ]
+      },
+      {
+        id: 'homerun-tracker',
+        icon: '🏃',
+        title: 'Home Run Tracker',
+        desc: 'Teachers mark athletes as Home Run (all work done) or No Home Run. Coaches get batched email at 4:30 PM.',
+        tags: ['GitHub Pages', 'GAS', 'Cron Jobs', 'Teams'],
+        tech: 'GitHub Pages + Google Apps Script + Google Sheets + Time Triggers',
+        timeline: [
+          { date: 'May 31, 2026', text: 'Built from scratch — 3-step flow: Grade → Teacher → Mark Home Runs.' },
+          { date: 'May 31, 2026', text: 'Added teams-based system: Baseball, Soccer, Basketball, T-Ball.' },
+          { date: 'May 31, 2026', text: 'Added cron jobs: 2 PM teacher reminders + 4:30 PM auto-send + supervisor alerts.' },
+          { date: 'May 31, 2026', text: 'Fixed critical bug: style.display must be "block" not "" to override CSS.' }
+        ]
+      },
+      {
+        id: 'pe-games',
+        icon: '🎮',
+        title: 'PE Games',
+        desc: 'K-5 PE games database with 16 games, 12 locomotor movements, and full Nevada PE Standards reference.',
+        tags: ['GitHub Pages', 'SLAM Athletics Design', 'Education'],
+        tech: 'Static HTML/CSS/JS — SLAM Athletics design system (Archivo/Space Grotesk, lime/red)',
+        timeline: [
+          { date: 'May 31, 2026', text: 'Built 16 game cards with grade filters + 4 detail pages.' },
+          { date: 'May 31, 2026', text: 'Rebuilt with SLAM Athletics design system (dark, lime #80FF00, red #DA0016).' },
+          { date: 'May 31, 2026', text: 'Added 3 sections: Games + Locomotor Movements + NV PE Standards (S1-S5).' }
+        ]
+      },
+      {
+        id: 'coachkenny-site',
+        icon: '🏠',
+        title: 'Coach Kenny Landing Page',
+        desc: 'Personal landing page at coachkenny.org with links to all tools, contact form via Web3Forms.',
+        tags: ['GitHub Pages', 'Web3Forms', 'Namecheap'],
+        tech: 'Static HTML/CSS/JS + Web3Forms for contact form',
+        timeline: [
+          { date: 'Ongoing', text: 'Added cards for: SLAM Athletics, Space Reservations, Home Run Tracker, PE Games.' },
+          { date: 'May 31, 2026', text: 'Purple PE Games card added to landing page.' }
+        ]
+      },
+      {
+        id: 'memory-wiki',
+        icon: '📚',
+        title: 'Memory Wiki',
+        desc: 'A browsable memory site showing all subjects, projects, daily logs, and conversations between Kenny and OWL.',
+        tags: ['GitHub Pages', 'Memory', 'Documentation'],
+        tech: 'Static HTML/CSS/JS with embedded data — updates automatically each morning.',
+        timeline: [
+          { date: 'May 31, 2026', text: 'Built from scratch — sidebar nav + subject cards + detail views + timeline.' }
+        ]
+      },
+      {
+        id: 'tech-stack',
+        icon: '🛠️',
+        title: 'Tech Stack & Patterns',
+        desc: 'Kenny\'s preferred tech stack: GitHub Pages frontend + GAS backend + Sheets data store. Auth via GIS @slamnv.org.',
+        tags: ['GitHub Pages', 'GAS', 'Sheets', 'GIS', 'Web3Forms'],
+        tech: 'Static HTML/CSS/JS + Google Apps Script + Google Sheets + GIS Auth',
+        timeline: [
+          { date: 'Ongoing', text: 'Established pattern used across all school internal tools.' },
+          { date: 'May 31, 2026', text: 'Two design systems documented: SLAM Athletics (Archivo/lime/red) vs Kenny\'s (Barlow/Inter/green).' }
+        ]
+      },
+      {
+        id: 'bugs-fixed',
+        icon: '🐛',
+        title: 'Bugs Fixed',
+        desc: 'Catalog of critical bugs discovered and fixed across all projects.',
+        tags: ['Debugging', 'Lessons Learned'],
+        tech: 'Various',
+        timeline: [
+          { date: 'May 31, 2026', text: 'style.display="" doesn\'t override CSS : none — must use "block".' },
+          { date: 'May 31, 2026', text: 'write_file can trap body content inside <style> tag if not careful.' },
+          { date: 'May 31, 2026', text: 'Grade filter JS hiding all cards — fixed with external JS + data attributes.' },
+          { date: 'May 31, 2026', text: 'JSON.parse on URL-encoded params in GAS.' }
+        ]
+      },
+      {
+        id: 'design-systems',
+        icon: '📏',
+        title: 'Design Systems',
+        desc: 'Two design systems in use: SLAM Athletics and Kenny\'s personal brand.',
+        tags: ['CSS', 'Typography', 'Branding'],
+        tech: 'CSS Custom Properties + Google Fonts',
+        timeline: [
+          { date: 'May 31, 2026', text: 'SLAM Athletics: Archivo Black + Space Grotesk + Space Mono, #80FF00/#DA0016.' },
+          { date: 'May 31, 2026', text: 'Kenny\'s brand: Barlow Condensed + Inter, #8CC63F/#E86C00 green/orange.' }
+        ]
+      }
+    ],
+    logs: [
+      {
+        id: 'log-2026-05-31',
+        date: 'May 31, 2026',
+        title: 'Home Run Tracker + PE Games + Memory Wiki',
+        preview: 'Built Home Run Tracker from scratch. Created PE Games page with SLAM Athletics design. Started Memory Wiki.',
+        tags: ['homerun-tracker', 'pe-games', 'memory-wiki'],
+        summary: 'Kenny asked for a Home Run Tracker app for teachers to mark athletes. Built the full frontend with 6 grades × 2 teachers × 6 players. Then rebuilt the PE Games page to match SLAM Athletics design system. Finally started the Memory Wiki.',
+        details: [
+          'Home Run Tracker: Teachers pick grade → pick their name → see athletes → toggle Home Run/No Home Run → Submit emails coaches',
+          'Home Run Tracker: Teams-based system (Baseball, Soccer, Basketball, T-Ball) with batched coach emails',
+          'Home Run Tracker: Cron jobs for 2 PM reminders and 4:30 PM auto-send',
+          'PE Games: 16 game cards + 12 locomotor cards + 5 NV PE Standards',
+          'PE Games: SLAM Athletics design — dark theme, lime/red, Archivo Black font',
+          'PE Games: Grade filter chips, 4 game detail pages with full rules',
+          'Memory Wiki: Browsable memory site with subject cards, daily logs, detail views',
+          'Memory Wiki: 8 subjects cataloged, timeline view for each',
+          'Bug fixes: style.display CSS override, write_file body-in-style, grade filter hiding all cards'
+        ]
+      }
+    ]
+  };
+
+  // ============================================
+  // RENDER FUNCTIONS
+  // ============================================
+  function render() {
+    renderSubjects();
+    renderLogs();
+    renderFullLogs();
+    renderRecent();
+    updateStats();
+    document.getElementById('last-updated').textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  function renderSubjects() {
+    var grid = document.getElementById('subject-grid');
+    grid.innerHTML = '';
+    WIKI.subjects.forEach(function(s) {
+      var card = document.createElement('a');
+      card.className = 'subject-card';
+      card.href = '#';
+      card.onclick = function() { showDetail('subject', s.id); return false; };
+      card.innerHTML =
+        '<div class="subject-icon">' + s.icon + '</div>' +
+        '<div class="subject-title">' + s.title + '</div>' +
+        '<div class="subject-desc">' + s.desc + '</div>' +
+        '<div class="subject-meta">' + s.tags.map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>';
+      grid.appendChild(card);
+    });
+  }
+
+  function renderLogs() {
+    var list = document.getElementById('log-list');
+    list.innerHTML = '';
+    WIKI.logs.forEach(function(l) {
+      var entry = document.createElement('a');
+      entry.className = 'log-entry';
+      entry.href = '#';
+      entry.onclick = function() { showDetail('log', l.id); return false; };
+      entry.innerHTML =
+        '<div class="log-date">' + l.date + '</div>' +
+        '<div class="log-title">' + l.title + '</div>' +
+        '<div class="log-preview">' + l.preview + '</div>' +
+        '<div class="log-tags">' + l.tags.map(function(t) { return '<span class="log-tag">' + t + '</span>'; }).join('') + '</div>';
+      list.appendChild(entry);
+    });
+  }
+
+  function renderFullLogs() {
+    var list = document.getElementById('log-list-full');
+    list.innerHTML = '';
+    WIKI.logs.forEach(function(l) {
+      var entry = document.createElement('a');
+      entry.className = 'log-entry';
+      entry.href = '#';
+      entry.onclick = function() { showDetail('log', l.id); return false; };
+      entry.innerHTML =
+        '<div class="log-date">' + l.date + '</div>' +
+        '<div class="log-title">' + l.title + '</div>' +
+        '<div class="log-preview">' + l.preview + '</div>' +
+        '<div class="log-tags">' + l.tags.map(function(t) { return '<span class="log-tag">' + t + '</span>'; }).join('') + '</div>';
+      list.appendChild(entry);
+    });
+  }
+
+  function renderRecent() {
+    var list = document.getElementById('recent-list');
+    list.innerHTML = '';
+    WIKI.subjects.slice(0, 5).forEach(function(s) {
+      var li = document.createElement('li');
+      li.innerHTML = '<a href="#" onclick="showDetail(\'subject\', \'' + s.id + '\'); return false;">' + s.icon + ' ' + s.title + '</a>';
+      list.appendChild(li);
+    });
+  }
+
+  function updateStats() {
+    document.getElementById('header-stats').textContent =
+      WIKI.subjects.length + ' subjects · ' + WIKI.logs.length + ' logs';
+    document.getElementById('subject-count').textContent = WIKI.subjects.length;
+    document.getElementById('log-count').textContent = WIKI.logs.length;
+  }
+
+  // ============================================
+  // NAVIGATION
+  // ============================================
+  function showView(view) {
+    document.querySelectorAll('.view').forEach(function(v) { v.style.display = 'none'; });
+    document.querySelector('.detail-panel').classList.remove('active');
+    var el = document.getElementById('view-' + view);
+    if (el) el.style.display = '';
+    document.querySelectorAll('.sidebar-nav a').forEach(function(a) {
+      a.classList.toggle('active', a.getAttribute('data-view') === view);
+    });
+  }
+
+  function showDetail(type, id) {
+    var content = document.getElementById('detail-content');
+    document.getElementById('view-subjects').style.display = 'none';
+    document.getElementById('view-logs').style.display = 'none';
+    document.querySelector('.detail-panel').classList.add('active');
+
+    if (type === 'subject') {
+      var s = WIKI.subjects.filter(function(x) { return x.id === id; })[0];
+      if (!s) return;
+      content.innerHTML =
+        '<div class="detail-title">' + s.icon + ' ' + s.title + '</div>' +
+        '<div class="detail-meta">' + s.tags.join(' · ') + '</div>' +
+        '<div class="detail-section"><h3>Overview</h3><p>' + s.desc + '</p></div>' +
+        '<div class="detail-section"><h3>Tech Stack</h3><p>' + s.tech + '</p></div>' +
+        '<div class="detail-section"><h3>Timeline</h3>' +
+        '<div class="timeline">' +
+        s.timeline.map(function(t) {
+          return '<div class="timeline-item"><div class="timeline-date">' + t.date + '</div><div class="timeline-text">' + t.text + '</div></div>';
+        }).join('') +
+        '</div></div>';
+    } else if (type === 'log') {
+      var l = WIKI.logs.filter(function(x) { return x.id === id; })[0];
+      if (!l) return;
+      content.innerHTML =
+        '<div class="detail-title">📅 ' + l.date + '</div>' +
+        '<div class="detail-meta">' + l.tags.join(' · ') + '</div>' +
+        '<div class="detail-section"><h3>Summary</h3><p>' + l.summary + '</p></div>' +
+        '<div class="detail-section"><h3>What We Did</h3><ul>' +
+        l.details.map(function(d) { return '<li>' + d + '</li>'; }).join('') +
+        '</ul></div>';
+    }
+  }
+
+  // INIT
+  document.addEventListener('DOMContentLoaded', render);
+  </script>
+</body>
+</html>
