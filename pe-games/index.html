@@ -4,549 +4,409 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SLAM! PE Games — K-5 Physical Education</title>
-  <meta name="description" content="SLAM! Nevada K-5 PE Games — locomotor movements, fitness games, and activities aligned with Nevada State PE Standards." />
+  <meta name="description" content="SLAM! Nevada K-5 PE Games, locomotor movements, and Nevada State PE Standards." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #1a1a2e;
-      color: #e5e7eb;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* HEADER */
-    .site-header {
-      background: rgba(26,26,46,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(140,198,63,0.15);
-      padding: 16px 24px;
-      position: sticky; top: 0; z-index: 100;
-    }
-    .header-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; align-items: center; gap: 16px;
-    }
-    .back-link {
-      color: #8CC63F; text-decoration: none; font-size: 14px;
-      display: flex; align-items: center; gap: 6px;
-      transition: opacity 0.2s;
-    }
-    .back-link:hover { opacity: 0.8; }
-    .header-logo {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.4rem; font-weight: 800;
-      color: #fff; text-decoration: none;
-    }
-    .header-logo span { color: #8CC63F; }
-    .header-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1rem; font-weight: 700;
-      color: #8CC63F; text-transform: uppercase;
-      letter-spacing: 0.08em; margin-left: auto;
-    }
-
-    /* HERO */
-    .hero {
-      max-width: 1100px; margin: 0 auto;
-      padding: 60px 24px 40px;
-      text-align: center;
-    }
-    .hero-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px; font-weight: 700;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: #8CC63F; margin-bottom: 12px;
-    }
-    .hero h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(36px, 6vw, 56px);
-      font-weight: 900; line-height: 1;
-      text-transform: uppercase; letter-spacing: 0.01em;
-      color: #fff;
-    }
-    .hero h1 span { color: #8CC63F; }
-    .hero-sub {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(14px, 2vw, 18px);
-      font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.12em; color: #6b7280;
-      margin-top: 12px; margin-bottom: 32px;
-    }
-
-    /* FILTER CHIPS */
-    .filter-row {
-      max-width: 1100px; margin: 0 auto;
-      padding: 0 24px 24px;
-      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
-    }
-    .filter-chip {
-      padding: 8px 18px;
-      border-radius: 50px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.04);
-      color: #9ca3af;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px; font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .filter-chip:hover { border-color: rgba(140,198,63,0.3); color: #8CC63F; }
-    .filter-chip.active {
-      background: rgba(140,198,63,0.15);
-      border-color: #8CC63F;
-      color: #8CC63F;
-    }
-
-    /* GAMES GRID */
-    .games-section {
-      max-width: 1100px; margin: 0 auto;
-      padding: 0 24px 60px;
-    }
-    .games-section-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 28px; font-weight: 800;
-      text-transform: uppercase; color: #fff;
-      margin-bottom: 20px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .games-section-title .count {
-      font-size: 14px; color: #6b7280; font-weight: 600;
-      background: rgba(255,255,255,0.06);
-      padding: 4px 10px; border-radius: 20px;
-    }
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 16px;
-    }
-
-    /* GAME CARD */
-    .game-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 20px;
-      display: flex; flex-direction: column; gap: 10px;
-      transition: all 0.3s;
-      cursor: pointer; text-decoration: none; color: inherit;
-    }
-    .game-card:hover {
-      border-color: rgba(140,198,63,0.4);
-      background: rgba(140,198,63,0.04);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
-    .game-icon { font-size: 28px; }
-    .game-grade-badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 50px;
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      background: rgba(140,198,63,0.12);
-      color: #8CC63F;
-      border: 1px solid rgba(140,198,63,0.2);
-      align-self: flex-start;
-    }
-    .game-card h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 20px; font-weight: 700;
-      color: #fff; text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
-    .game-locomotor {
-      font-size: 12px; color: #8CC63F;
-      font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    .game-desc {
-      font-size: 13px; color: #9ca3af; line-height: 1.6;
-    }
-    .game-standards {
-      display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px;
-    }
-    .game-standard-tag {
-      font-size: 10px; color: #6b7280;
-      background: rgba(255,255,255,0.04);
-      padding: 2px 8px; border-radius: 10px;
-    }
-
-    /* STANDARDS SECTION */
-    .standards-section {
-      max-width: 1100px; margin: 0 auto;
-      padding: 0 24px 80px;
-    }
-    .standards-section h2 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 24px; font-weight: 800;
-      text-transform: uppercase; color: #fff;
-      margin-bottom: 20px;
-    }
-    .standards-grid {
-      display: grid; gap: 12px;
-    }
-    .standard-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 10px;
-      padding: 16px 20px;
-    }
-    .standard-card h3 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 16px; font-weight: 700;
-      color: #8CC63F; margin-bottom: 6px;
-      letter-spacing: 0.05em;
-    }
-    .standard-card p {
-      font-size: 13px; color: #6b7280; margin-bottom: 8px;
-    }
-    .standard-card ul {
-      list-style: none; padding: 0;
-      display: flex; flex-wrap: wrap; gap: 6px;
-    }
-    .standard-card li {
-      font-size: 12px; color: #9ca3af;
-      background: rgba(255,255,255,0.04);
-      padding: 4px 10px; border-radius: 6px;
-    }
-    .standard-card li strong { color: #d1d5db; }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 24px; text-align: center;
-      font-size: 12px; color: #374151;
-    }
-
-    @media (max-width: 600px) {
-      .header-title { display: none; }
-      .games-grid { grid-template-columns: 1fr; }
-      .hero { padding: 40px 16px 24px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/pe-styles.css" />
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="../index.html" class="back-link">← Back</a>
-      <a href="../index.html" class="header-logo">SLAM<span>PE</span></a>
-      <div class="header-title">K-5 PE Games</div>
-    </div>
-  </header>
+  <!-- SIDE NAV -->
+  <nav class="side-nav" id="sideNav">
+    <a href="/pe-games/" class="side-nav-logo">SLAM<span>PE</span></a>
+    <a href="#games">Games</a>
+    <a href="#locomotor">Locomotor</a>
+    <a href="#standards">Standards</a>
+    <a href="/">Home</a>
+  </nav>
 
-  <section class="hero">
-    <div class="hero-eyebrow">SLAM! Nevada PE Department</div>
-    <h1>Physical <span>Education</span> Games</h1>
-    <div class="hero-sub">🏃 Locomotor games aligned with Nevada State PE Standards</div>
-  </section>
+  <div class="page">
 
-  <div class="filter-row">
-    <button class="filter-chip active" onclick="filterGames('all', this)">All Grades</button>
-    <button class="filter-chip" onclick="filterGames('K', this)">Kindergarten</button>
-    <button class="filter-chip" onclick="filterGames('1st', this)">1st Grade</button>
-    <button class="filter-chip" onclick="filterGames('2nd', this)">2nd Grade</button>
-    <button class="filter-chip" onclick="filterGames('3rd', this)">3rd Grade</button>
-    <button class="filter-chip" onclick="filterGames('4th', this)">4th Grade</button>
-    <button class="filter-chip" onclick="filterGames('5th', this)">5th Grade</button>
-  </div>
-
-  <section class="games-section">
-    <div class="games-section-title">
-      🎮 All PE Games
-      <span class="count">16 games</span>
-    </div>
-    <div class="games-grid" id="games-grid">
-
-      <a href="games/tag.html" class="game-card">
-        <div class="game-icon">🏃</div>
-        <div class="game-grade-badge">K-2</div>
-        <h3>Tag Games</h3>
-        <div class="game-locomotor">Run · Dodge · Chase</div>
-        <div class="game-desc">Classic tag with fun variations like Freeze Tag, Tunnel Tag, and Compliment Tag. Great for cardio warm-ups!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S3.E1</span>
-          <span class="game-standard-tag">S4.E2</span>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg vignette">
+        <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <defs>
+            <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(128,255,0,0.06)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)"/>
+        </svg>
+      </div>
+      <div class="hero-inner hero-center">
+        <p class="welcome-eyebrow">SLAM! Nevada · Physical Education</p>
+        <div class="hero-logo-wrap">
+          <div class="pe-hero-title">PE <span>GAMES</span></div>
         </div>
-      </a>
+        <p class="hero-desc">K-5 physical education games, locomotor movements &amp; activities aligned with Nevada State PE Standards.</p>
+      </div>
+    </section>
 
-      <a href="games/red-light-green-light.html" class="game-card">
-        <div class="game-icon">🚦</div>
-        <div class="game-grade-badge">K-2</div>
-        <h3>Red Light, Green Light</h3>
-        <div class="game-locomotor">Run · Stop · Control</div>
-        <div class="game-desc">"Green Light!" Go! "Red Light!" Freeze! Teaches impulse control and locomotor skills.</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S4.E1</span>
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 1: GAMES -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="content-section" id="games">
+      <div class="section-header">
+        <span class="section-eyebrow">Play · Move · Compete</span>
+        <h2 class="section-title">GAMES</h2>
+      </div>
+
+      <!-- Grade Filter -->
+      <div class="filter-row">
+        <button class="filter-chip active" data-filter="all">All Grades</button>
+        <button class="filter-chip" data-filter="k">K</button>
+        <button class="filter-chip" data-filter="1">1st</button>
+        <button class="filter-chip" data-filter="2">2nd</button>
+        <button class="filter-chip" data-filter="3">3rd</button>
+        <button class="filter-chip" data-filter="4">4th</button>
+        <button class="filter-chip" data-filter="5">5th</button>
+      </div>
+
+      <!-- Games Grid -->
+      <div class="games-grid">
+
+        <a href="games/tag.html" class="game-card" data-grades="k,1,2">
+          <div class="game-card-icon">🏃</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">K-2</span>
+            <h3 class="game-card-title">Tag Games</h3>
+            <p class="game-card-desc">Run, dodge &amp; chase variants</p>
+            <span class="game-card-locomotor">Run · Dodge · Chase</span>
+          </div>
+        </a>
+
+        <a href="games/red-light-green-light.html" class="game-card" data-grades="k,1,2">
+          <div class="game-card-icon">🚦</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">K-2</span>
+            <h3 class="game-card-title">Red Light, Green Light</h3>
+            <p class="game-card-desc">Stop &amp; go with control</p>
+            <span class="game-card-locomotor">Run · Stop · React</span>
+          </div>
+        </a>
+
+        <a href="games/sharks-and-minnows.html" class="game-card" data-grades="1,2,3">
+          <div class="game-card-icon">🦈</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">1-3</span>
+            <h3 class="game-card-title">Sharks &amp; Minnows</h3>
+            <p class="game-card-desc">Cross the ocean without getting caught</p>
+            <span class="game-card-locomotor">Run · Dodge · Swim</span>
+          </div>
+        </a>
+
+        <a href="games/hopscotch.html" class="game-card" data-grades="k,1,2,3">
+          <div class="game-card-icon">🟫</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">K-3</span>
+            <h3 class="game-card-title">Hopscotch</h3>
+            <p class="game-card-desc">Classic hopping with balance</p>
+            <span class="game-card-locomotor">Hop · Jump · Balance</span>
+          </div>
+        </a>
+
+        <div class="game-card" data-grades="k,1,2,3">
+          <div class="game-card-icon">🏗️</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">K-3</span>
+            <h3 class="game-card-title">Obstacle Course</h3>
+            <p class="game-card-desc">Crawl, jump, weave through stations</p>
+            <span class="game-card-locomotor">Crawl · Jump · Weave</span>
+          </div>
         </div>
-      </a>
 
-      <a href="games/sharks-and-minnows.html" class="game-card">
-        <div class="game-icon">🦈</div>
-        <div class="game-grade-badge">1-3</div>
-        <h3>Sharks &amp; Minnows</h3>
-        <div class="game-locomotor">Run · Dodge · Agility</div>
-        <div class="game-desc">One shark in the middle, minnows try to cross without getting tagged. A playground classic!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E2</span>
-          <span class="game-standard-tag">S3.E2</span>
-          <span class="game-standard-tag">S2.E1</span>
+        <div class="game-card" data-grades="1,2,3">
+          <div class="game-card-icon">📐</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">1-3</span>
+            <h3 class="game-card-title">Four Corners</h3>
+            <p class="game-card-desc">Race to corners on cue</p>
+            <span class="game-card-locomotor">Run · Listen · React</span>
+          </div>
         </div>
-      </a>
 
-      <a href="games/hopscotch.html" class="game-card">
-        <div class="game-icon">🟫</div>
-        <div class="game-grade-badge">K-3</div>
-        <h3>Hopscotch</h3>
-        <div class="game-locomotor">Hop · Jump · Balance</div>
-        <div class="game-desc">Classic hopscotch with math, spelling, and partner variations. Perfect for balance practice.</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E3</span>
-          <span class="game-standard-tag">S2.E1</span>
-          <span class="game-standard-tag">S4.E4</span>
+        <div class="game-card" data-grades="2,3,4,5">
+          <div class="game-card-icon">🪢</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">2-5</span>
+            <h3 class="game-card-title">Jump Rope</h3>
+            <p class="game-card-desc">Individual &amp; long rope challenges</p>
+            <span class="game-card-locomotor">Jump · Skip · Rhythm</span>
+          </div>
         </div>
-      </a>
 
-      <div class="game-card">
-        <div class="game-icon">🏁</div>
-        <div class="game-grade-badge">K-5</div>
-        <h3>Obstacle Course</h3>
-        <div class="game-locomotor">Run · Jump · Crawl</div>
-        <div class="game-desc">Set up cones, hula hoops, balance beams, and agility ladders. Time students for personal bests!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S1.E3</span>
-          <span class="game-standard-tag">S3.E2</span>
+        <div class="game-card" data-grades="k,1,2">
+          <div class="game-card-icon">🫧</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">K-2</span>
+            <h3 class="game-card-title">Blob Tag</h3>
+            <p class="game-card-desc">Join hands &amp; grow the blob</p>
+            <span class="game-card-locomotor">Run · Chase · Link</span>
+          </div>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">🔲</div>
-        <div class="game-grade-badge">K-2</div>
-        <h3>Four Corners</h3>
-        <div class="game-locomotor">Run · Decision · Listen</div>
-        <div class="game-desc">Number the corners 1-4. Students pick a corner. Teacher calls out a number — that corner is OUT!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S4.E1</span>
+        <div class="game-card" data-grades="3,4,5">
+          <div class="game-card-icon">📬</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">3-5</span>
+            <h3 class="game-card-title">Pony Express</h3>
+            <p class="game-card-desc">Relay race with baton passing</p>
+            <span class="game-card-locomotor">Run · Pass · Relay</span>
+          </div>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">🪢</div>
-        <div class="game-grade-badge">1-5</div>
-        <h3>Jump Rope</h3>
-        <div class="game-locomotor">Jump · Rhythm · Timing</div>
-        <div class="game-desc">Individual and long rope challenges. Build coordination, timing, and cardiovascular fitness.</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E3</span>
-          <span class="game-standard-tag">S3.E2</span>
-          <span class="game-standard-tag">S4.E4</span>
+        <div class="game-card" data-grades="k,1,2">
+          <div class="game-card-icon">🎵</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">K-2</span>
+            <h3 class="game-card-title">Musical Mats</h3>
+            <p class="game-card-desc">Musical chairs on gym mats</p>
+            <span class="game-card-locomotor">Run · Stop · Balance</span>
+          </div>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">🍩</div>
-        <div class="game-grade-badge">K-3</div>
-        <h3>Blob Tag</h3>
-        <div class="game-locomotor">Run · Dodge · Link</div>
-        <div class="game-desc">When tagged, link arms and become a growing blob! Last student not in the blob wins.</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S4.E2</span>
+        <div class="game-card" data-grades="k,1,2">
+          <div class="game-card-icon">🐴</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">K-2</span>
+            <h3 class="game-card-title">Animal Walks</h3>
+            <p class="game-card-desc">Crab bear, frog &amp; bunny hops</p>
+            <span class="game-card-locomotor">Walk · Hop · Crawl</span>
+          </div>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">🐎</div>
-        <div class="game-grade-badge">K-2</div>
-        <h3>Pony Express</h3>
-        <div class="game-locomotor">Run · Pass · Teamwork</div>
-        <div class="game-desc">Relay race with a twist — pass the baton (or beanbag) while galloping like a pony!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E2</span>
-          <span class="game-standard-tag">S4.E2</span>
+        <div class="game-card" data-grades="3,4,5">
+          <div class="game-card-icon">🚩</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">3-5</span>
+            <h3 class="game-card-title">Capture the Flag</h3>
+            <p class="game-card-desc">Steal the flag, don't get caught</p>
+            <span class="game-card-locomotor">Run · Dodge · Strategy</span>
+          </div>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">🎵</div>
-        <div class="game-grade-badge">K-2</div>
-        <h3>Musical Mats</h3>
-        <div class="game-locomotor">Run · Stop · Balance</div>
-        <div class="game-desc">Like musical chairs but with yoga mats. Freeze on a mat when the music stops — no elimination, just fun!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S4.E1</span>
+        <div class="game-card" data-grades="3,4,5">
+          <div class="game-card-icon">⚽</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">3-5</span>
+            <h3 class="game-card-title">Sideline Soccer</h3>
+            <p class="game-card-desc">Non-stop soccer from the sidelines</p>
+            <span class="game-card-locomotor">Run · Kick · Pass</span>
+          </div>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">🐸</div>
-        <div class="game-grade-badge">K-2</div>
-        <h3>Animal Walk Race</h3>
-        <div class="game-locomotor">Bear crawl · Crab · Frog</div>
-        <div class="game-desc">Frog jumps, bear crawls, crab walks — students race using different animal movements. Hilarious and effective!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E2</span>
-          <span class="game-standard-tag">S1.E4</span>
+        <div class="game-card" data-grades="4,5">
+          <div class="game-card-icon">🐻</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">4-5</span>
+            <h3 class="game-card-title">Frontier Tag</h3>
+            <p class="game-card-desc">Tag with a historical twist</p>
+            <span class="game-card-locomotor">Run · Dodge · React</span>
+          </div>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">🏴</div>
-        <div class="game-grade-badge">3-5</div>
-        <h3>Capture the Flag</h3>
-        <div class="game-locomotor">Run · Dodge · Strategy</div>
-        <div class="game-desc">Classic team strategy game. Cross into enemy territory, grab the flag, and make it back without getting tagged!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S4.E2</span>
-          <span class="game-standard-tag">S4.E4</span>
+        <div class="game-card" data-grades="k,1,2,3">
+          <div class="game-card-icon">🚗</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">K-3</span>
+            <h3 class="game-card-title">Traffic</h3>
+            <p class="game-card-desc">Follow the traffic commands</p>
+            <span class="game-card-locomotor">Walk · Jog · Freeze</span>
+          </div>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">⚽</div>
-        <div class="game-grade-badge">3-5</div>
-        <h3>Sideline Soccer</h3>
-        <div class="game-locomotor">Kick · Run · Pass</div>
-        <div class="game-desc">Soccer with players on the sideline who can pass to active players. Everyone stays involved the whole game!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E5</span>
-          <span class="game-standard-tag">S4.E2</span>
+        <div class="game-card" data-grades="3,4,5">
+          <div class="game-card-icon">🔄</div>
+          <div class="game-card-body">
+            <span class="game-card-grade">3-5</span>
+            <h3 class="game-card-title">Shuttle Run</h3>
+            <p class="game-card-desc">Back &amp; forth sprints</p>
+            <span class="game-card-locomotor">Run · Sprint · Stop</span>
+          </div>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">🚗</div>
-        <div class="game-grade-badge">K-2</div>
-        <h3>Traffic</h3>
-        <div class="game-locomotor">Walk · Jog · Sprint</div>
-        <div class="game-desc">Teacher calls: "Walk!" "Jog!" "Sprint!" "REVERSE!" Students respond with the appropriate speed. Stoplight signals add fun.</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S4.E1</span>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 2: LOCOMOTOR MOVEMENTS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="content-section" id="locomotor">
+      <div class="section-header">
+        <span class="section-eyebrow">Move · Grow · Develop</span>
+        <h2 class="section-title">LOCOMOTOR MOVEMENTS</h2>
+      </div>
+      <p class="section-intro">Fundamental movement skills every K-5 student masters through PE.</p>
+
+      <div class="locomotor-grid">
+
+        <div class="loco-card">
+          <div class="loco-icon">🚶</div>
+          <h3 class="loco-title">Walking</h3>
+          <p class="loco-desc">Heel-to-toe, arms swinging naturally, eyes forward. The foundation of all movement.</p>
+          <span class="loco-grade">All Grades</span>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">🌵</div>
-        <div class="game-grade-badge">2-4</div>
-        <h3>Frontier Tag</h3>
-        <div class="game-locomotor">Run · Dodge · React</div>
-        <div class="game-desc">Taggers have "lives" — when tagged, they spin 3 times before tagging again. Gives runners a chance to escape!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S3.E1</span>
+        <div class="loco-card">
+          <div class="loco-icon">🏃</div>
+          <h3 class="loco-title">Jogging / Running</h3>
+          <p class="loco-desc">Light on your feet, bent knees, arms pumping. Build endurance and speed.</p>
+          <span class="loco-grade">All Grades</span>
         </div>
-      </div>
 
-      <div class="game-card">
-        <div class="game-icon">✈️</div>
-        <div class="game-grade-badge">2-5</div>
-        <h3>Shuttle Run</h3>
-        <div class="game-locomotor">Sprint · Pivot · Speed</div>
-        <div class="game-desc">Line up in two groups. Sprint to the cone, touch it, sprint back, tag the next teammate. Fast-paced relay action!</div>
-        <div class="game-standards">
-          <span class="game-standard-tag">S1.E1</span>
-          <span class="game-standard-tag">S2.E1</span>
-          <span class="game-standard-tag">S3.E2</span>
+        <div class="loco-card">
+          <div class="loco-icon">🦘</div>
+          <h3 class="loco-title">Hopping</h3>
+          <p class="loco-desc">One-foot take-off and landing. Builds balance and leg strength.</p>
+          <span class="loco-grade">K-2</span>
         </div>
+
+        <div class="loco-card">
+          <div class="loco-icon">🐴</div>
+          <h3 class="loco-title">Galloping</h3>
+          <p class="loco-desc">One foot leads, the other follows. A smooth, rhythmic pattern.</p>
+          <span class="loco-grade">K-3</span>
+        </div>
+
+        <div class="loco-card">
+          <div class="loco-icon">⛸️</div>
+          <h3 class="loco-title">Sliding</h3>
+          <p class="loco-desc">Side-to-side movement, feet never cross. Quick direction changes.</p>
+          <span class="loco-grade">K-3</span>
+        </div>
+
+        <div class="loco-card">
+          <div class="loco-icon">🪴</div>
+          <h3 class="loco-title">Skipping</h3>
+          <p class="loco-desc">Step-hop, step-hop. A bouncy, fun pattern combining walk and hop.</p>
+          <span class="loco-grade">1-3</span>
+        </div>
+
+        <div class="loco-card">
+          <div class="loco-icon">🐸</div>
+          <h3 class="loco-title">Leaping</h3>
+          <p class="loco-desc">Take off on one foot, land on the other. Long, stretched flight.</p>
+          <span class="loco-grade">2-5</span>
+        </div>
+
+        <div class="loco-card">
+          <div class="loco-icon">🤸</div>
+          <h3 class="loco-title">Jumping</h3>
+          <p class="loco-desc">Two-foot takeoff and landing. Push off hard, land soft with bent knees.</p>
+          <span class="loco-grade">All Grades</span>
+        </div>
+
+        <div class="loco-card">
+          <div class="loco-icon">🦀</div>
+          <h3 class="loco-title">Crab Walk / Bear Walk</h3>
+          <p class="loco-desc">Non-locomotor fun that builds coordination and body awareness.</p>
+          <span class="loco-grade">K-2</span>
+        </div>
+
+        <div class="loco-card">
+          <div class="loco-icon">🐰</div>
+          <h3 class="loco-title">Bunny Hops</h3>
+          <p class="loco-desc">Both feet together, hopping forward. Great for leg power!</p>
+          <span class="loco-grade">K-2</span>
+        </div>
+
+        <div class="loco-card">
+          <div class="loco-icon">🎒</div>
+          <h3 class="loco-title">Dodging</h3>
+          <p class="loco-desc">Quick body shifts to avoid others. Essential for all sports.</p>
+          <span class="loco-grade">2-5</span>
+        </div>
+
+        <div class="loco-card">
+          <div class="loco-icon">📦</div>
+          <h3 class="loco-title">Crawling / Rolling</h3>
+          <p class="loco-desc">Space awareness and coordination. Log rolls, bear crawls, commando rolls.</p>
+          <span class="loco-grade">K-3</span>
+        </div>
+
       </div>
+    </section>
 
-    </div>
-  </section>
-
-  <!-- STANDARDS REFERENCE -->
-  <section class="standards-section">
-    <h2>📋 Nevada PE Standards Reference</h2>
-    <div class="standards-grid">
-
-      <div class="standard-card">
-        <h3>Standard 1 — Motor Skills &amp; Movement</h3>
-        <p>Students demonstrate competency in motor skills and movement patterns needed to perform physical activities.</p>
-        <ul>
-          <li><strong>S1.E1:</strong> Locomotor — walk, jog, run</li>
-          <li><strong>S1.E2:</strong> Locomotor — hop, gallop, slide, skip</li>
-          <li><strong>S1.E3:</strong> Jump &amp; land with control</li>
-          <li><strong>S1.E4:</strong> Balance &amp; weight transfer</li>
-          <li><strong>S1.E5:</strong> Manipulative — throw, catch, kick</li>
-        </ul>
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 3: NEVADA PE STANDARDS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="content-section" id="standards">
+      <div class="section-header">
+        <span class="section-eyebrow">Learn · Assess · Improve</span>
+        <h2 class="section-title">NEVADA PE STANDARDS</h2>
       </div>
+      <p class="section-intro">All SLAM! PE activities align with the Nevada Academic Content Standards for Physical Education (NVACS).</p>
 
-      <div class="standard-card">
-        <h3>Standard 2 — Movement Concepts</h3>
-        <p>Students understand movement concepts, principles, and strategies as they apply to learning and performing physical activities.</p>
-        <ul>
-          <li><strong>S2.E1:</strong> Spatial awareness — personal/general space</li>
-          <li><strong>S2.E2:</strong> Pathways, levels, directions</li>
-          <li><strong>S2.E3:</strong> Speed, force, flow concepts</li>
-        </ul>
+      <div class="standards-grid">
+
+        <div class="standard-card">
+          <span class="standard-code">S1</span>
+          <h3 class="standard-title">Motor Skills &amp; Movement Patterns</h3>
+          <p class="standard-desc">Demonstrates competency in motor skills and movement patterns needed to perform a variety of physical activities.</p>
+          <div class="standard-subs">
+            <span>S1.E1 – Locomotor (walk, run, hop, jump)</span>
+            <span>S1.E2 – Non-locomotor (bend, stretch, twist)</span>
+            <span>S1.E3 – Manipulative (throw, catch, kick)</span>
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <span class="standard-code">S2</span>
+          <h3 class="standard-title">Movement Concepts &amp; Principles</h3>
+          <p class="standard-desc">Understands movement concepts, principles, and strategies as they apply to physical activities.</p>
+          <div class="standard-subs">
+            <span>S2.E1 – Spatial awareness</span>
+            <span>S2.E2 – Pathways, levels, direction</span>
+            <span>S2.E3 – Speed, force, flow</span>
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <span class="standard-code">S3</span>
+          <h3 class="standard-title">Physical Activity &amp; Fitness</h3>
+          <p class="standard-desc">Participates in physical activities and understands the impact on health and fitness.</p>
+          <div class="standard-subs">
+            <span>S3.E1 – Active participation</span>
+            <span>S3.E2 – Cardiorespiratory fitness</span>
+            <span>S3.E3 – Flexibility &amp; strength</span>
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <span class="standard-code">S4</span>
+          <h3 class="standard-title">Responsible Personal &amp; Social Behavior</h3>
+          <p class="standard-desc">Exhibits responsible personal and social behavior in physical activity settings.</p>
+          <div class="standard-subs">
+            <span>S4.E1 – Follows rules &amp; directions</span>
+            <span>S4.E2 – Works cooperatively</span>
+            <span>S4.E3 – Sportsmanship</span>
+          </div>
+        </div>
+
+        <div class="standard-card">
+          <span class="standard-code">S5</span>
+          <h3 class="standard-title">Value of Physical Activity</h3>
+          <p class="standard-desc">Recognizes the value of physical activity for health, enjoyment, challenge, self-expression, and social interaction.</p>
+          <div class="standard-subs">
+            <span>S5.E1 – Self-expression &amp; enjoyment</span>
+            <span>S5.E2 – Challenge &amp; goal-setting</span>
+            <span>S5.E3 – Social interaction</span>
+          </div>
+        </div>
+
       </div>
+    </section>
 
-      <div class="standard-card">
-        <h3>Standard 3 — Physical Fitness &amp; Activity</h3>
-        <p>Students participate in regular physical activity and understand the relationship between activity and health.</p>
-        <ul>
-          <li><strong>S3.E1:</strong> Participates in activity majority of class</li>
-          <li><strong>S3.E2:</strong> Recognizes cardiorespiratory fitness</li>
-          <li><strong>S3.E3:</strong> Identifies physiological indicators</li>
-          <li><strong>S3.E4:</strong> Warm-up, workout, cool-down</li>
-        </ul>
-      </div>
+    <!-- FOOTER -->
+    <footer>
+      <p>&copy; 2026 SLAM! Nevada PE Department &middot; kenny.hin@slamnv.org</p>
+    </footer>
 
-      <div class="standard-card">
-        <h3>Standard 4 — Responsible Behavior</h3>
-        <p>Students exhibit responsible personal and social behavior that respects self and peers.</p>
-        <ul>
-          <li><strong>S4.E1:</strong> Listening &amp; following directions</li>
-          <li><strong>S4.E2:</strong> Works cooperatively with others</li>
-          <li><strong>S4.E3:</strong> Safe practices in activity</li>
-          <li><strong>S4.E4:</strong> Rules and fair play</li>
-        </ul>
-      </div>
+  </div><!-- /page -->
 
-      <div class="standard-card">
-        <h3>Standard 5 — Health-Enhancing Value</h3>
-        <p>Students recognize the value of physical activity for health, enjoyment, challenge, self-expression, and social interaction.</p>
-        <ul>
-          <li><strong>S5.E1:</strong> Activity is good for personal health</li>
-          <li><strong>S5.E2:</strong> Identifies enjoyable activities</li>
-          <li><strong>S5.E3:</strong> Positive social interactions</li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <footer>
-    &copy; 2026 SLAM! Nevada PE Department &middot; Coach Kenny Hin &middot; kenny.hin@slamnv.org
-  </footer>
-
-  <script>
-    function filterGames(grade, el) {
-      document.querySelectorAll('.filter-chip').forEach(function(c) { c.classList.remove('active'); });
-      if (el) el.classList.add('active');
-      var cards = document.querySelectorAll('.game-card');
-      cards.forEach(function(card) {
-        if (grade === 'all') {
-          card.style.display = '';
-        } else {
-          var badge = card.querySelector('.game-grade-badge');
-          var text = badge ? badge.textContent : '';
-          card.style.display = (text.indexOf(grade) !== -1) ? '' : 'none';
-        }
-      });
-    }
-  </script>
-
+  <!-- SCRIPTS -->
+  <script src="js/pe-filter.js" defer></script>
 </body>
 </html>
