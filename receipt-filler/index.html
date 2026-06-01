@@ -19,51 +19,48 @@
   .header {
     background: rgba(11,11,11,0.95);
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 20px 24px;
+    padding: 18px 20px;
     position: sticky; top: 0; z-index: 50;
     backdrop-filter: blur(12px);
   }
   .header-inner {
-    max-width: 640px; margin: 0 auto;
-    display: flex; align-items: center; gap: 16px;
+    max-width: 520px; margin: 0 auto;
+    display: flex; align-items: center; gap: 12px;
   }
   .brand {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.2rem; font-weight: 800;
+    font-size: 1.15rem; font-weight: 800;
     color: #fff; text-decoration: none;
   }
   .brand span { color: #8CC63F; }
-  .step-badge {
+  .badge {
     margin-left: auto;
     font-family: 'Space Mono', monospace;
-    font-size: 12px; font-weight: 700;
+    font-size: 11px; font-weight: 700;
     color: #8CC63F;
     background: rgba(140,198,63,0.08);
-    padding: 6px 10px; border-radius: 999px;
+    padding: 5px 9px; border-radius: 999px;
   }
   main {
-    max-width: 640px; margin: 0 auto; padding: 20px 20px 40px;
+    max-width: 520px; margin: 0 auto; padding: 16px 16px 48px;
   }
   .screen { display: none; }
   .screen.active { display: block; }
-
-  .cards {
-    display: grid; gap: 14px;
-  }
+  .cards { display: grid; gap: 14px; }
   .card {
     background: #16191f;
     border: 1px solid rgba(140,198,63,0.18);
     border-radius: 16px;
     padding: 22px;
     cursor: pointer;
-    transition: transform .18s, border-color .18s, box-shadow .18s;
+    transition: transform .15s, border-color .15s, box-shadow .15s;
   }
   .card:active { transform: scale(.99); }
   .card:hover, .card.focus {
     border-color: #8CC63F;
     box-shadow: 0 10px 24px rgba(140,198,63,0.12);
   }
-  .card-icon { font-size: 30px; margin-bottom: 8px; }
+  .card-icon { font-size: 28px; margin-bottom: 8px; }
   .card-title {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 22px; font-weight: 900;
@@ -74,6 +71,18 @@
     font-size: 13px; color: #9ca3af; line-height: 1.4;
   }
 
+  .panel {
+    background: #16191f;
+    border: 1px solid rgba(140,198,63,0.18);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  .panel-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px; font-weight: 900;
+    text-transform: uppercase; color: #fff;
+    margin-bottom: 14px;
+  }
   .field { margin-bottom: 14px; }
   .label {
     display: block;
@@ -86,22 +95,24 @@
     background: #0B0B0B;
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 10px;
-    padding: 14px 14px;
+    padding: 14px;
     color: #fff; font-family: inherit; font-size: 16px;
     outline: none;
   }
   input:focus, textarea:focus, select:focus { border-color: #8CC63F; }
   textarea { min-height: 90px; resize: vertical; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 520px) { .grid-2 { grid-template-columns: 1fr; } }
 
   .actions {
-    position: sticky; bottom: 16px;
-    display: flex; gap: 10px; margin-top: 18px;
+    margin-top: 18px;
+    display: flex; gap: 10px;
   }
   .btn {
     flex: 1;
     background: #8CC63F; color: #0B0B0B;
     border: none; border-radius: 12px;
-    padding: 14px 12px;
+    padding: 14px;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800; font-size: 16px;
     text-transform: uppercase;
@@ -114,34 +125,46 @@
     border: 1px solid rgba(255,255,255,0.14);
   }
   .hint {
+    font-size: 12px; color: #9ca3af; line-height: 1.4;
     margin-top: 8px;
-    font-size: 12px; color: #9ca3af; line-height: 1.35;
   }
-
   .snap {
     border: 1px dashed rgba(255,255,255,0.18);
     border-radius: 14px;
-    padding: 18px;
+    padding: 20px;
     text-align: center;
     color: #9ca3af;
     cursor: pointer;
   }
   .snap input { display: none; }
   .snap:active { border-color: #8CC63F; color: #8CC63F; }
-
-  .inputs { display: grid; gap: 14px; }
-
-  @media (max-width: 420px) {
-    .header { padding: 18px 18px; }
-    main { padding: 16px 14px 40px; }
+  .preview {
+    margin-top: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0B0B0B;
+    border: 1px solid rgba(255,255,255,0.08);
   }
+  .preview img { width: 100%; display: block; }
+  .ok {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #8CC63F;
+  }
+  .items { display: flex; flex-direction: column; gap: 10px; }
+  .item-row {
+    display: grid;
+    grid-template-columns: 1fr 90px 70px 60px;
+    gap: 10px; align-items: center;
+  }
+  @media (max-width: 520px) { .item-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <header class="header">
   <div class="header-inner">
-    <a class="brand" href="#" onclick="show('choose'); return false;">📝 <span>Receipt</span> Filler</a>
-    <div class="step-badge" id="step-badge" style="display:none"></div>
+    <a class="brand" href="#" onclick="resetAll(); return false;">📝 <span>Receipt</span> Filler</a>
+    <div class="badge" id="badge" style="display:none"></div>
   </div>
 </header>
 
@@ -162,36 +185,47 @@
   </div>
 
   <div class="screen" id="screen-receipt">
-    <div class="field">
-      <label class="label">Step 1 — Add receipt photo</label>
-      <label class="snap">
-        <input type="file" accept="image/*" capture="environment" onchange="onReceipt(this)" />
-        📷 Tap to take a photo
-      </label>
-      <p class="hint">Photo is optional. You can also continue without one and fill manually.</p>
-    </div>
-    <div id="preview-wrap" style="display:none; margin-top:10px; border-radius:12px; overflow:hidden; background:#0B0B0B; border:1px solid rgba(255,255,255,0.08);">
-      <img id="receipt-img" alt="receipt" style="width:100%; display:block;" />
-    </div>
-    <div class="actions">
-      <button class="btn" onclick="next('receipt','form')">Next</button>
+    <div class="panel">
+      <div class="panel-title">Receipt</div>
+
+      <div class="field">
+        <label class="label">Option A — Snap receipt</label>
+        <label class="snap">
+          <input type="file" accept="image/*" capture="environment" onchange="onReceipt(this)" />
+          📷 Take photo / choose file
+        </label>
+      </div>
+
+      <div id="preview-wrap" style="display:none" class="preview">
+        <img id="receipt-img" alt="receipt" />
+      </div>
+      <div id="ocr-status"></div>
+
+      <div class="field" style="margin-top:14px">
+        <label class="label">Option B — Skip receipt</label>
+        <p class="hint">Not needed. You can fill every field manually and skip OCR.</p>
+      </div>
+
+      <div class="actions">
+        <button class="btn" onclick="next('receipt','form')">Next</button>
+      </div>
     </div>
   </div>
 
   <div class="screen" id="screen-form">
-    <div id="step-area"></div>
-    <div class="actions">
-      <button class="btn btn-secondary" onclick="stepBack()">Back</button>
-      <button class="btn" id="step-next" onclick="stepNext()">Next</button>
+    <div class="panel">
+      <div id="step-area"></div>
+      <div class="actions" style="margin-top:16px">
+        <button class="btn btn-secondary" onclick="stepBack()">Back</button>
+        <button class="btn" id="step-next" onclick="stepNext()">Next</button>
+      </div>
     </div>
   </div>
 
   <div class="screen" id="screen-download">
-    <div class="panel" style="background:#16191f; border:1px solid rgba(140,198,63,0.18); border-radius:16px; padding:22px;">
-      <div class="field">
-        <div class="label">Ready</div>
-        <p class="hint">Your form is ready to download as PDF. Need another one? Start over.</p>
-      </div>
+    <div class="panel">
+      <div class="panel-title">Ready</div>
+      <p class="hint">Your form is ready. Download the PDF, then start another one.</p>
       <div class="actions">
         <button class="btn" onclick="generatePDF()">Download PDF</button>
         <button class="btn btn-secondary" onclick="resetAll()">New Form</button>
@@ -200,62 +234,53 @@
   </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>
-const STATE = {
-  type: null,
-  step: 0,
-  preview: '',
-  values: {}
-};
+const STATE = { type: null, step: 0, values: {} };
 
 function show(id) {
   document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  const badge = document.getElementById('step-badge');
-  if (id === 'choose') { badge.style.display = 'none'; }
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+  const badge = document.getElementById('badge');
+  badge.style.display = id === 'choose' ? 'none' : 'block';
 }
 
 function start(type) {
   STATE.type = type;
   STATE.step = 0;
   STATE.values = {};
+  document.getElementById('preview-wrap').style.display = 'none';
+  document.getElementById('receipt-img').src = '';
+  document.getElementById('ocr-status').innerHTML = '';
   show('receipt');
-  const badge = document.getElementById('step-badge');
-  badge.style.display = 'block';
-  badge.textContent = type === 'purchase' ? 'Purchase Request' : 'Reimbursement';
+  document.getElementById('badge').textContent = type === 'purchase' ? 'Purchase Request' : 'Reimbursement';
 }
 
 function onReceipt(input) {
   if (!input.files || !input.files[0]) return;
-  STATE.preview = input.files[0];
-  const img = document.getElementById('receipt-img');
-  img.src = URL.createObjectURL(input.files[0]);
   document.getElementById('preview-wrap').style.display = 'block';
-  runOCR(input.files[0]);
+  document.getElementById('receipt-img').src = URL.createObjectURL(input.files[0]);
+  readReceipt(input.files[0]);
 }
 
-async function runOCR(file) {
-  const status = document.createElement('div');
-  status.className = 'hint';
-  status.textContent = 'Reading receipt…';
-  status.style.marginTop = '8px';
-  document.getElementById('receipt-img').after(status);
+async function readReceipt(file) {
+  const box = document.getElementById('ocr-status');
+  box.innerHTML = '<div class="hint">Reading receipt…</div>';
   try {
+    if (typeof Tesseract === 'undefined') throw new Error('Tesseract not loaded');
     const result = await Tesseract.recognize(file, 'eng', { logger: m => {
-      if (m.status === 'recognizing text') status.textContent = 'Reading receipt… ' + Math.round((m.progress||0)*100) + '%';
-      else status.textContent = m.status;
+      if (m.status === 'recognizing text') box.innerHTML = '<div class="hint">Reading receipt… ' + Math.round((m.progress||0)*100) + '%</div>';
     }});
-    parseOCR(result.data.text);
-    status.textContent = 'Receipt read ✔';
-    status.style.color = '#8CC63F';
+    applyOCR(result.data.text);
+    box.innerHTML = '<div class="ok">Receipt read ✔</div>';
   } catch (e) {
-    status.textContent = 'Could not read receipt — no problem, just fill below.';
-    status.style.color = '#9ca3af';
+    box.innerHTML = '<div class="hint">Could not auto-read receipt — no problem, just fill below manually.</div>';
   }
 }
 
-function parseOCR(text) {
+function applyOCR(text) {
   const m = text.match(/\d{2,4}[-\/]\d{1,2}[-\/]\d{1,2}/);
   if (m) STATE.values.date = toDate(m[0]);
   if (STATE.type === 'purchase') {
@@ -270,80 +295,103 @@ function parseOCR(text) {
 }
 
 function toDate(str) {
-  try {
-    const d = new Date(str);
-    return isNaN(d) ? '' : d.toISOString().split('T')[0];
-  } catch (e) { return ''; }
+  try { const d = new Date(str); return isNaN(d) ? '' : d.toISOString().split('T')[0]; } catch (e) { return ''; }
 }
 
-function saveFromInputs(ids) {
-  ids.forEach(id => { STATE.values[id] = (document.getElementById(id) || {}).value || ''; });
-}
-function loadIntoInputs(ids) {
-  ids.forEach(id => { const el = document.getElementById(id); if (el && STATE.values[id] !== undefined) el.value = STATE.values[id] || ''; });
-}
-
-const PURCHASE_STEPS = [
-  {
-    title: 'Step 2 — Basic info',
-    inputs: [
+const STEPS = {
+  purchase: [
+    { title: 'Basic info', inputs: [
       { id: 'pr-date', label: 'Date Submitted', type: 'date' },
       { id: 'pr-name', label: 'Requested By', placeholder: 'Kenny Ho' },
       { id: 'pr-team', label: 'Cost Center / Team', placeholder: 'e.g. Soccer, Kinder' }
-    ],
-    save: ['pr-date','pr-name','pr-team']
-  },
-  {
-    title: 'Step 3 — Items',
-    inputs: () => itemInputsHTML('pr-items'),
-    save: () => collectItems('pr-items'),
-    render: () => renderItems('pr-items')
-  },
-  {
-    title: 'Step 4 — Totals',
-    inputs: [
+    ], save: ['pr-date','pr-name','pr-team'] },
+    { title: 'Items', inputs: () => itemRows('pr-items'), save: () => collectItems('pr-items'), render: () => restoreItems('pr-items') },
+    { title: 'Totals', inputs: [
       { id: 'pr-subtotal', label: 'Subtotal', type: 'number', step: '0.01' },
       { id: 'pr-shipping-amt', label: 'Shipping', type: 'number', step: '0.01' },
       { id: 'pr-total', label: 'Total', type: 'number', step: '0.01' }
-    ],
-    save: ['pr-subtotal','pr-shipping-amt','pr-total']
-  },
-  {
-    title: 'Step 5 — Shipping',
-    inputs: [
+    ], save: ['pr-subtotal','pr-shipping-amt','pr-total'] },
+    { title: 'Shipping', inputs: [
       { id: 'pr-shipping', label: 'Shipping Instructions', type: 'textarea', placeholder: 'Address or notes — optional' }
-    ],
-    save: ['pr-shipping']
-  }
-];
-const REIMBURSEMENT_STEPS = [
-  {
-    title: 'Step 2 — Basic info',
-    inputs: [
+    ], save: ['pr-shipping'] }
+  ],
+  reimbursement: [
+    { title: 'Basic info', inputs: [
       { id: 'rr-name', label: 'Employee Name', placeholder: 'Kenny Ho' },
       { id: 'rr-date', label: 'Date', type: 'date' },
       { id: 'rr-vendor', label: 'Vendor / Store', placeholder: 'Store name' }
-    ],
-    save: ['rr-name','rr-date','rr-vendor']
-  },
-  {
-    title: 'Step 3 — Details',
-    inputs: [
+    ], save: ['rr-name','rr-date','rr-vendor'] },
+    { title: 'Details', inputs: [
       { id: 'rr-amount', label: 'Amount', type: 'number', step: '0.01' },
-      { id: 'rr-purpose', label: 'Purpose / Description', type: 'textarea', placeholder: 'What was this purchase for?' }
-    ],
-    save: ['rr-amount','rr-purpose']
-  },
-  {
-    title: 'Step 4 — Account',
-    inputs: [
+      { id: 'rr-purpose', label: 'Purpose', type: 'textarea', placeholder: 'What was this purchase for?' }
+    ], save: ['rr-amount','rr-purpose'] },
+    { title: 'Account', inputs: [
       { id: 'rr-cost', label: 'Account / Cost Center', placeholder: 'e.g. Soccer, Kinder' }
-    ],
-    save: ['rr-cost']
-  }
-];
+    ], save: ['rr-cost'] }
+  ]
+};
 
-function itemInputsHTML(containerId) {
+function next(from, to) {
+  show(to);
+  buildStep();
+}
+function stepBack() { STATE.step = Math.max(0, STATE.step - 1); buildStep(); }
+function stepNext() {
+  saveStep();
+  const steps = STEPS[STATE.type] || [];
+  STATE.step += 1;
+  if (STATE.step >= steps.length) { show('download'); return; }
+  buildStep();
+}
+
+function saveStep() {
+  const steps = STEPS[STATE.type] || [];
+  const s = steps[STATE.step];
+  if (!s) return;
+  if (typeof s.save === 'function') s.save();
+  else (s.save || []).forEach(id => { STATE.values[id] = (document.getElementById(id)||{}).value || ''; });
+}
+
+function buildStep() {
+  const steps = STEPS[STATE.type] || [];
+  const s = steps[STATE.step];
+  const area = document.getElementById('step-area');
+  area.innerHTML = '';
+  const title = document.createElement('div');
+  title.className = 'panel-title';
+  title.textContent = s.title;
+  area.appendChild(title);
+
+  const inputs = typeof s.inputs === 'function' ? s.inputs() : s.inputs;
+  const wrap = document.createElement('div');
+  inputs.forEach(def => {
+    const f = document.createElement('div');
+    f.className = 'field';
+    const lbl = document.createElement('label');
+    lbl.className = 'label';
+    lbl.textContent = def.label;
+    f.appendChild(lbl);
+    const el = def.type === 'textarea' ? document.createElement('textarea') : document.createElement('input');
+    if (!def.type) el.type = 'text';
+    if (def.type) el.type = def.type;
+    if (def.placeholder) el.placeholder = def.placeholder;
+    if (def.step) el.step = def.step;
+    el.id = def.id;
+    if (STATE.values[def.id] !== undefined) el.value = STATE.values[def.id] || '';
+    f.appendChild(el);
+    wrap.appendChild(f);
+  });
+  area.appendChild(wrap);
+  if (typeof s.render === 'function') s.render();
+  updateBadge(steps.length);
+}
+
+function updateBadge(total) {
+  const b = document.getElementById('badge');
+  b.textContent = (STATE.step + 1) + '/' + total;
+}
+
+function itemRows(containerId) {
   const row = document.createElement('div');
   row.className = 'item-row';
   row.style.cssText = 'display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;';
@@ -356,136 +404,43 @@ function collectItems(containerId) {
   if (!c) return rows;
   c.querySelectorAll('.item-row').forEach(r => {
     rows.push({
-      desc: (r.querySelector('.item-desc') || {}).value || '',
-      price: (r.querySelector('.item-price') || {}).value || '',
-      qty: (r.querySelector('.item-qty') || {}).value || '',
-      total: (r.querySelector('.item-total') || {}).value || ''
+      desc: (r.querySelector('.item-desc')||{}).value || '',
+      price: (r.querySelector('.item-price')||{}).value || '',
+      qty: (r.querySelector('.item-qty')||{}).value || '1',
+      total: (r.querySelector('.item-total')||{}).value || ''
     });
   });
   STATE.values[containerId] = rows;
 }
-function renderItems(containerId) {
-  const c = document.getElementById(containerId);
-  if (!c) return;
+function restoreItems(containerId) {
+  const box = document.getElementById(containerId);
+  if (!box) return;
   (STATE.values[containerId] || []).forEach(r => {
     const row = document.createElement('div');
     row.className = 'item-row';
     row.style.cssText = 'display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;';
-    row.innerHTML = '<input placeholder="Item" class="item-desc" value="' + (r.desc||'').replace(/"/g,'&quot;') + '" /><input type="number" step="0.01" placeholder="Price" class="item-price" value="' + (r.price||'') + '" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="' + (r.qty||'1') + '" /><input type="number" step="0.01" placeholder="Total" class="item-total" value="' + (r.total||'') + '" />';
-    c.appendChild(row);
+    const q = (v) => (v||'').replace(/"/g,'&quot;');
+    row.innerHTML = '<input placeholder="Item" class="item-desc" value="' + q(r.desc) + '" /><input type="number" step="0.01" placeholder="Price" class="item-price" value="' + q(r.price) + '" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="' + q(r.qty) + '" /><input type="number" step="0.01" placeholder="Total" class="item-total" value="' + q(r.total) + '" />';
+    box.appendChild(row);
   });
 }
 
-function next(from, to) {
-  if (from === 'receipt') { saveFromInputs([]); }
-  show(to);
-  showStep();
-}
-function stepBack() {
-  STATE.step = Math.max(0, STATE.step - 1);
-  showStep();
-}
-function stepNext() {
-  saveCurrentStep();
-  const steps = STATE.type === 'purchase' ? PURCHASE_STEPS : REIMBURSEMENT_STEPS;
-  STATE.step += 1;
-  if (STATE.step >= steps.length) {
-    show('download');
-    return;
-  }
-  showStep();
-}
-
-function saveCurrentStep() {
-  const steps = STATE.type === 'purchase' ? PURCHASE_STEPS : REIMBURSEMENT_STEPS;
-  const s = steps[STATE.step];
-  if (!s) return;
-  if (typeof s.save === 'function') s.save();
-  else s.save.forEach(id => { STATE.values[id] = (document.getElementById(id)||{}).value || ''; });
-}
-function renderCurrentStep() {
-  const steps = STATE.type === 'purchase' ? PURCHASE_STEPS : REIMBURSEMENT_STEPS;
-  const s = steps[STATE.step];
-  if (!s) return;
-  const area = document.getElementById('step-area');
-  area.innerHTML = '';
-  const title = document.createElement('div');
-  title.className = 'label';
-  title.style.marginBottom = '10px';
-  title.textContent = s.title;
-  area.appendChild(title);
-
-  const inputs = typeof s.inputs === 'function' ? s.inputs() : s.inputs;
-  const wrap = document.createElement('div');
-  wrap.className = 'inputs';
-  inputs.forEach(def => {
-    const f = document.createElement('div');
-    f.className = 'field';
-    const lbl = document.createElement('label');
-    lbl.className = 'label';
-    lbl.textContent = def.label;
-    f.appendChild(lbl);
-    let el;
-    if (def.type === 'textarea') {
-      el = document.createElement('textarea');
-      el.placeholder = def.placeholder || '';
-    } else {
-      el = document.createElement('input');
-      el.type = def.type || 'text';
-      if (def.placeholder) el.placeholder = def.placeholder;
-      if (def.step) el.step = def.step;
-    }
-    el.id = def.id;
-    if (STATE.values[def.id] !== undefined) el.value = STATE.values[def.id] || '';
-    f.appendChild(el);
-    wrap.appendChild(f);
-  });
-  area.appendChild(wrap);
-
-  if (typeof s.render === 'function') s.render();
-  updateStepBadge();
-}
-function updateStepBadge() {
-  const steps = STATE.type === 'purchase' ? PURCHASE_STEPS : REIMBURSEMENT_STEPS;
-  const badge = document.getElementById('step-badge');
-  badge.textContent = (STATE.step + 1) + '/' + steps.length;
-}
-
-function showStep() {
-  show('form');
-  renderCurrentStep();
-}
+function fieldText(id) { return ((document.getElementById(id)||{}).value||'').trim(); }
 
 function resetAll() {
   STATE.type = null;
   STATE.step = 0;
   STATE.values = {};
-  STATE.preview = '';
   document.getElementById('preview-wrap').style.display = 'none';
   document.getElementById('receipt-img').src = '';
+  document.getElementById('ocr-status').innerHTML = '';
   show('choose');
-  document.getElementById('step-badge').style.display = 'none';
-}
-
-function fieldText(id) {
-  return ((document.getElementById(id) || {}).value || '').trim();
-}
-function collectCurrentItems() {
-  const c = document.getElementById('pr-items');
-  const rows = [];
-  c.querySelectorAll('.item-row').forEach(r => {
-    rows.push({
-      desc: (r.querySelector('.item-desc') || {}).value || '',
-      price: (r.querySelector('.item-price') || {}).value || '',
-      qty: (r.querySelector('.item-qty') || {}).value || '1',
-      total: (r.querySelector('.item-total') || {}).value || ''
-    });
-  });
-  STATE.values['pr-items'] = rows;
+  document.getElementById('badge').style.display = 'none';
 }
 
 async function generatePDF() {
   try {
+    if (typeof PDFLib === 'undefined') throw new Error('PDF library not loaded');
     const { PDFDocument, rgb, StandardFonts } = PDFLib;
     const doc = PDFDocument.create();
     const font = doc.registerFont(StandardFonts.Helvetica);
@@ -546,7 +501,6 @@ async function generatePDF() {
     show('download');
   } catch (err) {
     alert('PDF generation failed: ' + err.message);
-    console.error(err);
   }
 }
 </script>
