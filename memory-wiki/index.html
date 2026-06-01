@@ -377,11 +377,32 @@
         id: 'space-reservations',
         icon: '📅',
         title: 'Space Reservations',
-        desc: 'Staff-only web app for teachers to reserve shared school spaces — Cafegym, ES Turf, Kinder Playground.',
-        tags: ['GitHub Pages', 'GAS', 'Sheets', 'GIS Auth'],
-        tech: 'GitHub Pages + Google Apps Script + Google Sheets',
+        desc: 'Staff-only web app for @slamnv.org teachers to reserve Cafegym, ES Turf & Kinder Playground. Google Auth, 5-step form, Admin approval via Sheets menu.',
+        tags: ['GitHub Pages', 'GAS', 'Sheets', 'GIS Auth', 'FullCalendar'],
+        tech: 'GitHub Pages + Google Apps Script + Google Sheets + FullCalendar v6 + Google Identity Services',
+        status: 'ACTIVE — main ongoing project',
+        liveUrl: 'https://kennyhin.github.io/slam-space-reservations',
+        repo: 'kennyhin/slam-space-reservations',
+        scriptUrl: 'https://script.google.com/macros/s/AKfycbyJjRxfxRdR2guWfqYwnnCu8X19zuvq8mRYYhGMHbzb46K9MGO3OlctWUFqU_Uu_Ddg/exec',
+        keyFiles: [
+          'js/config.js — ONLY file needed for most changes (SCRIPT_URL, spaces, grade levels)',
+          'js/calendar.js — MiniCal + CalendarView + right detail panel',
+          'js/form.js — 5-step wizard + multi-date + custom time picker + live preview',
+          'css/styles.css — ALL styles, single file, no preprocessor',
+          'gas/Code.gs OR CODE_DEPLOY.gs — paste into Apps Script editor',
+          '_notes/WIKI.md — private agent handoff doc (not on live site)'
+        ],
         timeline: [
-          { date: 'Ongoing', text: 'Continuous maintenance and feature updates on kennyhin/slam-space-reservations.' }
+          { date: 'May 2026 (Claude)', text: 'Built entire site from scratch: Google Auth, 5-step form, Google Sheets backend, FullCalendar calendar, approval email flow.' },
+          { date: 'May 2026 (Claude)', text: 'Dark calendar theme, SLAM brand colors (PMS 186C red #C8102E, PMS 802C green #A8D400), custom animated Reserve button.' },
+          { date: 'May 2026 (Claude)', text: '3-column Notion-style layout: mini calendar sidebar | 5-day timeline | right detail panel.' },
+          { date: 'May 2026 (Claude)', text: 'Custom time picker (replaced ugly blue native browser picker). Live preview card alongside form.' },
+          { date: 'May 2026 (Claude)', text: 'Date click → reserve.html?date=YYYY-MM-DD auto-fills date. Hover slots show "+ Reserve" cue.' },
+          { date: 'May 2026 (Hermes)', text: 'Multi-date reservation support — teachers can add multiple dates per submission (entries[] array).' },
+          { date: 'May 2026 (Hermes)', text: 'New Apps Script deployed. SCRIPT_URL updated in config.js. CODE_DEPLOY.gs added to repo for easy copy-paste.' },
+          { date: 'May 2026 (Hermes)', text: 'Improved email formatting for multi-date reservations.' },
+          { date: 'May 2026 (Claude)', text: 'Mobile: default view → dayGridMonth. Red "Reserve a Space" bar pinned at top of calendar. Sidebars hidden on mobile.' },
+          { date: 'May 2026 (Claude)', text: 'Private agent wiki moved to slam-space-reservations/_notes/WIKI.md + robots.txt blocking crawlers.' }
         ]
       },
       {
@@ -391,11 +412,12 @@
         desc: 'Teachers mark athletes as Home Run (all work done) or No Home Run. Coaches get batched email at 4:30 PM.',
         tags: ['GitHub Pages', 'GAS', 'Cron Jobs', 'Teams'],
         tech: 'GitHub Pages + Google Apps Script + Google Sheets + Time Triggers',
+        repo: 'kennyhin/homerun-tracker',
         timeline: [
-          { date: 'May 31, 2026', text: 'Built from scratch — 3-step flow: Grade → Teacher → Mark Home Runs.' },
-          { date: 'May 31, 2026', text: 'Added teams-based system: Baseball, Soccer, Basketball, T-Ball.' },
-          { date: 'May 31, 2026', text: 'Added cron jobs: 2 PM teacher reminders + 4:30 PM auto-send + supervisor alerts.' },
-          { date: 'May 31, 2026', text: 'Fixed critical bug: style.display must be "block" not "" to override CSS.' }
+          { date: 'May 31, 2026 (Hermes)', text: 'Built from scratch — 3-step flow: Grade → Teacher → Mark Home Runs.' },
+          { date: 'May 31, 2026 (Hermes)', text: 'Teams-based: Baseball, Soccer, Basketball, T-Ball with batched coach emails.' },
+          { date: 'May 31, 2026 (Hermes)', text: 'Cron jobs: 2 PM teacher reminders + 4:30 PM auto-send + supervisor alerts.' },
+          { date: 'May 31, 2026 (Hermes)', text: 'Bug fix: style.display must be "block" not "" to override CSS display:none.' }
         ]
       },
       {
@@ -404,93 +426,132 @@
         title: 'PE Games',
         desc: 'K-5 PE games database with 16 games, 12 locomotor movements, and full Nevada PE Standards reference.',
         tags: ['GitHub Pages', 'SLAM Athletics Design', 'Education'],
-        tech: 'Static HTML/CSS/JS — SLAM Athletics design system (Archivo/Space Grotesk, lime/red)',
+        tech: 'Static HTML/CSS/JS — SLAM Athletics design system (Archivo Black / Space Grotesk, lime #80FF00 / red #DA0016)',
+        repo: 'kennyhin/coach-kenny (pe-games/ subfolder)',
+        liveUrl: 'https://kennyhin.github.io/coach-kenny/pe-games',
         timeline: [
-          { date: 'May 31, 2026', text: 'Built 16 game cards with grade filters + 4 detail pages.' },
-          { date: 'May 31, 2026', text: 'Rebuilt with SLAM Athletics design system (dark, lime #80FF00, red #DA0016).' },
-          { date: 'May 31, 2026', text: 'Added 3 sections: Games + Locomotor Movements + NV PE Standards (S1-S5).' }
+          { date: 'May 31, 2026 (Hermes)', text: 'Built 16 game cards with grade filters + 4 detail pages.' },
+          { date: 'May 31, 2026 (Hermes)', text: 'Rebuilt with SLAM Athletics design system (dark, lime #80FF00, red #DA0016, Archivo Black).' },
+          { date: 'May 31, 2026 (Hermes)', text: 'Added 3 sections: Games + Locomotor Movements + NV PE Standards (S1-S5).' }
         ]
       },
       {
         id: 'coachkenny-site',
         icon: '🏠',
         title: 'Coach Kenny Landing Page',
-        desc: 'Personal landing page at coachkenny.org with links to all tools, contact form via Web3Forms.',
-        tags: ['GitHub Pages', 'Web3Forms', 'Namecheap'],
-        tech: 'Static HTML/CSS/JS + Web3Forms for contact form',
+        desc: 'Personal landing page at coachkenny.org — links to SLAM Athletics, Space Reservations, Home Run Tracker, PE Games. Contact form via Web3Forms.',
+        tags: ['GitHub Pages', 'Web3Forms', 'Namecheap', 'coachkenny.org'],
+        tech: 'Static HTML/CSS/JS + Web3Forms (key: 7c27b5dc-c36d-466e-8b78-ffdba5bacc38)',
+        repo: 'kennyhin/coach-kenny',
+        liveUrl: 'https://coachkenny.org',
         timeline: [
-          { date: 'Ongoing', text: 'Added cards for: SLAM Athletics, Space Reservations, Home Run Tracker, PE Games.' },
-          { date: 'May 31, 2026', text: 'Purple PE Games card added to landing page.' }
+          { date: 'May 2026 (Claude)', text: 'Built from scratch — SLAM dark theme, bull logo, 2 cards, Web3Forms contact form with auto-reply.' },
+          { date: 'May 31, 2026 (Hermes)', text: 'Added Home Run Tracker card (orange) + PE Games card (purple).' },
+          { date: 'May 31, 2026 (Hermes)', text: 'Added Memory Wiki card (teal) — linking to /memory-wiki page.' },
+          { date: 'May 31, 2026 (Claude)', text: 'Removed Memory Wiki card from landing page (it\'s private — only accessible at /memory-wiki if you know URL). robots.txt added to block crawlers.' }
         ]
       },
       {
         id: 'memory-wiki',
         icon: '📚',
         title: 'Memory Wiki',
-        desc: 'A browsable memory site showing all subjects, projects, daily logs, and conversations between Kenny and OWL.',
-        tags: ['GitHub Pages', 'Memory', 'Documentation'],
-        tech: 'Static HTML/CSS/JS with embedded data — updates automatically each morning.',
+        desc: 'Browsable memory site for all projects, subjects, daily logs between Kenny and AI agents. Private — not linked from landing page.',
+        tags: ['GitHub Pages', 'Memory', 'Documentation', 'Private'],
+        tech: 'Static HTML/CSS/JS with embedded WIKI data object — agents update the data directly.',
+        liveUrl: 'https://coachkenny.org/memory-wiki (not publicly linked)',
+        howToUpdate: 'Edit /Users/wasabi/Coach Kenny/memory-wiki/index.html — find the WIKI object in the <script> tag. Add entries to subjects[].timeline or logs[]. Then git commit + push from /Users/wasabi/Coach Kenny.',
         timeline: [
-          { date: 'May 31, 2026', text: 'Built from scratch — sidebar nav + subject cards + detail views + timeline.' }
+          { date: 'May 31, 2026 (Hermes)', text: 'Built from scratch — sidebar nav + subject cards + detail views + timeline.' },
+          { date: 'May 31, 2026 (Hermes)', text: '8 subjects cataloged: Space Reservations, Homerun Tracker, PE Games, Landing Page, Memory Wiki, Tech Stack, Bugs, Design Systems.' },
+          { date: 'May 31, 2026 (Claude)', text: 'Removed from landing page nav. robots.txt added to block /memory-wiki/ from crawlers.' },
+          { date: 'May 31, 2026 (Claude)', text: 'Updated with accurate Space Reservations history, corrected design system colors, added agent attribution (Claude vs Hermes).' }
         ]
       },
       {
         id: 'tech-stack',
         icon: '🛠️',
         title: 'Tech Stack & Patterns',
-        desc: 'Kenny\'s preferred tech stack: GitHub Pages frontend + GAS backend + Sheets data store. Auth via GIS @slamnv.org.',
+        desc: 'Kenny\'s standard stack: GitHub Pages frontend + Google Apps Script backend + Sheets data store. Auth via Google Identity Services.',
         tags: ['GitHub Pages', 'GAS', 'Sheets', 'GIS', 'Web3Forms'],
-        tech: 'Static HTML/CSS/JS + Google Apps Script + Google Sheets + GIS Auth',
+        tech: 'Static HTML/CSS/JS — no npm, no build step, no framework. Push to main = deployed.',
         timeline: [
-          { date: 'Ongoing', text: 'Established pattern used across all school internal tools.' },
-          { date: 'May 31, 2026', text: 'Two design systems documented: SLAM Athletics (Archivo/lime/red) vs Kenny\'s (Barlow/Inter/green).' }
+          { date: 'Ongoing', text: 'All school tools follow this pattern: GitHub Pages + GAS + Sheets.' },
+          { date: 'Ongoing', text: 'Auth pattern: Google Identity Services (GSI) JWT, @slamnv.org domain restriction, sessionStorage for token.' },
+          { date: 'May 2026', text: 'Key constraint: Google Workspace EDU blocks onEdit triggers using CalendarApp/MailApp. Must use menu-based approval only.' },
+          { date: 'May 2026', text: 'Key constraint: CalendarApp.getCalendarById() write blocked for non-owned calendars. Use getDefaultCalendar() instead.' },
+          { date: 'May 2026', text: 'Deploy tip: git add -A && git commit -m "..." && git push origin main → live in ~2 min.' }
         ]
       },
       {
         id: 'bugs-fixed',
         icon: '🐛',
         title: 'Bugs Fixed',
-        desc: 'Catalog of critical bugs discovered and fixed across all projects.',
+        desc: 'Catalog of critical bugs discovered and fixed across all projects — read this before debugging.',
         tags: ['Debugging', 'Lessons Learned'],
         tech: 'Various',
         timeline: [
-          { date: 'May 31, 2026', text: 'style.display="" doesn\'t override CSS : none — must use "block".' },
-          { date: 'May 31, 2026', text: 'write_file can trap body content inside <style> tag if not careful.' },
-          { date: 'May 31, 2026', text: 'Grade filter JS hiding all cards — fixed with external JS + data attributes.' },
-          { date: 'May 31, 2026', text: 'JSON.parse on URL-encoded params in GAS.' }
+          { date: 'May 31, 2026 (Hermes)', text: 'style.display="" doesn\'t override CSS display:none — must use "block" explicitly.' },
+          { date: 'May 31, 2026 (Hermes)', text: 'write_file can trap body content inside <style> tag if not structured carefully.' },
+          { date: 'May 31, 2026 (Hermes)', text: 'Grade filter JS hiding all cards — fixed with external JS + data attributes.' },
+          { date: 'May 31, 2026 (Hermes)', text: 'JSON.parse on URL-encoded params in GAS — decode before parsing.' },
+          { date: 'May 2026 (Claude)', text: 'GAS: onEdit simple triggers can\'t use CalendarApp or MailApp — use menu items instead.' },
+          { date: 'May 2026 (Claude)', text: 'GAS: showModalDialog blocked in Google Workspace EDU — use ui.alert() only.' },
+          { date: 'May 2026 (Claude)', text: 'Native <input type="time"> browser picker is blue/unstyled — replaced with custom JS time picker.' },
+          { date: 'May 2026 (Claude)', text: 'GitHub Pages push rejected: "fetch first" — always git pull --rebase before pushing if multiple agents are working.' }
         ]
       },
       {
         id: 'design-systems',
         icon: '📏',
         title: 'Design Systems',
-        desc: 'Two design systems in use: SLAM Athletics and Kenny\'s personal brand.',
+        desc: 'Two design systems in use. Do NOT mix them — Space Reservations uses Kenny\'s brand; PE Games uses SLAM Athletics brand.',
         tags: ['CSS', 'Typography', 'Branding'],
         tech: 'CSS Custom Properties + Google Fonts',
         timeline: [
-          { date: 'May 31, 2026', text: 'SLAM Athletics: Archivo Black + Space Grotesk + Space Mono, #80FF00/#DA0016.' },
-          { date: 'May 31, 2026', text: 'Kenny\'s brand: Barlow Condensed + Inter, #8CC63F/#E86C00 green/orange.' }
+          { date: 'May 2026', text: 'SLAM Athletics (PE Games, Athletics site): Archivo Black + Space Grotesk + Space Mono. Colors: lime #80FF00 / red #DA0016. Dark theme.' },
+          { date: 'May 2026', text: 'Kenny\'s Brand (Space Reservations, Coach Kenny landing): Barlow Condensed + Inter. Official SLAM PMS colors: Red #C8102E (PMS 186C), Green #A8D400 (PMS 802C), Gray #888B8D (Cool Gray 8C), Black #0B0B0B.' },
+          { date: 'May 2026', text: 'Space Reservations layout: 3-col Notion-style (240px sidebar | 1fr calendar | 268px panel). Header: white, 50px, very subtle. No footer.' },
+          { date: 'May 2026', text: 'Space Reservations CSS: single file styles.css, no preprocessor. Key classes: .app-layout (3-col), .reserve-layout (2-col form), .tp (custom time picker).' }
         ]
       }
     ],
     logs: [
       {
-        id: 'log-2026-05-31',
-        date: 'May 31, 2026',
+        id: 'log-2026-05-31-hermes',
+        date: 'May 31, 2026 — Hermes Session',
         title: 'Home Run Tracker + PE Games + Memory Wiki',
-        preview: 'Built Home Run Tracker from scratch. Created PE Games page with SLAM Athletics design. Started Memory Wiki.',
+        preview: 'Built Home Run Tracker from scratch. Created PE Games page with SLAM Athletics design. Built Memory Wiki browsable site.',
         tags: ['homerun-tracker', 'pe-games', 'memory-wiki'],
-        summary: 'Kenny asked for a Home Run Tracker app for teachers to mark athletes. Built the full frontend with 6 grades × 2 teachers × 6 players. Then rebuilt the PE Games page to match SLAM Athletics design system. Finally started the Memory Wiki.',
+        summary: 'Hermes built the Home Run Tracker (teachers mark athletes, coaches get batched emails). Then built the PE Games reference page with SLAM Athletics design system. Finally created this Memory Wiki as a browsable project memory site.',
         details: [
-          'Home Run Tracker: Teachers pick grade → pick their name → see athletes → toggle Home Run/No Home Run → Submit emails coaches',
-          'Home Run Tracker: Teams-based system (Baseball, Soccer, Basketball, T-Ball) with batched coach emails',
-          'Home Run Tracker: Cron jobs for 2 PM reminders and 4:30 PM auto-send',
-          'PE Games: 16 game cards + 12 locomotor cards + 5 NV PE Standards',
-          'PE Games: SLAM Athletics design — dark theme, lime/red, Archivo Black font',
+          'Home Run Tracker: 3-step flow — Grade → Teacher → Mark Home Runs → Submit',
+          'Home Run Tracker: Teams system (Baseball, Soccer, Basketball, T-Ball)',
+          'Home Run Tracker: Cron jobs — 2 PM reminders + 4:30 PM auto-send + supervisor alerts',
+          'PE Games: 16 game cards + 12 locomotor movements + 5 NV PE Standards (S1-S5)',
+          'PE Games: SLAM Athletics design — dark, lime #80FF00, red #DA0016, Archivo Black font',
           'PE Games: Grade filter chips, 4 game detail pages with full rules',
-          'Memory Wiki: Browsable memory site with subject cards, daily logs, detail views',
-          'Memory Wiki: 8 subjects cataloged, timeline view for each',
-          'Bug fixes: style.display CSS override, write_file body-in-style, grade filter hiding all cards'
+          'Memory Wiki: Browsable site with sidebar nav, subject cards, daily logs, timeline detail views',
+          'Memory Wiki: 8 subjects cataloged with full timelines',
+          'Bug fixes: style.display CSS override, grade filter hiding all cards, JSON.parse in GAS'
+        ]
+      },
+      {
+        id: 'log-2026-05-31-claude',
+        date: 'May 31, 2026 — Claude Session',
+        title: 'Space Reservations Mobile Fixes + Wiki Cleanup',
+        preview: 'Fixed mobile calendar default view, added mobile reserve button, moved memory wiki off landing page, updated wiki with full project history.',
+        tags: ['space-reservations', 'memory-wiki', 'mobile', 'coachkenny-site'],
+        summary: 'Claude session focused on Space Reservations mobile improvements and wiki organization. Kenny noticed the mobile calendar defaulted to list view and the Reserve button was buried. Also noticed the Memory Wiki card was showing publicly on coachkenny.org and asked it to be removed from the landing page.',
+        details: [
+          'Space Reservations: Mobile default view changed from listWeek → dayGridMonth (monthly calendar on mobile)',
+          'Space Reservations: Added .mobile-reserve-bar — full-width red animated button at top of calendar on mobile only',
+          'Space Reservations: Also pulled Hermes changes (multi-date form, new SCRIPT_URL) via git pull --rebase',
+          'coachkenny.org: Removed Memory Wiki card from landing page (was publicly visible)',
+          'coachkenny.org: Added robots.txt — Disallow: /memory-wiki/ to block search crawlers',
+          'slam-space-reservations repo: Moved AGENT_HANDOFF.md to _notes/WIKI.md (private directory)',
+          'slam-space-reservations repo: Added robots.txt blocking /_notes/ and /CODE_DEPLOY.gs',
+          'slam-space-reservations repo: Removed Hermess preview_*.html dev files from root',
+          'Memory Wiki (this page): Updated with accurate project history, corrected design system colors, added agent attribution, added current SCRIPT_URL and key file references'
         ]
       }
     ]
