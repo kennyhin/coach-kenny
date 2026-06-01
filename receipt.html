@@ -390,7 +390,7 @@
 
   function generatePDF() {
     try {
-      if (typeof PDFLib === 'undefined') throw new Error('PDF library not loaded');
+      if (typeof PDFLib === 'undefined') throw new Error('PDF library not loaded. Reload the page or check internet settings so vendor/pdf-lib.min.js loads.');
       var PDFDocument = PDFLib.PDFDocument;
       var StandardFonts = PDFLib.StandardFonts;
       var rgb = PDFLib.rgb;
