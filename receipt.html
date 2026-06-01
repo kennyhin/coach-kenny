@@ -233,8 +233,10 @@
       </div>
     </div>
   </div>
+
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -323,6 +325,66 @@
     });
   }
 
+  function createItemRow(values) {
+    var row = document.createElement('div');
+    row.className = 'item-row';
+    row.style.cssText = 'display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;';
+    row.innerHTML = '<input placeholder="Item" class="item-desc" /><input type="number" step="0.01" class="item-price" placeholder="$"/><input type="number" step="0.01" class="item-qty" value="1"/><input type="number" step="0.01" class="item-total" placeholder="total"/>';
+    Object.keys(values || {}).forEach(function (key) {
+      var el = row.querySelector('.' + key);
+      if (!el) return;
+      if (el.classList.contains('item-total') && !values[key]) return;
+      el.value = values[key] || '';
+    });
+    return row;
+  }
+
+  function recalcItemRow(row) {
+    var priceEl = row.querySelector('.item-price');
+    var qtyEl = row.querySelector('.item-qty');
+    var totalEl = row.querySelector('.item-total');
+    if (!priceEl || !qtyEl || !totalEl) return;
+    var price = parseFloat(priceEl.value);
+    var qty = parseFloat(qtyEl.value);
+    if (isFinite(price) && isFinite(qty)) totalEl.value = (price * qty);
+  }
+
+  function bindRowEvents(row) {
+    if (!row) return;
+    row.querySelectorAll('.item-price, .item-qty').forEach(function(el){
+      el.addEventListener('input', function(){ recalcItemRow(row); });
+      el.addEventListener('change', function(){ recalcItemRow(row); });
+    });
+  }
+
+  function bindItemsEvents() {
+    var box = $('pr-items');
+    if (!box) return;
+    box.querySelectorAll('.item-row').forEach(bindRowEvents);
+    var add = $('add-row');
+    if (add) add.onclick = function() {
+      var newRow = createItemRow();
+      box.appendChild(newRow);
+      bindRowEvents(newRow);
+    }
+    var suggestions = $('quick-suggestions');
+    if (!suggestions) return;
+    suggestions.innerHTML = '';
+    var PRESETS = ['Cones','Whistle','Basketball','Soccer ball','Jump ropes','Pinnies','First aid kit','Stopwatch'];
+    PRESETS.forEach(function(label){
+      var btn = document.createElement('button');
+      btn.className = 'btn-secondary';
+      btn.textContent = label;
+      btn.style.cssText = 'background:transparent;color:#e5e7eb;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 10px;font-size:12px;text-transform:none;';
+      btn.onclick = function(){
+        var first = box.querySelector('.item-row');
+        if (!first) return;
+        first.querySelector('.item-desc').value = label;
+      };
+      suggestions.appendChild(btn);
+    });
+  }
+
   function buildStep() {
     var steps = STEPS[STATE.type] || [];
     var s = steps[STATE.step];
@@ -339,8 +401,10 @@
     box.id = s.container;
 
     if (s.items) {
+      var placeholder = 'type a line, add an item';
       box.className = 'items';
-      box.innerHTML = '<div class="item-row" style="display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;"><input placeholder="Item" class="item-desc" /><input type="number" step="0.01" placeholder="Price" class="item-price" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="1" /><input type="number" step="0.01" placeholder="Total" class="item-total" /></div>';
+      box.innerHTML = '<div class="item-row" style="display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;"><input placeholder="Item + price" class="item-desc"/><input type="number" step="0.01" class="item-price" placeholder="$"/><input type="number" step="0.01" class="item-qty" value="1"/><input type="number" step="0.01" class="item-total" placeholder="total"/></div><button class="btn btn-secondary" id="quick-add" style="margin-top:8px">Quick Add</button><div id="quick-suggestions" style="margin-top:6px;display:flex;flex-wrap:wrap;gap:8px"></div><button class="btn btn-secondary" id="add-row" style="margin-top:10px">+ Add row</button>';
+      setTimeout(bindItemsEvents, 0);
     } else if (s.fields) {
       box.className = 'fields';
       s.fields.forEach(function (def) {
