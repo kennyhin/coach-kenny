@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Receipt → PDF Filler</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Receipt → PDF</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -15,47 +15,66 @@
     background: #0B0B0B;
     color: #e5e7eb;
     min-height: 100vh;
-    padding-bottom: 40px;
   }
   .header {
     background: rgba(11,11,11,0.95);
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 24px 32px;
+    padding: 20px 24px;
     position: sticky; top: 0; z-index: 50;
     backdrop-filter: blur(12px);
   }
-  .inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 24px; }
-  .logo {
+  .header-inner {
+    max-width: 640px; margin: 0 auto;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .brand {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.4rem; font-weight: 800;
+    font-size: 1.2rem; font-weight: 800;
     color: #fff; text-decoration: none;
   }
-  .logo span { color: #8CC63F; }
-  .title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1rem; font-weight: 700;
-    color: #8CC63F; text-transform: uppercase;
-    letter-spacing: 0.1em; flex: 1; text-align: center;
+  .brand span { color: #8CC63F; }
+  .step-badge {
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: #8CC63F;
+    background: rgba(140,198,63,0.08);
+    padding: 6px 10px; border-radius: 999px;
   }
-  main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
-  .panel {
+  main {
+    max-width: 640px; margin: 0 auto; padding: 20px 20px 40px;
+  }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .cards {
+    display: grid; gap: 14px;
+  }
+  .card {
     background: #16191f;
-    border: 1px solid rgba(140,198,63,0.15);
+    border: 1px solid rgba(140,198,63,0.18);
     border-radius: 16px;
-    padding: 24px;
+    padding: 22px;
+    cursor: pointer;
+    transition: transform .18s, border-color .18s, box-shadow .18s;
   }
-  .panel-head {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 14px;
+  .card:active { transform: scale(.99); }
+  .card:hover, .card.focus {
+    border-color: #8CC63F;
+    box-shadow: 0 10px 24px rgba(140,198,63,0.12);
   }
-  .panel-icon { font-size: 28px; }
-  .panel-title {
+  .card-icon { font-size: 30px; margin-bottom: 8px; }
+  .card-title {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 22px; font-weight: 900;
     text-transform: uppercase; color: #fff;
   }
-  .field { margin-bottom: 12px; }
+  .card-desc {
+    margin-top: 6px;
+    font-size: 13px; color: #9ca3af; line-height: 1.4;
+  }
+
+  .field { margin-bottom: 14px; }
   .label {
     display: block;
     font-size: 12px; font-weight: 700;
@@ -67,300 +86,405 @@
     background: #0B0B0B;
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 10px;
-    padding: 12px 14px;
-    color: #fff; font-family: inherit; font-size: 14px;
+    padding: 14px 14px;
+    color: #fff; font-family: inherit; font-size: 16px;
     outline: none;
-    transition: border-color 0.15s;
   }
   input:focus, textarea:focus, select:focus { border-color: #8CC63F; }
-  textarea { min-height: 80px; resize: vertical; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
-  .drop {
-    border: 1px dashed rgba(255,255,255,0.15);
-    border-radius: 14px;
-    padding: 24px 16px;
-    text-align: center;
-    color: #9ca3af;
-    background: rgba(11,11,11,0.4);
-    cursor: pointer;
-    transition: all 0.15s;
+  textarea { min-height: 90px; resize: vertical; }
+
+  .actions {
+    position: sticky; bottom: 16px;
+    display: flex; gap: 10px; margin-top: 18px;
   }
-  .drop:hover { border-color: #8CC63F; color: #8CC63F; }
-  .drop input { display: none; }
-  .actions { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
   .btn {
+    flex: 1;
     background: #8CC63F; color: #0B0B0B;
-    border: none; border-radius: 10px;
-    padding: 12px 16px;
+    border: none; border-radius: 12px;
+    padding: 14px 12px;
     font-family: 'Barlow Condensed', sans-serif;
     font-weight: 800; font-size: 16px;
     text-transform: uppercase;
     cursor: pointer;
-    transition: transform 0.15s, background 0.15s;
   }
-  .btn:hover { background: #9CD85A; transform: translateY(-1px); }
+  .btn:active { transform: translateY(1px); }
   .btn-secondary {
     background: transparent;
     color: #e5e7eb;
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.14);
   }
-  .btn-secondary:hover { border-color: #8CC63F; color: #8CC63F; background: transparent; }
-  .preview {
-    margin-top: 10px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #0B0B0B;
-    border: 1px solid rgba(255,255,255,0.08);
+  .hint {
+    margin-top: 8px;
+    font-size: 12px; color: #9ca3af; line-height: 1.35;
   }
-  .preview img { width: 100%; display: block; }
-  .status { margin-top: 10px; font-size: 13px; color: #9ca3af; font-family: 'Space Mono', monospace; }
-  .hint { font-size: 12px; color: #9ca3af; margin-top: 6px; }
-  .items { display: flex; flex-direction: column; gap: 10px; }
-  .item-row {
-    display: grid;
-    grid-template-columns: 1fr 100px 80px 60px;
-    gap: 10px;
-    align-items: center;
+
+  .snap {
+    border: 1px dashed rgba(255,255,255,0.18);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    color: #9ca3af;
+    cursor: pointer;
   }
-  @media (max-width: 640px) { .item-row { grid-template-columns: 1fr; } }
+  .snap input { display: none; }
+  .snap:active { border-color: #8CC63F; color: #8CC63F; }
+
+  .inputs { display: grid; gap: 14px; }
+
+  @media (max-width: 420px) {
+    .header { padding: 18px 18px; }
+    main { padding: 16px 14px 40px; }
+  }
 </style>
 </head>
 <body>
 <header class="header">
-  <div class="inner">
-    <a class="logo" href="#">📝 <span>Receipt</span> Filler</a>
-    <div class="title">Manual Fill + OCR Assist</div>
+  <div class="header-inner">
+    <a class="brand" href="#" onclick="show('choose'); return false;">📝 <span>Receipt</span> Filler</a>
+    <div class="step-badge" id="step-badge" style="display:none"></div>
   </div>
 </header>
 
 <main>
-  <div class="grid">
-    <section class="panel" id="form-purchase">
-      <div class="panel-head">
-        <div class="panel-icon">🛒</div>
-        <div class="panel-title">Purchase Request</div>
+  <div class="screen active" id="screen-choose">
+    <div class="cards">
+      <div class="card" onclick="start('purchase')">
+        <div class="card-icon">🛒</div>
+        <div class="card-title">Purchase Request</div>
+        <div class="card-desc">Request to buy something for a team or program.</div>
       </div>
+      <div class="card" onclick="start('reimbursement')">
+        <div class="card-icon">💵</div>
+        <div class="card-title">Reimbursement</div>
+        <div class="card-desc">Get paid back after you’ve already paid.</div>
+      </div>
+    </div>
+  </div>
 
+  <div class="screen" id="screen-receipt">
+    <div class="field">
+      <label class="label">Step 1 — Add receipt photo</label>
+      <label class="snap">
+        <input type="file" accept="image/*" capture="environment" onchange="onReceipt(this)" />
+        📷 Tap to take a photo
+      </label>
+      <p class="hint">Photo is optional. You can also continue without one and fill manually.</p>
+    </div>
+    <div id="preview-wrap" style="display:none; margin-top:10px; border-radius:12px; overflow:hidden; background:#0B0B0B; border:1px solid rgba(255,255,255,0.08);">
+      <img id="receipt-img" alt="receipt" style="width:100%; display:block;" />
+    </div>
+    <div class="actions">
+      <button class="btn" onclick="next('receipt','form')">Next</button>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-form">
+    <div id="step-area"></div>
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="stepBack()">Back</button>
+      <button class="btn" id="step-next" onclick="stepNext()">Next</button>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-download">
+    <div class="panel" style="background:#16191f; border:1px solid rgba(140,198,63,0.18); border-radius:16px; padding:22px;">
       <div class="field">
-        <label class="label">Snap or upload receipt</label>
-        <label class="drop">
-          <input type="file" accept="image/*" capture="environment" onchange="onReceipt(this, 'purchase')" />
-          📷 Tap to take a photo / upload
-        </label>
+        <div class="label">Ready</div>
+        <p class="hint">Your form is ready to download as PDF. Need another one? Start over.</p>
       </div>
-      <div class="preview" id="preview-purchase" style="display:none">
-        <img id="img-purchase" alt="receipt" />
-      </div>
-      <div class="status" id="status-purchase"></div>
-      <div class="hint">First, take a receipt photo for auto-fill. Then adjust values below.</div>
-
-      <div class="grid-2" style="margin-top:16px">
-        <div class="field">
-          <label class="label">Date Submitted</label>
-          <input type="date" id="pr-date" />
-        </div>
-        <div class="field">
-          <label class="label">Cost Center / Team</label>
-          <input type="text" id="pr-team" placeholder="e.g. Soccer, Kinder-UCKHANAN" />
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Requested By</label>
-        <input type="text" id="pr-name" placeholder="Kenny Ho" />
-      </div>
-
-      <div class="field">
-        <label class="label">Shipping Instructions</label>
-        <textarea id="pr-shipping" placeholder="Shipping address or notes — leave blank if not needed"></textarea>
-      </div>
-
-      <div class="field">
-        <label class="label">Items</label>
-        <div class="items" id="pr-items">
-          <div class="item-row">
-            <input placeholder="Item description" class="item-desc" />
-            <input type="number" step="0.01" placeholder="Unit price" class="item-price" />
-            <input type="number" step="0.01" placeholder="Qty" class="item-qty" value="1" />
-            <input type="number" step="0.01" placeholder="Line total" class="item-total" />
-          </div>
-        </div>
-        <button class="btn btn-secondary" style="margin-top:10px" onclick="addItem('pr-items')">+ Add item</button>
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label class="label">Subtotal</label>
-          <input type="number" step="0.01" id="pr-subtotal" placeholder="0.00" />
-        </div>
-        <div class="field">
-          <label class="label">Shipping</label>
-          <input type="number" step="0.01" id="pr-shipping-amt" placeholder="0.00" />
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Total</label>
-        <input type="number" step="0.01" id="pr-total" placeholder="0.00" />
-      </div>
-
       <div class="actions">
-        <button class="btn" onclick="generatePDF('purchase')">Download PDF</button>
-        <button class="btn btn-secondary" onclick="refill('purchase')">Refill from receipt</button>
+        <button class="btn" onclick="generatePDF()">Download PDF</button>
+        <button class="btn btn-secondary" onclick="resetAll()">New Form</button>
       </div>
-    </section>
-
-    <section class="panel" id="form-reimbursement">
-      <div class="panel-head">
-        <div class="panel-icon">💵</div>
-        <div class="panel-title">Reimbursement</div>
-      </div>
-
-      <div class="field">
-        <label class="label">Snap or upload receipt</label>
-        <label class="drop">
-          <input type="file" accept="image/*" capture="environment" onchange="onReceipt(this, 'reimbursement')" />
-          📷 Tap to take a photo / upload
-        </label>
-      </div>
-      <div class="preview" id="preview-reimbursement" style="display:none">
-        <img id="img-reimbursement" alt="receipt" />
-      </div>
-      <div class="status" id="status-reimbursement"></div>
-      <div class="hint">Photo is optional — fill manually below and download.</div>
-
-      <div class="grid-2" style="margin-top:16px">
-        <div class="field">
-          <label class="label">Employee Name</label>
-          <input type="text" id="rr-name" placeholder="Kenny Ho" />
-        </div>
-        <div class="field">
-          <label class="label">Date</label>
-          <input type="date" id="rr-date" />
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label class="label">Vendor / Store</label>
-          <input type="text" id="rr-vendor" placeholder="Store name" />
-        </div>
-        <div class="field">
-          <label class="label">Amount</label>
-          <input type="number" step="0.01" id="rr-amount" placeholder="0.00" />
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Purpose / Description</label>
-        <textarea id="rr-purpose" placeholder="What was this purchase for?"></textarea>
-      </div>
-
-      <div class="field">
-        <label class="label">Account / Cost Center</label>
-        <input type="text" id="rr-cost" placeholder="e.g. Soccer, Kinder-UCKHANAN" />
-      </div>
-
-      <div class="actions">
-        <button class="btn" onclick="generatePDF('reimbursement')">Download PDF</button>
-        <button class="btn btn-secondary" onclick="refill('reimbursement')">Refill from receipt</button>
-      </div>
-    </section>
+    </div>
   </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>
-function fillToday(id) {
-  const d = new Date().toISOString().split('T')[0];
-  const el = document.getElementById(id);
-  if (el) el.value = d;
-}
-fillToday('pr-date');
-fillToday('rr-date');
+const STATE = {
+  type: null,
+  step: 0,
+  preview: '',
+  values: {}
+};
 
-function onReceipt(input, type) {
+function show(id) {
+  document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const badge = document.getElementById('step-badge');
+  if (id === 'choose') { badge.style.display = 'none'; }
+}
+
+function start(type) {
+  STATE.type = type;
+  STATE.step = 0;
+  STATE.values = {};
+  show('receipt');
+  const badge = document.getElementById('step-badge');
+  badge.style.display = 'block';
+  badge.textContent = type === 'purchase' ? 'Purchase Request' : 'Reimbursement';
+}
+
+function onReceipt(input) {
   if (!input.files || !input.files[0]) return;
-  const id = type === 'purchase' ? 'preview-purchase' : 'preview-reimbursement';
-  const img = type === 'purchase' ? 'img-purchase' : 'img-reimbursement';
-  const status = type === 'purchase' ? 'status-purchase' : 'status-reimbursement';
-  document.getElementById(id).style.display = 'block';
-  document.getElementById(img).src = URL.createObjectURL(input.files[0]);
-  document.getElementById(status).textContent = 'Reading receipt…';
-  document.getElementById(status).style.color = '#8CC63F';
-  runOCR(type, input.files[0]);
+  STATE.preview = input.files[0];
+  const img = document.getElementById('receipt-img');
+  img.src = URL.createObjectURL(input.files[0]);
+  document.getElementById('preview-wrap').style.display = 'block';
+  runOCR(input.files[0]);
 }
 
-async function runOCR(type, file) {
-  const statusId = type === 'purchase' ? 'status-purchase' : 'status-reimbursement';
-  const status = document.getElementById(statusId);
+async function runOCR(file) {
+  const status = document.createElement('div');
+  status.className = 'hint';
+  status.textContent = 'Reading receipt…';
+  status.style.marginTop = '8px';
+  document.getElementById('receipt-img').after(status);
   try {
     const result = await Tesseract.recognize(file, 'eng', { logger: m => {
-      if (m.status === 'recognizing text') {
-        const pct = Math.round((m.progress || 0) * 100);
-        status.textContent = 'Reading receipt… ' + pct + '%';
-      } else {
-        status.textContent = m.status;
-      }
+      if (m.status === 'recognizing text') status.textContent = 'Reading receipt… ' + Math.round((m.progress||0)*100) + '%';
+      else status.textContent = m.status;
     }});
-    window.__ocr = window.__ocr || {};
-    window.__ocr[type] = result.data.text;
-    status.textContent = 'Receipt read ✔ — values updated where possible.';
-    parseAndFill(type);
-  } catch (err) {
-    status.textContent = 'OCR failed: ' + err.message;
-    status.style.color = '#E31837';
+    parseOCR(result.data.text);
+    status.textContent = 'Receipt read ✔';
+    status.style.color = '#8CC63F';
+  } catch (e) {
+    status.textContent = 'Could not read receipt — no problem, just fill below.';
+    status.style.color = '#9ca3af';
   }
 }
 
-function parseAndFill(type) {
-  const text = (window.__ocr && window.__ocr[type]) || '';
-  if (!text) return;
-  if (type === 'purchase') {
-    const m = text.match(/\d{2,4}[-\/]\d{1,2}[-\/]\d{1,2}/);
-    if (m) document.getElementById('pr-date').value = toISODate(m[0]);
+function parseOCR(text) {
+  const m = text.match(/\d{2,4}[-\/]\d{1,2}[-\/]\d{1,2}/);
+  if (m) STATE.values.date = toDate(m[0]);
+  if (STATE.type === 'purchase') {
     const nums = text.match(/(\d+\.\d{2})/g);
-    if (nums && nums.length) document.getElementById('pr-total').value = nums[nums.length - 1];
+    if (nums && nums.length) STATE.values.total = nums[nums.length - 1];
   } else {
-    const m = text.match(/\d{2,4}[-\/]\d{1,2}[-\/]\d{1,2}/);
-    if (m) document.getElementById('rr-date').value = toISODate(m[0]);
     const nums = text.match(/(\d+\.\d{2})/g);
-    if (nums && nums.length) document.getElementById('rr-amount').value = nums[nums.length - 1];
+    if (nums && nums.length) STATE.values.amount = nums[nums.length - 1];
     const lines = text.split(/\n/).filter(l => /[A-Z]/.test(l) && l.trim().length > 3);
-    if (lines[0]) document.getElementById('rr-vendor').value = lines[0].trim();
+    if (lines[0]) STATE.values.vendor = lines[0].trim();
   }
 }
 
-function refill(type) {
-  const img = type === 'purchase' ? 'img-purchase' : 'img-reimbursement';
-  const el = document.getElementById(img);
-  if (!el || !el.src) { alert('Take or upload a receipt photo first.'); return; }
-  parseAndFill(type);
-}
-
-function toISODate(str) {
+function toDate(str) {
   try {
     const d = new Date(str);
     return isNaN(d) ? '' : d.toISOString().split('T')[0];
   } catch (e) { return ''; }
 }
 
-function addItem(containerId) {
-  const c = document.getElementById(containerId);
+function saveFromInputs(ids) {
+  ids.forEach(id => { STATE.values[id] = (document.getElementById(id) || {}).value || ''; });
+}
+function loadIntoInputs(ids) {
+  ids.forEach(id => { const el = document.getElementById(id); if (el && STATE.values[id] !== undefined) el.value = STATE.values[id] || ''; });
+}
+
+const PURCHASE_STEPS = [
+  {
+    title: 'Step 2 — Basic info',
+    inputs: [
+      { id: 'pr-date', label: 'Date Submitted', type: 'date' },
+      { id: 'pr-name', label: 'Requested By', placeholder: 'Kenny Ho' },
+      { id: 'pr-team', label: 'Cost Center / Team', placeholder: 'e.g. Soccer, Kinder' }
+    ],
+    save: ['pr-date','pr-name','pr-team']
+  },
+  {
+    title: 'Step 3 — Items',
+    inputs: () => itemInputsHTML('pr-items'),
+    save: () => collectItems('pr-items'),
+    render: () => renderItems('pr-items')
+  },
+  {
+    title: 'Step 4 — Totals',
+    inputs: [
+      { id: 'pr-subtotal', label: 'Subtotal', type: 'number', step: '0.01' },
+      { id: 'pr-shipping-amt', label: 'Shipping', type: 'number', step: '0.01' },
+      { id: 'pr-total', label: 'Total', type: 'number', step: '0.01' }
+    ],
+    save: ['pr-subtotal','pr-shipping-amt','pr-total']
+  },
+  {
+    title: 'Step 5 — Shipping',
+    inputs: [
+      { id: 'pr-shipping', label: 'Shipping Instructions', type: 'textarea', placeholder: 'Address or notes — optional' }
+    ],
+    save: ['pr-shipping']
+  }
+];
+const REIMBURSEMENT_STEPS = [
+  {
+    title: 'Step 2 — Basic info',
+    inputs: [
+      { id: 'rr-name', label: 'Employee Name', placeholder: 'Kenny Ho' },
+      { id: 'rr-date', label: 'Date', type: 'date' },
+      { id: 'rr-vendor', label: 'Vendor / Store', placeholder: 'Store name' }
+    ],
+    save: ['rr-name','rr-date','rr-vendor']
+  },
+  {
+    title: 'Step 3 — Details',
+    inputs: [
+      { id: 'rr-amount', label: 'Amount', type: 'number', step: '0.01' },
+      { id: 'rr-purpose', label: 'Purpose / Description', type: 'textarea', placeholder: 'What was this purchase for?' }
+    ],
+    save: ['rr-amount','rr-purpose']
+  },
+  {
+    title: 'Step 4 — Account',
+    inputs: [
+      { id: 'rr-cost', label: 'Account / Cost Center', placeholder: 'e.g. Soccer, Kinder' }
+    ],
+    save: ['rr-cost']
+  }
+];
+
+function itemInputsHTML(containerId) {
   const row = document.createElement('div');
   row.className = 'item-row';
-  row.innerHTML = '<input placeholder="Item description" class="item-desc" /><input type="number" step="0.01" placeholder="Unit price" class="item-price" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="1" /><input type="number" step="0.01" placeholder="Line total" class="item-total" />';
-  c.appendChild(row);
+  row.style.cssText = 'display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;';
+  row.innerHTML = '<input placeholder="Item" class="item-desc" /><input type="number" step="0.01" placeholder="Price" class="item-price" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="1" /><input type="number" step="0.01" placeholder="Total" class="item-total" />';
+  return [row];
+}
+function collectItems(containerId) {
+  const rows = [];
+  const c = document.getElementById(containerId);
+  if (!c) return rows;
+  c.querySelectorAll('.item-row').forEach(r => {
+    rows.push({
+      desc: (r.querySelector('.item-desc') || {}).value || '',
+      price: (r.querySelector('.item-price') || {}).value || '',
+      qty: (r.querySelector('.item-qty') || {}).value || '',
+      total: (r.querySelector('.item-total') || {}).value || ''
+    });
+  });
+  STATE.values[containerId] = rows;
+}
+function renderItems(containerId) {
+  const c = document.getElementById(containerId);
+  if (!c) return;
+  (STATE.values[containerId] || []).forEach(r => {
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.style.cssText = 'display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;';
+    row.innerHTML = '<input placeholder="Item" class="item-desc" value="' + (r.desc||'').replace(/"/g,'&quot;') + '" /><input type="number" step="0.01" placeholder="Price" class="item-price" value="' + (r.price||'') + '" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="' + (r.qty||'1') + '" /><input type="number" step="0.01" placeholder="Total" class="item-total" value="' + (r.total||'') + '" />';
+    c.appendChild(row);
+  });
+}
+
+function next(from, to) {
+  if (from === 'receipt') { saveFromInputs([]); }
+  show(to);
+  showStep();
+}
+function stepBack() {
+  STATE.step = Math.max(0, STATE.step - 1);
+  showStep();
+}
+function stepNext() {
+  saveCurrentStep();
+  const steps = STATE.type === 'purchase' ? PURCHASE_STEPS : REIMBURSEMENT_STEPS;
+  STATE.step += 1;
+  if (STATE.step >= steps.length) {
+    show('download');
+    return;
+  }
+  showStep();
+}
+
+function saveCurrentStep() {
+  const steps = STATE.type === 'purchase' ? PURCHASE_STEPS : REIMBURSEMENT_STEPS;
+  const s = steps[STATE.step];
+  if (!s) return;
+  if (typeof s.save === 'function') s.save();
+  else s.save.forEach(id => { STATE.values[id] = (document.getElementById(id)||{}).value || ''; });
+}
+function renderCurrentStep() {
+  const steps = STATE.type === 'purchase' ? PURCHASE_STEPS : REIMBURSEMENT_STEPS;
+  const s = steps[STATE.step];
+  if (!s) return;
+  const area = document.getElementById('step-area');
+  area.innerHTML = '';
+  const title = document.createElement('div');
+  title.className = 'label';
+  title.style.marginBottom = '10px';
+  title.textContent = s.title;
+  area.appendChild(title);
+
+  const inputs = typeof s.inputs === 'function' ? s.inputs() : s.inputs;
+  const wrap = document.createElement('div');
+  wrap.className = 'inputs';
+  inputs.forEach(def => {
+    const f = document.createElement('div');
+    f.className = 'field';
+    const lbl = document.createElement('label');
+    lbl.className = 'label';
+    lbl.textContent = def.label;
+    f.appendChild(lbl);
+    let el;
+    if (def.type === 'textarea') {
+      el = document.createElement('textarea');
+      el.placeholder = def.placeholder || '';
+    } else {
+      el = document.createElement('input');
+      el.type = def.type || 'text';
+      if (def.placeholder) el.placeholder = def.placeholder;
+      if (def.step) el.step = def.step;
+    }
+    el.id = def.id;
+    if (STATE.values[def.id] !== undefined) el.value = STATE.values[def.id] || '';
+    f.appendChild(el);
+    wrap.appendChild(f);
+  });
+  area.appendChild(wrap);
+
+  if (typeof s.render === 'function') s.render();
+  updateStepBadge();
+}
+function updateStepBadge() {
+  const steps = STATE.type === 'purchase' ? PURCHASE_STEPS : REIMBURSEMENT_STEPS;
+  const badge = document.getElementById('step-badge');
+  badge.textContent = (STATE.step + 1) + '/' + steps.length;
+}
+
+function showStep() {
+  show('form');
+  renderCurrentStep();
+}
+
+function resetAll() {
+  STATE.type = null;
+  STATE.step = 0;
+  STATE.values = {};
+  STATE.preview = '';
+  document.getElementById('preview-wrap').style.display = 'none';
+  document.getElementById('receipt-img').src = '';
+  show('choose');
+  document.getElementById('step-badge').style.display = 'none';
 }
 
 function fieldText(id) {
-  const el = document.getElementById(id);
-  return el ? (el.value || '').trim() : '';
+  return ((document.getElementById(id) || {}).value || '').trim();
+}
+function collectCurrentItems() {
+  const c = document.getElementById('pr-items');
+  const rows = [];
+  c.querySelectorAll('.item-row').forEach(r => {
+    rows.push({
+      desc: (r.querySelector('.item-desc') || {}).value || '',
+      price: (r.querySelector('.item-price') || {}).value || '',
+      qty: (r.querySelector('.item-qty') || {}).value || '1',
+      total: (r.querySelector('.item-total') || {}).value || ''
+    });
+  });
+  STATE.values['pr-items'] = rows;
 }
 
-function generatePDF(type) {
+async function generatePDF() {
   try {
     const { PDFDocument, rgb, StandardFonts } = PDFLib;
     const doc = PDFDocument.create();
@@ -369,8 +493,7 @@ function generatePDF(type) {
     let y = 720;
     const black = rgb(0.11, 0.11, 0.11);
     const green = rgb(0.545, 0.776, 0.247);
-
-    page.drawText(type === 'purchase' ? 'PURCHASE REQUEST' : 'REIMBURSEMENT REQUEST', { x: 72, y, size: 18, font, color: black });
+    page.drawText(STATE.type === 'purchase' ? 'PURCHASE REQUEST' : 'REIMBURSEMENT REQUEST', { x: 72, y, size: 18, font, color: green });
     y -= 42;
 
     function field(label, value) {
@@ -382,39 +505,49 @@ function generatePDF(type) {
       y -= 22;
     }
 
-    if (type === 'purchase') {
-      field('Date Submitted', fieldText('pr-date'));
-      field('Name', fieldText('pr-name'));
-      field('Team / Cost Center', fieldText('pr-team'));
-      field('Shipping', fieldText('pr-shipping'));
-      field('Subtotal', fieldText('pr-subtotal'));
-      field('Shipping', fieldText('pr-shipping-amt'));
-      field('Total', fieldText('pr-total'));
+    if (STATE.type === 'purchase') {
+      field('Date Submitted', STATE.values['pr-date']);
+      field('Requested By', STATE.values['pr-name']);
+      field('Team / Cost Center', STATE.values['pr-team']);
+      field('Subtotal', STATE.values['pr-subtotal']);
+      field('Shipping', STATE.values['pr-shipping-amt']);
+      field('Total', STATE.values['pr-total']);
+      field('Shipping Instructions', STATE.values['pr-shipping']);
+      const rows = STATE.values['pr-items'] || [];
+      if (rows.length) {
+        y -= 10;
+        if (y < 120) { doc.addPage(); y = 720; }
+        page.drawText('ITEMS', { x: 72, y, size: 12, font, color: green });
+        y -= 24;
+        rows.forEach(r => {
+          if (y < 90) { doc.addPage(); y = 720; }
+          const line = [r.desc, '$' + (r.price||'0'), 'x' + (r.qty||'1'), '$' + (r.total||'0')].join('   |   ');
+          page.drawText(line, { x: 72, y, size: 11, font, color: black });
+          y -= 20;
+        });
+      }
     } else {
-      field('Employee Name', fieldText('rr-name'));
-      field('Date', fieldText('rr-date'));
-      field('Vendor / Store', fieldText('rr-vendor'));
-      field('Amount', fieldText('rr-amount'));
-      field('Purpose', fieldText('rr-purpose'));
-      field('Account', fieldText('rr-cost'));
+      field('Employee Name', STATE.values['rr-name']);
+      field('Date', STATE.values['rr-date']);
+      field('Vendor / Store', STATE.values['rr-vendor']);
+      field('Amount', STATE.values['rr-amount']);
+      field('Purpose', STATE.values['rr-purpose']);
+      field('Account', STATE.values['rr-cost']);
     }
 
     const bytes = await doc.save();
     const blob = new Blob([bytes], { type: 'application/pdf' });
-    downloadBlob(blob, (type === 'purchase' ? 'purchase-request' : 'reimbursement') + '.pdf');
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = (STATE.type === 'purchase' ? 'purchase-request' : 'reimbursement') + '.pdf';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    show('download');
   } catch (err) {
     alert('PDF generation failed: ' + err.message);
     console.error(err);
   }
-}
-
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 </script>
 </body>
