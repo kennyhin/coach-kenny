@@ -458,7 +458,7 @@
       var PDFDocument = PDFLib.PDFDocument;
       var StandardFonts = PDFLib.StandardFonts;
       var rgb = PDFLib.rgb;
-      var doc = PDFDocument.create();
+      var doc = await PDFDocument.create();
       var font = await doc.embedFont(StandardFonts.Helvetica);
       var page = doc.addPage([612, 792]);
       var y = 720;
