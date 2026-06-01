@@ -70,7 +70,6 @@
     margin-top: 6px;
     font-size: 13px; color: #9ca3af; line-height: 1.4;
   }
-
   .panel {
     background: #16191f;
     border: 1px solid rgba(140,198,63,0.18);
@@ -103,7 +102,6 @@
   textarea { min-height: 90px; resize: vertical; }
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media (max-width: 520px) { .grid-2 { grid-template-columns: 1fr; } }
-
   .actions {
     margin-top: 18px;
     display: flex; gap: 10px;
@@ -151,7 +149,7 @@
     font-size: 13px;
     color: #8CC63F;
   }
-  .items { display: flex; flex-direction: column; gap: 10px; }
+  .items { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
   .item-row {
     display: grid;
     grid-template-columns: 1fr 90px 70px 60px;
@@ -189,21 +187,21 @@
       <div class="panel-title">Receipt</div>
 
       <div class="field">
-        <label class="label">Option A — Snap receipt</label>
+        <label class="label">Take a photo</label>
         <label class="snap">
-          <input type="file" accept="image/*" capture="environment" onchange="onReceipt(this)" />
-          📷 Take photo / choose file
+          <input type="file" accept="image/*" capture="environment" onchange="onPhoto(this)" />
+          📷 Tap to open camera
         </label>
+        <p class="hint">Optional. Preview only — does not slow you down.</p>
       </div>
 
       <div id="preview-wrap" style="display:none" class="preview">
         <img id="receipt-img" alt="receipt" />
       </div>
-      <div id="ocr-status"></div>
 
       <div class="field" style="margin-top:14px">
-        <label class="label">Option B — Skip receipt</label>
-        <p class="hint">Not needed. You can fill every field manually and skip OCR.</p>
+        <label class="label">No receipt?</label>
+        <p class="hint">No problem. Skip this and type everything in the next steps.</p>
       </div>
 
       <div class="actions">
@@ -225,7 +223,7 @@
   <div class="screen" id="screen-download">
     <div class="panel">
       <div class="panel-title">Ready</div>
-      <p class="hint">Your form is ready. Download the PDF, then start another one.</p>
+      <p class="hint">Everything is filled. Download the PDF, then start another one.</p>
       <div class="actions">
         <button class="btn" onclick="generatePDF()">Download PDF</button>
         <button class="btn btn-secondary" onclick="resetAll()">New Form</button>
@@ -234,7 +232,6 @@
   </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>
 const STATE = { type: null, step: 0, values: {} };
@@ -253,83 +250,15 @@ function start(type) {
   STATE.values = {};
   document.getElementById('preview-wrap').style.display = 'none';
   document.getElementById('receipt-img').src = '';
-  document.getElementById('ocr-status').innerHTML = '';
   show('receipt');
   document.getElementById('badge').textContent = type === 'purchase' ? 'Purchase Request' : 'Reimbursement';
 }
 
-function onReceipt(input) {
+function onPhoto(input) {
   if (!input.files || !input.files[0]) return;
   document.getElementById('preview-wrap').style.display = 'block';
   document.getElementById('receipt-img').src = URL.createObjectURL(input.files[0]);
-  readReceipt(input.files[0]);
 }
-
-async function readReceipt(file) {
-  const box = document.getElementById('ocr-status');
-  box.innerHTML = '<div class="hint">Reading receipt…</div>';
-  try {
-    if (typeof Tesseract === 'undefined') throw new Error('Tesseract not loaded');
-    const result = await Tesseract.recognize(file, 'eng', { logger: m => {
-      if (m.status === 'recognizing text') box.innerHTML = '<div class="hint">Reading receipt… ' + Math.round((m.progress||0)*100) + '%</div>';
-    }});
-    applyOCR(result.data.text);
-    box.innerHTML = '<div class="ok">Receipt read ✔</div>';
-  } catch (e) {
-    box.innerHTML = '<div class="hint">Could not auto-read receipt — no problem, just fill below manually.</div>';
-  }
-}
-
-function applyOCR(text) {
-  const m = text.match(/\d{2,4}[-\/]\d{1,2}[-\/]\d{1,2}/);
-  if (m) STATE.values.date = toDate(m[0]);
-  if (STATE.type === 'purchase') {
-    const nums = text.match(/(\d+\.\d{2})/g);
-    if (nums && nums.length) STATE.values.total = nums[nums.length - 1];
-  } else {
-    const nums = text.match(/(\d+\.\d{2})/g);
-    if (nums && nums.length) STATE.values.amount = nums[nums.length - 1];
-    const lines = text.split(/\n/).filter(l => /[A-Z]/.test(l) && l.trim().length > 3);
-    if (lines[0]) STATE.values.vendor = lines[0].trim();
-  }
-}
-
-function toDate(str) {
-  try { const d = new Date(str); return isNaN(d) ? '' : d.toISOString().split('T')[0]; } catch (e) { return ''; }
-}
-
-const STEPS = {
-  purchase: [
-    { title: 'Basic info', inputs: [
-      { id: 'pr-date', label: 'Date Submitted', type: 'date' },
-      { id: 'pr-name', label: 'Requested By', placeholder: 'Kenny Ho' },
-      { id: 'pr-team', label: 'Cost Center / Team', placeholder: 'e.g. Soccer, Kinder' }
-    ], save: ['pr-date','pr-name','pr-team'] },
-    { title: 'Items', inputs: () => itemRows('pr-items'), save: () => collectItems('pr-items'), render: () => restoreItems('pr-items') },
-    { title: 'Totals', inputs: [
-      { id: 'pr-subtotal', label: 'Subtotal', type: 'number', step: '0.01' },
-      { id: 'pr-shipping-amt', label: 'Shipping', type: 'number', step: '0.01' },
-      { id: 'pr-total', label: 'Total', type: 'number', step: '0.01' }
-    ], save: ['pr-subtotal','pr-shipping-amt','pr-total'] },
-    { title: 'Shipping', inputs: [
-      { id: 'pr-shipping', label: 'Shipping Instructions', type: 'textarea', placeholder: 'Address or notes — optional' }
-    ], save: ['pr-shipping'] }
-  ],
-  reimbursement: [
-    { title: 'Basic info', inputs: [
-      { id: 'rr-name', label: 'Employee Name', placeholder: 'Kenny Ho' },
-      { id: 'rr-date', label: 'Date', type: 'date' },
-      { id: 'rr-vendor', label: 'Vendor / Store', placeholder: 'Store name' }
-    ], save: ['rr-name','rr-date','rr-vendor'] },
-    { title: 'Details', inputs: [
-      { id: 'rr-amount', label: 'Amount', type: 'number', step: '0.01' },
-      { id: 'rr-purpose', label: 'Purpose', type: 'textarea', placeholder: 'What was this purchase for?' }
-    ], save: ['rr-amount','rr-purpose'] },
-    { title: 'Account', inputs: [
-      { id: 'rr-cost', label: 'Account / Cost Center', placeholder: 'e.g. Soccer, Kinder' }
-    ], save: ['rr-cost'] }
-  ]
-};
 
 function next(from, to) {
   show(to);
@@ -344,88 +273,122 @@ function stepNext() {
   buildStep();
 }
 
-function saveStep() {
-  const steps = STEPS[STATE.type] || [];
-  const s = steps[STATE.step];
-  if (!s) return;
-  if (typeof s.save === 'function') s.save();
-  else (s.save || []).forEach(id => { STATE.values[id] = (document.getElementById(id)||{}).value || ''; });
+function saveInputs(root) {
+  if (!root) return;
+  root.querySelectorAll('input, textarea').forEach(el => {
+    if (el.id) STATE.values[el.id] = (el.value || '').trim();
+  });
 }
+
+function fillInputs(root) {
+  if (!root) return;
+  Object.keys(STATE.values).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = STATE.values[id] || '';
+  });
+}
+
+const STEPS = {
+  purchase: [
+    { title: 'Basic info', container: 'pr-basic', fields: [
+      { id: 'pr-date', label: 'Date Submitted', type: 'date' },
+      { id: 'pr-name', label: 'Requested By', placeholder: 'Kenny Ho' },
+      { id: 'pr-team', label: 'Cost Center / Team', placeholder: 'e.g. Soccer, Kinder' }
+    ]},
+    { title: 'Items', container: 'pr-items', items: true },
+    { title: 'Totals', container: 'pr-totals', fields: [
+      { id: 'pr-subtotal', label: 'Subtotal', type: 'number', step: '0.01' },
+      { id: 'pr-shipping-amt', label: 'Shipping', type: 'number', step: '0.01' },
+      { id: 'pr-total', label: 'Total', type: 'number', step: '0.01' }
+    ]},
+    { title: 'Shipping', container: 'pr-shipping', fields: [
+      { id: 'pr-shipping', label: 'Shipping Instructions', type: 'textarea', placeholder: 'Optional — address or notes' }
+    ]}
+  ],
+  reimbursement: [
+    { title: 'Basic info', container: 'rr-basic', fields: [
+      { id: 'rr-name', label: 'Employee Name', placeholder: 'Kenny Ho' },
+      { id: 'rr-date', label: 'Date', type: 'date' },
+      { id: 'rr-vendor', label: 'Vendor / Store', placeholder: 'Store name' }
+    ]},
+    { title: 'Details', container: 'rr-details', fields: [
+      { id: 'rr-amount', label: 'Amount', type: 'number', step: '0.01' },
+      { id: 'rr-purpose', label: 'Purpose / Description', type: 'textarea', placeholder: 'What was this purchase for?' }
+    ]},
+    { title: 'Account', container: 'rr-account', fields: [
+      { id: 'rr-cost', label: 'Account / Cost Center', placeholder: 'e.g. Soccer, Kinder' }
+    ]}
+  ]
+};
 
 function buildStep() {
   const steps = STEPS[STATE.type] || [];
   const s = steps[STATE.step];
+  if (!s) return;
   const area = document.getElementById('step-area');
   area.innerHTML = '';
+
   const title = document.createElement('div');
   title.className = 'panel-title';
   title.textContent = s.title;
   area.appendChild(title);
 
-  const inputs = typeof s.inputs === 'function' ? s.inputs() : s.inputs;
-  const wrap = document.createElement('div');
-  inputs.forEach(def => {
-    const f = document.createElement('div');
-    f.className = 'field';
-    const lbl = document.createElement('label');
-    lbl.className = 'label';
-    lbl.textContent = def.label;
-    f.appendChild(lbl);
-    const el = def.type === 'textarea' ? document.createElement('textarea') : document.createElement('input');
-    if (!def.type) el.type = 'text';
-    if (def.type) el.type = def.type;
-    if (def.placeholder) el.placeholder = def.placeholder;
-    if (def.step) el.step = def.step;
-    el.id = def.id;
-    if (STATE.values[def.id] !== undefined) el.value = STATE.values[def.id] || '';
-    f.appendChild(el);
-    wrap.appendChild(f);
-  });
-  area.appendChild(wrap);
-  if (typeof s.render === 'function') s.render();
+  const box = document.createElement('div');
+  box.id = s.container;
+
+  if (s.items) {
+    box.className = 'items';
+    box.innerHTML = '<div class="item-row" style="display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;"><input placeholder="Item" class="item-desc" /><input type="number" step="0.01" placeholder="Price" class="item-price" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="1" /><input type="number" step="0.01" placeholder="Total" class="item-total" /></div>';
+  } else if (s.fields) {
+    box.className = 'fields';
+    s.fields.forEach(def => {
+      const f = document.createElement('div');
+      f.className = 'field';
+      const lbl = document.createElement('label');
+      lbl.className = 'label';
+      lbl.textContent = def.label;
+      f.appendChild(lbl);
+      const el = document.createElement(def.type === 'textarea' ? 'textarea' : 'input');
+      if (!def.type || def.type === 'text') el.type = 'text';
+      else el.type = def.type;
+      if (def.placeholder) el.placeholder = def.placeholder;
+      if (def.step) el.step = def.step;
+      el.id = def.id;
+      if (STATE.values[def.id]) el.value = STATE.values[def.id];
+      f.appendChild(el);
+      box.appendChild(f);
+    });
+  }
+
+  area.appendChild(box);
   updateBadge(steps.length);
+}
+
+function saveStep() {
+  const steps = STEPS[STATE.type] || [];
+  const s = steps[STATE.step];
+  if (!s) return;
+  const root = document.getElementById(s.container);
+  if (s.items) {
+    const rows = [];
+    (root || {}).querySelectorAll && root.querySelectorAll('.item-row').forEach(r => {
+      rows.push({
+        desc: (r.querySelector('.item-desc')||{}).value || '',
+        price: (r.querySelector('.item-price')||{}).value || '',
+        qty: (r.querySelector('.item-qty')||{}).value || '1',
+        total: (r.querySelector('.item-total')||{}).value || ''
+      });
+    });
+    STATE.values['items'] = rows;
+  } else {
+    saveInputs(root);
+  }
 }
 
 function updateBadge(total) {
   const b = document.getElementById('badge');
-  b.textContent = (STATE.step + 1) + '/' + total;
+  if (b) b.textContent = (STATE.step + 1) + '/' + total;
 }
-
-function itemRows(containerId) {
-  const row = document.createElement('div');
-  row.className = 'item-row';
-  row.style.cssText = 'display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;';
-  row.innerHTML = '<input placeholder="Item" class="item-desc" /><input type="number" step="0.01" placeholder="Price" class="item-price" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="1" /><input type="number" step="0.01" placeholder="Total" class="item-total" />';
-  return [row];
-}
-function collectItems(containerId) {
-  const rows = [];
-  const c = document.getElementById(containerId);
-  if (!c) return rows;
-  c.querySelectorAll('.item-row').forEach(r => {
-    rows.push({
-      desc: (r.querySelector('.item-desc')||{}).value || '',
-      price: (r.querySelector('.item-price')||{}).value || '',
-      qty: (r.querySelector('.item-qty')||{}).value || '1',
-      total: (r.querySelector('.item-total')||{}).value || ''
-    });
-  });
-  STATE.values[containerId] = rows;
-}
-function restoreItems(containerId) {
-  const box = document.getElementById(containerId);
-  if (!box) return;
-  (STATE.values[containerId] || []).forEach(r => {
-    const row = document.createElement('div');
-    row.className = 'item-row';
-    row.style.cssText = 'display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;';
-    const q = (v) => (v||'').replace(/"/g,'&quot;');
-    row.innerHTML = '<input placeholder="Item" class="item-desc" value="' + q(r.desc) + '" /><input type="number" step="0.01" placeholder="Price" class="item-price" value="' + q(r.price) + '" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="' + q(r.qty) + '" /><input type="number" step="0.01" placeholder="Total" class="item-total" value="' + q(r.total) + '" />';
-    box.appendChild(row);
-  });
-}
-
-function fieldText(id) { return ((document.getElementById(id)||{}).value||'').trim(); }
 
 function resetAll() {
   STATE.type = null;
@@ -433,10 +396,11 @@ function resetAll() {
   STATE.values = {};
   document.getElementById('preview-wrap').style.display = 'none';
   document.getElementById('receipt-img').src = '';
-  document.getElementById('ocr-status').innerHTML = '';
   show('choose');
   document.getElementById('badge').style.display = 'none';
 }
+
+function fieldText(id) { return ((document.getElementById(id)||{}).value||'').trim(); }
 
 async function generatePDF() {
   try {
@@ -468,7 +432,7 @@ async function generatePDF() {
       field('Shipping', STATE.values['pr-shipping-amt']);
       field('Total', STATE.values['pr-total']);
       field('Shipping Instructions', STATE.values['pr-shipping']);
-      const rows = STATE.values['pr-items'] || [];
+      const rows = STATE.values['items'] || [];
       if (rows.length) {
         y -= 10;
         if (y < 120) { doc.addPage(); y = 720; }
