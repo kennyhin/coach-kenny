@@ -24,191 +24,176 @@
     display: flex; align-items: center; gap: 12px;
   }
   .brand {
-    font-weight: 800;
-    font-size: 1.15rem;
-    color: #fff; text-decoration: none;
-    letter-spacing: -0.02em;
+    font-weight: 800; font-size: 1.15rem;
+    color: #fff; text-decoration: none; letter-spacing: -0.02em;
   }
   .brand span { color: #8CC63F; }
   .badge {
     margin-left: auto;
     font-family: ui-monospace, monospace;
     font-size: 11px; font-weight: 700;
-    color: #8CC63F;
-    background: rgba(140,198,63,0.08);
+    color: #8CC63F; background: rgba(140,198,63,0.08);
     padding: 5px 9px; border-radius: 999px;
     display: none;
   }
-  main {
-    max-width: 520px; margin: 0 auto; padding: 16px 16px 48px;
-  }
+  main { max-width: 520px; margin: 0 auto; padding: 16px 16px 64px; }
   .screen { display: none; }
   .screen-visible { display: block; }
   .cards { display: grid; gap: 14px; }
   .card {
     background: #16191f;
     border: 1px solid rgba(140,198,63,0.18);
-    border-radius: 16px;
-    padding: 22px;
-    cursor: pointer;
-    transition: transform .15s, border-color .15s, box-shadow .15s;
+    border-radius: 16px; padding: 22px; cursor: pointer;
+    transition: transform .15s, border-color .15s;
   }
   .card:active { transform: scale(.99); }
   .card-icon { font-size: 28px; margin-bottom: 8px; }
-  .card-title {
-    font-size: 22px; font-weight: 900;
-    text-transform: uppercase; color: #fff;
-    letter-spacing: 0.02em;
-  }
-  .card-desc {
-    margin-top: 6px;
-    font-size: 13px; color: #9ca3af; line-height: 1.4;
-  }
+  .card-title { font-size: 22px; font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: 0.02em; }
+  .card-desc { margin-top: 6px; font-size: 13px; color: #9ca3af; line-height: 1.4; }
   .panel {
     background: #16191f;
     border: 1px solid rgba(140,198,63,0.18);
-    border-radius: 16px;
-    padding: 22px;
+    border-radius: 16px; padding: 22px;
   }
-  .panel-title {
-    font-size: 22px; font-weight: 900;
-    text-transform: uppercase; color: #fff;
-    margin-bottom: 14px;
-    letter-spacing: 0.02em;
-  }
+  .panel-title { font-size: 22px; font-weight: 900; text-transform: uppercase; color: #fff; margin-bottom: 16px; letter-spacing: 0.02em; }
   .field { margin-bottom: 14px; }
   .label {
-    display: block;
-    font-size: 12px; font-weight: 700;
-    color: #8CC63F; text-transform: uppercase;
-    letter-spacing: 0.08em; margin-bottom: 6px;
+    display: block; font-size: 12px; font-weight: 700;
+    color: #8CC63F; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
   }
   input, textarea, select {
-    width: 100%;
-    background: #0B0B0B;
+    width: 100%; background: #0B0B0B;
     border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 14px;
+    border-radius: 10px; padding: 13px 14px;
     color: #fff; font-family: inherit; font-size: 16px;
-    outline: none;
-    -webkit-appearance: none;
+    outline: none; -webkit-appearance: none;
   }
-  input:focus, textarea:focus, select:focus { border-color: #8CC63F; }
-  textarea { min-height: 90px; resize: vertical; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 520px) { .grid-2 { grid-template-columns: 1fr; } }
-  .actions {
-    margin-top: 18px;
-    display: flex; gap: 10px;
-  }
+  input:focus, textarea:focus { border-color: #8CC63F; }
+  input[readonly] { opacity: 0.55; cursor: default; }
+  textarea { min-height: 80px; resize: vertical; }
+  .actions { margin-top: 18px; display: flex; gap: 10px; }
   .btn {
-    flex: 1;
-    background: #8CC63F; color: #0B0B0B;
-    border: none; border-radius: 12px;
-    padding: 14px;
-    font-weight: 800; font-size: 16px;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-family: inherit;
+    flex: 1; background: #8CC63F; color: #0B0B0B;
+    border: none; border-radius: 12px; padding: 14px;
+    font-weight: 800; font-size: 16px; text-transform: uppercase;
+    cursor: pointer; font-family: inherit;
   }
   .btn:active { transform: translateY(1px); }
   .btn-secondary {
-    background: transparent;
-    color: #e5e7eb;
+    background: transparent; color: #e5e7eb;
     border: 1px solid rgba(255,255,255,0.14);
   }
-  .hint {
-    font-size: 12px; color: #9ca3af; line-height: 1.4;
-    margin-top: 8px;
+  .hint { font-size: 12px; color: #9ca3af; line-height: 1.4; margin-top: 8px; }
+  .ok { margin-top: 8px; font-size: 13px; color: #8CC63F; }
+
+  /* Camera snap area */
+  .snap-area {
+    border: 2px dashed rgba(140,198,63,0.35);
+    border-radius: 16px; padding: 32px 20px;
+    text-align: center; cursor: pointer;
+    background: rgba(140,198,63,0.03);
+    transition: border-color .15s, background .15s;
+    display: block;
   }
-  .snap {
-    border: 1px dashed rgba(255,255,255,0.18);
-    border-radius: 14px;
-    padding: 20px;
-    text-align: center;
-    color: #9ca3af;
-    cursor: pointer;
-  }
-  .snap input { display: none; }
-  .snap:active { border-color: #8CC63F; color: #8CC63F; }
+  .snap-area:active { border-color: #8CC63F; background: rgba(140,198,63,0.08); }
+  .snap-area input[type="file"] { display: none; }
+  .snap-icon { font-size: 40px; display: block; margin-bottom: 10px; line-height: 1; }
+  .snap-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .snap-sub { font-size: 12px; color: #9ca3af; }
   .preview {
-    margin-top: 10px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #0B0B0B;
-    border: 1px solid rgba(255,255,255,0.08);
+    margin-top: 12px; border-radius: 12px; overflow: hidden;
+    background: #0B0B0B; border: 1px solid rgba(255,255,255,0.08);
   }
   .preview img { width: 100%; display: block; }
-  .ok { margin-top: 8px; font-size: 13px; color: #8CC63F; }
-  .items { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
-  .item-row {
-    display: grid;
-    grid-template-columns: 1fr 90px 70px 60px;
-    gap: 10px; align-items: center;
+
+  /* Items section */
+  .items-section { display: flex; flex-direction: column; gap: 6px; }
+  .item-headers {
+    display: grid; gap: 8px; padding: 0 2px; margin-bottom: 2px; margin-top: 2px;
   }
-  @media (max-width: 520px) { .item-row { grid-template-columns: 1fr; } }
-  .no-js-warning {
-    background: #f59e0b;
-    color: #000;
-    padding: 10px 14px;
+  .item-header-cell {
+    font-size: 10px; font-weight: 700; color: #8CC63F;
+    text-transform: uppercase; letter-spacing: 0.07em;
+  }
+  .item-row { display: grid; gap: 8px; align-items: center; }
+  .item-row input { padding: 11px 10px; font-size: 15px; }
+  .items-list { display: flex; flex-direction: column; gap: 8px; }
+  .add-row-btn {
+    margin-top: 6px; flex: none;
+    padding: 10px 16px; font-size: 14px;
     border-radius: 10px;
-    font-weight: 600;
-    margin-bottom: 14px;
-    display: none;
+  }
+
+  /* Totals summary */
+  .items-totals {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: 14px; padding-top: 12px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .totals-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .totals-label { font-size: 13px; color: #9ca3af; font-weight: 600; }
+  .totals-value { font-size: 15px; font-weight: 700; color: #fff; }
+  .totals-value.primary { color: #8CC63F; font-size: 17px; }
+  .totals-row input {
+    width: 100px; text-align: right; padding: 8px 10px; font-size: 15px;
+  }
+  .no-js-warning {
+    background: #f59e0b; color: #000;
+    padding: 10px 14px; border-radius: 10px;
+    font-weight: 600; margin-bottom: 14px; display: none;
   }
 </style>
 </head>
 <body>
 <noscript>
   <div style="max-width:520px;margin:24px auto;padding:16px;background:#f59e0b;color:#000;border-radius:12px;">
-    <strong>JavaScript is disabled.</strong> Please enable it to fill the form.
+    <strong>JavaScript is required.</strong> Please enable it to fill the form.
   </div>
 </noscript>
 <header class="header">
   <div class="header-inner">
-    <a class="brand" href="#" onclick="app && app.resetAll(); return false;">📝 <span>Receipt</span> Filler</a>
+    <a class="brand" href="#" onclick="app && app.resetAll(); return false;">&#x1F4DD; <span>Receipt</span> Filler</a>
     <div class="badge" id="badge"></div>
   </div>
 </header>
 
 <main>
-  <div id="js-status" class="no-js-warning" style="display:block">⚠️ App did not initialize.</div>
+  <div id="js-status" class="no-js-warning" style="display:block">&#x26A0;&#xFE0F; App did not initialize.</div>
 
   <div id="screen-choose" class="screen screen-visible">
     <div class="cards">
       <div class="card" onclick="app && app.start('purchase')">
-        <div class="card-icon">🛒</div>
+        <div class="card-icon">&#x1F6D2;</div>
         <div class="card-title">Purchase Request</div>
         <div class="card-desc">Request to buy something for a team or program.</div>
       </div>
       <div class="card" onclick="app && app.start('reimbursement')">
-        <div class="card-icon">💵</div>
+        <div class="card-icon">&#x1F4B5;</div>
         <div class="card-title">Reimbursement</div>
-        <div class="card-desc">Get paid back after you’ve already paid.</div>
+        <div class="card-desc">Get paid back after you've already paid.</div>
       </div>
     </div>
   </div>
 
   <div id="screen-receipt" class="screen">
     <div class="panel">
-      <div class="panel-title">Receipt</div>
+      <div class="panel-title">Receipt Photo</div>
       <div class="field">
-        <label class="label">Take a photo</label>
-        <label class="snap">
+        <label class="snap-area" id="snap-label">
           <input type="file" accept="image/*" capture="environment" onchange="app && app.onPhoto(this)" />
-          📷 Tap to open camera
+          <span class="snap-icon">&#x1F4F7;</span>
+          <div class="snap-title">Tap to take a photo</div>
+          <div class="snap-sub">Optional — for your reference</div>
         </label>
-        <p class="hint">Optional. Preview only — does not slow you down.</p>
       </div>
       <div id="preview-wrap" style="display:none" class="preview">
         <img id="receipt-img" alt="receipt" />
       </div>
-      <div class="field" style="margin-top:14px">
-        <label class="label">No receipt?</label>
-        <p class="hint">No problem. Skip this and type everything in the next steps.</p>
-      </div>
-      <div class="actions">
-        <button class="btn" onclick="app && app.next('receipt','form')">Next</button>
+      <div class="actions" style="margin-top:20px">
+        <button class="btn btn-secondary" onclick="app && app.resetAll()">Back</button>
+        <button class="btn" onclick="app && app.next()">Next</button>
       </div>
     </div>
   </div>
@@ -216,7 +201,7 @@
   <div id="screen-form" class="screen">
     <div class="panel">
       <div id="step-area"></div>
-      <div class="actions" style="margin-top:16px">
+      <div class="actions" style="margin-top:18px">
         <button class="btn btn-secondary" onclick="app && app.stepBack()">Back</button>
         <button class="btn" id="step-next" onclick="app && app.stepNext()">Next</button>
       </div>
@@ -226,14 +211,13 @@
   <div id="screen-download" class="screen">
     <div class="panel">
       <div class="panel-title">Ready</div>
-      <p class="hint">Everything is filled. Download the PDF, then start another one.</p>
-      <div class="actions">
+      <p class="hint">All fields are filled. Download the PDF below.</p>
+      <div class="actions" style="margin-top:20px">
         <button class="btn" onclick="app && app.generatePDF()">Download PDF</button>
         <button class="btn btn-secondary" onclick="app && app.resetAll()">New Form</button>
       </div>
     </div>
   </div>
-
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
@@ -241,21 +225,69 @@
 (function () {
   'use strict';
 
-  const STATE = { type: null, step: 0, values: {} };
+  var TODAY = (function() {
+    var d = new Date();
+    var mm = String(d.getMonth() + 1).padStart(2, '0');
+    var dd = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + mm + '-' + dd;
+  })();
 
+  var STATE = { type: null, step: 0, values: {} };
   function $(id) { return document.getElementById(id); }
 
+  // ── Column configs ────────────────────────────────────────────────────────
+  var ITEM_COLS = {
+    purchase: [
+      { key: 'desc',  label: 'Description', type: 'text',   grow: true,  placeholder: 'Item description' },
+      { key: 'price', label: 'Unit Price',  type: 'number', width: '85px', placeholder: '0.00', step: '0.01' },
+      { key: 'qty',   label: 'Qty',         type: 'number', width: '52px', defVal: '1',          step: '1' },
+      { key: 'total', label: 'Row Total',   type: 'number', width: '82px', placeholder: 'auto',  step: '0.01', readonly: true },
+    ],
+    reimbursement: [
+      { key: 'vendor', label: 'Vendor',      type: 'text',   grow: true,  placeholder: 'Store name' },
+      { key: 'desc',   label: 'Description', type: 'text',   grow: true,  placeholder: 'What you bought' },
+      { key: 'amount', label: 'Amount',      type: 'number', width: '90px', placeholder: '0.00', step: '0.01' },
+    ],
+  };
+
+  function gridTemplate(cols) {
+    return cols.map(function(c) { return c.grow ? '1fr' : c.width; }).join(' ');
+  }
+
+  // ── Steps definition ──────────────────────────────────────────────────────
+  var STEPS = {
+    purchase: [
+      { title: 'Basic Info', container: 'pr-basic', fields: [
+        { id: 'pr-date',   label: 'Date',           type: 'date' },
+        { id: 'pr-name',   label: 'Requested By',   placeholder: 'Name' },
+        { id: 'pr-team',   label: 'Club / Sport',   placeholder: 'Team' },
+        { id: 'pr-vendor', label: 'Vendor',         placeholder: 'Vendor name' },
+      ]},
+      { title: 'Items', container: 'pr-items', items: true, formType: 'purchase' },
+    ],
+    reimbursement: [
+      { title: 'Basic Info', container: 'rr-basic', fields: [
+        { id: 'rr-date',     label: 'Date',            type: 'date' },
+        { id: 'rr-name',     label: 'Name',            placeholder: 'Name' },
+        { id: 'rr-account',  label: 'Account / Event', placeholder: 'e.g. SLAM ES Athletics / Soccer' },
+        { id: 'rr-position', label: 'Position',        placeholder: 'e.g. Athletic Director' },
+      ]},
+      { title: 'Items', container: 'rr-items', items: true, formType: 'reimbursement' },
+    ],
+  };
+
+  // ── Screen control ────────────────────────────────────────────────────────
   function show(id) {
-    ['screen-choose','screen-receipt','screen-form','screen-download'].forEach(function (n) {
-      const el = $(n);
+    ['screen-choose','screen-receipt','screen-form','screen-download'].forEach(function(n) {
+      var el = $(n);
       if (!el) return;
       if (n === id) { el.classList.add('screen-visible'); el.classList.remove('screen'); }
-      else { el.classList.add('screen'); el.classList.remove('screen-visible'); }
+      else          { el.classList.add('screen'); el.classList.remove('screen-visible'); }
     });
-    const badge = $('badge');
+    var badge = $('badge');
     if (!badge) return;
     badge.style.display = id === 'screen-choose' ? 'none' : 'block';
-    const w = $('js-status');
+    var w = $('js-status');
     if (w) w.style.display = 'none';
   }
 
@@ -273,10 +305,16 @@
     if (!input.files || !input.files[0]) return;
     $('preview-wrap').style.display = 'block';
     $('receipt-img').src = URL.createObjectURL(input.files[0]);
+    var snap = $('snap-label');
+    if (snap) {
+      snap.querySelector('.snap-title').textContent = 'Photo added';
+      snap.querySelector('.snap-sub').textContent = 'Tap to retake';
+    }
   }
 
-  function next() { show('screen-form'); buildStep(); }
+  function next()     { show('screen-form'); buildStep(); }
   function stepBack() { STATE.step = Math.max(0, STATE.step - 1); buildStep(); }
+
   function stepNext() {
     saveStep();
     var steps = STEPS[STATE.type] || [];
@@ -285,106 +323,193 @@
     buildStep();
   }
 
+  // ── Save logic ────────────────────────────────────────────────────────────
   function saveStep() {
-    var steps = STEPS[STATE.type] || [];
-    var s = steps[STATE.step];
+    var s = (STEPS[STATE.type] || [])[STATE.step];
     if (!s) return;
-    if (s.items) { saveItems(s.container); return; }
     var root = $(s.container);
     if (!root) return;
-    Array.prototype.forEach.call(root.querySelectorAll('input, textarea'), function (el) {
-      if (el.id) STATE.values[el.id] = (el.value || '').trim();
-    });
-  }
 
-  function saveItems(containerId) {
-    var root = $(containerId);
-    if (!root) return;
-    var rows = [];
-    Array.prototype.forEach.call(root.querySelectorAll('.item-row'), function (r) {
-      rows.push({
-        desc: (r.querySelector('.item-desc') || {}).value || '',
-        price: (r.querySelector('.item-price') || {}).value || '',
-        qty: (r.querySelector('.item-qty') || {}).value || '1',
-        total: (r.querySelector('.item-total') || {}).value || ''
+    if (s.items) {
+      var rows = [];
+      Array.prototype.forEach.call(root.querySelectorAll('.item-row'), function(row) {
+        var item = {};
+        Array.prototype.forEach.call(row.querySelectorAll('input[data-key]'), function(el) {
+          item[el.getAttribute('data-key')] = (el.value || '').trim();
+        });
+        rows.push(item);
       });
-    });
-    STATE.values['items'] = rows;
+      STATE.values['items'] = rows;
+      Array.prototype.forEach.call(root.querySelectorAll('input[data-field]'), function(el) {
+        STATE.values[el.getAttribute('data-field')] = (el.value || '').trim();
+      });
+      STATE.values['_subtotal'] = (root.querySelector('.subtotal-val') || {}).textContent || '0.00';
+      STATE.values['_total']    = (root.querySelector('.total-val')    || {}).textContent || '0.00';
+    } else {
+      Array.prototype.forEach.call(root.querySelectorAll('input, textarea'), function(el) {
+        if (el.id) STATE.values[el.id] = (el.value || '').trim();
+      });
+    }
   }
 
-  function restoreItems(containerId) {
-    var box = $(containerId);
-    if (!box) return;
-    (STATE.values['items'] || []).forEach(function (r) {
-      var row = document.createElement('div');
-      row.className = 'item-row';
-      row.style.cssText = 'display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;';
-      var q = function (v) { return (v || '').replace(/"/g, '&quot;'); };
-      row.innerHTML = '<input placeholder="Item" class="item-desc" value="' + q(r.desc) + '" /><input type="number" step="0.01" placeholder="Price" class="item-price" value="' + q(r.price) + '" /><input type="number" step="0.01" placeholder="Qty" class="item-qty" value="' + q(r.qty) + '" /><input type="number" step="0.01" placeholder="Total" class="item-total" value="' + q(r.total) + '" />';
-      box.appendChild(row);
-    });
-  }
-
-  function createItemRow(values) {
+  // ── Items building ────────────────────────────────────────────────────────
+  function createRow(cols, vals) {
     var row = document.createElement('div');
     row.className = 'item-row';
-    row.style.cssText = 'display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;';
-    row.innerHTML = '<input placeholder="Item" class="item-desc" /><input type="number" step="0.01" class="item-price" placeholder="$"/><input type="number" step="0.01" class="item-qty" value="1"/><input type="number" step="0.01" class="item-total" placeholder="total"/>';
-    Object.keys(values || {}).forEach(function (key) {
-      var el = row.querySelector('.' + key);
-      if (!el) return;
-      if (el.classList.contains('item-total') && !values[key]) return;
-      el.value = values[key] || '';
+    row.style.gridTemplateColumns = gridTemplate(cols);
+    cols.forEach(function(col) {
+      var inp = document.createElement('input');
+      inp.type = col.type || 'text';
+      inp.setAttribute('data-key', col.key);
+      if (col.placeholder) inp.placeholder = col.placeholder;
+      if (col.step)        inp.step = col.step;
+      if (col.readonly)    inp.readOnly = true;
+      var saved = vals && vals[col.key];
+      inp.value = saved || col.defVal || '';
+      row.appendChild(inp);
     });
     return row;
   }
 
-  function recalcItemRow(row) {
-    var priceEl = row.querySelector('.item-price');
-    var qtyEl = row.querySelector('.item-qty');
-    var totalEl = row.querySelector('.item-total');
-    if (!priceEl || !qtyEl || !totalEl) return;
-    var price = parseFloat(priceEl.value);
-    var qty = parseFloat(qtyEl.value);
-    if (isFinite(price) && isFinite(qty)) totalEl.value = (price * qty);
+  function recalcRow(row, formType) {
+    if (formType !== 'purchase') return;
+    var p = parseFloat((row.querySelector('[data-key="price"]') || {}).value);
+    var q = parseFloat((row.querySelector('[data-key="qty"]')   || {}).value);
+    var tot = row.querySelector('[data-key="total"]');
+    if (tot) tot.value = isFinite(p) && isFinite(q) ? (p * q).toFixed(2) : '';
   }
 
-  function bindRowEvents(row) {
-    if (!row) return;
-    row.querySelectorAll('.item-price, .item-qty').forEach(function(el){
-      el.addEventListener('input', function(){ recalcItemRow(row); });
-      el.addEventListener('change', function(){ recalcItemRow(row); });
+  function recalcTotals(container, formType) {
+    var sum = 0;
+    Array.prototype.forEach.call(container.querySelectorAll('.item-row'), function(row) {
+      var key = formType === 'purchase' ? 'total' : 'amount';
+      var v = parseFloat((row.querySelector('[data-key="' + key + '"]') || {}).value);
+      if (isFinite(v)) sum += v;
     });
-  }
 
-  function bindItemsEvents() {
-    var box = $('pr-items');
-    if (!box) return;
-    box.querySelectorAll('.item-row').forEach(bindRowEvents);
-    var add = $('add-row');
-    if (add) add.onclick = function() {
-      var newRow = createItemRow();
-      box.appendChild(newRow);
-      bindRowEvents(newRow);
+    var subEl = container.querySelector('.subtotal-val');
+    if (subEl) subEl.textContent = sum.toFixed(2);
+
+    if (formType === 'purchase') {
+      var ship = parseFloat((container.querySelector('[data-field="pr-shipping-amt"]') || {}).value) || 0;
+      if (!isFinite(ship)) ship = 0;
+      var totEl = container.querySelector('.total-val');
+      if (totEl) totEl.textContent = (sum + ship).toFixed(2);
+    } else {
+      var tax = parseFloat((container.querySelector('[data-field="rr-tax"]') || {}).value) || 0;
+      if (!isFinite(tax)) tax = 0;
+      var reimEl = container.querySelector('.total-val');
+      if (reimEl) reimEl.textContent = Math.max(0, sum - tax).toFixed(2);
     }
-    var suggestions = $('quick-suggestions');
-    if (!suggestions) return;
-    suggestions.innerHTML = '';
-    var PRESETS = ['Cones','Whistle','Basketball','Soccer ball','Jump ropes','Pinnies','First aid kit','Stopwatch'];
-    PRESETS.forEach(function(label){
-      var btn = document.createElement('button');
-      btn.className = 'btn-secondary';
-      btn.textContent = label;
-      btn.style.cssText = 'background:transparent;color:#e5e7eb;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 10px;font-size:12px;text-transform:none;';
-      btn.onclick = function(){
-        var first = box.querySelector('.item-row');
-        if (!first) return;
-        first.querySelector('.item-desc').value = label;
-      };
-      suggestions.appendChild(btn);
+  }
+
+  function bindRow(row, container, formType) {
+    Array.prototype.forEach.call(row.querySelectorAll('input'), function(el) {
+      el.addEventListener('input', function() {
+        recalcRow(row, formType);
+        recalcTotals(container, formType);
+      });
     });
   }
 
+  function buildItemsStep(s, area) {
+    var formType = s.formType || STATE.type;
+    var cols = ITEM_COLS[formType];
+
+    var box = document.createElement('div');
+    box.id = s.container;
+    box.className = 'items-section';
+
+    // Header row
+    var hdr = document.createElement('div');
+    hdr.className = 'item-headers';
+    hdr.style.gridTemplateColumns = gridTemplate(cols);
+    cols.forEach(function(col) {
+      var cell = document.createElement('div');
+      cell.className = 'item-header-cell';
+      cell.textContent = col.label;
+      hdr.appendChild(cell);
+    });
+    box.appendChild(hdr);
+
+    // Item rows
+    var list = document.createElement('div');
+    list.className = 'items-list';
+    var existing = STATE.values['items'] || [];
+    if (existing.length) {
+      existing.forEach(function(vals) { list.appendChild(createRow(cols, vals)); });
+    } else {
+      list.appendChild(createRow(cols));
+    }
+    box.appendChild(list);
+
+    // Add Row button
+    var addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'btn btn-secondary add-row-btn';
+    addBtn.textContent = '+ Add Row';
+    addBtn.onclick = function() {
+      var newRow = createRow(cols);
+      list.appendChild(newRow);
+      bindRow(newRow, box, formType);
+      newRow.querySelector('input').focus();
+    };
+    box.appendChild(addBtn);
+
+    // Totals summary
+    var totBox = document.createElement('div');
+    totBox.className = 'items-totals';
+
+    if (formType === 'purchase') {
+      totBox.innerHTML =
+        '<div class="totals-row">' +
+          '<span class="totals-label">Shipping</span>' +
+          '<input type="number" step="0.01" data-field="pr-shipping-amt" placeholder="0.00"' +
+          (STATE.values['pr-shipping-amt'] ? ' value="' + STATE.values['pr-shipping-amt'] + '"' : '') + '/>' +
+        '</div>' +
+        '<div class="totals-row">' +
+          '<span class="totals-label">Subtotal</span>' +
+          '<span class="totals-value">$<span class="subtotal-val">0.00</span></span>' +
+        '</div>' +
+        '<div class="totals-row">' +
+          '<span class="totals-label">Total</span>' +
+          '<span class="totals-value primary">$<span class="total-val">0.00</span></span>' +
+        '</div>';
+    } else {
+      totBox.innerHTML =
+        '<div class="totals-row">' +
+          '<span class="totals-label">Subtotal</span>' +
+          '<span class="totals-value">$<span class="subtotal-val">0.00</span></span>' +
+        '</div>' +
+        '<div class="totals-row">' +
+          '<span class="totals-label">Tax Paid (deduct)</span>' +
+          '<input type="number" step="0.01" data-field="rr-tax" placeholder="0.00"' +
+          (STATE.values['rr-tax'] ? ' value="' + STATE.values['rr-tax'] + '"' : '') + '/>' +
+        '</div>' +
+        '<div class="totals-row" style="border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-top:2px">' +
+          '<span class="totals-label">Reimbursable</span>' +
+          '<span class="totals-value primary">$<span class="total-val">0.00</span></span>' +
+        '</div>';
+    }
+    box.appendChild(totBox);
+    area.appendChild(box);
+
+    // Bind all events after DOM is ready
+    setTimeout(function() {
+      var container = $(s.container);
+      if (!container) return;
+      Array.prototype.forEach.call(container.querySelectorAll('.item-row'), function(row) {
+        bindRow(row, container, formType);
+        recalcRow(row, formType);
+      });
+      Array.prototype.forEach.call(container.querySelectorAll('[data-field]'), function(el) {
+        el.addEventListener('input', function() { recalcTotals(container, formType); });
+      });
+      recalcTotals(container, formType);
+    }, 0);
+  }
+
+  // ── Build fields step ─────────────────────────────────────────────────────
   function buildStep() {
     var steps = STEPS[STATE.type] || [];
     var s = steps[STATE.step];
@@ -397,22 +522,18 @@
     title.textContent = s.title;
     area.appendChild(title);
 
-    var box = document.createElement('div');
-    box.id = s.container;
-
     if (s.items) {
-      var placeholder = 'type a line, add an item';
-      box.className = 'items';
-      box.innerHTML = '<div class="item-row" style="display:grid; grid-template-columns: 1fr 90px 70px 60px; gap:10px; align-items:center;"><input placeholder="Item + price" class="item-desc"/><input type="number" step="0.01" class="item-price" placeholder="$"/><input type="number" step="0.01" class="item-qty" value="1"/><input type="number" step="0.01" class="item-total" placeholder="total"/></div><button class="btn btn-secondary" id="quick-add" style="margin-top:8px">Quick Add</button><div id="quick-suggestions" style="margin-top:6px;display:flex;flex-wrap:wrap;gap:8px"></div><button class="btn btn-secondary" id="add-row" style="margin-top:10px">+ Add row</button>';
-      setTimeout(bindItemsEvents, 0);
-    } else if (s.fields) {
-      box.className = 'fields';
-      s.fields.forEach(function (def) {
+      buildItemsStep(s, area);
+    } else {
+      var box = document.createElement('div');
+      box.id = s.container;
+      s.fields.forEach(function(def) {
         var f = document.createElement('div');
         f.className = 'field';
         var lbl = document.createElement('label');
         lbl.className = 'label';
         lbl.textContent = def.label;
+        lbl.htmlFor = def.id;
         f.appendChild(lbl);
         var el;
         if (def.type === 'textarea') {
@@ -425,13 +546,13 @@
           if (def.step) el.step = def.step;
         }
         el.id = def.id;
-        if (STATE.values[def.id]) el.value = STATE.values[def.id];
+        el.value = STATE.values[def.id] || (def.type === 'date' ? TODAY : '');
         f.appendChild(el);
         box.appendChild(f);
       });
+      area.appendChild(box);
     }
-    area.appendChild(box);
-    if (s.container === 'pr-items') restoreItems('pr-items');
+
     updateBadge(steps.length);
   }
 
@@ -441,128 +562,118 @@
   }
 
   function resetAll() {
-    STATE.type = null;
-    STATE.step = 0;
-    STATE.values = {};
+    STATE.type = null; STATE.step = 0; STATE.values = {};
     $('preview-wrap').style.display = 'none';
     $('receipt-img').src = '';
+    var snap = $('snap-label');
+    if (snap) {
+      snap.querySelector('.snap-title').textContent = 'Tap to take a photo';
+      snap.querySelector('.snap-sub').textContent = 'Optional — for your reference';
+    }
     show('screen-choose');
     $('badge').style.display = 'none';
   }
 
-  function fieldText(id) { return (($(id) || {}).value || '').trim(); }
-
+  // ── PDF Generation ────────────────────────────────────────────────────────
   async function generatePDF() {
     try {
-      if (typeof PDFLib === 'undefined') throw new Error('PDF library not loaded. Reload the page or check internet settings so vendor/pdf-lib.min.js loads.');
+      if (typeof PDFLib === 'undefined') throw new Error('PDF library not loaded. Check your internet connection and reload.');
       var PDFDocument = PDFLib.PDFDocument;
       var StandardFonts = PDFLib.StandardFonts;
       var rgb = PDFLib.rgb;
-      var doc = await PDFDocument.create();
-      var font = await doc.embedFont(StandardFonts.Helvetica);
-      var page = doc.addPage([612, 792]);
-      var y = 720;
+      var v = STATE.values;
+      var items = v['items'] || [];
       var black = rgb(0.11, 0.11, 0.11);
-      var green = rgb(0.545, 0.776, 0.247);
-      page.drawText(STATE.type === 'purchase' ? 'PURCHASE REQUEST' : 'REIMBURSEMENT REQUEST', { x: 72, y: y, size: 18, font: font, color: green });
-      y -= 42;
 
-      function field(label, value) {
-        value = (value || '').trim();
-        if (!value) return;
-        if (y < 90) { doc.addPage(); y = 720; }
-        page.drawText(label + ':', { x: 72, y: y, size: 11, font: font, color: black });
-        page.drawText(value, { x: 180, y: y, size: 11, font: font, color: black });
-        y -= 22;
+      var templateUrl = STATE.type === 'purchase'
+        ? './templates/purchase_request_blank.pdf'
+        : './templates/reimbursement_blank.pdf';
+
+      var doc;
+      try {
+        var resp = await fetch(templateUrl);
+        if (!resp.ok) throw new Error('template not found');
+        var bytes = await resp.arrayBuffer();
+        doc = await PDFDocument.load(bytes);
+      } catch (e) {
+        // Fallback plain PDF
+        doc = await PDFDocument.create();
+        doc.addPage([612, 792]);
+      }
+
+      var font = await doc.embedFont(StandardFonts.Helvetica);
+      var page = doc.getPages()[0];
+
+      function t(x, y, val, size) {
+        var str = String(val || '').trim();
+        if (!str) return;
+        page.drawText(str, { x: x, y: y, size: size || 9, font: font, color: black });
       }
 
       if (STATE.type === 'purchase') {
-        field('Date Submitted', STATE.values['pr-date']);
-        field('Requested By', STATE.values['pr-name']);
-        field('Team / Cost Center', STATE.values['pr-team']);
-        field('Subtotal', STATE.values['pr-subtotal']);
-        field('Shipping', STATE.values['pr-shipping-amt']);
-        field('Total', STATE.values['pr-total']);
-        field('Shipping Instructions', STATE.values['pr-shipping']);
-        var rows = STATE.values['items'] || [];
-        if (rows.length) {
-          y -= 10;
-          if (y < 120) { doc.addPage(); y = 720; }
-          page.drawText('ITEMS', { x: 72, y: y, size: 12, font: font, color: green });
-          y -= 24;
-          rows.forEach(function (r) {
-            if (y < 90) { doc.addPage(); y = 720; }
-            var line = [r.desc, '$' + (r.price || '0'), 'x' + (r.qty || '1'), '$' + (r.total || '0')].join('   |   ');
-            page.drawText(line, { x: 72, y: y, size: 11, font: font, color: black });
-            y -= 20;
-          });
-        }
+        t(95,  694, v['pr-vendor']);
+        t(441, 694, v['pr-date']);
+        t(490, 581, v['pr-name']);
+        t(252, 561, v['pr-team']);
+
+        // Item rows — up to 12
+        var PR_Y = [499, 479, 459, 439, 420, 401, 382, 363, 344, 325, 306, 287];
+        items.forEach(function(item, i) {
+          if (i >= PR_Y.length) return;
+          var y = PR_Y[i];
+          t(103, y, item.desc,  8);
+          if (item.price) t(395, y, '$' + item.price, 8);
+          if (item.qty)   t(442, y, item.qty,         8);
+          if (item.total) t(524, y, '$' + item.total, 8);
+        });
+
+        if (v['pr-shipping-amt']) t(430, 259, '$' + v['pr-shipping-amt']);
+        // Subtotal
+        var sub = v['_subtotal'] || '0.00';
+        t(430, 243, '$' + sub);
+
       } else {
-        field('Employee Name', STATE.values['rr-name']);
-        field('Date', STATE.values['rr-date']);
-        field('Vendor / Store', STATE.values['rr-vendor']);
-        field('Amount', STATE.values['rr-amount']);
-        field('Purpose', STATE.values['rr-purpose']);
-        field('Account', STATE.values['rr-cost']);
+        // Reimbursement
+        t(41,  647, v['rr-date']);
+        t(119, 647, v['rr-name']);
+        t(245, 647, v['rr-account'],  9);
+        t(461, 647, v['rr-position'], 9);
+
+        // Item rows — up to 10
+        var RR_Y = [583, 565, 546, 528, 510, 492, 473, 455, 437, 419];
+        items.forEach(function(item, i) {
+          if (i >= RR_Y.length) return;
+          var y = RR_Y[i];
+          t(44,  y, v['rr-date'],   8);   // receipt date
+          t(101, y, item.vendor,    8);
+          t(191, y, item.desc,      8);
+          t(413, y, '1',            8);   // qty
+          if (item.amount) {
+            t(446, y, item.amount,  8);   // rate
+            t(546, y, item.amount,  8);   // $ amount
+          }
+        });
+
+        // Total (reimbursable = subtotal - tax)
+        var total = v['_total'] || v['_subtotal'] || '0.00';
+        t(546, 400, total, 10);
       }
 
-      var bytes = await doc.save();
-      var blob = new Blob([bytes], { type: 'application/pdf' });
+      var pdfBytes = await doc.save();
+      var blob = new Blob([pdfBytes], { type: 'application/pdf' });
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
-      a.href = url;
-      a.download = (STATE.type === 'purchase' ? 'purchase-request' : 'reimbursement') + '.pdf';
+      a.href = url; a.download = (STATE.type === 'purchase' ? 'purchase-request' : 'reimbursement') + '.pdf';
       a.click();
-      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-      show('screen-download');
+      setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
     } catch (err) {
       alert('PDF generation failed: ' + err.message);
     }
   }
 
-  var STEPS = {
-    purchase: [
-      { title: 'Basic info', container: 'pr-basic', fields: [
-        { id: 'pr-date', label: 'Date Submitted', type: 'date' },
-        { id: 'pr-name', label: 'Requested By', placeholder: 'Kenny Ho' },
-        { id: 'pr-team', label: 'Cost Center / Team', placeholder: 'e.g. Soccer, Kinder' }
-      ]},
-      { title: 'Items', container: 'pr-items', items: true },
-      { title: 'Totals', container: 'pr-totals', fields: [
-        { id: 'pr-subtotal', label: 'Subtotal', type: 'number', step: '0.01' },
-        { id: 'pr-shipping-amt', label: 'Shipping', type: 'number', step: '0.01' },
-        { id: 'pr-total', label: 'Total', type: 'number', step: '0.01' }
-      ]},
-      { title: 'Shipping', container: 'pr-shipping', fields: [
-        { id: 'pr-shipping', label: 'Shipping Instructions', type: 'textarea', placeholder: 'Optional — address or notes' }
-      ]}
-    ],
-    reimbursement: [
-      { title: 'Basic info', container: 'rr-basic', fields: [
-        { id: 'rr-name', label: 'Employee Name', placeholder: 'Kenny Ho' },
-        { id: 'rr-date', label: 'Date', type: 'date' },
-        { id: 'rr-vendor', label: 'Vendor / Store', placeholder: 'Store name' }
-      ]},
-      { title: 'Details', container: 'rr-details', fields: [
-        { id: 'rr-amount', label: 'Amount', type: 'number', step: '0.01' },
-        { id: 'rr-purpose', label: 'Purpose', type: 'textarea', placeholder: 'What was this purchase for?' }
-      ]},
-      { title: 'Account', container: 'rr-account', fields: [
-        { id: 'rr-cost', label: 'Account / Cost Center', placeholder: 'e.g. Soccer, Kinder' }
-      ]}
-    ]
-  };
-
+  // ── Bootstrap ─────────────────────────────────────────────────────────────
   try {
-    window.app = {
-      start: start,
-      onPhoto: onPhoto,
-      next: next,
-      stepBack: stepBack,
-      stepNext: stepNext,
-      generatePDF: generatePDF,
-      resetAll: resetAll
-    };
+    window.app = { start: start, onPhoto: onPhoto, next: next, stepBack: stepBack, stepNext: stepNext, generatePDF: generatePDF, resetAll: resetAll };
     show('screen-choose');
   } catch (e) {
     var w = $('js-status');
