@@ -45,6 +45,7 @@
     color: #8CC63F; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
   }
   .label-opt { color: #6b7280; font-weight: 600; text-transform: none; font-size: 11px; margin-left: 4px; }
+  .label-auto { color: #8CC63F; font-weight: 600; text-transform: none; font-size: 11px; margin-left: 4px; }
   input, textarea, select {
     width: 100%; background: #0B0B0B; border: 1px solid rgba(255,255,255,0.1);
     border-radius: 10px; padding: 13px 14px; color: #fff;
@@ -52,6 +53,7 @@
   }
   input:focus, textarea:focus, select:focus { border-color: #8CC63F; }
   input[readonly] { opacity: 0.5; cursor: default; }
+  input.from-ocr, textarea.from-ocr { border-color: rgba(140,198,63,0.5); background: rgba(140,198,63,0.06); }
   textarea { min-height: 80px; resize: vertical; }
   select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238CC63F' d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
   select option { background: #16191f; }
@@ -62,6 +64,7 @@
     text-transform: uppercase; cursor: pointer; font-family: inherit;
   }
   .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: 0.6; cursor: default; }
   .btn-secondary { background: transparent; color: #e5e7eb; border: 1px solid rgba(255,255,255,0.14); }
 
   /* Camera */
@@ -77,6 +80,20 @@
   .snap-sub { font-size: 12px; color: #9ca3af; }
   .preview { margin-top: 12px; border-radius: 12px; overflow: hidden; background: #0B0B0B; border: 1px solid rgba(255,255,255,0.08); }
   .preview img { width: 100%; display: block; }
+
+  .ocr-status {
+    margin-top: 12px; padding: 12px 14px; border-radius: 10px;
+    background: rgba(140,198,63,0.08); border: 1px solid rgba(140,198,63,0.2);
+    font-size: 13px; color: #c9d6c1; display: none; align-items: center; gap: 10px;
+  }
+  .ocr-status.err { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); color: #f0c674; }
+  .ocr-spinner {
+    width: 16px; height: 16px; border-radius: 50%; flex: none;
+    border: 2px solid rgba(140,198,63,0.25); border-top-color: #8CC63F;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .ocr-skip { display: none; margin-top: 8px; font-size: 12px; color: #8CC63F; text-decoration: underline; cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; }
 
   /* Items */
   .items-section { display: flex; flex-direction: column; gap: 6px; }
@@ -138,16 +155,21 @@
         <label class="snap-area" id="snap-label">
           <input type="file" accept="image/*" capture="environment" onchange="app && app.onPhoto(this)" />
           <span class="snap-icon">&#x1F4F7;</span>
-          <div class="snap-title">Tap to take a photo</div>
-          <div class="snap-sub">Optional — for your reference while filling out the form</div>
+          <div class="snap-title">Tap to scan a receipt or invoice</div>
+          <div class="snap-sub">We'll read it and auto-fill the form below</div>
         </label>
       </div>
       <div id="preview-wrap" style="display:none" class="preview">
         <img id="receipt-img" alt="receipt" />
       </div>
+      <div id="ocr-status" class="ocr-status">
+        <span class="ocr-spinner" id="ocr-spinner"></span>
+        <span id="ocr-status-text">Reading receipt…</span>
+      </div>
+      <button class="ocr-skip" id="ocr-skip-btn" onclick="app && app.skipOcrWait()">Taking a while? Continue and fill in manually →</button>
       <div class="actions" style="margin-top:20px">
         <button class="btn btn-secondary" onclick="app && app.resetAll()">Back</button>
-        <button class="btn" onclick="app && app.next()">Next</button>
+        <button class="btn" id="receipt-next-btn" onclick="app && app.next()">Next</button>
       </div>
     </div>
   </div>
@@ -177,6 +199,7 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
 (function () {
   'use strict';
@@ -188,7 +211,7 @@
       String(d.getDate()).padStart(2, '0');
   })();
 
-  var STATE = { type: null, step: 0, values: {} };
+  var STATE = { type: null, step: 0, values: {}, ocrRunning: false };
   function $(id) { return document.getElementById(id); }
 
   // ── Step definitions ───────────────────────────────────────────────────────
@@ -262,21 +285,24 @@
   }
 
   function start(type) {
-    STATE.type = type; STATE.step = 0; STATE.values = {};
+    STATE.type = type; STATE.step = 0; STATE.values = {}; STATE.ocrRunning = false;
     $('preview-wrap').style.display = 'none';
     $('receipt-img').src = '';
+    setOcrStatus(null);
     var snap = $('snap-label');
-    if (snap) { snap.querySelector('.snap-title').textContent = 'Tap to take a photo'; snap.querySelector('.snap-sub').textContent = 'Optional — for your reference while filling out the form'; }
+    if (snap) { snap.querySelector('.snap-title').textContent = 'Tap to scan a receipt or invoice'; snap.querySelector('.snap-sub').textContent = "We'll read it and auto-fill the form below"; }
     show('screen-receipt');
     $('badge').textContent = type === 'purchase' ? 'Purchase Request' : 'Reimbursement';
   }
 
   function onPhoto(input) {
     if (!input.files || !input.files[0]) return;
+    var file = input.files[0];
     $('preview-wrap').style.display = 'block';
-    $('receipt-img').src = URL.createObjectURL(input.files[0]);
+    $('receipt-img').src = URL.createObjectURL(file);
     var snap = $('snap-label');
     if (snap) { snap.querySelector('.snap-title').textContent = 'Photo added ✓'; snap.querySelector('.snap-sub').textContent = 'Tap to retake'; }
+    runOCR(file);
   }
 
   function next()     { show('screen-form'); buildStep(); }
@@ -287,6 +313,167 @@
     STATE.step += 1;
     if (STATE.step >= steps.length) { show('screen-download'); return; }
     buildStep();
+  }
+
+  // ── OCR ────────────────────────────────────────────────────────────────────
+  function setOcrStatus(mode, text) {
+    var box = $('ocr-status');
+    var spinner = $('ocr-spinner');
+    var skip = $('ocr-skip-btn');
+    var nextBtn = $('receipt-next-btn');
+    if (!box) return;
+    if (!mode) { box.style.display = 'none'; skip.style.display = 'none'; if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = 'Next'; } return; }
+    box.style.display = 'flex';
+    box.classList.toggle('err', mode === 'error');
+    spinner.style.display = mode === 'running' ? 'block' : 'none';
+    $('ocr-status-text').textContent = text || '';
+    if (nextBtn) { nextBtn.disabled = mode === 'running'; nextBtn.textContent = mode === 'running' ? 'Reading…' : 'Next'; }
+  }
+
+  function skipOcrWait() {
+    STATE.ocrRunning = false;
+    setOcrStatus('error', "Skipped — fill in the details on the next screens.");
+  }
+
+  function downscaleImage(file, maxDim) {
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      img.onload = function () {
+        var w = img.width, h = img.height;
+        var scale = Math.min(1, maxDim / Math.max(w, h));
+        var cw = Math.round(w * scale), ch = Math.round(h * scale);
+        var canvas = document.createElement('canvas');
+        canvas.width = cw; canvas.height = ch;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, cw, ch);
+        URL.revokeObjectURL(img.src);
+        resolve(canvas);
+      };
+      img.onerror = function () { reject(new Error('Could not load image')); };
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  async function runOCR(file) {
+    if (typeof Tesseract === 'undefined') {
+      setOcrStatus('error', "OCR library didn't load — check your connection. You can still fill in manually.");
+      return;
+    }
+    STATE.ocrRunning = true;
+    setOcrStatus('running', 'Reading receipt…');
+    var skipTimer = setTimeout(function () {
+      var skip = $('ocr-skip-btn');
+      if (skip && STATE.ocrRunning) skip.style.display = 'block';
+    }, 6000);
+
+    try {
+      var canvas = await downscaleImage(file, 1600);
+      var result = await Tesseract.recognize(canvas, 'eng');
+      var text = (result && result.data && result.data.text) || '';
+      var parsed = parseReceiptText(text);
+      applyOcrResults(parsed);
+
+      var bits = [];
+      if (parsed.vendor) bits.push('vendor');
+      if (parsed.date) bits.push('date');
+      if (parsed.items.length) bits.push(parsed.items.length + ' item' + (parsed.items.length > 1 ? 's' : ''));
+      if (parsed.tax) bits.push('tax');
+
+      if (bits.length) {
+        setOcrStatus('done', '✓ Detected ' + bits.join(', ') + ' — review on the next screens.');
+      } else {
+        setOcrStatus('error', "Couldn't make out the details clearly — please fill in manually on the next screens.");
+      }
+    } catch (e) {
+      setOcrStatus('error', 'OCR failed (' + e.message + ') — you can still fill in manually.');
+    } finally {
+      STATE.ocrRunning = false;
+      clearTimeout(skipTimer);
+      var skip = $('ocr-skip-btn');
+      if (skip) skip.style.display = 'none';
+      var nextBtn = $('receipt-next-btn');
+      if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = 'Next'; }
+    }
+  }
+
+  function normalizeDate(str) {
+    var m = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+    if (m) {
+      var mm = m[1].padStart(2, '0'), dd = m[2].padStart(2, '0');
+      var yyyy = m[3].length === 2 ? '20' + m[3] : m[3];
+      return yyyy + '-' + mm + '-' + dd;
+    }
+    var m2 = str.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (m2) return str;
+    return '';
+  }
+
+  function parseReceiptText(text) {
+    var lines = text.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+    var result = { vendor: '', date: '', total: '', tax: '', subtotal: '', items: [] };
+
+    // Vendor: first substantial line that isn't a URL/number-only line
+    for (var i = 0; i < lines.length; i++) {
+      var l = lines[i];
+      if (l.length > 2 && !/^\d+$/.test(l) && !/^www\./i.test(l) && !/^https?:/i.test(l)) {
+        result.vendor = l.replace(/[^\w&'.,\- ]/g, '').trim();
+        if (result.vendor) break;
+      }
+    }
+
+    var dateMatch = text.match(/\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}-\d{2}-\d{2})\b/);
+    if (dateMatch) result.date = normalizeDate(dateMatch[1]);
+
+    var moneyRe = /\$?\s?(\d{1,4}(?:,\d{3})*\.\d{2})/;
+    var skipWords = /\b(total|tax|subtotal|sub[\s-]?total|change|cash|visa|mastercard|amex|card|balance|due|invoice|date|phone|fax|www\.|http|terms|net\s?\d|please\s*pay|amount\s*due|grand\s*total|remit(ted)?|miscellaneous|freight|shipping|bill\s*to|ship\s*to|attn|order|customer|rep|carrier|tracking|po\s*box|warehouse|whse)\b/i;
+
+    lines.forEach(function (line) {
+      var lower = line.toLowerCase();
+      var m = line.match(moneyRe);
+      if (!m) return;
+      var amt = m[1].replace(/,/g, '');
+      if (/sub[\s-]?total/.test(lower)) { result.subtotal = amt; return; }
+      if (/\btax\b/.test(lower)) { result.tax = amt; return; }
+      if (/\b(total|please pay|amount due|balance due|grand total|invoice total)\b/.test(lower)) { result.total = amt; return; }
+    });
+
+    lines.forEach(function (line) {
+      var lower = line.toLowerCase();
+      if (skipWords.test(lower)) return;
+      var m = line.match(/^(.+?)\s+\$?(\d{1,4}(?:,\d{3})*\.\d{2})\s*$/);
+      if (m) {
+        var desc = m[1].replace(/[-.]{2,}/g, '').replace(/\s{2,}/g, ' ').trim();
+        var amt = m[2].replace(/,/g, '');
+        if (desc.length > 1 && desc.length < 60 && /[a-zA-Z]{2,}/.test(desc)) result.items.push({ desc: desc, amount: amt });
+      }
+    });
+
+    return result;
+  }
+
+  function applyOcrResults(parsed) {
+    if (STATE.type === 'purchase') {
+      if (parsed.vendor) { STATE.values['pr-vendor'] = parsed.vendor; STATE.values['_ocr_pr-vendor'] = true; }
+      if (parsed.date)   { STATE.values['pr-date'] = parsed.date; STATE.values['_ocr_pr-date'] = true; }
+      if (parsed.items.length) {
+        STATE.values['items'] = parsed.items.map(function (it) {
+          return { desc: it.desc, price: it.amount, qty: '1' };
+        });
+        STATE.values['_ocr_items'] = true;
+      }
+    } else {
+      if (parsed.date) { STATE.values['rr-date'] = parsed.date; STATE.values['_ocr_rr-date'] = true; }
+      if (parsed.items.length) {
+        STATE.values['items'] = parsed.items.map(function (it) {
+          return { vendor: parsed.vendor || '', desc: it.desc, amount: it.amount };
+        });
+        STATE.values['_ocr_items'] = true;
+      } else if (parsed.vendor) {
+        STATE.values['items'] = [{ vendor: parsed.vendor, desc: '', amount: parsed.total || '' }];
+        STATE.values['_ocr_items'] = true;
+      }
+      if (parsed.tax) { STATE.values['rr-tax'] = parsed.tax; STATE.values['_ocr_rr-tax'] = true; }
+    }
   }
 
   // ── Save logic ─────────────────────────────────────────────────────────────
@@ -331,6 +518,7 @@
       if (col.readonly)    inp.readOnly = true;
       var saved = vals && vals[col.key];
       inp.value = saved || col.defVal || '';
+      if (vals && vals._ocr) inp.classList.add('from-ocr');
       row.appendChild(inp);
     });
     return row;
@@ -367,7 +555,7 @@
 
   function bindRow(row, container, formType) {
     Array.prototype.forEach.call(row.querySelectorAll('input'), function (el) {
-      el.addEventListener('input', function () { recalcRow(row); recalcTotals(container, formType); });
+      el.addEventListener('input', function () { el.classList.remove('from-ocr'); recalcRow(row); recalcTotals(container, formType); });
     });
   }
 
@@ -378,7 +566,13 @@
     box.id   = s.container;
     box.className = 'items-section';
 
-    // Column headers
+    if (STATE.values['_ocr_items']) {
+      var banner = document.createElement('div');
+      banner.style.cssText = 'font-size:12px;color:#8CC63F;margin-bottom:8px;';
+      banner.textContent = '✓ Filled in from your photo — check these before continuing';
+      box.appendChild(banner);
+    }
+
     var hdr = document.createElement('div');
     hdr.className = 'item-headers';
     hdr.style.gridTemplateColumns = gridTemplate(cols);
@@ -390,18 +584,20 @@
     });
     box.appendChild(hdr);
 
-    // Rows
     var list = document.createElement('div');
     list.className = 'items-list';
     var existing = STATE.values['items'] || [];
+    var ocrFlag = !!STATE.values['_ocr_items'];
     if (existing.length) {
-      existing.forEach(function (vals) { list.appendChild(createRow(cols, vals)); });
+      existing.forEach(function (vals) {
+        var v2 = Object.assign({}, vals, { _ocr: ocrFlag });
+        list.appendChild(createRow(cols, v2));
+      });
     } else {
       list.appendChild(createRow(cols));
     }
     box.appendChild(list);
 
-    // Add Row
     var addBtn = document.createElement('button');
     addBtn.type = 'button';
     addBtn.className = 'btn btn-secondary add-row-btn';
@@ -414,7 +610,6 @@
     };
     box.appendChild(addBtn);
 
-    // Totals
     var totBox = document.createElement('div');
     totBox.className = 'items-totals';
     if (formType === 'purchase') {
@@ -427,7 +622,7 @@
     } else {
       totBox.innerHTML =
         '<div class="totals-row"><span class="totals-label">Subtotal</span><span class="totals-value">$<span class="subtotal-val">0.00</span></span></div>' +
-        '<div class="totals-row"><span class="totals-label">Tax Paid (deduct)</span>' +
+        '<div class="totals-row"><span class="totals-label">Tax Paid (deduct)' + (STATE.values['_ocr_rr-tax'] ? ' <span class="label-auto">(auto)</span>' : '') + '</span>' +
         '<input type="number" step="0.01" data-field="rr-tax" placeholder="0.00"' +
         (STATE.values['rr-tax'] ? ' value="' + STATE.values['rr-tax'] + '"' : '') + '/></div>' +
         '<div class="totals-row" style="border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-top:2px">' +
@@ -480,6 +675,12 @@
         optSpan.textContent = '(optional)';
         lbl.appendChild(optSpan);
       }
+      if (STATE.values['_ocr_' + def.id]) {
+        var autoSpan = document.createElement('span');
+        autoSpan.className = 'label-auto';
+        autoSpan.textContent = '(from photo)';
+        lbl.appendChild(autoSpan);
+      }
       f.appendChild(lbl);
 
       var el;
@@ -505,6 +706,10 @@
       } else {
         el.value = STATE.values[def.id] || (def.type === 'date' ? TODAY : '');
       }
+      if (STATE.values['_ocr_' + def.id]) {
+        el.classList.add('from-ocr');
+        el.addEventListener('input', function () { el.classList.remove('from-ocr'); });
+      }
       f.appendChild(el);
       box.appendChild(f);
     });
@@ -518,9 +723,10 @@
   }
 
   function resetAll() {
-    STATE.type = null; STATE.step = 0; STATE.values = {};
+    STATE.type = null; STATE.step = 0; STATE.values = {}; STATE.ocrRunning = false;
     $('preview-wrap').style.display = 'none';
     $('receipt-img').src = '';
+    setOcrStatus(null);
     show('screen-choose');
     $('badge').style.display = 'none';
   }
@@ -535,15 +741,17 @@
   }
 
   // ── PDF Generation ─────────────────────────────────────────────────────────
+  // Coordinates measured directly against the official SLAM templates
+  // (templates/purchase_request_blank.pdf and templates/reimbursement_blank.pdf).
   async function generatePDF() {
     try {
       if (typeof PDFLib === 'undefined') throw new Error('PDF library not loaded. Check your connection and reload.');
-      var PDFDocument  = PDFLib.PDFDocument;
+      var PDFDocument   = PDFLib.PDFDocument;
       var StandardFonts = PDFLib.StandardFonts;
-      var rgb          = PDFLib.rgb;
-      var v            = STATE.values;
-      var items        = v['items'] || [];
-      var black        = rgb(0.11, 0.11, 0.11);
+      var rgb           = PDFLib.rgb;
+      var v             = STATE.values;
+      var items         = v['items'] || [];
+      var black         = rgb(0.11, 0.11, 0.11);
 
       var templateUrl = STATE.type === 'purchase'
         ? './templates/purchase_request_blank.pdf'
@@ -571,75 +779,68 @@
       // ── Purchase Request ──────────────────────────────────────────────────
       if (STATE.type === 'purchase') {
 
-        // Header fields
-        t(95,  694, v['pr-vendor']);                // Vendor
-        t(441, 694, v['pr-date']);                  // Date Submitted
-        t(108, 675, v['pr-addr1']);                 // Address 1
-        t(108, 657, v['pr-addr2']);                 // Address 2
-        t(90,  639, v['pr-phone']);                 // Phone
-        t(106, 621, v['pr-fax']);                   // Fax/Email
-        t(157, 603, v['pr-ship-notes']);            // Shipping Instructions
+        t(80,  711, v['pr-vendor']);                 // Vendor
+        t(386, 711, v['pr-date']);                   // Date Submitted
+        t(93,  694, v['pr-addr1']);                  // Address 1
+        t(93,  676, v['pr-addr2']);                  // Address 2
+        t(77,  659, v['pr-phone']);                  // Phone
+        t(92,  641, v['pr-fax']);                    // Fax/Email
+        t(204, 625, v['pr-ship-notes']);             // Shipping Instructions
 
-        // Staff Member — full name at x=490, same line as the label
-        t(490, 581, v['pr-name'], 9);
+        // "Please circle" — draw a box around the chosen Operating/SGF option
+        var fundIsSGF = (v['pr-fund'] || '').trim().toUpperCase() === 'SGF';
+        var boxX = fundIsSGF ? 107 : 40;
+        var boxW = fundIsSGF ? 25  : 44;
+        page.drawRectangle({ x: boxX, y: 554, width: boxW, height: 13, borderColor: black, borderWidth: 1 });
 
-        // Operating/SGF line:
-        //   budget type replaces "General Fund" (x=135)
-        //   "Club/Sport:" label at x=204 is kept visible in the template
-        //   team + grade go at x=252
-        t(135, 561, v['pr-fund'] || 'Operating', 9);
+        // Club/Sport blank line — team + grade level
         var teamGrade = [v['pr-team'], v['pr-grade']].filter(Boolean).join(' ');
-        t(252, 561, teamGrade, 9);
+        t(270, 559, teamGrade, 8);
 
-        // Item rows (up to 12)
-        var PR_Y = [499, 479, 459, 439, 420, 401, 382, 363, 344, 325, 306, 287];
+        // Item rows (12 rows on the official grid)
+        var PR_Y = [496, 478, 459, 441, 423, 404, 386, 368, 349, 331, 313, 295];
         items.forEach(function (item, i) {
           if (i >= PR_Y.length) return;
           var y = PR_Y[i];
-          t(103, y, item.desc,  8);
-          if (item.price) t(395, y, '$' + parseFloat(item.price).toFixed(2), 8);
-          if (item.qty)   t(442, y, item.qty, 8);
-          if (item.total) t(524, y, '$' + parseFloat(item.total).toFixed(2), 8);
+          t(88,  y, item.desc, 8);
+          if (item.price) t(312, y, '$' + parseFloat(item.price).toFixed(2), 8);
+          if (item.qty)   t(405, y, item.qty, 8);
+          if (item.total) t(512, y, '$' + parseFloat(item.total).toFixed(2), 8);
         });
 
-        // Shipping & Subtotal
-        if (v['pr-shipping-amt']) t(430, 259, '$' + parseFloat(v['pr-shipping-amt']).toFixed(2));
+        if (v['pr-shipping-amt']) t(518, 263, '$' + parseFloat(v['pr-shipping-amt']).toFixed(2));
         var sub = parseFloat(v['_subtotal'] || '0');
-        if (sub > 0) t(430, 243, '$' + sub.toFixed(2));
+        if (sub > 0) t(518, 245, '$' + sub.toFixed(2));
 
-        // Filename: LastName_Team_PRF.pdf
         var fn = safeName(lastName(v['pr-name'])) + '_' + safeName(v['pr-team']) + '_PRF.pdf';
         await downloadPDF(doc, fn);
 
       // ── Reimbursement ─────────────────────────────────────────────────────
       } else {
 
-        // Header row
-        t(41,  647, v['rr-date']);
-        t(119, 647, v['rr-name'],     9);
-        t(245, 647, v['rr-account'],  9);
-        t(461, 647, v['rr-position'], 9);
+        t(42,  647, v['rr-date']);
+        t(120, 647, v['rr-name'],     9);
+        t(246, 647, v['rr-account'],  9);
+        t(462, 647, v['rr-position'], 9);
 
-        // Item rows (up to 10)
-        var RR_Y = [583, 565, 546, 528, 510, 492, 473, 455, 437, 419];
+        // Item rows (10 rows on the official grid)
+        var RR_Y = [583, 565, 546, 528, 510, 491, 473, 455, 437, 419];
         items.forEach(function (item, i) {
           if (i >= RR_Y.length) return;
           var y = RR_Y[i];
-          t(44,  y, v['rr-date'],  8);   // receipt date
-          t(101, y, item.vendor,   8);
-          t(191, y, item.desc,     8);
-          t(413, y, '1',           8);   // qty
+          t(40,  y, v['rr-date'],  8);   // receipt date
+          t(100, y, item.vendor,   8);
+          t(190, y, item.desc,     8);
+          t(410, y, '1',           8);   // qty
           if (item.amount) {
-            t(446, y, parseFloat(item.amount).toFixed(2), 8);   // rate
-            t(546, y, parseFloat(item.amount).toFixed(2), 8);   // $ amount
+            t(436, y, parseFloat(item.amount).toFixed(2), 8);   // rate
+            t(500, y, parseFloat(item.amount).toFixed(2), 8);   // $ amount
           }
         });
 
-        // Total (after tax deduction)
         var total = parseFloat(v['_total'] || v['_subtotal'] || '0');
-        if (total > 0) t(546, 400, total.toFixed(2), 10);
+        if (total > 0) t(500, 401, total.toFixed(2), 10);
 
-        // Filename: LastName_RRF.pdf
         var fn = safeName(lastName(v['rr-name'])) + '_RRF.pdf';
         await downloadPDF(doc, fn);
       }
@@ -663,7 +864,8 @@
     window.app = {
       start: start, onPhoto: onPhoto, next: next,
       stepBack: stepBack, stepNext: stepNext,
-      generatePDF: generatePDF, resetAll: resetAll
+      generatePDF: generatePDF, resetAll: resetAll,
+      skipOcrWait: skipOcrWait
     };
     show('screen-choose');
   } catch (e) {
