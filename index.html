@@ -103,8 +103,8 @@
 
     /* ── LINK CARDS ── */
     .cards {
-      display: flex; gap: 20px; flex-wrap: wrap;
-      justify-content: center; margin-bottom: 80px;
+      display: grid; grid-template-columns: repeat(3, 280px);
+      gap: 20px; justify-content: center; margin-bottom: 80px;
     }
 
     .card {
@@ -301,8 +301,11 @@
     footer img { height: 24px; opacity: 0.4; margin-bottom: 8px; display: inline-block; }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 940px) {
+      .cards { grid-template-columns: repeat(2, 280px); }
+    }
     @media (max-width: 600px) {
-      .cards { flex-direction: column; align-items: center; }
+      .cards { grid-template-columns: 1fr; justify-items: center; }
       .card  { width: 100%; max-width: 340px; }
     }
   </style>
@@ -366,8 +369,8 @@
         <div class="card-arrow">↗</div>
         <div class="card-icon">✝️</div>
         <div class="card-label">Personal</div>
-        <div class="card-title">My Journey with God</div>
-        <div class="card-sub">Reflections &amp; faith along the way</div>
+        <div class="card-title">Reflections</div>
+        <div class="card-sub">My journey with God</div>
       </a>
 
     </div>
