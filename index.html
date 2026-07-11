@@ -15,6 +15,8 @@
     :root {
       --green:  #8CC63F;
       --red:    #E31837;
+      --blue:   #38bdf8;
+      --indigo: #6366f1;
       --black:  #0B0B0B;
       --dark:   #111318;
       --card:   #16191f;
@@ -47,40 +49,22 @@
       padding: 60px 24px 40px;
       text-align: center;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(140,198,63,0.12) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(227,24,55,0.07) 0%, transparent 60%);
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(56,189,248,0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(99,102,241,0.09) 0%, transparent 60%);
     }
 
-    /* animated green line top */
+    /* animated blue line top */
     .hero::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0;
       height: 3px;
-      background: linear-gradient(90deg, transparent, var(--green), var(--red), var(--green), transparent);
+      background: linear-gradient(90deg, transparent, var(--blue), var(--indigo), var(--blue), transparent);
       background-size: 200% 100%;
       animation: line-slide 3s linear infinite;
     }
     @keyframes line-slide {
       0%   { background-position: 100% 0; }
       100% { background-position: -100% 0; }
-    }
-
-    .bull-logo {
-      width: 140px; height: auto;
-      margin-bottom: 28px;
-      filter: drop-shadow(0 0 32px rgba(140,198,63,0.35));
-      animation: float 4s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-8px); }
-    }
-
-    .hero-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px; font-weight: 700;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--green); margin-bottom: 12px;
     }
 
     .hero-name {
@@ -91,7 +75,12 @@
       color: #fff;
       margin-bottom: 48px;
     }
-    .hero-name span { color: var(--green); }
+    .hero-name span {
+      background: linear-gradient(90deg, var(--blue), var(--indigo));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
 
     .hero-title {
       font-family: 'Barlow Condensed', sans-serif;
@@ -103,7 +92,7 @@
 
     /* ── LINK CARDS ── */
     .cards {
-      display: grid; grid-template-columns: repeat(3, 280px);
+      display: grid; grid-template-columns: repeat(4, 280px);
       gap: 20px; justify-content: center; margin-bottom: 80px;
     }
 
@@ -115,7 +104,7 @@
       padding: 28px;
       border-radius: 16px;
       background: var(--card);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(56,189,248,0.18);
       text-decoration: none;
       transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       cursor: pointer;
@@ -123,40 +112,12 @@
     .card::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(140,198,63,0.08) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, transparent 60%);
       opacity: 0; transition: opacity 0.25s;
     }
-    .card:hover { transform: translateY(-4px); border-color: rgba(140,198,63,0.5); }
+    .card:hover { transform: translateY(-4px); border-color: rgba(56,189,248,0.55); }
     .card:hover::before { opacity: 1; }
-    .card:hover { box-shadow: 0 16px 48px rgba(140,198,63,0.18), 0 4px 16px rgba(0,0,0,0.4); }
-
-    .card.red-card { border-color: rgba(227,24,55,0.2); }
-    .card.red-card::before { background: linear-gradient(135deg, rgba(227,24,55,0.08) 0%, transparent 60%); }
-    .card.red-card:hover { border-color: rgba(227,24,55,0.5); box-shadow: 0 16px 48px rgba(227,24,55,0.18), 0 4px 16px rgba(0,0,0,0.4); }
-
-    .card.orange-card { border-color: rgba(232,108,0,0.2); }
-    .card.orange-card::before { background: linear-gradient(135deg, rgba(232,108,0,0.08) 0%, transparent 60%); }
-    .card.orange-card:hover { border-color: rgba(232,108,0,0.5); box-shadow: 0 16px 48px rgba(232,108,0,0.18), 0 4px 16px rgba(0,0,0,0.4); }
-    .orange-card .card-label { color: #E86C00; }
-    .orange-card:hover .card-arrow { background: #E86C00; color: #fff; }
-
-    .card.purple-card { border-color: rgba(139,92,246,0.2); }
-    .card.purple-card::before { background: linear-gradient(135deg, rgba(139,92,246,0.08) 0%, transparent 60%); }
-    .card.purple-card:hover { border-color: rgba(139,92,246,0.5); box-shadow: 0 16px 48px rgba(139,92,246,0.18), 0 4px 16px rgba(0,0,0,0.4); }
-    .purple-card .card-label { color: #8B5CF6; }
-    .purple-card:hover .card-arrow { background: #8B5CF6; color: #fff; }
-
-    .card.teal-card { border-color: rgba(20,184,166,0.2); }
-    .card.teal-card::before { background: linear-gradient(135deg, rgba(20,184,166,0.08) 0%, transparent 60%); }
-    .card.teal-card:hover { border-color: rgba(20,184,166,0.5); box-shadow: 0 16px 48px rgba(20,184,166,0.18), 0 4px 16px rgba(0,0,0,0.4); }
-    .teal-card .card-label { color: #14B8A6; }
-    .teal-card:hover .card-arrow { background: #14B8A6; color: #fff; }
-
-    .card.gold-card { border-color: rgba(182,144,47,0.2); }
-    .card.gold-card::before { background: linear-gradient(135deg, rgba(182,144,47,0.08) 0%, transparent 60%); }
-    .card.gold-card:hover { border-color: rgba(182,144,47,0.5); box-shadow: 0 16px 48px rgba(182,144,47,0.18), 0 4px 16px rgba(0,0,0,0.4); }
-    .gold-card .card-label { color: #B6902F; }
-    .gold-card:hover .card-arrow { background: #B6902F; color: #000; }
+    .card:hover { box-shadow: 0 16px 48px rgba(56,189,248,0.2), 0 4px 16px rgba(0,0,0,0.4); }
 
     .card-icon {
       font-size: 32px; margin-bottom: 16px;
@@ -166,15 +127,18 @@
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 11px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.16em;
-      color: var(--green); margin-bottom: 6px;
+      color: var(--blue); margin-bottom: 6px;
     }
-    .red-card .card-label { color: var(--red); }
 
     .card-title {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 26px; font-weight: 800;
       text-transform: uppercase; letter-spacing: 0.02em;
       color: #fff; line-height: 1; margin-bottom: 8px;
+    }
+    .card-title-sub {
+      font-size: 12px; font-weight: 600; color: #9ca3af;
+      margin-bottom: 8px; line-height: 1.3;
     }
     .card-sub {
       font-size: 12px; color: #6b7280; line-height: 1.4;
@@ -187,8 +151,7 @@
       font-size: 14px; color: #6b7280;
       transition: background 0.2s, color 0.2s;
     }
-    .card:hover .card-arrow { background: var(--green); color: #000; }
-    .red-card:hover .card-arrow { background: var(--red); color: #fff; }
+    .card:hover .card-arrow { background: linear-gradient(90deg, var(--blue), var(--indigo)); color: #fff; }
 
     /* ── DIVIDER ── */
     .divider {
@@ -301,6 +264,9 @@
     footer img { height: 24px; opacity: 0.4; margin-bottom: 8px; display: inline-block; }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 1260px) {
+      .cards { grid-template-columns: repeat(3, 280px); }
+    }
     @media (max-width: 940px) {
       .cards { grid-template-columns: repeat(2, 280px); }
     }
@@ -314,13 +280,30 @@
 
   <!-- HERO -->
   <section class="hero">
-    <img src="slam-bull.png" alt="SLAM!" class="bull-logo" />
-    <p class="hero-eyebrow">SLAM! Nevada · Athletic Department</p>
     <h1 class="hero-name">Coach <span>Kenny</span></h1>
 
     <div class="cards">
+      <!-- AthleticsOS -->
+      <a href="https://www.athleticsos.io" target="_blank" class="card">
+        <div class="card-arrow">↗</div>
+        <div class="card-icon">🖥️</div>
+        <div class="card-label">Staff Portal</div>
+        <div class="card-title">AOS</div>
+        <div class="card-title-sub">Athletics Operating Systems</div>
+        <div class="card-sub">Teams, rosters &amp; practice scheduling</div>
+      </a>
+
+      <!-- Coaching Hub -->
+      <a href="https://www.athleticsos.io/coach" target="_blank" class="card">
+        <div class="card-arrow">↗</div>
+        <div class="card-icon">🏈</div>
+        <div class="card-label">Coach Portal</div>
+        <div class="card-title">Coaching Hub</div>
+        <div class="card-sub">PIN login — roster, schedule &amp; PT tracker</div>
+      </a>
+
       <!-- SLAM Athletics -->
-      <a href="https://slamnvathletics.org" target="_blank" class="card red-card">
+      <a href="https://slamnvathletics.org" target="_blank" class="card">
         <div class="card-arrow">↗</div>
         <div class="card-icon">🏆</div>
         <div class="card-label">Visit</div>
@@ -338,7 +321,7 @@
       </a>
 
       <!-- Home Run Tracker -->
-      <a href="https://kennyhin.github.io/homerun-tracker" target="_blank" class="card orange-card">
+      <a href="https://kennyhin.github.io/homerun-tracker" target="_blank" class="card">
         <div class="card-arrow">↗</div>
         <div class="card-icon">🏃</div>
         <div class="card-label">Staff Portal</div>
@@ -347,7 +330,7 @@
       </a>
 
       <!-- PE Games -->
-      <a href="https://kennyhin.github.io/coach-kenny/pe-games" target="_blank" class="card purple-card">
+      <a href="https://kennyhin.github.io/coach-kenny/pe-games" target="_blank" class="card">
         <div class="card-arrow">↗</div>
         <div class="card-icon">🎮</div>
         <div class="card-label">K-5 Resource</div>
@@ -355,17 +338,8 @@
         <div class="card-sub">Games, locomotor skills &amp; NV standards</div>
       </a>
 
-      <!-- AD Hub -->
-      <a href="https://adhub.coachkenny.org" target="_blank" class="card teal-card">
-        <div class="card-arrow">↗</div>
-        <div class="card-icon">📋</div>
-        <div class="card-label">Staff Portal</div>
-        <div class="card-title">AD Hub</div>
-        <div class="card-sub">Teams, rosters &amp; practice scheduling</div>
-      </a>
-
       <!-- My Journey with God -->
-      <a href="https://kennyhin.github.io/my-journey-with-god" target="_blank" class="card gold-card">
+      <a href="https://kennyhin.github.io/my-journey-with-god" target="_blank" class="card">
         <div class="card-arrow">↗</div>
         <div class="card-icon">✝️</div>
         <div class="card-label">Personal</div>
