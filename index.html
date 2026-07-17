@@ -92,7 +92,7 @@
 
     /* ── LINK CARDS ── */
     .cards {
-      display: grid; grid-template-columns: repeat(4, 280px);
+      display: grid; grid-template-columns: repeat(3, 280px);
       gap: 20px; justify-content: center; margin-bottom: 80px;
     }
 
@@ -152,6 +152,72 @@
       transition: background 0.2s, color 0.2s;
     }
     .card:hover .card-arrow { background: linear-gradient(90deg, var(--blue), var(--indigo)); color: #fff; }
+
+    /* ── AOS FLIP CARD ── */
+    .card-flip {
+      padding: 0; background: transparent; border: none;
+      perspective: 1400px;
+    }
+    .card-flip:hover { transform: translateY(-4px); }
+    .card-flip-inner {
+      position: relative; width: 100%; height: 100%; min-height: 160px;
+      transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+      transform-style: preserve-3d;
+    }
+    .card-flip.flipped .card-flip-inner { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 16px;
+      padding: 28px;
+      display: flex; flex-direction: column;
+      background: var(--card);
+    }
+    .card-face-front {
+      justify-content: flex-end;
+      border: 1px solid rgba(56,189,248,0.18);
+      transition: border-color 0.25s;
+    }
+    .card-flip:hover .card-face-front { border-color: rgba(56,189,248,0.55); }
+    .card-face-back {
+      transform: rotateY(180deg);
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid rgba(99,102,241,0.45);
+      box-shadow: 0 16px 48px rgba(99,102,241,0.18);
+    }
+    .card-back-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.16em;
+      color: var(--indigo); margin-bottom: 8px;
+    }
+    .login-btn {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #e5e7eb; text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.02em;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .login-btn:hover {
+      background: linear-gradient(90deg, rgba(56,189,248,0.18), rgba(99,102,241,0.18));
+      border-color: rgba(56,189,248,0.5);
+      transform: translateX(3px);
+    }
+    .login-btn-icon { font-size: 15px; line-height: 1; }
+    .card-back-close {
+      position: absolute; top: 24px; right: 24px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: #6b7280;
+    }
 
     /* ── DIVIDER ── */
     .divider {
@@ -264,9 +330,6 @@
     footer img { height: 24px; opacity: 0.4; margin-bottom: 8px; display: inline-block; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 1260px) {
-      .cards { grid-template-columns: repeat(3, 280px); }
-    }
     @media (max-width: 940px) {
       .cards { grid-template-columns: repeat(2, 280px); }
     }
@@ -283,32 +346,31 @@
     <h1 class="hero-name">Coach <span>Kenny</span></h1>
 
     <div class="cards">
-      <!-- AthleticsOS -->
-      <a href="https://www.athleticsos.io" target="_blank" class="card">
-        <div class="card-arrow">↗</div>
-        <div class="card-icon">🖥️</div>
-        <div class="card-label">Staff Portal</div>
-        <div class="card-title">AOS</div>
-        <div class="card-title-sub">Athletics Operating Systems</div>
-        <div class="card-sub">Teams, rosters &amp; practice scheduling</div>
-      </a>
+      <!-- AthleticsOS — flips to reveal the three portal logins -->
+      <div class="card card-flip" id="aos-card">
+        <div class="card-flip-inner">
+          <div class="card-face card-face-front">
+            <div class="card-arrow">↗</div>
+            <div class="card-icon">🖥️</div>
+            <div class="card-label">AOS</div>
+            <div class="card-title" style="font-size: 20px;">Athletics Operating Systems</div>
+          </div>
+          <div class="card-face card-face-back">
+            <div class="card-back-close">✕</div>
+            <div class="card-back-label">Choose your login</div>
+            <a href="https://www.athleticsos.io" target="_blank" class="login-btn"><span class="login-btn-icon">🛡️</span> Athletic Director</a>
+            <a href="https://www.athleticsos.io/coach" target="_blank" class="login-btn"><span class="login-btn-icon">🏈</span> Coaching</a>
+            <a href="https://www.athleticsos.io/teacher" target="_blank" class="login-btn"><span class="login-btn-icon">📋</span> Teacher</a>
+          </div>
+        </div>
+      </div>
 
-      <!-- Coaching Hub -->
-      <a href="https://www.athleticsos.io/coach" target="_blank" class="card">
-        <div class="card-arrow">↗</div>
-        <div class="card-icon">🏈</div>
-        <div class="card-label">Coach Portal</div>
-        <div class="card-title">Coaching Hub</div>
-        <div class="card-sub">PIN login — roster, schedule &amp; PT tracker</div>
-      </a>
-
-      <!-- SLAM Athletics -->
+      <!-- SLAM Elementary Athletics -->
       <a href="https://slamnvathletics.org" target="_blank" class="card">
         <div class="card-arrow">↗</div>
         <div class="card-icon">🏆</div>
-        <div class="card-label">Visit</div>
-        <div class="card-title">SLAM Athletics</div>
-        <div class="card-sub">Schedules, rosters, scores &amp; news</div>
+        <div class="card-label">Website</div>
+        <div class="card-title" style="font-size: 20px;">Slam Elementary Athletics</div>
       </a>
 
       <!-- Space Reservations -->
@@ -317,16 +379,6 @@
         <div class="card-icon">📅</div>
         <div class="card-label">Staff Portal</div>
         <div class="card-title">Space Reservations</div>
-        <div class="card-sub">Reserve the cafegym, turf &amp; playground</div>
-      </a>
-
-      <!-- Home Run Tracker -->
-      <a href="https://kennyhin.github.io/homerun-tracker" target="_blank" class="card">
-        <div class="card-arrow">↗</div>
-        <div class="card-icon">🏃</div>
-        <div class="card-label">Staff Portal</div>
-        <div class="card-title">Home Run Tracker</div>
-        <div class="card-sub">Teachers mark athletes — coaches get notified</div>
       </a>
 
       <!-- PE Games -->
@@ -335,7 +387,14 @@
         <div class="card-icon">🎮</div>
         <div class="card-label">K-5 Resource</div>
         <div class="card-title">PE Games</div>
-        <div class="card-sub">Games, locomotor skills &amp; NV standards</div>
+      </a>
+
+      <!-- Specialist Rotation -->
+      <a href="https://sites.google.com/slamnv.org/slamspecialist/special-rotations" target="_blank" class="card">
+        <div class="card-arrow">↗</div>
+        <div class="card-icon">🔄</div>
+        <div class="card-label">Rotations</div>
+        <div class="card-title">Specialist Calendar</div>
       </a>
 
       <!-- My Journey with God -->
@@ -384,6 +443,19 @@
     <img src="slam-logo.png" alt="SLAM! Nevada" /><br />
     &copy; 2026 SLAM! Nevada Athletic Department &nbsp;·&nbsp; kenny.hin@slamnv.org
   </footer>
+
+  <!-- AOS CARD FLIP — tap to reveal the three portal logins -->
+  <script>
+    const aosCard = document.getElementById('aos-card');
+    aosCard.addEventListener('click', function () {
+      this.classList.toggle('flipped');
+    });
+    // Clicking a login link opens it in a new tab — keep the card flipped open
+    // rather than also snapping shut on the way out.
+    aosCard.querySelectorAll('.login-btn').forEach(function (link) {
+      link.addEventListener('click', function (e) { e.stopPropagation(); });
+    });
+  </script>
 
   <!-- WEB3FORMS — free email service, no backend needed -->
   <!-- GET YOUR FREE KEY: go to web3forms.com, enter kenny.hin@slamnv.org, check your email -->
