@@ -93,13 +93,14 @@
     /* ── LINK CARDS ── */
     .cards {
       display: grid; grid-template-columns: repeat(3, 280px);
-      gap: 20px; justify-content: center; margin-bottom: 80px;
+      gap: 20px; justify-content: center; margin-bottom: 48px;
     }
 
     .card {
       position: relative; overflow: hidden;
       display: flex; flex-direction: column;
-      align-items: flex-start; justify-content: flex-end;
+      align-items: center; justify-content: flex-end;
+      text-align: center;
       width: 280px; min-height: 160px;
       padding: 28px;
       border-radius: 16px;
@@ -176,15 +177,16 @@
       background: var(--card);
     }
     .card-face-front {
-      justify-content: flex-end;
+      align-items: center; justify-content: flex-end; text-align: center;
       border: 1px solid rgba(56,189,248,0.18);
       transition: border-color 0.25s;
     }
     .card-flip:hover .card-face-front { border-color: rgba(56,189,248,0.55); }
     .card-face-back {
       transform: rotateY(180deg);
-      justify-content: center;
-      gap: 8px;
+      align-items: center; justify-content: center; text-align: center;
+      gap: 14px;
+      padding: 22px 18px;
       border: 1px solid rgba(99,102,241,0.45);
       box-shadow: 0 16px 48px rgba(99,102,241,0.18);
     }
@@ -192,25 +194,31 @@
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 11px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.16em;
-      color: var(--indigo); margin-bottom: 8px;
+      color: var(--indigo);
     }
-    .login-btn {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 14px;
+    /* Three logins side by side (not stacked) so the back face never overflows
+       the card's fixed height. */
+    .login-row {
+      display: flex; gap: 8px; width: 100%;
+    }
+    .login-tile {
+      flex: 1; min-width: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 6px;
+      padding: 12px 4px;
       border-radius: 10px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.1);
       color: #e5e7eb; text-decoration: none;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 15px; font-weight: 700; letter-spacing: 0.02em;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+      text-transform: uppercase; text-align: center; line-height: 1.15;
       transition: background 0.2s, border-color 0.2s, transform 0.2s;
     }
-    .login-btn:hover {
-      background: linear-gradient(90deg, rgba(56,189,248,0.18), rgba(99,102,241,0.18));
-      border-color: rgba(56,189,248,0.5);
-      transform: translateX(3px);
-    }
-    .login-btn-icon { font-size: 15px; line-height: 1; }
+    .login-tile-icon { font-size: 20px; line-height: 1; }
+    .login-tile.tile-ad:hover { background: linear-gradient(160deg, rgba(56,189,248,0.22), rgba(56,189,248,0.06)); border-color: rgba(56,189,248,0.55); transform: translateY(-2px); }
+    .login-tile.tile-coach:hover { background: linear-gradient(160deg, rgba(140,198,63,0.22), rgba(140,198,63,0.06)); border-color: rgba(140,198,63,0.55); transform: translateY(-2px); }
+    .login-tile.tile-teacher:hover { background: linear-gradient(160deg, rgba(227,24,55,0.22), rgba(227,24,55,0.06)); border-color: rgba(227,24,55,0.55); transform: translateY(-2px); }
     .card-back-close {
       position: absolute; top: 24px; right: 24px;
       width: 28px; height: 28px; border-radius: 50%;
@@ -230,7 +238,7 @@
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 11px; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.2em;
-      color: #374151;
+      color: var(--blue);
     }
 
     /* ── CONTACT FORM ── */
@@ -358,9 +366,17 @@
           <div class="card-face card-face-back">
             <div class="card-back-close">✕</div>
             <div class="card-back-label">Choose your login</div>
-            <a href="https://www.athleticsos.io" target="_blank" class="login-btn"><span class="login-btn-icon">🛡️</span> Athletic Director</a>
-            <a href="https://www.athleticsos.io/coach" target="_blank" class="login-btn"><span class="login-btn-icon">🏈</span> Coaching</a>
-            <a href="https://www.athleticsos.io/teacher" target="_blank" class="login-btn"><span class="login-btn-icon">📋</span> Teacher</a>
+            <div class="login-row">
+              <a href="https://www.athleticsos.io" target="_blank" class="login-tile tile-ad">
+                <span class="login-tile-icon">🛡️</span> Athletic<br>Director
+              </a>
+              <a href="https://www.athleticsos.io/coach" target="_blank" class="login-tile tile-coach">
+                <span class="login-tile-icon">🏈</span> Coaching
+              </a>
+              <a href="https://www.athleticsos.io/teacher" target="_blank" class="login-tile tile-teacher">
+                <span class="login-tile-icon">📋</span> Teacher
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -452,7 +468,7 @@
     });
     // Clicking a login link opens it in a new tab — keep the card flipped open
     // rather than also snapping shut on the way out.
-    aosCard.querySelectorAll('.login-btn').forEach(function (link) {
+    aosCard.querySelectorAll('.login-tile').forEach(function (link) {
       link.addEventListener('click', function (e) { e.stopPropagation(); });
     });
   </script>
