@@ -77,7 +77,7 @@
             </svg>
           </div>
           <h2 class="card-title">Reimbursement Ready</h2>
-          <p class="card-sub">Download the PDF and email it to Kenny Hin, Athletic Director.</p>
+          <p class="card-sub">Your signed PDF is ready. Download it or send directly to Kenny Hin, Athletic Director.</p>
           <div class="actions" style="justify-content:center">
             <button type="button" class="btn btn-primary" onclick="app.generatePDF()">Download PDF</button>
           </div>
@@ -103,31 +103,37 @@
     { key: 'upload', label: 'Upload' },
     { key: 'info', label: 'Info' },
     { key: 'items', label: 'Items' },
+    { key: 'sign', label: 'Sign' },
     { key: 'download', label: 'Download' },
   ];
 
   var FORM_STEPS = [
     {
       title: 'Your Info',
-      sub: 'Basic details for the reimbursement form.',
+      sub: 'Receipts do not include your name — enter it here along with your team details.',
       container: 'rr-basic',
       fields: [
         { id: 'rr-date', label: 'Date', type: 'date' },
-        { id: 'rr-name', label: 'Your Name', placeholder: 'First and last name' },
+        { id: 'rr-name', label: 'Your Name', placeholder: 'First and last name', required: true },
         { id: 'rr-sportteam', label: 'Sport Team', type: 'sportteam' },
-        { id: 'rr-position', label: 'Position', placeholder: 'Coach, Assistant Coach, etc.' },
+        { id: 'rr-position', label: 'Position', placeholder: 'Coach, Assistant Coach, etc.', required: true },
       ]
     },
     {
       title: 'Line Items',
-      sub: 'Enter each purchase from your receipt.',
+      sub: 'Confirm the store name and each purchase from your receipt.',
       container: 'rr-items',
       items: true
+    },
+    {
+      title: 'Sign & Date',
+      sub: 'Sign with your finger or mouse, then confirm the date.',
+      container: 'rr-sign',
+      signature: true
     }
   ];
 
   var ITEM_COLS = [
-    { key: 'vendor', label: 'Vendor', placeholder: 'Store' },
     { key: 'desc', label: 'Description', placeholder: 'What you bought' },
     { key: 'qty', label: 'Qty', type: 'number', defVal: '1', step: '1' },
     { key: 'amount', label: 'Amount', type: 'number', placeholder: '0.00', step: '0.01' },
@@ -135,7 +141,7 @@
 
   var AD_EMAIL = 'kenny.hin@slamnv.org';
   var TODAY = new Date().toISOString().slice(0, 10);
-  var STATE = { step: 0, values: {}, ocrRunning: false, scanned: false };
+  var STATE = { step: 0, values: {}, ocrRunning: false, scanned: false, sigPad: null };
 
   function $(id) { return document.getElementById(id); }
 
@@ -152,7 +158,7 @@
     var screen = getVisibleScreen();
     if (screen === 'screen-receipt') return 0;
     if (screen === 'screen-form') return STATE.step + 1;
-    if (screen === 'screen-download') return 3;
+    if (screen === 'screen-download') return 4;
     return 0;
   }
 
@@ -261,12 +267,55 @@
 
   function stepNext() {
     saveStep();
+    if (!validateStep()) return;
     STATE.step += 1;
     if (STATE.step >= FORM_STEPS.length) {
       show('screen-download');
       return;
     }
     buildStep();
+  }
+
+  function validateStep() {
+    var s = FORM_STEPS[STATE.step];
+    if (!s) return true;
+    if (s.fields) {
+      if (!(STATE.values['rr-name'] || '').trim()) {
+        alert('Please enter your name. Receipts do not include it — you must fill it in on this step.');
+        return false;
+      }
+      if (!(STATE.values['rr-position'] || '').trim()) {
+        alert('Please enter your position (e.g. Head Coach).');
+        return false;
+      }
+      if (!(STATE.values['rr-sport'] || '').trim()) {
+        alert('Please enter your sport.');
+        return false;
+      }
+    }
+    if (s.items) {
+      if (!(STATE.values['rr-vendor'] || '').trim()) {
+        alert('Please enter the store / vendor name from your receipt.');
+        return false;
+      }
+      var items = STATE.values['items'] || [];
+      var hasAmount = items.some(function (it) { return parseFloat(it.amount) > 0; });
+      if (!hasAmount) {
+        alert('Add at least one line item with an amount.');
+        return false;
+      }
+    }
+    if (s.signature) {
+      if (!STATE.values['_signature_png']) {
+        alert('Please sign in the box before continuing.');
+        return false;
+      }
+      if (!(STATE.values['rr-sign-date'] || '').trim()) {
+        alert('Please confirm the signature date.');
+        return false;
+      }
+    }
+    return true;
   }
 
   function setOcrStatus(mode, text) {
@@ -327,20 +376,32 @@
     return /^\d{4}-\d{2}-\d{2}$/.test(str) ? str : '';
   }
 
+  function isItemLine(line) {
+    return /^\d+\s+[A-Za-z]/.test(line.trim());
+  }
+
+  function isSkipLine(line) {
+    return /^(total|cash|change|subtotal|tax|thank|visa|mastercard|amount|balance|due|invoice|date|phone|www\.|http|barcode|\d{6,})/i.test(line.trim());
+  }
+
   function parseReceiptText(text) {
     var lines = text.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
     var result = { vendor: '', date: '', total: '', tax: '', items: [] };
-    for (var i = 0; i < lines.length; i++) {
+
+    for (var i = 0; i < Math.min(lines.length, 12); i++) {
       var l = lines[i];
-      if (l.length > 2 && !/^\d+$/.test(l) && !/^www\./i.test(l)) {
-        result.vendor = l.replace(/[^\w&'.,\- ]/g, '').trim();
-        if (result.vendor) break;
+      if (isItemLine(l) || isSkipLine(l)) continue;
+      var cleaned = l.replace(/[^\w&'!.,\- ]/g, ' ').replace(/\s+/g, ' ').trim();
+      if (cleaned.length >= 3 && /[A-Za-z]{3,}/.test(cleaned) && !/^\d/.test(cleaned)) {
+        result.vendor = cleaned;
+        break;
       }
     }
+
     var dateMatch = text.match(/\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}-\d{2}-\d{2})\b/);
     if (dateMatch) result.date = normalizeDate(dateMatch[1]);
+
     var moneyRe = /\$?\s?(\d{1,4}(?:,\d{3})*\.\d{2})/;
-    var skipWords = /\b(total|tax|subtotal|change|cash|visa|card|balance|due|invoice|date|phone|www\.|shipping)\b/i;
     lines.forEach(function (line) {
       var lower = line.toLowerCase();
       var m = line.match(moneyRe);
@@ -350,31 +411,70 @@
       if (/\btax\b/.test(lower)) { result.tax = amt; return; }
       if (/\b(total|amount due|balance due)\b/.test(lower)) { result.total = amt; }
     });
+
     lines.forEach(function (line) {
-      if (skipWords.test(line.toLowerCase())) return;
-      var m = line.match(/^(.+?)\s+\$?(\d{1,4}(?:,\d{3})*\.\d{2})\s*$/);
+      if (isSkipLine(line)) return;
+      var m = line.match(/^(\d+)\s+(.+?)\s*:?\s*\$?(\d{1,4}(?:,\d{3})*\.\d{2})\s*$/);
       if (m) {
-        var desc = m[1].replace(/[-.]{2,}/g, '').replace(/\s{2,}/g, ' ').trim();
-        if (desc.length > 1 && desc.length < 60 && /[a-zA-Z]{2,}/.test(desc)) {
-          result.items.push({ desc: desc, amount: m[2].replace(/,/g, '') });
+        var qty = m[1];
+        var name = m[2].replace(/[-.]{2,}/g, '').replace(/\s+/g, ' ').trim();
+        if (name.length > 0 && name.length < 60) {
+          result.items.push({
+            desc: qty + ' ' + name,
+            qty: qty,
+            amount: m[3].replace(/,/g, '')
+          });
+        }
+        return;
+      }
+      m = line.match(/^(.+?)\s+\$?(\d{1,4}(?:,\d{3})*\.\d{2})\s*$/);
+      if (m) {
+        var desc = m[1].replace(/[-.]{2,}/g, '').replace(/\s+/g, ' ').trim();
+        if (desc.length > 1 && desc.length < 60 && /[a-zA-Z]{2,}/.test(desc) && !isSkipLine(desc)) {
+          var qtyMatch = desc.match(/^(\d+)\s+(.+)$/);
+          result.items.push({
+            desc: desc,
+            qty: qtyMatch ? qtyMatch[1] : '1',
+            amount: m[2].replace(/,/g, '')
+          });
         }
       }
     });
+
     return result;
   }
 
   function applyOcrResults(parsed) {
+    if (parsed.vendor) {
+      STATE.values['rr-vendor'] = parsed.vendor;
+      STATE.values['_ocr_rr-vendor'] = true;
+    }
     if (parsed.date) { STATE.values['rr-date'] = parsed.date; STATE.values['_ocr_rr-date'] = true; }
     if (parsed.items.length) {
       STATE.values['items'] = parsed.items.map(function (it) {
-        return { vendor: parsed.vendor || '', desc: it.desc, qty: '1', amount: it.amount };
+        return { desc: it.desc, qty: it.qty || '1', amount: it.amount };
       });
       STATE.values['_ocr_items'] = true;
     } else if (parsed.vendor) {
-      STATE.values['items'] = [{ vendor: parsed.vendor, desc: '', qty: '1', amount: parsed.total || '' }];
+      STATE.values['items'] = [{ desc: '', qty: '1', amount: parsed.total || '' }];
       STATE.values['_ocr_items'] = true;
     }
     if (parsed.tax) { STATE.values['rr-tax'] = parsed.tax; STATE.values['_ocr_rr-tax'] = true; }
+  }
+
+  function persistAll() {
+    if (STATE.sigPad) saveSignature();
+    var signRoot = $('rr-sign');
+    if (signRoot) {
+      var signDate = signRoot.querySelector('#rr-sign-date');
+      if (signDate) STATE.values['rr-sign-date'] = (signDate.value || '').trim();
+    }
+  }
+
+  function saveSignature() {
+    if (STATE.sigPad && STATE.sigPad.hasStroke) {
+      STATE.values['_signature_png'] = STATE.sigPad.canvas.toDataURL('image/png');
+    }
   }
 
   function saveStep() {
@@ -382,7 +482,15 @@
     if (!s) return;
     var root = $(s.container);
     if (!root) return;
+    if (s.signature) {
+      saveSignature();
+      var signDate = root.querySelector('#rr-sign-date');
+      if (signDate) STATE.values['rr-sign-date'] = (signDate.value || '').trim();
+      return;
+    }
     if (s.items) {
+      var vendorEl = root.querySelector('#rr-vendor');
+      if (vendorEl) STATE.values['rr-vendor'] = (vendorEl.value || '').trim();
       var rows = [];
       Array.prototype.forEach.call(root.querySelectorAll('tbody tr'), function (row) {
         var item = {};
@@ -451,9 +559,24 @@
     if (STATE.values['_ocr_items']) {
       var banner = document.createElement('div');
       banner.className = 'ocr-banner';
-      banner.textContent = 'Filled from your receipt — please review before continuing.';
+      banner.textContent = 'Filled from your receipt — please review the store name and line items.';
       box.appendChild(banner);
     }
+
+    var vendorField = document.createElement('div');
+    vendorField.className = 'field vendor-field';
+    var vendorLbl = document.createElement('label');
+    vendorLbl.htmlFor = 'rr-vendor';
+    vendorLbl.textContent = 'Store / Vendor (from receipt)';
+    if (STATE.values['_ocr_rr-vendor']) vendorLbl.textContent += ' — detected from photo';
+    vendorField.appendChild(vendorLbl);
+    var vendorInp = document.createElement('input');
+    vendorInp.id = 'rr-vendor';
+    vendorInp.placeholder = 'e.g. Green Supermarket';
+    vendorInp.value = STATE.values['rr-vendor'] || '';
+    if (STATE.values['_ocr_rr-vendor']) vendorInp.classList.add('from-ocr');
+    vendorField.appendChild(vendorInp);
+    box.appendChild(vendorField);
 
     var wrap = document.createElement('div');
     wrap.className = 'table-wrap';
@@ -516,6 +639,113 @@
     }, 0);
   }
 
+  function buildSignatureStep(s, area) {
+    var box = document.createElement('div');
+    box.id = s.container;
+
+    var sigWrap = document.createElement('div');
+    sigWrap.className = 'sig-wrap';
+    var canvas = document.createElement('canvas');
+    canvas.className = 'sig-canvas';
+    canvas.width = 600;
+    canvas.height = 160;
+    sigWrap.appendChild(canvas);
+    box.appendChild(sigWrap);
+
+    var sigActions = document.createElement('div');
+    sigActions.className = 'sig-actions';
+    sigActions.innerHTML = '<span class="sig-hint">Use your finger on phone or mouse on desktop</span>';
+    var clearBtn = document.createElement('button');
+    clearBtn.type = 'button';
+    clearBtn.className = 'btn btn-ghost';
+    clearBtn.textContent = 'Clear signature';
+    clearBtn.onclick = function () { clearSignaturePad(); };
+    sigActions.appendChild(clearBtn);
+    box.appendChild(sigActions);
+
+    var dateField = document.createElement('div');
+    dateField.className = 'field';
+    dateField.style.marginTop = '16px';
+    var dateLbl = document.createElement('label');
+    dateLbl.htmlFor = 'rr-sign-date';
+    dateLbl.textContent = 'Signature Date';
+    dateField.appendChild(dateLbl);
+    var dateInp = document.createElement('input');
+    dateInp.type = 'date';
+    dateInp.id = 'rr-sign-date';
+    dateInp.value = STATE.values['rr-sign-date'] || STATE.values['rr-date'] || TODAY;
+    dateField.appendChild(dateInp);
+    box.appendChild(dateField);
+
+    area.appendChild(box);
+    initSignaturePad(canvas);
+  }
+
+  function initSignaturePad(canvas) {
+    var ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#0B0B0B';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    var pad = { canvas: canvas, ctx: ctx, drawing: false, hasStroke: false };
+    STATE.sigPad = pad;
+
+    if (STATE.values['_signature_png']) {
+      var img = new Image();
+      img.onload = function () {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        pad.hasStroke = true;
+      };
+      img.src = STATE.values['_signature_png'];
+    }
+
+    function pos(e) {
+      var rect = canvas.getBoundingClientRect();
+      var cx = e.touches ? e.touches[0].clientX : e.clientX;
+      var cy = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: (cx - rect.left) * (canvas.width / rect.width),
+        y: (cy - rect.top) * (canvas.height / rect.height)
+      };
+    }
+
+    function start(e) {
+      e.preventDefault();
+      pad.drawing = true;
+      var p = pos(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+    }
+
+    function move(e) {
+      if (!pad.drawing) return;
+      e.preventDefault();
+      var p = pos(e);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      pad.hasStroke = true;
+    }
+
+    function end() { pad.drawing = false; }
+
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', move);
+    canvas.addEventListener('mouseup', end);
+    canvas.addEventListener('mouseleave', end);
+    canvas.addEventListener('touchstart', start, { passive: false });
+    canvas.addEventListener('touchmove', move, { passive: false });
+    canvas.addEventListener('touchend', end);
+  }
+
+  function clearSignaturePad() {
+    if (!STATE.sigPad) return;
+    var pad = STATE.sigPad;
+    pad.ctx.clearRect(0, 0, pad.canvas.width, pad.canvas.height);
+    pad.hasStroke = false;
+    delete STATE.values['_signature_png'];
+  }
+
   function buildStep() {
     var s = FORM_STEPS[STATE.step];
     if (!s) return;
@@ -533,6 +763,7 @@
     area.appendChild(sub);
 
     if (s.items) { buildItemsStep(s, area); renderStepBar(); return; }
+    if (s.signature) { buildSignatureStep(s, area); renderStepBar(); return; }
 
     var box = document.createElement('div');
     box.id = s.container;
@@ -618,6 +849,21 @@
     return (str || '').replace(/[^a-zA-Z0-9]/g, '').substring(0, 20) || 'unknown';
   }
 
+  function formatPdfDate(val) {
+    if (!val) return '';
+    var m = String(val).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (m) return m[2] + '/' + m[3] + '/' + m[1];
+    return val;
+  }
+
+  function dataUrlToBytes(dataUrl) {
+    var base64 = dataUrl.split(',')[1];
+    var bin = atob(base64);
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+  }
+
   async function buildPdfDoc() {
     if (typeof PDFLib === 'undefined') throw new Error('PDF library not loaded.');
     var PDFDocument = PDFLib.PDFDocument;
@@ -625,6 +871,7 @@
     var rgb = PDFLib.rgb;
     var v = STATE.values;
     var items = v['items'] || [];
+    var vendorName = (v['rr-vendor'] || '').trim();
     var black = rgb(0.11, 0.11, 0.11);
 
     var doc;
@@ -646,7 +893,7 @@
     }
 
     var sportTeam = buildSportTeam(v);
-    t(42, 647, v['rr-date']);
+    t(42, 647, formatPdfDate(v['rr-date']));
     t(120, 647, v['rr-name'], 9);
     t(246, 647, sportTeam, 9);
     t(462, 647, v['rr-position'], 9);
@@ -655,8 +902,8 @@
     items.forEach(function (item, i) {
       if (i >= RR_Y.length) return;
       var y = RR_Y[i];
-      t(40, y, v['rr-date'], 8);
-      t(100, y, item.vendor, 8);
+      t(40, y, formatPdfDate(v['rr-date']), 8);
+      t(100, y, vendorName, 8);
       t(190, y, item.desc, 8);
       var qtyNum = parseFloat(item.qty) || 1;
       var amtNum = parseFloat(item.amount) || 0;
@@ -670,6 +917,14 @@
 
     var total = parseFloat(v['_total'] || v['_subtotal'] || '0');
     if (total > 0) t(500, 401, total.toFixed(2), 10);
+
+    if (v['_signature_png']) {
+      try {
+        var sigImg = await doc.embedPng(dataUrlToBytes(v['_signature_png']));
+        page.drawImage(sigImg, { x: 42, y: 328, width: 170, height: 42 });
+      } catch (e) { /* signature embed failed — continue without */ }
+    }
+    t(480, 340, formatPdfDate(v['rr-sign-date'] || v['rr-date']), 9);
 
     return { bytes: await doc.save(), filename: safeName(lastName(v['rr-name'])) + '_RRF.pdf' };
   }
@@ -686,7 +941,7 @@
 
   async function generatePDF() {
     try {
-      saveStep();
+      persistAll();
       var result = await buildPdfDoc();
       downloadBytes(result.bytes, result.filename);
     } catch (err) {
@@ -696,7 +951,7 @@
 
   async function sendToAD() {
     try {
-      saveStep();
+      persistAll();
       var result = await buildPdfDoc();
       var file = new File([result.bytes], result.filename, { type: 'application/pdf' });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -717,6 +972,7 @@
     STATE.values = {};
     STATE.ocrRunning = false;
     STATE.scanned = false;
+    STATE.sigPad = null;
     resetUploadUi();
     show('screen-receipt');
   }
