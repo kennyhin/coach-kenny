@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Coach Reimbursement — SLAM! Nevada Athletics</title>
+  <meta name="description" content="Fill out and download your SLAM coach reimbursement form. Mobile-friendly, no login required." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="pe-games/css/pe-styles.css" />
+  <link rel="stylesheet" href="css/reimbursement.css" />
+  <link rel="icon" type="image/png" href="slam-logo.png" />
+</head>
+<body>
+
+  <div class="mobile-bar">
+    <a href="/" class="mobile-bar-logo">SLAM<span>RRF</span></a>
+    <span id="mobile-step" class="step-badge" style="margin:0"></span>
+  </div>
+
+  <nav class="side-nav">
+    <a href="/" class="side-nav-logo">
+      <img src="slam-logo.png" alt="SLAM Nevada" style="width:66px;height:auto;display:block;opacity:0.9" />
+    </a>
+    <a href="https://www.slamnvathletics.org" target="_blank" rel="noopener">Athletics</a>
+    <a href="/">Coach Kenny</a>
+    <a href="receipt.html">All Forms</a>
+  </nav>
+
+  <div class="page">
+    <section class="hero hero-compact">
+      <div class="hero-bg vignette">
+        <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <defs>
+            <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+              <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(218,0,22,0.08)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)"/>
+          <rect width="100%" height="100%" fill="radial-gradient(circle at 20% 80%, rgba(128,255,0,0.12), transparent 55%)"/>
+        </svg>
+      </div>
+      <div class="hero-inner hero-center">
+        <p class="welcome-eyebrow">SLAM! Nevada · Athletics Department</p>
+        <h1 class="pe-hero-title" style="font-size:clamp(42px,8vw,96px)">Coach <span>Reimburse</span></h1>
+        <p class="hero-desc" id="hero-desc">Get paid back for team purchases. Fill the form, download the official PDF, and send it to the Athletic Director.</p>
+      </div>
+    </section>
+
+    <section class="content-section" style="margin-top:32px">
+      <div class="form-shell">
+        <div id="js-status" class="no-js-warning" style="display:none">App did not initialize. Please reload.</div>
+
+        <div class="progress" id="progress" style="display:none">
+          <div class="progress-step" data-step="0"></div>
+          <div class="progress-step" data-step="1"></div>
+          <div class="progress-step" data-step="2"></div>
+        </div>
+
+        <!-- Intro -->
+        <div id="screen-intro" class="screen screen-visible">
+          <div class="panel">
+            <span class="step-badge">Staff tool</span>
+            <h2 class="panel-title">Start your form</h2>
+            <p class="panel-sub">This matches the official SLAM reimbursement form. You'll enter your info and line items, then download a filled PDF ready for Kenny Hin, Athletic Director.</p>
+            <ul style="font-size:14px;color:var(--fg-muted);line-height:1.7;margin-bottom:20px;padding-left:18px">
+              <li>Name, date, sport team, and position</li>
+              <li>Receipt line items (vendor, description, amount)</li>
+              <li>Tax paid is deducted automatically</li>
+            </ul>
+            <div class="intro-actions">
+              <button class="btn btn-primary" onclick="app.beginForm()">Start reimbursement</button>
+              <button class="btn btn-ghost" onclick="app.beginWithScan()">Scan a receipt first (optional)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Receipt scan -->
+        <div id="screen-receipt" class="screen">
+          <div class="panel">
+            <span class="step-badge">Optional</span>
+            <h2 class="panel-title">Receipt photo</h2>
+            <p class="panel-sub">Take a photo and we'll try to read the vendor, date, and line items. You can always edit on the next screens.</p>
+            <div class="field">
+              <label class="snap-area" id="snap-label">
+                <input type="file" accept="image/*" capture="environment" onchange="app.onPhoto(this)" />
+                <div class="snap-kicker">Camera or upload</div>
+                <div class="snap-title">Tap to scan a receipt</div>
+                <div class="snap-sub">Best results: flat, well-lit photo</div>
+              </label>
+            </div>
+            <div id="preview-wrap" style="display:none" class="preview">
+              <img id="receipt-img" alt="Receipt preview" />
+            </div>
+            <div id="ocr-status" class="ocr-status">
+              <span class="ocr-spinner" id="ocr-spinner"></span>
+              <span id="ocr-status-text">Reading receipt…</span>
+            </div>
+            <button class="ocr-skip" id="ocr-skip-btn" type="button" onclick="app.skipOcrWait()">Taking a while? Continue manually →</button>
+            <div class="actions">
+              <button class="btn btn-secondary" type="button" onclick="app.goIntro()">Back</button>
+              <button class="btn btn-primary" type="button" id="receipt-next-btn" onclick="app.nextFromReceipt()">Continue</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form steps -->
+        <div id="screen-form" class="screen">
+          <div class="panel">
+            <div id="step-area"></div>
+            <div class="actions">
+              <button class="btn btn-secondary" type="button" onclick="app.stepBack()">Back</button>
+              <button class="btn btn-primary" type="button" onclick="app.stepNext()">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Download -->
+        <div id="screen-download" class="screen">
+          <div class="panel">
+            <div class="done-card">
+              <div class="done-icon">✓</div>
+              <span class="step-badge">Complete</span>
+              <h2 class="panel-title">Ready to submit</h2>
+              <p class="panel-sub">Download the PDF and attach it in an email to the Athletic Director, or use Share on your phone.</p>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="button" onclick="app.generatePDF()">Download PDF</button>
+            </div>
+            <div class="actions" style="margin-top:10px">
+              <button class="btn btn-secondary" type="button" onclick="app.sendToAD()">Send to Athletic Director</button>
+            </div>
+            <div class="actions" style="margin-top:10px">
+              <button class="btn btn-ghost" type="button" onclick="app.resetAll()">Start a new form</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer style="text-align:center;padding:40px 24px 56px;color:var(--fg-dim);font-size:13px">
+      <img src="slam-logo.png" alt="SLAM Nevada" style="width:48px;height:auto;margin-bottom:12px;opacity:0.85" /><br />
+      &copy; 2026 SLAM! Nevada Athletic Department · kenny.hin@slamnv.org
+    </footer>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var TODAY = (function () {
+    var d = new Date();
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  })();
+
+  var AD_EMAIL = 'kenny.hin@slamnv.org';
+  var STATE = { step: 0, values: {}, ocrRunning: false, fromScan: false };
+
+  var STEPS = [
+    {
+      title: 'Basic info',
+      container: 'rr-basic',
+      fields: [
+        { id: 'rr-date', label: 'Date', type: 'date' },
+        { id: 'rr-name', label: 'Your name', placeholder: 'First and last name' },
+        { id: 'rr-sportteam', label: 'Sport team', type: 'sportteam' },
+        { id: 'rr-position', label: 'Position', placeholder: 'Coach, Assistant Coach, etc.' },
+      ]
+    },
+    { title: 'Line items', container: 'rr-items', items: true }
+  ];
+
+  var ITEM_COLS = [
+    { key: 'vendor', label: 'Vendor', type: 'text', grow: true, placeholder: 'Store name' },
+    { key: 'desc', label: 'Description', type: 'text', grow: true, placeholder: 'What you bought' },
+    { key: 'qty', label: 'Qty', type: 'number', width: '50px', defVal: '1', step: '1' },
+    { key: 'amount', label: 'Amount', type: 'number', width: '85px', placeholder: '0.00', step: '0.01' },
+  ];
+
+  function $(id) { return document.getElementById(id); }
+
+  function buildSportTeam(vals) {
+    var parts = ['Slam'];
+    if (vals['rr-grade']) parts.push(vals['rr-grade']);
+    if (vals['rr-sport']) parts.push(vals['rr-sport']);
+    var base = parts.join(' ');
+    if (vals['rr-coach']) base += ' (' + vals['rr-coach'] + ')';
+    return base;
+  }
+
+  function gridTemplate(cols) {
+    return cols.map(function (c) { return c.grow ? '1fr' : c.width; }).join(' ');
+  }
+
+  function updateProgress() {
+    var bar = $('progress');
+    var mobile = $('mobile-step');
+    var inFlow = ['screen-form', 'screen-download'].indexOf(getVisibleScreen()) >= 0 ||
+      getVisibleScreen() === 'screen-receipt';
+    bar.style.display = inFlow ? 'flex' : 'none';
+
+    var idx = STATE.step;
+    if (getVisibleScreen() === 'screen-receipt') idx = 0;
+    if (getVisibleScreen() === 'screen-download') idx = STEPS.length;
+
+    Array.prototype.forEach.call(bar.querySelectorAll('.progress-step'), function (el, i) {
+      el.classList.remove('done', 'active');
+      if (i < idx) el.classList.add('done');
+      if (i === idx && getVisibleScreen() !== 'screen-download') el.classList.add('active');
+      if (getVisibleScreen() === 'screen-download') el.classList.add('done');
+    });
+
+    if (mobile) {
+      if (getVisibleScreen() === 'screen-download') mobile.textContent = 'Done';
+      else if (getVisibleScreen() === 'screen-receipt') mobile.textContent = 'Scan';
+      else if (getVisibleScreen() === 'screen-form') mobile.textContent = 'Step ' + (STATE.step + 1) + ' / ' + STEPS.length;
+      else mobile.textContent = '';
+    }
+  }
+
+  function getVisibleScreen() {
+    var ids = ['screen-intro', 'screen-receipt', 'screen-form', 'screen-download'];
+    for (var i = 0; i < ids.length; i++) {
+      var el = $(ids[i]);
+      if (el && el.classList.contains('screen-visible')) return ids[i];
+    }
+    return 'screen-intro';
+  }
+
+  function show(id) {
+    ['screen-intro', 'screen-receipt', 'screen-form', 'screen-download'].forEach(function (n) {
+      var el = $(n);
+      if (!el) return;
+      if (n === id) { el.classList.add('screen-visible'); el.classList.remove('screen'); }
+      else { el.classList.add('screen'); el.classList.remove('screen-visible'); }
+    });
+    var desc = $('hero-desc');
+    if (desc) {
+      if (id === 'screen-intro') desc.textContent = 'Get paid back for team purchases. Fill the form, download the official PDF, and send it to the Athletic Director.';
+      else if (id === 'screen-receipt') desc.textContent = 'Optional: scan your receipt to auto-fill line items.';
+      else if (id === 'screen-form') desc.textContent = 'Step ' + (STATE.step + 1) + ' of ' + STEPS.length + ' — ' + (STEPS[STATE.step] ? STEPS[STATE.step].title : '');
+      else desc.textContent = 'Your reimbursement PDF is ready.';
+    }
+    updateProgress();
+    var w = $('js-status');
+    if (w) w.style.display = 'none';
+  }
+
+  function beginForm() {
+    STATE.step = 0; STATE.fromScan = false;
+    show('screen-form');
+    buildStep();
+  }
+
+  function beginWithScan() {
+    STATE.step = 0; STATE.fromScan = true;
+    resetReceiptUi();
+    show('screen-receipt');
+  }
+
+  function goIntro() { show('screen-intro'); }
+
+  function resetReceiptUi() {
+    $('preview-wrap').style.display = 'none';
+    $('receipt-img').src = '';
+    setOcrStatus(null);
+    var snap = $('snap-label');
+    if (snap) {
+      snap.querySelector('.snap-title').textContent = 'Tap to scan a receipt';
+      snap.querySelector('.snap-sub').textContent = 'Best results: flat, well-lit photo';
+    }
+  }
+
+  function nextFromReceipt() {
+    show('screen-form');
+    buildStep();
+  }
+
+  function onPhoto(input) {
+    if (!input.files || !input.files[0]) return;
+    var file = input.files[0];
+    $('preview-wrap').style.display = 'block';
+    $('receipt-img').src = URL.createObjectURL(file);
+    var snap = $('snap-label');
+    if (snap) {
+      snap.querySelector('.snap-title').textContent = 'Photo added';
+      snap.querySelector('.snap-sub').textContent = 'Tap to retake';
+    }
+    runOCR(file);
+  }
+
+  function stepBack() {
+    if (STATE.step === 0) {
+      if (STATE.fromScan) show('screen-receipt');
+      else show('screen-intro');
+      return;
+    }
+    STATE.step -= 1;
+    buildStep();
+  }
+
+  function stepNext() {
+    saveStep();
+    STATE.step += 1;
+    if (STATE.step >= STEPS.length) { show('screen-download'); return; }
+    buildStep();
+  }
+
+  function setOcrStatus(mode, text) {
+    var box = $('ocr-status');
+    var spinner = $('ocr-spinner');
+    var skip = $('ocr-skip-btn');
+    var nextBtn = $('receipt-next-btn');
+    if (!box) return;
+    if (!mode) {
+      box.style.display = 'none';
+      if (skip) skip.style.display = 'none';
+      if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = 'Continue'; }
+      return;
+    }
+    box.style.display = 'flex';
+    box.classList.toggle('err', mode === 'error');
+    if (spinner) spinner.style.display = mode === 'running' ? 'block' : 'none';
+    $('ocr-status-text').textContent = text || '';
+    if (nextBtn) {
+      nextBtn.disabled = mode === 'running';
+      nextBtn.textContent = mode === 'running' ? 'Reading…' : 'Continue';
+    }
+  }
+
+  function skipOcrWait() {
+    STATE.ocrRunning = false;
+    setOcrStatus('error', 'Skipped — fill in details on the next screens.');
+  }
+
+  function downscaleImage(file, maxDim) {
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      img.onload = function () {
+        var w = img.width, h = img.height;
+        var scale = Math.min(1, maxDim / Math.max(w, h));
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.round(w * scale);
+        canvas.height = Math.round(h * scale);
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(img.src);
+        resolve(canvas);
+      };
+      img.onerror = function () { reject(new Error('Could not load image')); };
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  async function runOCR(file) {
+    if (typeof Tesseract === 'undefined') {
+      setOcrStatus('error', 'OCR did not load — check your connection. You can still fill in manually.');
+      return;
+    }
+    STATE.ocrRunning = true;
+    setOcrStatus('running', 'Reading receipt…');
+    var skipTimer = setTimeout(function () {
+      var skip = $('ocr-skip-btn');
+      if (skip && STATE.ocrRunning) skip.style.display = 'block';
+    }, 6000);
+
+    try {
+      var canvas = await downscaleImage(file, 1600);
+      var result = await Tesseract.recognize(canvas, 'eng');
+      var text = (result && result.data && result.data.text) || '';
+      applyOcrResults(parseReceiptText(text));
+      setOcrStatus('done', 'Review auto-filled fields on the next screens.');
+    } catch (e) {
+      setOcrStatus('error', 'OCR failed — you can still fill in manually.');
+    } finally {
+      STATE.ocrRunning = false;
+      clearTimeout(skipTimer);
+      var skip = $('ocr-skip-btn');
+      if (skip) skip.style.display = 'none';
+      var nextBtn = $('receipt-next-btn');
+      if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = 'Continue'; }
+    }
+  }
+
+  function normalizeDate(str) {
+    var m = str.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+    if (m) {
+      var yyyy = m[3].length === 2 ? '20' + m[3] : m[3];
+      return yyyy + '-' + m[1].padStart(2, '0') + '-' + m[2].padStart(2, '0');
+    }
+    if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+    return '';
+  }
+
+  function parseReceiptText(text) {
+    var lines = text.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+    var result = { vendor: '', date: '', total: '', tax: '', items: [] };
+
+    for (var i = 0; i < lines.length; i++) {
+      var l = lines[i];
+      if (l.length > 2 && !/^\d+$/.test(l) && !/^www\./i.test(l)) {
+        result.vendor = l.replace(/[^\w&'.,\- ]/g, '').trim();
+        if (result.vendor) break;
+      }
+    }
+
+    var dateMatch = text.match(/\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}-\d{2}-\d{2})\b/);
+    if (dateMatch) result.date = normalizeDate(dateMatch[1]);
+
+    var moneyRe = /\$?\s?(\d{1,4}(?:,\d{3})*\.\d{2})/;
+    var skipWords = /\b(total|tax|subtotal|change|cash|visa|card|balance|due|invoice|date|phone|www\.|shipping|bill to|ship to)\b/i;
+
+    lines.forEach(function (line) {
+      var lower = line.toLowerCase();
+      var m = line.match(moneyRe);
+      if (!m) return;
+      var amt = m[1].replace(/,/g, '');
+      if (/sub[\s-]?total/.test(lower)) { result.subtotal = amt; return; }
+      if (/\btax\b/.test(lower)) { result.tax = amt; return; }
+      if (/\b(total|amount due|balance due)\b/.test(lower)) { result.total = amt; }
+    });
+
+    lines.forEach(function (line) {
+      if (skipWords.test(line.toLowerCase())) return;
+      var m = line.match(/^(.+?)\s+\$?(\d{1,4}(?:,\d{3})*\.\d{2})\s*$/);
+      if (m) {
+        var desc = m[1].replace(/[-.]{2,}/g, '').replace(/\s{2,}/g, ' ').trim();
+        if (desc.length > 1 && desc.length < 60 && /[a-zA-Z]{2,}/.test(desc)) {
+          result.items.push({ desc: desc, amount: m[2].replace(/,/g, '') });
+        }
+      }
+    });
+
+    return result;
+  }
+
+  function applyOcrResults(parsed) {
+    if (parsed.date) { STATE.values['rr-date'] = parsed.date; STATE.values['_ocr_rr-date'] = true; }
+    if (parsed.items.length) {
+      STATE.values['items'] = parsed.items.map(function (it) {
+        return { vendor: parsed.vendor || '', desc: it.desc, qty: '1', amount: it.amount };
+      });
+      STATE.values['_ocr_items'] = true;
+    } else if (parsed.vendor) {
+      STATE.values['items'] = [{ vendor: parsed.vendor, desc: '', qty: '1', amount: parsed.total || '' }];
+      STATE.values['_ocr_items'] = true;
+    }
+    if (parsed.tax) { STATE.values['rr-tax'] = parsed.tax; STATE.values['_ocr_rr-tax'] = true; }
+  }
+
+  function saveStep() {
+    var s = STEPS[STATE.step];
+    if (!s) return;
+    var root = $(s.container);
+    if (!root) return;
+    if (s.items) {
+      var rows = [];
+      Array.prototype.forEach.call(root.querySelectorAll('.item-row'), function (row) {
+        var item = {};
+        Array.prototype.forEach.call(row.querySelectorAll('input[data-key]'), function (el) {
+          item[el.getAttribute('data-key')] = (el.value || '').trim();
+        });
+        rows.push(item);
+      });
+      STATE.values['items'] = rows;
+      Array.prototype.forEach.call(root.querySelectorAll('input[data-field]'), function (el) {
+        STATE.values[el.getAttribute('data-field')] = (el.value || '').trim();
+      });
+      STATE.values['_subtotal'] = (root.querySelector('.subtotal-val') || {}).textContent || '0.00';
+      STATE.values['_total'] = (root.querySelector('.total-val') || {}).textContent || '0.00';
+    } else {
+      Array.prototype.forEach.call(root.querySelectorAll('input, textarea, select'), function (el) {
+        if (el.id) STATE.values[el.id] = (el.value || '').trim();
+      });
+    }
+  }
+
+  function createRow(cols, vals) {
+    var row = document.createElement('div');
+    row.className = 'item-row';
+    row.style.gridTemplateColumns = gridTemplate(cols);
+    cols.forEach(function (col) {
+      var inp = document.createElement('input');
+      inp.type = col.type || 'text';
+      inp.setAttribute('data-key', col.key);
+      if (col.placeholder) inp.placeholder = col.placeholder;
+      if (col.step) inp.step = col.step;
+      if (col.readonly) inp.readOnly = true;
+      inp.value = (vals && vals[col.key]) || col.defVal || '';
+      if (vals && vals._ocr) inp.classList.add('from-ocr');
+      row.appendChild(inp);
+    });
+    return row;
+  }
+
+  function recalcTotals(container) {
+    var sum = 0;
+    Array.prototype.forEach.call(container.querySelectorAll('.item-row'), function (row) {
+      var v = parseFloat((row.querySelector('[data-key="amount"]') || {}).value);
+      if (isFinite(v)) sum += v;
+    });
+    var subEl = container.querySelector('.subtotal-val');
+    if (subEl) subEl.textContent = sum.toFixed(2);
+    var tax = parseFloat((container.querySelector('[data-field="rr-tax"]') || {}).value) || 0;
+    if (!isFinite(tax)) tax = 0;
+    var totEl = container.querySelector('.total-val');
+    if (totEl) totEl.textContent = Math.max(0, sum - tax).toFixed(2);
+  }
+
+  function bindRow(row, container) {
+    Array.prototype.forEach.call(row.querySelectorAll('input'), function (el) {
+      el.addEventListener('input', function () {
+        el.classList.remove('from-ocr');
+        recalcTotals(container);
+      });
+    });
+  }
+
+  function buildItemsStep(s, area) {
+    var box = document.createElement('div');
+    box.id = s.container;
+    box.className = 'items-section';
+
+    if (STATE.values['_ocr_items']) {
+      var banner = document.createElement('div');
+      banner.className = 'ocr-banner';
+      banner.textContent = 'Filled from your receipt photo — please review before continuing.';
+      box.appendChild(banner);
+    }
+
+    var hdr = document.createElement('div');
+    hdr.className = 'item-headers';
+    hdr.style.gridTemplateColumns = gridTemplate(ITEM_COLS);
+    ITEM_COLS.forEach(function (col) {
+      var cell = document.createElement('div');
+      cell.className = 'item-header-cell';
+      cell.textContent = col.label;
+      hdr.appendChild(cell);
+    });
+    box.appendChild(hdr);
+
+    var list = document.createElement('div');
+    list.className = 'items-list';
+    var existing = STATE.values['items'] || [];
+    var ocrFlag = !!STATE.values['_ocr_items'];
+    if (existing.length) {
+      existing.forEach(function (vals) {
+        list.appendChild(createRow(ITEM_COLS, Object.assign({}, vals, { _ocr: ocrFlag })));
+      });
+    } else {
+      list.appendChild(createRow(ITEM_COLS));
+    }
+    box.appendChild(list);
+
+    var addBtn = document.createElement('button');
+    addBtn.type = 'button';
+    addBtn.className = 'btn btn-secondary add-row-btn';
+    addBtn.textContent = '+ Add row';
+    addBtn.onclick = function () {
+      var newRow = createRow(ITEM_COLS);
+      list.appendChild(newRow);
+      bindRow(newRow, box);
+      newRow.querySelector('input').focus();
+    };
+    box.appendChild(addBtn);
+
+    var totBox = document.createElement('div');
+    totBox.className = 'items-totals';
+    totBox.innerHTML =
+      '<div class="totals-row"><span class="totals-label">Subtotal</span><span class="totals-value">$<span class="subtotal-val">0.00</span></span></div>' +
+      '<div class="totals-row"><span class="totals-label">Tax paid (deduct)' +
+      (STATE.values['_ocr_rr-tax'] ? ' <span class="label-auto">auto</span>' : '') +
+      '</span><input type="number" step="0.01" data-field="rr-tax" placeholder="0.00"' +
+      (STATE.values['rr-tax'] ? ' value="' + STATE.values['rr-tax'] + '"' : '') + '/></div>' +
+      '<div class="totals-row" style="border-top:1px solid var(--border);padding-top:10px;margin-top:2px">' +
+      '<span class="totals-label">Reimbursable</span><span class="totals-value primary">$<span class="total-val">0.00</span></span></div>';
+    box.appendChild(totBox);
+    area.appendChild(box);
+
+    setTimeout(function () {
+      var container = $(s.container);
+      if (!container) return;
+      Array.prototype.forEach.call(container.querySelectorAll('.item-row'), function (row) {
+        bindRow(row, container);
+      });
+      Array.prototype.forEach.call(container.querySelectorAll('[data-field]'), function (el) {
+        el.addEventListener('input', function () { recalcTotals(container); });
+      });
+      recalcTotals(container);
+    }, 0);
+  }
+
+  function buildStep() {
+    var s = STEPS[STATE.step];
+    if (!s) return;
+    var area = $('step-area');
+    area.innerHTML = '';
+
+    var badge = document.createElement('span');
+    badge.className = 'step-badge';
+    badge.textContent = 'Step ' + (STATE.step + 1) + ' of ' + STEPS.length;
+    area.appendChild(badge);
+
+    var title = document.createElement('h2');
+    title.className = 'panel-title';
+    title.textContent = s.title;
+    area.appendChild(title);
+
+    if (s.items) { buildItemsStep(s, area); updateProgress(); return; }
+
+    var box = document.createElement('div');
+    box.id = s.container;
+    s.fields.forEach(function (def) {
+      var f = document.createElement('div');
+      f.className = 'field';
+
+      var lbl = document.createElement('label');
+      lbl.className = 'label';
+      lbl.htmlFor = def.id;
+      lbl.textContent = def.label;
+      if (STATE.values['_ocr_' + def.id]) {
+        var autoSpan = document.createElement('span');
+        autoSpan.className = 'label-auto';
+        autoSpan.textContent = 'from photo';
+        lbl.appendChild(autoSpan);
+      }
+      f.appendChild(lbl);
+
+      if (def.type === 'sportteam') {
+        var wrap = document.createElement('div');
+        wrap.className = 'composite-row';
+        var prefix = document.createElement('span');
+        prefix.className = 'composite-prefix';
+        prefix.textContent = 'Slam';
+        wrap.appendChild(prefix);
+
+        var gradeInp = document.createElement('input');
+        gradeInp.id = 'rr-grade';
+        gradeInp.placeholder = 'Grade (2-3)';
+        gradeInp.style.flex = '0 0 92px';
+        gradeInp.value = STATE.values['rr-grade'] || '';
+        wrap.appendChild(gradeInp);
+
+        var sportInp = document.createElement('input');
+        sportInp.id = 'rr-sport';
+        sportInp.placeholder = 'Sport';
+        sportInp.style.flex = '1';
+        sportInp.value = STATE.values['rr-sport'] || '';
+        wrap.appendChild(sportInp);
+
+        var coachInp = document.createElement('input');
+        coachInp.id = 'rr-coach';
+        coachInp.placeholder = 'Coach last name';
+        coachInp.style.flex = '1';
+        coachInp.value = STATE.values['rr-coach'] || '';
+        wrap.appendChild(coachInp);
+
+        f.appendChild(wrap);
+
+        var preview = document.createElement('div');
+        preview.className = 'field-hint';
+        var updatePreview = function () {
+          preview.innerHTML = 'Appears on form as: <strong>' + buildSportTeam({
+            'rr-grade': gradeInp.value, 'rr-sport': sportInp.value, 'rr-coach': coachInp.value
+          }) + '</strong>';
+        };
+        [gradeInp, sportInp, coachInp].forEach(function (inp) {
+          inp.addEventListener('input', updatePreview);
+        });
+        updatePreview();
+        f.appendChild(preview);
+        box.appendChild(f);
+        return;
+      }
+
+      var el = document.createElement('input');
+      el.type = def.type || 'text';
+      el.id = def.id;
+      if (def.placeholder) el.placeholder = def.placeholder;
+      el.value = STATE.values[def.id] || (def.type === 'date' ? TODAY : '');
+      if (STATE.values['_ocr_' + def.id]) {
+        el.classList.add('from-ocr');
+        el.addEventListener('input', function () { el.classList.remove('from-ocr'); });
+      }
+      f.appendChild(el);
+      box.appendChild(f);
+    });
+    area.appendChild(box);
+    updateProgress();
+  }
+
+  function lastName(fullName) {
+    var parts = (fullName || '').trim().split(/\s+/);
+    return parts[parts.length - 1] || 'unknown';
+  }
+  function safeName(str) {
+    return (str || '').replace(/[^a-zA-Z0-9]/g, '').substring(0, 20) || 'unknown';
+  }
+
+  async function buildPdfDoc() {
+    if (typeof PDFLib === 'undefined') throw new Error('PDF library not loaded. Check your connection and reload.');
+    var PDFDocument = PDFLib.PDFDocument;
+    var StandardFonts = PDFLib.StandardFonts;
+    var rgb = PDFLib.rgb;
+    var v = STATE.values;
+    var items = v['items'] || [];
+    var black = rgb(0.11, 0.11, 0.11);
+
+    var doc;
+    try {
+      var resp = await fetch('./templates/reimbursement_blank.pdf');
+      if (!resp.ok) throw new Error('template fetch failed');
+      doc = await PDFDocument.load(await resp.arrayBuffer());
+    } catch (e) {
+      doc = await PDFDocument.create();
+      doc.addPage([612, 792]);
+    }
+
+    var font = await doc.embedFont(StandardFonts.Helvetica);
+    var page = doc.getPages()[0];
+
+    function t(x, y, val, size) {
+      var str = String(val || '').trim();
+      if (!str) return;
+      page.drawText(str, { x: x, y: y, size: size || 9, font: font, color: black });
+    }
+
+    var sportTeam = buildSportTeam(v);
+    t(42, 647, v['rr-date']);
+    t(120, 647, v['rr-name'], 9);
+    t(246, 647, sportTeam, 9);
+    t(462, 647, v['rr-position'], 9);
+
+    var RR_Y = [583, 565, 546, 528, 510, 491, 473, 455, 437, 419];
+    items.forEach(function (item, i) {
+      if (i >= RR_Y.length) return;
+      var y = RR_Y[i];
+      t(40, y, v['rr-date'], 8);
+      t(100, y, item.vendor, 8);
+      t(190, y, item.desc, 8);
+      var qtyNum = parseFloat(item.qty) || 1;
+      var amtNum = parseFloat(item.amount) || 0;
+      t(410, y, String(qtyNum), 8);
+      if (amtNum) {
+        var rate = qtyNum > 0 ? (amtNum / qtyNum) : amtNum;
+        t(436, y, rate.toFixed(2), 8);
+        t(500, y, amtNum.toFixed(2), 8);
+      }
+    });
+
+    var total = parseFloat(v['_total'] || v['_subtotal'] || '0');
+    if (total > 0) t(500, 401, total.toFixed(2), 10);
+
+    var filename = safeName(lastName(v['rr-name'])) + '_RRF.pdf';
+    return { bytes: await doc.save(), filename: filename };
+  }
+
+  function downloadBytes(bytes, filename) {
+    var blob = new Blob([bytes], { type: 'application/pdf' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  async function generatePDF() {
+    try {
+      saveStep();
+      var result = await buildPdfDoc();
+      downloadBytes(result.bytes, result.filename);
+    } catch (err) {
+      alert('PDF generation failed: ' + err.message);
+    }
+  }
+
+  async function sendToAD() {
+    try {
+      saveStep();
+      var result = await buildPdfDoc();
+      var file = new File([result.bytes], result.filename, { type: 'application/pdf' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'Coach Reimbursement',
+          text: 'Please send this to ' + AD_EMAIL
+        });
+      } else {
+        downloadBytes(result.bytes, result.filename);
+        var subject = encodeURIComponent(result.filename.replace(/\.pdf$/, '').replace(/_/g, ' '));
+        var body = encodeURIComponent(
+          'Hi Kenny,\n\nAttached is my completed reimbursement form ("' + result.filename + '").\n\nThanks!'
+        );
+        setTimeout(function () {
+          window.location.href = 'mailto:' + AD_EMAIL + '?subject=' + subject + '&body=' + body;
+        }, 300);
+      }
+    } catch (err) {
+      alert('Could not prepare email: ' + err.message);
+    }
+  }
+
+  function resetAll() {
+    STATE.step = 0;
+    STATE.values = {};
+    STATE.ocrRunning = false;
+    STATE.fromScan = false;
+    resetReceiptUi();
+    show('screen-intro');
+  }
+
+  window.app = {
+    beginForm: beginForm,
+    beginWithScan: beginWithScan,
+    goIntro: goIntro,
+    onPhoto: onPhoto,
+    nextFromReceipt: nextFromReceipt,
+    stepBack: stepBack,
+    stepNext: stepNext,
+    generatePDF: generatePDF,
+    sendToAD: sendToAD,
+    resetAll: resetAll,
+    skipOcrWait: skipOcrWait
+  };
+
+  show('screen-intro');
+})();
+</script>
+</body>
+</html>
