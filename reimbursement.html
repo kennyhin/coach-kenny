@@ -352,19 +352,87 @@
   }
 
   async function runOCR(file) {
+    setOcrStatus('running', 'Reading receipt with AI…');
+    var usedClaude = false;
+    try {
+      usedClaude = await tryClaudeExtract(file);
+      if (usedClaude) {
+        setOcrStatus('done', 'Receipt read — review store name and line items on the next screens.');
+        return;
+      }
+    } catch (e) { /* fall through to Tesseract */ }
+
     if (typeof Tesseract === 'undefined') {
-      setOcrStatus('error', 'OCR unavailable — you can still fill in manually.');
+      setOcrStatus('error', 'OCR unavailable — enter the store name and items manually.');
       return;
     }
-    setOcrStatus('running', 'Reading receipt…');
     try {
       var canvas = await downscaleImage(file, 1600);
       var result = await Tesseract.recognize(canvas, 'eng');
       applyOcrResults(parseReceiptText((result.data && result.data.text) || ''));
-      setOcrStatus('done', 'Receipt read — review fields on the next screens.');
+      setOcrStatus('done', 'Receipt read — please confirm the store name (check carefully).');
     } catch (e) {
       setOcrStatus('error', 'Could not read receipt — fill in manually on the next screens.');
     }
+  }
+
+  async function tryClaudeExtract(file) {
+    var formData = new FormData();
+    formData.append('receipt', file);
+    var resp = await fetch('https://prf-app.vercel.app/api/extract-reimbursement', {
+      method: 'POST',
+      body: formData,
+    });
+    if (!resp.ok) return false;
+    var data = await resp.json();
+    if (!data || data.error) return false;
+    applyClaudeResults(data);
+    STATE.values['_ocr_source'] = 'claude';
+    return true;
+  }
+
+  function applyClaudeResults(data) {
+    var vendor = sanitizeVendor(data.vendor || '');
+    if (vendor) {
+      STATE.values['rr-vendor'] = vendor;
+      STATE.values['_ocr_rr-vendor'] = true;
+    }
+    if (data.date) {
+      STATE.values['rr-date'] = normalizeDate(data.date) || data.date;
+      STATE.values['_ocr_rr-date'] = true;
+    }
+    if (Array.isArray(data.items) && data.items.length) {
+      STATE.values['items'] = data.items.map(function (it) {
+        return {
+          desc: String(it.desc || '').trim(),
+          qty: String(it.qty || '1').trim(),
+          amount: String(it.amount || '').replace(/^\$/, '').trim(),
+        };
+      });
+      STATE.values['_ocr_items'] = true;
+    }
+    if (data.tax) { STATE.values['rr-tax'] = String(data.tax).replace(/^\$/, ''); STATE.values['_ocr_rr-tax'] = true; }
+  }
+
+  function sanitizeVendor(name) {
+    var v = String(name || '').replace(/\s+/g, ' ').trim();
+    if (!v) return '';
+    if (/^slam[\s!]*$/i.test(v)) return '';
+    if (/^slam\s+(nevada|athletics| elementary)/i.test(v)) return '';
+    return v;
+  }
+
+  function vendorScore(line) {
+    var cleaned = line.replace(/[^\w&'!.,\- ]/g, ' ').replace(/\s+/g, ' ').trim();
+    if (!cleaned || cleaned.length < 3) return -100;
+    if (/^\d/.test(cleaned)) return -100;
+    if (isItemLine(cleaned) || isSkipLine(cleaned)) return -100;
+    if (sanitizeVendor(cleaned) === '') return -100;
+    var lower = cleaned.toLowerCase();
+    var score = cleaned.length;
+    if (/market|store|shop|mart|grocery|super|foods|inc|llc|café|cafe|restaurant|gas|pharmacy|target|walmart|costco|amazon/i.test(lower)) score += 30;
+    if (/\d/.test(cleaned)) score -= 5;
+    return score;
   }
 
   function normalizeDate(str) {
@@ -387,16 +455,17 @@
   function parseReceiptText(text) {
     var lines = text.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
     var result = { vendor: '', date: '', total: '', tax: '', items: [] };
+    var bestVendor = '';
+    var bestScore = -100;
 
-    for (var i = 0; i < Math.min(lines.length, 12); i++) {
-      var l = lines[i];
-      if (isItemLine(l) || isSkipLine(l)) continue;
-      var cleaned = l.replace(/[^\w&'!.,\- ]/g, ' ').replace(/\s+/g, ' ').trim();
-      if (cleaned.length >= 3 && /[A-Za-z]{3,}/.test(cleaned) && !/^\d/.test(cleaned)) {
-        result.vendor = cleaned;
-        break;
+    for (var i = 0; i < Math.min(lines.length, 15); i++) {
+      var score = vendorScore(lines[i]);
+      if (score > bestScore) {
+        bestScore = score;
+        bestVendor = sanitizeVendor(lines[i].replace(/[^\w&'!.,\- ]/g, ' ').replace(/\s+/g, ' ').trim());
       }
     }
+    result.vendor = bestVendor;
 
     var dateMatch = text.match(/\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4}|\d{4}-\d{2}-\d{2})\b/);
     if (dateMatch) result.date = normalizeDate(dateMatch[1]);
@@ -445,8 +514,9 @@
   }
 
   function applyOcrResults(parsed) {
-    if (parsed.vendor) {
-      STATE.values['rr-vendor'] = parsed.vendor;
+    var vendor = sanitizeVendor(parsed.vendor || '');
+    if (vendor) {
+      STATE.values['rr-vendor'] = vendor;
       STATE.values['_ocr_rr-vendor'] = true;
     }
     if (parsed.date) { STATE.values['rr-date'] = parsed.date; STATE.values['_ocr_rr-date'] = true; }
@@ -568,7 +638,9 @@
     var vendorLbl = document.createElement('label');
     vendorLbl.htmlFor = 'rr-vendor';
     vendorLbl.textContent = 'Store / Vendor (from receipt)';
-    if (STATE.values['_ocr_rr-vendor']) vendorLbl.textContent += ' — detected from photo';
+    if (STATE.values['_ocr_rr-vendor']) {
+      vendorLbl.textContent += STATE.values['_ocr_source'] === 'claude' ? ' — read by AI' : ' — detected from photo';
+    }
     vendorField.appendChild(vendorLbl);
     var vendorInp = document.createElement('input');
     vendorInp.id = 'rr-vendor';
