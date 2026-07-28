@@ -331,3 +331,30 @@ kbd{font-family:var(--mono);font-size:.78em;background:var(--surface-2);
   .ed{grid-template-columns:1fr}
   .ed-list{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line)}
 }
+
+/* ============================================================
+   PIN LOCK — editor gate
+   ============================================================ */
+.lock{position:fixed;inset:0;z-index:200;display:grid;place-items:center;
+  background:var(--ink);padding:1.2rem}
+.lock-in{width:100%;max-width:22rem;text-align:center}
+.lock-icon{font-size:2.2rem;line-height:1;margin-bottom:.9rem}
+.lock-in h1{font-family:var(--display);font-size:1.9rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.02em;margin:0 0 .45rem;color:var(--text)}
+.lock-in p{margin:0 0 1.5rem;color:var(--text-2);font-size:.9rem;line-height:1.6}
+.pin-row{display:flex;gap:.5rem;justify-content:center;margin-bottom:1rem}
+.pin-row input{width:3.1rem;height:3.6rem;text-align:center;font-family:var(--mono);
+  font-size:1.5rem;font-weight:700;color:var(--text);background:var(--surface);
+  border:1px solid var(--line-2);border-radius:10px;outline:none;
+  transition:border-color .15s,box-shadow .15s}
+.pin-row input:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--glow)}
+.lock.bad .pin-row{animation:shake .4s}
+.lock.bad .pin-row input{border-color:var(--red)}
+@keyframes shake{
+  0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-7px)}
+  40%,80%{transform:translateX(7px)}
+}
+.lock-msg{min-height:1.3rem;font-size:.83rem;color:var(--red);margin:0 0 1.1rem}
+.lock-back{color:var(--text-3);font-size:.83rem;text-decoration:none}
+.lock-back:hover{color:var(--text)}
+@media (prefers-reduced-motion:reduce){ .lock.bad .pin-row{animation:none} }

@@ -9,6 +9,24 @@
 </head>
 <body>
 
+<!-- PIN gate. Client-side only — a deterrent, not real security. The genuine
+     protection is that publishing needs a GitHub token nobody else has. -->
+<div class="lock" id="lock">
+  <div class="lock-in">
+    <div class="lock-icon">🔒</div>
+    <h1>Deck editor</h1>
+    <p>Enter the 4-digit code to continue.</p>
+    <div class="pin-row" id="pin-row">
+      <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 1" />
+      <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2" />
+      <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3" />
+      <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 4" />
+    </div>
+    <p class="lock-msg" id="lock-msg" role="alert"></p>
+    <a class="lock-back" href="index.html">← Back to decks</a>
+  </div>
+</div>
+
 <header class="topbar">
   <a class="brand" href="index.html"><span class="brand-k">Coach <span>Kenny</span></span></a>
   <span class="brand-sep"></span>
@@ -99,6 +117,7 @@
   </div>
 </div>
 
+<script src="assets/lock.js"></script>
 <script src="assets/render.js"></script>
 <script src="assets/editor.js"></script>
 </body>

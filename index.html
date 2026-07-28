@@ -405,13 +405,29 @@
         <div class="card-title">PE Games</div>
       </a>
 
-      <!-- Staff Walkthrough Decks -->
-      <a href="/decks/" class="card">
-        <div class="card-arrow">↗</div>
-        <div class="card-icon">📊</div>
-        <div class="card-label">Staff Training</div>
-        <div class="card-title">Walkthrough Decks</div>
-      </a>
+      <!-- Decks — flips to reveal view / edit -->
+      <div class="card card-flip" id="decks-card">
+        <div class="card-flip-inner">
+          <div class="card-face card-face-front">
+            <div class="card-arrow">↗</div>
+            <div class="card-icon">📊</div>
+            <div class="card-label">Staff Training</div>
+            <div class="card-title">Decks</div>
+          </div>
+          <div class="card-face card-face-back">
+            <div class="card-back-close">✕</div>
+            <div class="card-back-label">What do you need?</div>
+            <div class="login-row">
+              <a href="/decks/" class="login-tile tile-teacher">
+                <span class="login-tile-icon">📊</span> View<br>Decks
+              </a>
+              <a href="/decks/edit.html" class="login-tile tile-ad">
+                <span class="login-tile-icon">✎</span> Editor
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Specialist Rotation -->
       <a href="https://sites.google.com/slamnv.org/slamspecialist/special-rotations" target="_blank" class="card">
@@ -484,16 +500,17 @@
     &copy; 2026 SLAM! Nevada Athletic Department &nbsp;·&nbsp; kenny.hin@slamnv.org
   </footer>
 
-  <!-- AOS CARD FLIP — tap to reveal the three portal logins -->
+  <!-- CARD FLIPS — tap a flip card to reveal its options -->
   <script>
-    const aosCard = document.getElementById('aos-card');
-    aosCard.addEventListener('click', function () {
-      this.classList.toggle('flipped');
-    });
-    // Clicking a login link opens it in a new tab — keep the card flipped open
-    // rather than also snapping shut on the way out.
-    aosCard.querySelectorAll('.login-tile').forEach(function (link) {
-      link.addEventListener('click', function (e) { e.stopPropagation(); });
+    document.querySelectorAll('.card-flip').forEach(function (card) {
+      card.addEventListener('click', function () {
+        this.classList.toggle('flipped');
+      });
+      // Clicking a tile follows the link — keep the card open rather than
+      // also snapping shut on the way out.
+      card.querySelectorAll('.login-tile').forEach(function (link) {
+        link.addEventListener('click', function (e) { e.stopPropagation(); });
+      });
     });
   </script>
 
