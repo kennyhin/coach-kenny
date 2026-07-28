@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Edit deck — Coach Kenny</title>
+<meta name="robots" content="noindex,nofollow" />
+<link rel="stylesheet" href="assets/deck.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="brand-k">Coach <span>Kenny</span></span></a>
+  <span class="brand-sep"></span>
+  <span class="brand-sub">Deck editor</span>
+  <nav class="deckswitch" id="deckswitch" aria-label="Decks"></nav>
+  <div class="topbar-actions">
+    <button class="tbtn" id="btn-theme" title="Toggle light / dark">◐</button>
+    <a class="tbtn" id="btn-view" href="#" target="_blank" rel="noopener">▶ View</a>
+    <button class="tbtn" id="btn-export">↓ Export</button>
+    <button class="tbtn" id="btn-gh">⚙ GitHub</button>
+    <button class="tbtn tbtn-hot" id="btn-save">Save</button>
+  </div>
+</header>
+
+<div class="ed">
+  <aside class="ed-list">
+    <div class="ed-list-h">
+      <p class="mono">Slides</p>
+      <button class="xbtn" id="btn-add-slide" title="Add a slide">+</button>
+    </div>
+    <ul class="slidelist" id="slidelist"></ul>
+  </aside>
+
+  <main class="ed-main">
+    <div class="ed-bar">
+      <h1 id="ed-title">Loading…</h1>
+      <button class="tbtn" id="btn-up"   title="Move slide earlier">↑</button>
+      <button class="tbtn" id="btn-down" title="Move slide later">↓</button>
+      <button class="tbtn" id="btn-dupe" title="Duplicate this slide">⧉</button>
+      <button class="tbtn" id="btn-del"  title="Delete this slide">🗑</button>
+      <button class="tbtn" id="btn-deck" title="Edit deck title, subtitle, contents">Deck settings</button>
+    </div>
+    <div id="form"></div>
+    <div class="ed-sec" id="preview-sec">
+      <h3>Preview</h3>
+      <div id="preview" class="deck"></div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- GitHub connect -->
+<div class="sheet" id="sheet-gh" hidden>
+  <div class="sheet-in">
+    <h2>Save straight to GitHub</h2>
+    <p>
+      Paste a GitHub <b>fine-grained personal access token</b> with
+      <code>Contents: Read and write</code> on <code>kennyhin/coach-kenny</code>.
+      Then the Save button commits your changes and the site updates in about a minute.
+    </p>
+    <p class="warn">
+      The token is stored in this browser only (localStorage) and is never sent anywhere
+      except github.com. Anyone who can use this computer could read it, so don't set it
+      up on a shared or student machine — use Export there instead.
+    </p>
+    <div class="field">
+      <label for="gh-token">Token</label>
+      <input type="password" id="gh-token" placeholder="github_pat_…" autocomplete="off" spellcheck="false" />
+      <p class="field-hint">
+        Create one at <b>github.com → Settings → Developer settings → Personal access tokens
+        → Fine-grained tokens</b>.
+      </p>
+    </div>
+    <div class="sheet-acts">
+      <button class="tbtn" id="gh-forget">Forget token</button>
+      <button class="tbtn" id="gh-cancel">Cancel</button>
+      <button class="tbtn tbtn-hot" id="gh-save">Connect</button>
+    </div>
+  </div>
+</div>
+
+<!-- Export -->
+<div class="sheet" id="sheet-export" hidden>
+  <div class="sheet-in">
+    <h2>Export this deck</h2>
+    <p>
+      Download the file and drop it into GitHub at
+      <code id="exp-path">decks/data/…</code> — or copy the text and paste it into
+      GitHub's web editor. Either way the site updates about a minute after you commit.
+    </p>
+    <textarea class="jsonout" id="exp-json" readonly spellcheck="false"></textarea>
+    <div class="sheet-acts">
+      <button class="tbtn" id="exp-close">Close</button>
+      <button class="tbtn" id="exp-copy">Copy</button>
+      <button class="tbtn tbtn-hot" id="exp-download">Download .json</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/render.js"></script>
+<script src="assets/editor.js"></script>
+</body>
+</html>

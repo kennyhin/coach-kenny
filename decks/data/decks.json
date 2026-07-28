@@ -1,0 +1,12 @@
+{
+  "decks": [
+    {
+      "slug": "slam-reservations",
+      "title": "Space Reservations",
+      "label": "Staff walkthrough",
+      "icon": "📅",
+      "blurb": "Booking the Cafegym, ES Turf and Kinder Playground — plus coach season schedules and the approver dashboard.",
+      "updated": "2026-07-28"
+    }
+  ]
+}

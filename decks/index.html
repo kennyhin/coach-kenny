@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Decks — Coach Kenny</title>
+<meta name="description" content="Staff walkthrough decks for SLAM! Nevada tools." />
+<link rel="stylesheet" href="assets/deck.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="https://coachkenny.org">
+    <span class="brand-k">Coach <span>Kenny</span></span>
+  </a>
+  <span class="brand-sep"></span>
+  <span class="brand-sub">Decks</span>
+  <nav class="deckswitch" id="deckswitch" aria-label="Decks"></nav>
+  <div class="topbar-actions">
+    <button class="tbtn" id="btn-theme" title="Toggle light / dark">◐</button>
+  </div>
+</header>
+
+<main class="hub">
+  <p class="hub-eyebrow mono">SLAM! Nevada · Staff training</p>
+  <h1 class="hub-h">Walk<span>throughs</span></h1>
+  <p class="hub-lede">
+    Step-by-step guides to the staff tools, built to present at a meeting and to
+    hand out afterwards. Pick one below — arrow keys move through the slides.
+  </p>
+  <div class="hub-grid" id="grid">
+    <div class="hub-empty">Loading decks…</div>
+  </div>
+</main>
+
+<script src="assets/render.js"></script>
+<script>
+(function () {
+  var saved = localStorage.getItem('ck-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('btn-theme').addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    var nextT = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nextT);
+    localStorage.setItem('ck-theme', nextT);
+  });
+
+  var E = DeckRender.esc;
+
+  fetch('data/decks.json')
+    .then(function (r) { return r.json(); })
+    .then(function (m) {
+      var decks = m.decks || [];
+
+      document.getElementById('deckswitch').innerHTML = decks.map(function (d) {
+        return '<a class="dtab" href="deck.html?d=' + encodeURIComponent(d.slug) + '">' +
+               (d.icon || '') + ' ' + E(d.title) + '</a>';
+      }).join('');
+
+      var grid = document.getElementById('grid');
+      if (!decks.length) {
+        grid.innerHTML = '<div class="hub-empty">No decks yet.</div>';
+        return;
+      }
+      grid.innerHTML = decks.map(function (d) {
+        return '<a class="hub-card" href="deck.html?d=' + encodeURIComponent(d.slug) + '">' +
+          '<span class="hub-card-icon">' + (d.icon || '📊') + '</span>' +
+          '<p class="hub-card-label mono">' + E(d.label || 'Walkthrough') + '</p>' +
+          '<h2 class="hub-card-title">' + E(d.title) + '</h2>' +
+          '<p class="hub-card-blurb">' + E(d.blurb || '') + '</p>' +
+          '<span class="hub-card-foot">' +
+            '<span class="hub-card-meta mono">' + (d.updated ? 'Updated ' + E(d.updated) : '') + '</span>' +
+            '<span class="hub-card-go">Open →</span>' +
+          '</span>' +
+        '</a>';
+      }).join('');
+    })
+    .catch(function () {
+      document.getElementById('grid').innerHTML =
+        '<div class="hub-empty">Could not load the deck list.</div>';
+    });
+})();
+</script>
+</body>
+</html>

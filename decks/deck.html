@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Deck — Coach Kenny</title>
+<meta name="description" content="Staff walkthrough deck." />
+<link rel="stylesheet" href="assets/deck.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">
+    <span class="brand-k">Coach <span>Kenny</span></span>
+  </a>
+  <span class="brand-sep"></span>
+  <span class="brand-sub">Decks</span>
+  <nav class="deckswitch" id="deckswitch" aria-label="Decks"></nav>
+  <div class="topbar-actions">
+    <button class="tbtn" id="btn-theme" title="Toggle light / dark">◐</button>
+    <a class="tbtn" id="btn-edit" href="#">✎ Edit</a>
+  </div>
+</header>
+
+<div class="deck">
+  <nav class="rail" id="rail" aria-label="Deck progress"></nav>
+  <main class="stage" id="stage"></main>
+  <div class="controls">
+    <button class="nav" id="prev" aria-label="Previous slide">&larr;</button>
+    <span class="count mono" id="count" aria-live="polite">— / —</span>
+    <button class="nav" id="next" aria-label="Next slide">&rarr;</button>
+  </div>
+</div>
+
+<script src="assets/render.js"></script>
+<script>
+(function () {
+  var P    = new URLSearchParams(location.search);
+  var slug = P.get('d') || 'slam-reservations';
+  var stage = document.getElementById('stage');
+  var rail  = document.getElementById('rail');
+  var count = document.getElementById('count');
+  var prev  = document.getElementById('prev');
+  var next  = document.getElementById('next');
+  var deck = null, slides = [], ticks = [], i = 0;
+
+  /* ---- theme toggle ---- */
+  var saved = localStorage.getItem('ck-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('btn-theme').addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    if (!cur) {
+      cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    var nextT = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nextT);
+    localStorage.setItem('ck-theme', nextT);
+  });
+
+  document.getElementById('btn-edit').href = 'edit.html?d=' + encodeURIComponent(slug);
+
+  /* ---- deck switcher ---- */
+  fetch('data/decks.json')
+    .then(function (r) { return r.json(); })
+    .then(function (m) {
+      var nav = document.getElementById('deckswitch');
+      nav.innerHTML = (m.decks || []).map(function (d) {
+        return '<a class="dtab" href="deck.html?d=' + encodeURIComponent(d.slug) + '"' +
+               (d.slug === slug ? ' aria-current="page"' : '') + '>' +
+               (d.icon || '') + ' ' + DeckRender.esc(d.title) + '</a>';
+      }).join('');
+    })
+    .catch(function () {});
+
+  /* ---- deck content ---- */
+  fetch('data/' + slug + '.json')
+    .then(function (r) {
+      if (!r.ok) throw new Error('Deck "' + slug + '" not found.');
+      return r.json();
+    })
+    .then(function (d) {
+      deck = d;
+      document.title = (d.title || 'Deck') + ' — Coach Kenny';
+      build();
+      var start = parseInt((location.hash || '').replace('#', ''), 10);
+      show(isNaN(start) ? 0 : start - 1, true);
+    })
+    .catch(function (err) {
+      stage.innerHTML = '<div class="slide"><div class="pad">' +
+        '<h2 style="font-family:var(--display);text-transform:uppercase">Could not load this deck</h2>' +
+        '<p class="lede">' + DeckRender.esc(err.message) + '</p>' +
+        '<p class="lede"><a href="index.html" style="color:var(--red)">Back to all decks</a></p>' +
+        '</div></div>';
+    });
+
+  function build() {
+    slides = deck.slides || [];
+
+    stage.innerHTML = slides.map(function (s, n) {
+      return '<section class="slide slide-' + DeckRender.esc(s.kind) + '" data-act="' +
+             DeckRender.esc(s.act || '') + '" aria-label="Slide ' + (n + 1) + ' of ' + slides.length +
+             '" hidden>' + DeckRender.slideBody(s, deck) + '</section>';
+    }).join('');
+
+    // progress rail, grouped by act
+    var acts = deck.acts && deck.acts.length
+      ? deck.acts
+      : [{ id: '', label: '' }];
+    rail.innerHTML = acts.map(function (a) {
+      var idxs = [];
+      slides.forEach(function (s, n) { if ((s.act || '') === a.id) idxs.push(n); });
+      if (!idxs.length) return '';
+      return '<div class="seg" data-act="' + DeckRender.esc(a.id) + '">' +
+        '<span class="seg-l mono">' + DeckRender.esc(a.label) + '</span>' +
+        '<div class="seg-t">' + idxs.map(function (n) {
+          return '<button class="tick" data-goto="' + n + '" aria-label="Go to slide ' + (n + 1) + '"></button>';
+        }).join('') + '</div></div>';
+    }).join('');
+
+    ticks = [].slice.call(rail.querySelectorAll('.tick'));
+    ticks.forEach(function (t) {
+      t.addEventListener('click', function () { show(parseInt(t.dataset.goto, 10)); });
+    });
+  }
+
+  function show(n, keepScroll) {
+    if (!slides.length) return;
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    [].slice.call(stage.children).forEach(function (el, k) { el.hidden = (k !== i); });
+    ticks.forEach(function (t) {
+      var g = parseInt(t.dataset.goto, 10);
+      t.setAttribute('aria-current', g === i ? 'true' : 'false');
+      t.classList.toggle('done', g < i);
+    });
+    count.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    prev.disabled = (i === 0);
+    next.disabled = (i === slides.length - 1);
+    if (!keepScroll) window.scrollTo({ top: 0 });
+    if (history.replaceState) history.replaceState(null, '', '#' + (i + 1));
+  }
+
+  prev.addEventListener('click', function () { show(i - 1); });
+  next.addEventListener('click', function () { show(i + 1); });
+
+  document.addEventListener('keydown', function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    var tag = (ev.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    if (ev.key === 'ArrowRight' || ev.key === 'PageDown' || ev.key === ' ') { show(i + 1); ev.preventDefault(); }
+    else if (ev.key === 'ArrowLeft' || ev.key === 'PageUp') { show(i - 1); ev.preventDefault(); }
+    else if (ev.key === 'Home') { show(0); ev.preventDefault(); }
+    else if (ev.key === 'End') { show(slides.length - 1); ev.preventDefault(); }
+  });
+
+  var x0 = null, y0 = null;
+  document.addEventListener('touchstart', function (ev) {
+    x0 = ev.touches[0].clientX; y0 = ev.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', function (ev) {
+    if (x0 === null) return;
+    var dx = ev.changedTouches[0].clientX - x0;
+    var dy = ev.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.6) show(i + (dx < 0 ? 1 : -1));
+    x0 = null; y0 = null;
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
