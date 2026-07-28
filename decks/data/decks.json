@@ -7,6 +7,14 @@
       "icon": "📅",
       "blurb": "Booking the Cafegym, ES Turf and Kinder Playground — plus coach season schedules and the approver dashboard.",
       "updated": "2026-07-28"
+    },
+    {
+      "slug": "fundraising-field-trips",
+      "title": "Fundraising & Field Trips",
+      "label": "Staff walkthrough",
+      "icon": "🎟️",
+      "blurb": "Submitting a fundraiser or field trip, the pre-approval checklist, and how approval reaches the master calendar.",
+      "updated": "2026-07-28"
     }
   ]
 }

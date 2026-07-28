@@ -1,0 +1,262 @@
+{
+  "slug": "fundraising-field-trips",
+  "title": "Fundraising &amp; Field Trips",
+  "eyebrow": "SLAM! Nevada K-5 · Staff walkthrough",
+  "subtitle": "How to submit a fundraiser or a field trip, get approved, and end up on the master calendar.",
+  "theme": { "accent": "#7ED321", "accentLight": "#4E7D0C" },
+  "contents": [
+    "Submitting a request",
+    "Fundraising &amp; field trip paths",
+    "Approval, email and calendar"
+  ],
+  "acts": [
+    { "id": "intro",   "label": "Intro" },
+    { "id": "teacher", "label": "Teacher" },
+    { "id": "admin",   "label": "Approval" },
+    { "id": "after",   "label": "After" },
+    { "id": "outro",   "label": "Wrap" }
+  ],
+  "slides": [
+    { "kind": "cover", "act": "intro" },
+
+    {
+      "kind": "grid", "act": "intro",
+      "eyebrow": "Why this matters",
+      "title": "One form. Clear checklist. Official approval.",
+      "lede": "This replaces paper and email-only requests. The same form covers fundraising (including use of space) and field trips.",
+      "cards": [
+        { "h": "Submit early", "b": "At least <b>30 days</b> ahead for a fundraiser or local trip &mdash; <b>60 days</b> for an overnight trip." },
+        { "h": "Everything in one place", "b": "Your answers and every file you attach are saved together, so nothing gets lost in an inbox." },
+        { "h": "Calendar invite = official", "b": "Approval alone is not the finish line. If no calendar invite arrives, you are not on the master calendar yet." },
+        { "h": "Field trips get help", "b": "The checklist and the forms you need are emailed to you automatically &mdash; you do not have to hunt for them." }
+      ]
+    },
+    {
+      "kind": "grid", "act": "intro",
+      "eyebrow": "Roles", "title": "Who does what",
+      "cards": [
+        { "h": "You", "b": "Fill out the form, attach the required files, then watch your email for the decision." },
+        { "h": "Admin &amp; reviewers", "b": "Get notified the moment you submit, open the review link, and approve or deny with a note." },
+        { "h": "The system", "b": "Files everything, emails the reviewers, emails you the decision, and prepares the calendar entry and field trip forms." }
+      ]
+    },
+    {
+      "kind": "text", "act": "intro",
+      "eyebrow": "The whole process", "title": "Five steps, start to finish",
+      "lede": "Every request &mdash; fundraiser or field trip &mdash; follows the same path.",
+      "steps": [
+        { "h": "You submit the form", "b": "Everything is saved and your files are filed together in one place." },
+        { "h": "Reviewers get an email", "b": "With your full summary and a button that opens the review page." },
+        { "h": "An admin decides", "b": "Approve or deny, with an optional note back to you." },
+        { "h": "You get the decision by email", "b": "Approved or denied. Field trip approvals arrive with your forms attached." },
+        { "h": "The calendar invite confirms it", "b": "Once the admin adds it to the calendar, you get an invite. That is when it is official." }
+      ]
+    },
+
+    {
+      "kind": "divider", "act": "teacher", "num": "Part 1",
+      "title": "Filling out the form",
+      "lede": "A step-by-step wizard that only asks what applies to your request.",
+      "persona": "Teacher / Staff"
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "01-intro.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Step 1", "title": "Getting started",
+      "lede": "Your name, your school email, your grade or group &mdash; then pick which kind of request this is.",
+      "steps": [
+        { "h": "Fundraising or Field Trip", "b": "This one choice decides everything you are asked from here on. The form skips anything that does not apply." },
+        { "h": "Watch the progress bar", "b": "It shows Step X of Y and updates as your answers change the path." },
+        { "h": "One request per event", "b": "Running two separate events? Submit the form twice." }
+      ]
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "03-fieldtrip-sel.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Step 1", "title": "Pick Field Trip and it warns you early",
+      "lede": "Choosing Field Trip pops a banner right away so the paperwork is never a surprise at the end.",
+      "steps": [
+        { "h": "You are told up front", "b": "The full approval checklist is coming on the next steps, along with what you need to attach." },
+        { "h": "Fundraising is shorter", "b": "Picking Fundraising skips the trip steps entirely &mdash; usually four or five screens." }
+      ]
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "04-fundraising.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Path A", "title": "Fundraising details",
+      "lede": "Covers fundraisers and use of space. Tell it what you are running, when, and where.",
+      "steps": [
+        { "h": "Type of fundraiser", "b": "Chocolates, concessions, ticket sales, fireworks booth, or something else." },
+        { "h": "Multiple dates welcome", "b": "Selling for a week? Add a date and time row for each day on the one request." },
+        { "h": "Where", "b": "MPR, CAFE, Turf, Grass, Lobby or Online." },
+        { "h": "Main Gym is separate", "b": "The Main Gym is <b>not</b> on this list &mdash; request it from Mike.Cofer@slamnv.org." }
+      ],
+      "note": "Main Gym does not go through this form. Email Mike Cofer directly."
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "05-financial.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Path A", "title": "Money and vendors",
+      "lede": "What you are charging, what the activity involves, and whether anyone from outside is running it.",
+      "steps": [
+        { "h": "Cost per item", "b": "What families will actually pay." },
+        { "h": "Outside vendor?", "b": "Answer yes and one more step appears asking you to upload their insurance. Answer no and you skip straight to the agreement." }
+      ]
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "06-triptype.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Path B", "title": "Local or overnight",
+      "lede": "The single most important answer on a field trip &mdash; it changes your deadline and how much paperwork you owe.",
+      "steps": [
+        { "h": "Local, not overnight", "b": "Minimum <b>30 days</b> ahead." },
+        { "h": "Overnight", "b": "Minimum <b>60 days</b> ahead, and a hotel and rooming step gets added later on." },
+        { "h": "The checklist retitles itself", "b": "Pick overnight and the checklist heading, the deadline and the extra hotel section all update on the spot." }
+      ]
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "08-tripdetails.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Path B", "title": "The pre-approval checklist",
+      "lede": "Shown in full, in the form, before you are asked for anything &mdash; and emailed to you the moment you submit.",
+      "steps": [
+        { "h": "Transportation", "b": "Charter bus through a local company, admin approval, costs included, quote attached." },
+        { "h": "Parent letter &amp; itinerary", "b": "Times, activities, cost, lunch plan and what to bring &mdash; stapled to the Permission Form and Parent Protocol." },
+        { "h": "Chaperones", "b": "Fingerprinted through Victoria or Maria, listed for approval, waivers to Karla or Cynthia." },
+        { "h": "Lunch and payment", "b": "Kitchen needs two weeks&rsquo; notice through Odalys. Tell the front office the amount, your name and the trip name." }
+      ],
+      "note": "The checklist also lists what happens after approval — student spreadsheet, forms to Cynthia or Karla, and picking up the binder on trip day."
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "09-transport.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Path B", "title": "How you are getting there",
+      "lede": "Pick the method and the form asks only for that method&rsquo;s paperwork.",
+      "steps": [
+        { "h": "Rental van", "b": "Driver and vehicle documentation." },
+        { "h": "Pre-approved charter bus", "b": "Attach the quote." },
+        { "h": "Airplane", "b": "Flight options and details." }
+      ]
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "10-hotel.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Path B", "title": "Hotel and rooming",
+      "lede": "This step only exists if you said overnight.",
+      "steps": [
+        { "h": "Where everyone is staying", "b": "Name, address, contact and phone number." },
+        { "h": "The logistics", "b": "Check-in and check-out, number of rooms, and how students are assigned." },
+        { "h": "Safety", "b": "Confirm the facility meets student safety and supervision requirements." }
+      ]
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "11-agreement.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Last step", "title": "The agreement",
+      "lede": "One acknowledgement before you submit, on every request type.",
+      "steps": [
+        { "h": "What you are agreeing to", "b": "Communicating details to the front office, getting Cynthia Garcia what she needs on money, supervisor approval for banking and chaperoning, and arranging sub coverage." }
+      ]
+    },
+    {
+      "kind": "shot", "act": "teacher", "img": "12-success.jpg", "persona": "Teacher / Staff",
+      "eyebrow": "Submitted", "title": "What happens the second you submit",
+      "lede": "All of this is automatic. You do not have to email anybody to tell them it is there.",
+      "steps": [
+        { "h": "Your request is filed", "b": "Saved with a status of <b>Pending</b>, and your uploads are filed together with a summary." },
+        { "h": "Reviewers are emailed", "b": "One email with your full summary and a green <b>Review this request</b> button." },
+        { "h": "Field trips: you get the checklist", "b": "A pre-approval checklist email lands in your inbox straight away." },
+        { "h": "Submitted is not approved", "b": "There is no decision email yet. That comes after an admin reviews it." }
+      ],
+      "note": "Submitting ≠ approved. Approval comes later, by email, then by calendar invite."
+    },
+
+    {
+      "kind": "divider", "act": "admin", "num": "Part 2",
+      "title": "How it gets approved",
+      "lede": "What happens on the other side once your request lands.",
+      "persona": "Administrator"
+    },
+    {
+      "kind": "text", "act": "admin",
+      "eyebrow": "Step 1", "title": "Reviewers get notified",
+      "lede": "Nobody has to go looking for new requests &mdash; the email arrives as soon as you hit submit.",
+      "steps": [
+        { "h": "Who gets it", "b": "Kenny, plus everyone on the Notify List. Add or remove reviewers there without touching the form." },
+        { "h": "What is in it", "b": "Who submitted, the request type, your full set of answers, and a link to your attached files." },
+        { "h": "One button", "b": "<b>Review this request</b> opens the decision page directly." },
+        { "h": "First decision wins", "b": "If two reviewers open it at once, only the first decision counts &mdash; you will never get two conflicting emails." }
+      ]
+    },
+    {
+      "kind": "text", "act": "admin",
+      "eyebrow": "Step 2", "title": "Approve or deny",
+      "lede": "The review page shows the whole request on one screen, with the files one click away.",
+      "steps": [
+        { "h": "What the admin sees", "b": "A pill saying Fundraising or Field Trip, your name and group, every answer you gave, and a link to open your attachments." },
+        { "h": "Add a note", "b": "Optional on approve, strongly encouraged on deny &mdash; it goes to you word for word." },
+        { "h": "Confirm before it sends", "b": "There is a confirmation step, so a stray click cannot email you by accident." },
+        { "h": "Already decided?", "b": "If someone else got there first, the page just shows who decided and when." }
+      ]
+    },
+
+    {
+      "kind": "grid", "act": "after",
+      "eyebrow": "Your inbox", "title": "What you get after a decision",
+      "lede": "Either way you hear back by email, and you are told what to do next.",
+      "cards": [
+        { "h": "If approved", "b": "&ldquo;Good news &mdash; approved&rdquo;, any note from the reviewer, and a reminder that the calendar invite is the official confirmation." },
+        { "h": "Field trips get forms attached", "b": "Permission Form, Parent Field Trip Protocol, Chaperone Waiver and the Student Eligibility Spreadsheet &mdash; attached to the approval email." },
+        { "h": "What to do with them", "b": "Fill in the eligibility spreadsheet, and turn the completed forms in to Cynthia or Karla." },
+        { "h": "If denied", "b": "You get the reason, and an invitation to revise and resubmit. Nothing is deleted &mdash; just fix it and send it again." }
+      ]
+    },
+    {
+      "kind": "text", "act": "after",
+      "eyebrow": "The last mile", "title": "Approved is not the same as on the calendar",
+      "lede": "This is the step people miss. Read this one out loud in the meeting.",
+      "steps": [
+        { "h": "You get the decision email", "b": "Immediately on approval." },
+        { "h": "The approver gets a second email", "b": "With an <b>Add to Calendar</b> button, already filled in." },
+        { "h": "They review it and press Save", "b": "The event goes on the master calendar with you listed as a guest." },
+        { "h": "Then your invite arrives", "b": "A fundraiser gets one entry per date and time row. A field trip gets one all-day event covering the travel dates." }
+      ],
+      "note": "No calendar invite means you are not on the master calendar yet. Follow up with the front office."
+    },
+
+    {
+      "kind": "recap", "act": "outro",
+      "eyebrow": "Questions we get a lot", "title": "Quick answers",
+      "columns": [
+        {
+          "k": "Submitting",
+          "items": [
+            "<b>Do I get an email right away?</b> Field trips do &mdash; the checklist. The decision email comes later.",
+            "<b>Can I edit after submitting?</b> No. Ask to be denied and resubmit, or send a fresh one.",
+            "<b>Multiple dates?</b> One form per event, but a fundraiser can carry several date and time rows."
+          ]
+        },
+        {
+          "k": "Spaces &amp; trips",
+          "items": [
+            "<b>Main Gym?</b> Not through this form &mdash; email Mike.Cofer@slamnv.org.",
+            "<b>Overnight vs local?</b> Overnight adds the hotel step, a 60-day window and extra checklist items.",
+            "<b>Where do my files go?</b> Filed with your request, linked from the reviewer email."
+          ]
+        },
+        {
+          "k": "Who to ask",
+          "items": [
+            "<b>Fingerprinting</b> &mdash; Victoria or Maria",
+            "<b>Chaperone waivers &amp; binder</b> &mdash; Karla or Cynthia",
+            "<b>Lunches</b> &mdash; Odalys, two weeks ahead",
+            "<b>The form itself</b> &mdash; kenny.hin@slamnv.org"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "text", "act": "outro",
+      "eyebrow": "Before you go", "title": "Ready when you are",
+      "lede": "Use the form for every fundraiser and every field trip &mdash; it is the only way to get on the master calendar.",
+      "steps": [
+        { "h": "Submit early", "b": "30 days for a fundraiser or local trip, 60 for an overnight." },
+        { "h": "Attach the paperwork before you submit", "b": "A request missing its quote, letter or list will come back to you." },
+        { "h": "Watch your email", "b": "The decision comes there &mdash; and for field trips, so do your forms." },
+        { "h": "Check you got the calendar invite", "b": "That is the confirmation that it is actually booked." }
+      ],
+      "note": "Open the form: script.google.com → SLAM K-5 Fundraising & Field Trip Request (bookmark it from the staff portal)"
+    }
+  ]
+}

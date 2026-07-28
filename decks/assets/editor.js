@@ -96,6 +96,7 @@
     .then(function (d) {
       deck = d;
       if (!deck.slides) deck.slides = [];
+      DeckRender.applyTheme(deck);
       renderList();
       renderForm();
     })

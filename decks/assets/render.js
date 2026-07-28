@@ -132,5 +132,42 @@ window.DeckRender = (function () {
     return s.title || s.eyebrow || s.kind;
   }
 
-  return { slideBody: slideBody, label: label, esc: esc, imgPath: imgPath };
+  /* Per-deck accent colour. The stylesheet drives every accent off --red /
+     --red-fill / --glow, so a deck can re-hue itself by redefining just those.
+     `light` is the darker variant used on the light theme, where a bright
+     accent would not hold contrast as text. */
+  function applyTheme(deck) {
+    var t = deck && deck.theme;
+    if (!t || !t.accent) return;
+    var dark  = t.accent;
+    var light = t.accentLight || t.accent;
+    var glowD = t.glow || hexToRgba(dark, 0.16);
+    var glowL = hexToRgba(light, 0.12);
+
+    var css =
+      ':root{--red:' + light + ';--red-fill:' + light + ';--glow:' + glowL + ';}' +
+      '@media (prefers-color-scheme:dark){:root{--red:' + dark + ';--red-fill:' + dark + ';--glow:' + glowD + ';}}' +
+      ':root[data-theme="dark"]{--red:' + dark + ';--red-fill:' + dark + ';--glow:' + glowD + ';}' +
+      ':root[data-theme="light"]{--red:' + light + ';--red-fill:' + light + ';--glow:' + glowL + ';}';
+
+    var el = document.getElementById('deck-theme');
+    if (!el) {
+      el = document.createElement('style');
+      el.id = 'deck-theme';
+      document.head.appendChild(el);
+    }
+    el.textContent = css;
+  }
+
+  function hexToRgba(hex, a) {
+    var h = String(hex).replace('#', '');
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    var n = parseInt(h, 16);
+    return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+
+  return {
+    slideBody: slideBody, label: label, esc: esc,
+    imgPath: imgPath, applyTheme: applyTheme
+  };
 })();

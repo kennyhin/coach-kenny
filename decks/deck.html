@@ -80,7 +80,12 @@
     })
     .then(function (d) {
       deck = d;
-      document.title = (d.title || 'Deck') + ' — Coach Kenny';
+      // Titles may carry inline HTML entities for the cover; the tab title is
+      // plain text, so decode them rather than showing a literal &amp;.
+      var t = document.createElement('textarea');
+      t.innerHTML = d.title || 'Deck';
+      document.title = t.value + ' — Coach Kenny';
+      DeckRender.applyTheme(deck);
       build();
       var start = parseInt((location.hash || '').replace('#', ''), 10);
       show(isNaN(start) ? 0 : start - 1, true);
