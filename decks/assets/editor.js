@@ -174,6 +174,55 @@
     return wrap;
   }
 
+  /* Colour swatch + hex box, kept in sync both ways */
+  function colorField(labelTxt, value, onChange, hint) {
+    var wrap = document.createElement('div');
+    wrap.className = 'field';
+    var id = 'f' + Math.random().toString(36).slice(2, 8);
+    var lab = document.createElement('label');
+    lab.setAttribute('for', id);
+    lab.textContent = labelTxt;
+
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:.5rem;align-items:center';
+
+    var swatch = document.createElement('input');
+    swatch.type = 'color';
+    swatch.id = id;
+    swatch.value = /^#[0-9a-f]{6}$/i.test(value) ? value : '#C8102E';
+    swatch.style.cssText =
+      'width:2.6rem;height:2.6rem;padding:2px;border-radius:8px;cursor:pointer;' +
+      'border:1px solid var(--line-2);background:var(--surface)';
+
+    var hex = document.createElement('input');
+    hex.type = 'text';
+    hex.value = value || '';
+    hex.spellcheck = false;
+    hex.style.flex = '1';
+
+    swatch.addEventListener('input', function () {
+      hex.value = swatch.value.toUpperCase();
+      onChange(hex.value); markDirty();
+    });
+    hex.addEventListener('input', function () {
+      var v = hex.value.trim();
+      if (/^#[0-9a-f]{6}$/i.test(v)) swatch.value = v;
+      onChange(v); markDirty();
+    });
+
+    row.appendChild(swatch);
+    row.appendChild(hex);
+    wrap.appendChild(lab);
+    wrap.appendChild(row);
+    if (hint) {
+      var h = document.createElement('p');
+      h.className = 'field-hint';
+      h.textContent = hint;
+      wrap.appendChild(h);
+    }
+    return wrap;
+  }
+
   /* A repeatable list of {h,b} pairs (steps / cards) */
   function pairList(title, arr, keyH, keyB, labelH, labelB, onStructural) {
     var sec = document.createElement('div');
@@ -276,6 +325,41 @@
       f.appendChild(textField('Subtitle', deck.subtitle, function (v) { deck.subtitle = v; }, null, true));
       if (!deck.contents) deck.contents = [];
       f.appendChild(stringList('Contents list on the cover', deck.contents, 'Item', function () { renderForm(); renderPreview(); }));
+
+      // ---- accent colour ----
+      if (!deck.theme) deck.theme = {};
+      var tsec = document.createElement('div');
+      tsec.className = 'ed-sec';
+      var th3 = document.createElement('h3');
+      th3.textContent = 'Deck colour';
+      tsec.appendChild(th3);
+      var tg = document.createElement('div');
+      tg.className = 'grid2';
+      tg.appendChild(colorField('Accent (dark theme)', deck.theme.accent || '#C8102E', function (v) {
+        deck.theme.accent = v; DeckRender.applyTheme(deck); renderPreview();
+      }, 'The bright version, used on the dark background.'));
+      tg.appendChild(colorField('Accent (light theme)', deck.theme.accentLight || deck.theme.accent || '#C8102E', function (v) {
+        deck.theme.accentLight = v; DeckRender.applyTheme(deck); renderPreview();
+      }, 'A darker shade, so it stays readable on white.'));
+      tsec.appendChild(tg);
+      var clr = document.createElement('button');
+      clr.className = 'addbtn';
+      clr.textContent = 'Reset to SLAM red';
+      clr.addEventListener('click', function () {
+        delete deck.theme;
+        var el = document.getElementById('deck-theme');
+        if (el) el.remove();
+        markDirty(); renderForm(); renderPreview();
+      });
+      tsec.appendChild(clr);
+      f.appendChild(tsec);
+
+      // ---- sections (acts) ----
+      if (!deck.acts) deck.acts = [];
+      f.appendChild(pairList('Sections (the groups in the top progress bar)', deck.acts, 'id', 'label',
+        'Section id (used by slides)', 'Section name shown on screen',
+        function () { renderForm(); renderPreview(); }));
+
       renderPreview();
       return;
     }
