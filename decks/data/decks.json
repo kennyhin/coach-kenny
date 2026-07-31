@@ -9,6 +9,14 @@
       "updated": "2026-07-28"
     },
     {
+      "slug": "teacher-os",
+      "title": "Teacher Check-In",
+      "label": "Teacher walkthrough",
+      "icon": "✅",
+      "blurb": "Marking Home Run and Bulls Commitment each week — and what probation, suspension and the emails home actually mean.",
+      "updated": "2026-07-30"
+    },
+    {
       "slug": "coach-os",
       "title": "Coach OS",
       "label": "Coach walkthrough",

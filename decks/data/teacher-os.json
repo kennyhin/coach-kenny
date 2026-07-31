@@ -1,0 +1,193 @@
+{
+  "slug": "teacher-os",
+  "title": "Teacher Check-In",
+  "eyebrow": "SLAM! Nevada Athletics · Teacher walkthrough",
+  "subtitle": "Two taps per athlete, once a week. That is the whole job — and here is exactly what it does.",
+  "theme": { "accent": "#38BDF8", "accentLight": "#0369A1" },
+  "contents": [
+    "Marking your athletes",
+    "Probation and suspension",
+    "Who hears about it"
+  ],
+  "acts": [
+    { "id": "intro",  "label": "Start" },
+    { "id": "mark",   "label": "Marking" },
+    { "id": "ladder", "label": "Ladder" },
+    { "id": "who",    "label": "Who Knows" },
+    { "id": "wrap",   "label": "Wrap" }
+  ],
+  "slides": [
+    { "kind": "cover", "act": "intro" },
+
+    {
+      "kind": "grid", "act": "intro",
+      "eyebrow": "Why you",
+      "title": "You are the only one who sees them all week",
+      "lede": "Coaches see athletes at practice. You see them in class. That is why the check-in is yours.",
+      "cards": [
+        { "h": "Only your athletes", "b": "You see the students in <b>your</b> homeroom who are on a team. Nobody else&rsquo;s kids, and not your whole class." },
+        { "h": "Once a week", "b": "Marks are due on Fridays. It takes about a minute for a whole roster." },
+        { "h": "Two things per athlete", "b": "Did they take care of the academic side, and did they behave. That is it." },
+        { "h": "It has real teeth", "b": "What you mark decides whether an athlete plays in the next game. It is not paperwork." }
+      ]
+    },
+    {
+      "kind": "shot", "act": "intro", "img": "01-login.jpg", "persona": "Teacher",
+      "eyebrow": "Step 1", "title": "Signing in",
+      "lede": "Go to athleticsos.io/teacher, enter your school email, then the PIN for your grade.",
+      "steps": [
+        { "h": "Your email", "b": "The one the school has on file. If you co-teach, either teacher&rsquo;s email works &mdash; you both see the same students." },
+        { "h": "Then your grade PIN", "b": "Shared by grade level, not per person. Ask the office if you do not have it." },
+        { "h": "It remembers you", "b": "On your own laptop or phone you will usually stay signed in week to week." }
+      ]
+    },
+
+    {
+      "kind": "divider", "act": "mark", "num": "Part 1",
+      "title": "Marking your athletes",
+      "lede": "What the screen looks like and what the two buttons mean.",
+      "persona": "Teacher"
+    },
+    {
+      "kind": "shot", "act": "mark", "img": "02-grid.jpg", "persona": "Teacher",
+      "eyebrow": "The screen", "title": "Everything on one page",
+      "lede": "Your athletes down the middle, the week you are marking across the top, and a watch list up top.",
+      "steps": [
+        { "h": "Pick the week first", "b": "The Fridays of the season run across the top. A <b>&check;</b> means you already submitted that week. It opens on the current one." },
+        { "h": "Two buttons per athlete", "b": "<b>HR</b> is Home Run &mdash; grades and homework. <b>BC</b> is Bulls Commitment &mdash; behavior." },
+        { "h": "Green means good", "b": "Everyone starts green. You only change the ones who had a problem." },
+        { "h": "Accountability watch", "b": "The panel at the top shows who is currently on probation or suspended, so you can see it without hunting." }
+      ],
+      "note": "Everyone starts green — you are only marking the exceptions, not grading all 20 kids."
+    },
+    {
+      "kind": "shot", "act": "mark", "img": "03-reason.jpg", "persona": "Teacher",
+      "eyebrow": "Marking a problem", "title": "Tap the button, then say what happened",
+      "lede": "Tapping a green button turns it red and asks you one question. The answer is not optional and it matters.",
+      "steps": [
+        { "h": "Tap HR or BC to flip it red", "b": "A box opens asking what happened." },
+        { "h": "Write it plain and factual", "b": "&ldquo;Missing three homework assignments&rdquo; or &ldquo;was disrespectful to a substitute&rdquo;. Short is fine." },
+        { "h": "Parents read this word for word", "b": "Your note is copied into the email that goes home. Write it the way you would say it to the parent." },
+        { "h": "Then press Mark not good", "b": "The reason shows under the athlete&rsquo;s name so you can see it at a glance." }
+      ],
+      "note": "The wording you type is what the family reads. Nobody rewrites it for you."
+    },
+    {
+      "kind": "text", "act": "mark",
+      "eyebrow": "Finishing up", "title": "Submitting the week",
+      "lede": "Nothing counts until you press submit. That is the moment it becomes real.",
+      "steps": [
+        { "h": "The button tells you the count", "b": "It reads something like <b>Submit week of Oct 9 &middot; 2 flagged</b>, so you can sanity-check before sending." },
+        { "h": "Marks alone do nothing", "b": "You can tap around all week. No email goes out and no standing changes until you submit." },
+        { "h": "You can fix a mistake", "b": "A submitted week can be re-submitted, or reset if you need to start it over." },
+        { "h": "A clean week still gets submitted", "b": "If everyone was good, submit it anyway &mdash; that is what clears athletes off probation." }
+      ]
+    },
+
+    {
+      "kind": "divider", "act": "ladder", "num": "Part 2",
+      "title": "What a red mark actually does",
+      "lede": "The part teachers ask about most. It is simpler than it sounds.",
+      "persona": "Teacher"
+    },
+    {
+      "kind": "text", "act": "ladder",
+      "eyebrow": "The ladder", "title": "Three steps, and only three",
+      "lede": "A red on either button counts the same. It does not matter whether it was HR or BC, or whether both went red.",
+      "steps": [
+        { "h": "Clean week &rarr; Good standing", "b": "Nothing happens, and any earlier trouble is wiped out." },
+        { "h": "One bad week &rarr; Probation", "b": "The athlete still plays. The family and the coach get an email so everyone knows." },
+        { "h": "Two bad weeks in a row &rarr; Suspended", "b": "They sit out the next game. The family and coach get a different, clearer email." },
+        { "h": "After the suspension", "b": "They start over. A later bad week puts them back on probation &mdash; it does not stack into a longer ban." }
+      ],
+      "note": "The two bad weeks must be back to back. A good week in between resets everything."
+    },
+    {
+      "kind": "grid", "act": "ladder",
+      "eyebrow": "Worked examples",
+      "title": "How it plays out",
+      "lede": "Same rule, four common patterns.",
+      "cards": [
+        { "h": "Good, good, good", "b": "Good standing the whole way. Nothing sent, nothing to do." },
+        { "h": "Good, <b>bad</b>, good", "b": "Probation after the bad week, then straight back to good standing. One email went home." },
+        { "h": "Good, <b>bad</b>, <b>bad</b>", "b": "Probation, then <b>suspended</b> &mdash; they miss the next game." },
+        { "h": "<b>bad</b>, good, <b>bad</b>", "b": "Probation, cleared, probation again. Never suspended, because the bad weeks were not consecutive." }
+      ]
+    },
+    {
+      "kind": "text", "act": "ladder",
+      "eyebrow": "Good to know", "title": "A few things that trip people up",
+      "steps": [
+        { "h": "HR and BC weigh the same", "b": "One red is one bad week. Two reds in the same week is still just one bad week." },
+        { "h": "Skipped weeks do not count against anyone", "b": "Only weeks you actually submit are on the ladder." },
+        { "h": "The standing is always current", "b": "It is recalculated from your submitted weeks, so fixing a mistake fixes the standing." },
+        { "h": "You do not decide the punishment", "b": "You report what happened in class. The ladder handles the rest." }
+      ]
+    },
+
+    {
+      "kind": "divider", "act": "who", "num": "Part 3",
+      "title": "Who finds out",
+      "lede": "The question everyone asks before they press submit.",
+      "persona": "Teacher"
+    },
+    {
+      "kind": "text", "act": "who",
+      "eyebrow": "On submit", "title": "Who gets the email",
+      "lede": "Only athletes who were marked down that week trigger anything. Everyone else is silent.",
+      "steps": [
+        { "h": "The parents get it", "b": "It goes <b>to</b> the parent email on file &mdash; both, if the school has two." },
+        { "h": "You are copied", "b": "So you have a record of exactly what went out and when." },
+        { "h": "The coaches are copied", "b": "Head coach and any assistants, so they are not blindsided at the next practice." },
+        { "h": "Kenny is copied", "b": "The athletic director sees every one." }
+      ],
+      "note": "No parent email on file? The athlete shows a small 'no parent email' tag and no message is sent — tell the office."
+    },
+    {
+      "kind": "grid", "act": "who",
+      "eyebrow": "What it says",
+      "title": "What lands in the family&rsquo;s inbox",
+      "lede": "Two versions, depending on where the athlete landed on the ladder.",
+      "cards": [
+        { "h": "Probation email", "b": "Names the student, the team and the week, says they have been placed on probation, and includes your note." },
+        { "h": "Suspension email", "b": "Same details, but says they are suspended from the next game and names which one." },
+        { "h": "Your note is the body", "b": "The specific thing you typed is the part parents actually read. Everything else is a template." },
+        { "h": "Sent from the school", "b": "It goes out as an official school email, not from your personal address." }
+      ]
+    },
+
+    {
+      "kind": "recap", "act": "wrap",
+      "eyebrow": "Take this away", "title": "The short version",
+      "columns": [
+        {
+          "k": "Every Friday",
+          "items": [
+            "athleticsos.io/teacher &mdash; email, then your grade PIN.",
+            "Pick the week at the top.",
+            "Everyone starts <b>green</b> &mdash; only change the exceptions.",
+            "<b>Submit</b>, even if the whole week was clean."
+          ]
+        },
+        {
+          "k": "The two buttons",
+          "items": [
+            "<b>HR</b> &mdash; Home Run: grades and homework.",
+            "<b>BC</b> &mdash; Bulls Commitment: behavior.",
+            "Red on either one = one bad week.",
+            "Always write a clear, factual reason."
+          ]
+        },
+        {
+          "k": "What it triggers",
+          "items": [
+            "One bad week &rarr; <b>probation</b>, they still play.",
+            "Two in a row &rarr; <b>suspended</b> for the next game.",
+            "Any clean week resets it.",
+            "Email goes to parents, copied to you, the coaches and Kenny."
+          ]
+        }
+      ]
+    }
+  ]
+}
