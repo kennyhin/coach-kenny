@@ -9,6 +9,14 @@
       "updated": "2026-07-28"
     },
     {
+      "slug": "coach-os",
+      "title": "Coach OS",
+      "label": "Coach walkthrough",
+      "icon": "🏆",
+      "blurb": "Your team hub — tryouts and the draft, roster, attendance, playing time, scores and drills.",
+      "updated": "2026-07-30"
+    },
+    {
       "slug": "fundraising-field-trips",
       "title": "Fundraising & Field Trips",
       "label": "Staff walkthrough",
