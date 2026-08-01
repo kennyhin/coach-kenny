@@ -1,0 +1,321 @@
+{
+  "slug": "specialist-first-day",
+  "title": "Specialist First Day",
+  "eyebrow": "SLAM! Nevada K-5 · Specialist team · 2026-27",
+  "subtitle": "Your rotation schedule, saved to your phone in four taps &mdash; and the pacing guide that keeps every specialist pointed at the same weekly destination.",
+  "theme": { "accent": "#F0B429", "accentLight": "#8A5B00" },
+  "contents": [
+    "Find the schedule",
+    "Save it to your phone",
+    "Read the pacing guide"
+  ],
+  "acts": [
+    { "id": "intro", "label": "Start" },
+    { "id": "access", "label": "Your Phone" },
+    { "id": "pacing", "label": "Pacing" },
+    { "id": "wrap", "label": "Wrap" }
+  ],
+  "slides": [
+    { "kind": "cover", "act": "intro" },
+
+    {
+      "kind": "grid",
+      "act": "intro",
+      "eyebrow": "Today's finish line",
+      "title": "Three things, and then we go set up our gyms",
+      "lede": "This is a working session, not a sit-and-listen. Have your phone out, and have the pacing file open.",
+      "cards": [
+        {
+          "h": "Schedule access",
+          "b": "You can find the specialist rotation from your phone, without asking anyone or digging through email."
+        },
+        {
+          "h": "A phone shortcut",
+          "b": "It lives on your home screen by the time you leave this room. One tap, no searching."
+        },
+        {
+          "h": "Pacing that lines us up",
+          "b": "You can read a pacing row and say the unit, the standard, and the evidence out loud."
+        }
+      ]
+    },
+
+    {
+      "kind": "shot",
+      "act": "access",
+      "img": "qr-coachkenny.png",
+      "persona": "Everyone, phones up",
+      "eyebrow": "One front door",
+      "title": "Scan this, then wait on the hub",
+      "lede": "Point your camera at the code. It opens <b>coachkenny.org</b> &mdash; the single address that holds everything we use.",
+      "steps": [
+        {
+          "h": "Camera app is enough",
+          "b": "No scanner app needed. Point, then tap the banner."
+        },
+        {
+          "h": "Or just type it",
+          "b": "<b>coachkenny.org</b> &mdash; if the scan is fussy, type it."
+        },
+        {
+          "h": "Why the hub, not the schedule",
+          "b": "Schedule links change. The hub does not. Bookmark it once."
+        }
+      ],
+      "note": "Hold here until every phone shows the hub."
+    },
+
+    {
+      "kind": "shot",
+      "act": "access",
+      "img": "open-the-schedule.png",
+      "persona": "Everyone, phones up",
+      "eyebrow": "From the hub",
+      "title": "Getting to the rotation schedule",
+      "lede": "Three taps from the front door. Scroll past the athletics cards to the <b>Rotations</b> card.",
+      "steps": [
+        {
+          "h": "Scroll to Rotations",
+          "b": "It sits below <b>Decks</b> in the card list. The card is labelled <b>Specialist Calendar</b>."
+        },
+        {
+          "h": "Sign in with your school account",
+          "b": "It is a slamnv.org Google Site. A personal Gmail will be refused."
+        },
+        {
+          "h": "Bookmark the hub, not this page",
+          "b": "Come back out to coachkenny.org before the next slide."
+        }
+      ],
+      "note": "Blocker: test the Rotations card on a phone signed in as @slamnv.org. It was reported as a 404."
+    },
+
+    {
+      "kind": "shot",
+      "act": "access",
+      "img": "ios-add-to-home.svg",
+      "persona": "iPhone",
+      "eyebrow": "Save it — iPhone",
+      "title": "Add to Home Screen in Safari",
+      "lede": "In Safari, with <b>coachkenny.org</b> open:",
+      "steps": [
+        {
+          "h": "Tap Share",
+          "b": "The square-with-an-arrow icon in the bottom toolbar."
+        },
+        {
+          "h": "Scroll to Add to Home Screen",
+          "b": "Below Add Bookmark. You will have to scroll."
+        },
+        {
+          "h": "Name it something short",
+          "b": "&ldquo;Specialist&rdquo; fits. Long names get cut off."
+        },
+        {
+          "h": "Tap Add",
+          "b": "The icon lands on your home screen. That is your one tap."
+        }
+      ],
+      "note": "Must be Safari &mdash; Chrome on iPhone cannot do this."
+    },
+
+    {
+      "kind": "shot",
+      "act": "access",
+      "img": "android-add-to-home.svg",
+      "persona": "Android",
+      "eyebrow": "Save it — Android",
+      "title": "Add to Home screen in Chrome",
+      "lede": "Same idea, different menu. In Chrome:",
+      "steps": [
+        {
+          "h": "Tap the three-dot menu",
+          "b": "Top right, next to the address bar."
+        },
+        {
+          "h": "Add to Home screen",
+          "b": "Some versions label this <b>Install app</b>. Same result."
+        },
+        {
+          "h": "Name it, then Add",
+          "b": "Android may ask you to confirm once more. Tap <b>Add</b> again."
+        },
+        {
+          "h": "Check your home screen",
+          "b": "Do not leave until the icon is there and it opens the hub."
+        }
+      ],
+      "note": "Illustrations, not device captures. Wording shifts by version."
+    },
+
+    {
+      "kind": "grid",
+      "act": "pacing",
+      "eyebrow": "The other half of today",
+      "title": "A pacing guide is the map, not the drive",
+      "lede": "It sets the destination for each week. It does not tell you minute by minute how to get there &mdash; that is your lesson plan.",
+      "cards": [
+        {
+          "h": "Calendar",
+          "b": "Which week, the real dates, and how many student days you actually get. A four-day week is not a five-day week."
+        },
+        {
+          "h": "Unit and question",
+          "b": "The strand you are in, and the essential question the week is trying to answer."
+        },
+        {
+          "h": "Standard",
+          "b": "The Nevada indicator the week is accountable to. This is the part that has to be defensible."
+        },
+        {
+          "h": "Focus and activity",
+          "b": "What students should be able to do on cue, and the activity that gets them there."
+        },
+        {
+          "h": "Evidence",
+          "b": "How you will know they got it. A checklist, an exit cue, an observation &mdash; something you can point at."
+        },
+        {
+          "h": "What it is not",
+          "b": "It is not a script, and it is not fixed. Weather, assemblies and one hard class all move it. Move it on purpose."
+        }
+      ]
+    },
+
+    {
+      "kind": "text",
+      "act": "pacing",
+      "eyebrow": "Read one row together",
+      "title": "One week, all the way across",
+      "lede": "The worked PE example on the <b>Master Copy</b> tab. Read it in this order &mdash; standard first, then evidence, then the activity.",
+      "steps": [
+        {
+          "h": "Week and student days",
+          "b": "Week 11 &middot; 10/19&ndash;10/23 &middot; <b>5 student days</b>."
+        },
+        {
+          "h": "Unit and essential question",
+          "b": "<b>Object Control II</b> &mdash; <i>how do body position and force change control?</i>"
+        },
+        {
+          "h": "Vocabulary and standard",
+          "b": "kick, pass, plant foot, follow-through &mdash; <b>1.2.2</b> and <b>2.2.1</b>."
+        },
+        {
+          "h": "Weekly focus and activity",
+          "b": "<i>Kick and pass to a target with control.</i> Anchor: kick through gates."
+        },
+        {
+          "h": "Evidence and connections",
+          "b": "A kick/pass checklist. Science: force and motion."
+        }
+      ]
+    },
+
+    {
+      "kind": "flow",
+      "act": "pacing",
+      "eyebrow": "PE, K-5",
+      "title": "The year at a glance",
+      "lede": "36 weeks, 163 student days, every Nevada K-2 and 3-5 indicator covered in its own band. <b>Every quarter opens with a procedures reset, on purpose.</b>",
+      "stages": [
+        {
+          "n": "Q1",
+          "k": "Weeks 1-9 · Aug 12 - Oct 8",
+          "h": "Procedures, then movement foundations",
+          "b": "Weeks 1-3 are policy, procedures and safety only &mdash; entry and exit, the freeze signal, boundaries, equipment homes. Then locomotor, balance and first object control."
+        },
+        {
+          "n": "Q2",
+          "k": "Weeks 10-18",
+          "h": "Object control, rhythm, fitness foundations",
+          "b": "Procedures reset in week 10. Kicking and striking, rhythm and pathways, then the first fitness unit and a semester integration week."
+        },
+        {
+          "n": "Q3",
+          "k": "Weeks 19-27",
+          "h": "Fitness application and game strategy",
+          "b": "Procedures reset again in week 19. Jump rope, endurance, strength and flexibility, then invasion, target and striking games."
+        },
+        {
+          "n": "Q4",
+          "k": "Weeks 28-36",
+          "h": "Cooperation, then the field-day build",
+          "b": "Reset at week 27 into cooperative challenges and active lifetime choices. <b>Weeks 31-36 are field day practice</b> &mdash; relays, accuracy, balance, team challenges, then the day itself."
+        }
+      ]
+    },
+
+    {
+      "kind": "grid",
+      "act": "pacing",
+      "eyebrow": "Same destination, different road",
+      "title": "What consistency actually looks like",
+      "lede": "Two specialists can run completely different rooms and still be aligned. Alignment is about the destination and the evidence, not the drill.",
+      "cards": [
+        {
+          "h": "K-2: explore and imitate",
+          "b": "Visual cues, short turns, large and light equipment, one instruction at a time. Success is participation and a recognisable attempt."
+        },
+        {
+          "h": "3-5: combine and explain",
+          "b": "Skills in combination, tactics they can put into words, feedback to a partner, and chances to lead a station."
+        },
+        {
+          "h": "Reset every quarter",
+          "b": "Weeks 10, 19 and 27 each open with procedures again. Do not skip it because &ldquo;they already know.&rdquo; They do not, in January."
+        },
+        {
+          "h": "Adapt five things",
+          "b": "Space, equipment, rules, cues, and the movement itself. Change any of them so every student can participate &mdash; that is not lowering the standard."
+        }
+      ]
+    },
+
+    {
+      "kind": "recap",
+      "act": "wrap",
+      "eyebrow": "Before we leave",
+      "title": "Three things to walk out with",
+      "lede": "Turn to the person next to you and check each other. Nobody leaves this room without the shortcut on their phone.",
+      "columns": [
+        {
+          "k": "On your phone",
+          "items": [
+            "<b>coachkenny.org</b> is the one address.",
+            "Shortcut is on your home screen.",
+            "You are signed in as <b>@slamnv.org</b>.",
+            "Your partner watched you open it."
+          ]
+        },
+        {
+          "k": "In the pacing guide",
+          "items": [
+            "Find your <b>current week</b>.",
+            "Say the <b>unit</b> out loud.",
+            "Say the <b>standard</b> out loud.",
+            "Say what <b>evidence</b> you will collect."
+          ]
+        },
+        {
+          "k": "This year's shape",
+          "items": [
+            "Weeks 1-3: procedures and safety.",
+            "Every quarter reopens with a reset.",
+            "Weeks 31-36: field day practice.",
+            "36 weeks, 163 student days."
+          ]
+        },
+        {
+          "k": "If you get stuck",
+          "items": [
+            "Ask before the week starts, not after.",
+            "Moving a week is fine &mdash; move it on purpose.",
+            "Standard and evidence first, activity second.",
+            "Bring it to the next specialist meeting."
+          ]
+        }
+      ]
+    }
+  ]
+}

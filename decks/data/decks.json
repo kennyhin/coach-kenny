@@ -1,6 +1,14 @@
 {
   "decks": [
     {
+      "slug": "specialist-first-day",
+      "title": "Specialist First Day",
+      "label": "Specialist walkthrough",
+      "icon": "🏃",
+      "blurb": "The rotation schedule on your phone in four taps — and how to read the 2026-27 pacing guide.",
+      "updated": "2026-08-01"
+    },
+    {
       "slug": "slam-reservations",
       "title": "Space Reservations",
       "label": "Staff walkthrough",
