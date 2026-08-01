@@ -124,42 +124,76 @@ window.DeckRender = (function () {
     }
 
     if (k === 'flow') {
-      var stages = (s.stages || []).map(function (st, i) {
-        return (i ? '<div class="flow-arrow" aria-hidden="true"></div>' : '') +
-          '<div class="flow-stage">' +
-            '<span class="flow-n mono">' + esc(st.n || String(i + 1)) + '</span>' +
-            '<div class="flow-stage-b">' +
-              '<h4>' + (st.h || '') + '</h4>' +
-              (st.b ? '<p>' + st.b + '</p>' : '') +
-            '</div>' +
-          '</div>';
-      }).join('');
+      /* One numbered spine, top to bottom. Every stage is a row hanging off the
+         same rail, so there is no arrow to anchor by hand — the rail is drawn by
+         the row itself and stays correct at any width or stage count. */
+      var n = 0;
+      var rows = '';
 
-      var hub = s.hub
-        ? '<div class="flow-hub">' +
-            '<p class="flow-hub-k mono">' + esc(s.hub.k || 'Email') + '</p>' +
-            '<h4>' + (s.hub.h || '') + '</h4>' +
-            (s.hub.b ? '<p>' + s.hub.b + '</p>' : '') +
-          '</div>'
-        : '';
+      var flowStep = function (kicker, head, body, extra, cls, num) {
+        n += 1;
+        return '<li class="flow-step' + (cls ? ' ' + cls : '') + '">' +
+          '<span class="flow-n mono" aria-hidden="true">' + esc(num || String(n)) + '</span>' +
+          '<div class="flow-body">' +
+            (kicker ? '<p class="flow-k mono">' + esc(kicker) + '</p>' : '') +
+            (head ? '<h4>' + head + '</h4>' : '') +
+            (body ? '<p>' + body + '</p>' : '') +
+            (extra || '') +
+          '</div>' +
+        '</li>';
+      };
 
-      var recipients = (s.recipients || []).map(function (r) {
-        var role = String(r.role || 'CC').toUpperCase();
-        var primary = role === 'TO' ? ' flow-rec-to' : '';
-        return '<article class="flow-rec' + primary + '">' +
-          '<p class="flow-role mono">' + esc(role) + '</p>' +
-          '<h4>' + (r.h || '') + '</h4>' +
-          (r.b ? '<p>' + r.b + '</p>' : '') +
-          '</article>';
-      }).join('');
-
-      var branch = s.branch
+      var branchHtml = s.branch
         ? '<aside class="flow-branch">' +
-            '<p class="flow-branch-k mono">If no parent email</p>' +
-            '<h4>' + (s.branch.h || '') + '</h4>' +
-            (s.branch.b ? '<p>' + s.branch.b + '</p>' : '') +
+            '<p class="flow-branch-k mono">' + esc(s.branch.k || 'If no parent email') + '</p>' +
+            '<div class="flow-branch-b">' +
+              '<h4>' + (s.branch.h || '') + '</h4>' +
+              (s.branch.b ? '<p>' + s.branch.b + '</p>' : '') +
+            '</div>' +
           '</aside>'
         : '';
+      var branchPlaced = false;
+
+      (s.stages || []).forEach(function (st) {
+        rows += flowStep(st.k, st.h, st.b, '', '', st.n);
+      });
+
+      if (s.hub) {
+        rows += flowStep(s.hub.k || 'System sends', s.hub.h, s.hub.b, '', 'flow-step-hub');
+      }
+
+      if ((s.recipients || []).length) {
+        // The recipients are parallel, not more steps on the spine: they share
+        // one stage marker and sit in a grid branching off it.
+        var hasTo = false;
+        var recs = s.recipients.map(function (r) {
+          var role = String(r.role || 'CC').toUpperCase();
+          var isTo = role === 'TO';
+          if (isTo) hasTo = true;
+          return '<article class="flow-rec' + (isTo ? ' flow-rec-to' : '') + '">' +
+            '<p class="flow-role mono">' + esc(role) + '</p>' +
+            '<h4>' + (r.h || '') + '</h4>' +
+            (r.b ? '<p>' + r.b + '</p>' : '') +
+          '</article>';
+        }).join('');
+        // The exception is a sibling of the cards inside the same grid: it sits
+        // directly under the TO card it belongs to, and `order` keeps it there
+        // once the grid collapses to a single column.
+        if (hasTo && branchHtml) {
+          recs += branchHtml;
+          branchPlaced = true;
+        }
+        rows += flowStep(s.fanK || '', s.fanH || 'Who receives it', s.fanB || '',
+                         '<div class="flow-recs">' + recs + '</div>', 'flow-step-fan');
+      }
+
+      // No TO card to hang it on — keep the exception visible as its own row.
+      if (branchHtml && !branchPlaced) {
+        rows += '<li class="flow-step flow-step-alone">' +
+          '<span class="flow-n flow-n-alt mono" aria-hidden="true">!</span>' +
+          '<div class="flow-body">' + branchHtml + '</div>' +
+        '</li>';
+      }
 
       return '' +
         '<div class="pad">' +
@@ -168,18 +202,7 @@ window.DeckRender = (function () {
             '<h2>' + (s.title || '') + '</h2>' +
             (s.lede ? '<p class="lede">' + s.lede + '</p>' : '') +
           '</header>' +
-          '<div class="flow">' +
-            (stages ? '<div class="flow-stages">' + stages + '</div>' : '') +
-            (hub || recipients
-              ? '<div class="flow-arrow flow-arrow-down" aria-hidden="true"></div>' +
-                '<div class="flow-send">' + hub +
-                  (recipients ? '<div class="flow-recs">' + recipients + '</div>' : '') +
-                '</div>'
-              : '') +
-            (branch
-              ? '<div class="flow-arrow flow-arrow-down flow-arrow-branch" aria-hidden="true"></div>' + branch
-              : '') +
-          '</div>' +
+          '<ol class="flow">' + rows + '</ol>' +
         '</div>';
     }
 
