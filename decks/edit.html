@@ -73,21 +73,23 @@
   <div class="sheet-in">
     <h2>Save straight to GitHub</h2>
     <p>
-      Paste a GitHub <b>fine-grained personal access token</b> with
-      <code>Contents: Read and write</code> on <code>kennyhin/coach-kenny</code>.
-      Then the Save button commits your changes and the site updates in about a minute.
+      Paste a GitHub personal access token that can read and write this repo.
+      Save commits your edits; GitHub Pages updates in about a minute.
     </p>
+    <p id="gh-status" class="warn" hidden></p>
     <p class="warn">
-      The token is stored in this browser only (localStorage) and is never sent anywhere
-      except github.com. Anyone who can use this computer could read it, so don't set it
-      up on a shared or student machine — use Export there instead.
+      The token is stored in this browser only (localStorage) and is only sent to
+      api.github.com. Don't set it up on a shared or student machine — use Export there instead.
+      If Save suddenly fails with 401, the token expired: Forget it and paste a new one.
     </p>
     <div class="field">
       <label for="gh-token">Token</label>
-      <input type="password" id="gh-token" placeholder="github_pat_…" autocomplete="off" spellcheck="false" />
+      <input type="password" id="gh-token" placeholder="github_pat_… or ghp_…" autocomplete="off" spellcheck="false" />
       <p class="field-hint">
-        Create one at <b>github.com → Settings → Developer settings → Personal access tokens
-        → Fine-grained tokens</b>.
+        <b>Recommended:</b> github.com → Settings → Developer settings → Personal access tokens
+        → <b>Fine-grained tokens</b> → Resource owner <code>kennyhin</code> → only
+        <code>coach-kenny</code> → Permissions → <b>Contents: Read and write</b>.
+        Or a classic token with the <code>repo</code> scope. Connect verifies the token before storing it.
       </p>
     </div>
     <div class="sheet-acts">

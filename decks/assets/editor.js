@@ -717,24 +717,90 @@
   function hasToken() { return !!localStorage.getItem(TOKEN_KEY); }
   function token() { return localStorage.getItem(TOKEN_KEY) || ''; }
 
-  $('btn-gh').addEventListener('click', function () {
+  function syncGhButton() {
+    var btn = $('btn-gh');
+    if (!btn) return;
+    btn.textContent = hasToken() ? '⚙ GitHub ✓' : '⚙ GitHub';
+    btn.title = hasToken()
+      ? 'GitHub connected — click to replace or forget the token'
+      : 'Connect a GitHub token so Save can commit';
+  }
+
+  function openGhSheet(prefillMsg) {
     $('gh-token').value = '';
+    var status = $('gh-status');
+    if (status) {
+      status.textContent = prefillMsg || '';
+      status.hidden = !prefillMsg;
+    }
     $('sheet-gh').hidden = false;
+    setTimeout(function () { $('gh-token').focus(); }, 0);
+  }
+
+  function forgetToken(quiet) {
+    localStorage.removeItem(TOKEN_KEY);
+    syncGhButton();
+    if (!quiet) toast('Token removed from this browser.', 'ok');
+    renderForm();
+  }
+
+  function authErrorMessage(status, action) {
+    if (status === 401) {
+      return 'GitHub ' + action + ' failed (401): token missing, expired, or revoked. ' +
+        'Press ⚙ GitHub, paste a fresh PAT, then Save again.';
+    }
+    if (status === 403) {
+      return 'GitHub ' + action + ' failed (403): token lacks access. ' +
+        'Need Contents: Read and write on kennyhin/coach-kenny (or classic PAT with repo scope).';
+    }
+    if (status === 404) {
+      return 'GitHub ' + action + ' failed (404): repo/path not found, or token cannot see this private repo.';
+    }
+    return 'GitHub ' + action + ' failed (' + status + ')';
+  }
+
+  $('btn-gh').addEventListener('click', function () {
+    openGhSheet(hasToken()
+      ? 'A token is already stored here. Paste a new one to replace it, or Forget to remove it.'
+      : '');
   });
   $('gh-cancel').addEventListener('click', function () { $('sheet-gh').hidden = true; });
   $('gh-forget').addEventListener('click', function () {
-    localStorage.removeItem(TOKEN_KEY);
+    forgetToken(false);
     $('sheet-gh').hidden = true;
-    toast('Token removed from this browser.', 'ok');
-    renderForm();
   });
   $('gh-save').addEventListener('click', function () {
     var v = $('gh-token').value.trim();
     if (!v) { toast('Paste a token first.', 'bad'); return; }
-    localStorage.setItem(TOKEN_KEY, v);
-    $('sheet-gh').hidden = true;
-    toast('Connected. Save now commits straight to GitHub.', 'ok');
-    renderForm();
+    if (!/^(github_pat_|gh[pousr]_)/.test(v)) {
+      toast('That does not look like a GitHub PAT (github_pat_… or ghp_…).', 'bad');
+      return;
+    }
+    var btn = $('gh-save');
+    btn.disabled = true;
+    btn.textContent = 'Checking…';
+    // Probe Contents read so we catch bad/expired tokens before storing them.
+    fetch('https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/decks/data?ref=' + BRANCH, {
+      headers: {
+        'Authorization': 'Bearer ' + v,
+        'Accept': 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    }).then(function (r) {
+      if (!r.ok) {
+        throw new Error(authErrorMessage(r.status, 'connect'));
+      }
+      localStorage.setItem(TOKEN_KEY, v);
+      $('sheet-gh').hidden = true;
+      syncGhButton();
+      toast('Connected. Save now commits straight to GitHub.', 'ok');
+      renderForm();
+    }).catch(function (err) {
+      toast(err.message || 'Could not verify token.', 'bad');
+    }).then(function () {
+      btn.disabled = false;
+      btn.textContent = 'Connect';
+    });
   });
 
   function api(path, opts) {
@@ -751,7 +817,11 @@
     return api('/contents/' + path + '?ref=' + BRANCH)
       .then(function (r) {
         if (r.status === 404) return null;
-        if (!r.ok) throw new Error('GitHub read failed (' + r.status + ')');
+        if (!r.ok) {
+          var err = new Error(authErrorMessage(r.status, 'read'));
+          err.status = r.status;
+          throw err;
+        }
         return r.json().then(function (j) { return j.sha; });
       });
   }
@@ -765,7 +835,15 @@
       body: JSON.stringify(body)
     }).then(function (r) {
       return r.json().then(function (j) {
-        if (!r.ok) throw new Error(j.message || ('GitHub write failed (' + r.status + ')'));
+        if (!r.ok) {
+          var err = new Error(
+            (r.status === 401 || r.status === 403)
+              ? authErrorMessage(r.status, 'write')
+              : (j.message || ('GitHub write failed (' + r.status + ')'))
+          );
+          err.status = r.status;
+          throw err;
+        }
         return j;
       });
     });
@@ -773,10 +851,8 @@
 
   $('btn-save').addEventListener('click', function () {
     if (!hasToken()) {
-      $('exp-json').value = json();
-      $('exp-path').textContent = 'decks/data/' + slug + '.json';
-      $('sheet-export').hidden = false;
-      toast('No GitHub token set — export the file instead, or press ⚙ GitHub to connect.');
+      openGhSheet('Paste a GitHub token to enable Save, or use ↓ Export to download the JSON.');
+      toast('No GitHub token — connect via ⚙ GitHub, or use Export.', 'bad');
       return;
     }
     var btn = $('btn-save');
@@ -793,13 +869,19 @@
         toast('Saved. The live deck updates in about a minute.', 'ok');
       })
       .catch(function (err) {
-        toast(err.message + ' — use Export to save it by hand.', 'bad');
+        if (err && (err.status === 401 || err.status === 403)) {
+          forgetToken(true);
+          openGhSheet(err.message + ' Export still works if you need to keep your edits.');
+        }
+        toast((err && err.message ? err.message : 'Save failed') + ' — or use ↓ Export.', 'bad');
       })
       .then(function () {
         btn.disabled = false;
         if (!dirty) btn.textContent = 'Save';
       });
   });
+
+  syncGhButton();
 
   function uploadImage(file, slide) {
     if (!hasToken()) { toast('Connect GitHub first.', 'bad'); return; }
