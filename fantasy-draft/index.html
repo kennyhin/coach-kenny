@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Year Board — Coach Kenny</title>
+  <meta name="description" content="PIN-gated fantasy football contract-year draft board — rank WRs, RBs, QBs, and TEs by ADP and projections.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- PIN gate — same 530 staff code pattern as decks / teacher guide -->
+  <div class="fd-lock lock" id="lock"
+       data-salt="ck-fantasy-draft-v1"
+       data-hash="02276a90758d22f2119e9cc386fa7fb08c9a32481af186a55c8e9e20661294dc"
+       data-key="ck-fantasy-draft-ok">
+    <div class="fd-lock-in lock-in">
+      <div class="fd-lock-icon" aria-hidden="true">&#128274;</div>
+      <h1>Fantasy draft board</h1>
+      <p>Enter the 3-digit staff code to open the contract-year board.</p>
+      <div class="fd-pin-row pin-row" id="pin-row">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 1">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3">
+      </div>
+      <p class="fd-lock-msg lock-msg" id="lock-msg" role="alert"></p>
+      <a class="fd-lock-back" href="/">&#8592; Back to coachkenny.org</a>
+      <p class="fd-lock-note">Static-site PIN — discourages casual access only</p>
+    </div>
+  </div>
+
+  <header>
+    <a class="brand" href="/">Coach Kenny</a>
+    <h1>Fantasy Draft Hub</h1>
+    <p>Contract-year targets for 2026 — drag to rank within each position</p>
+  </header>
+
+  <nav>
+    <a href="index.html" class="active">Contract Year</a>
+  </nav>
+
+  <div class="toolbar">
+    <p class="hint">Drag players up or down to set your personal ranks. Rankings save automatically in your browser. ADP from FantasyPros PPR consensus; projections from Draft Sharks PPR consensus (Aug 2026).</p>
+    <button type="button" id="reset-btn">Reset to ADP order</button>
+  </div>
+
+  <main id="board" class="board" aria-label="Contract year player board"></main>
+
+  <footer>
+    Contract status: <a href="https://www.spotrac.com/nfl/contracts/remaining/" target="_blank" rel="noopener">Spotrac</a>.
+    ADP: <a href="https://www.fantasypros.com/nfl/adp/ppr-overall.php" target="_blank" rel="noopener">FantasyPros</a>.
+    Projections: <a href="https://www.draftsharks.com/rankings/" target="_blank" rel="noopener">Draft Sharks</a>.
+  </footer>
+
+  <script src="/decks/assets/lock.js"></script>
+  <script src="js/players.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
