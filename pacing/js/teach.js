@@ -42,6 +42,11 @@
   function parseHash() {
     var h = (location.hash || '').replace(/^#/, '');
     if (!h) return;
+    try {
+      h = decodeURIComponent(h);
+    } catch (_) {
+      return;
+    }
     var parts = h.split('/');
     if (parts.length >= 2 && GRADES.indexOf(parts[0]) > -1) {
       grade = parts[0];
