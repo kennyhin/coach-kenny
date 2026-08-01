@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PE Pacing Guide 2026-27 — SLAM! Nevada K-5</title>
+  <meta name="description" content="SLAM! Nevada K-5 physical education pacing guide for 2026-27 — 36 weeks per grade, 163 student days, mapped to the Nevada PE content standards." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/pe-games/css/pe-styles.css" />
+  <link rel="stylesheet" href="css/pacing.css" />
+</head>
+<body>
+
+  <nav class="side-nav">
+    <a href="/pacing/" class="side-nav-logo">SLAM<span>PE</span></a>
+    <a href="#guide">Guide</a>
+    <a href="#games">Games</a>
+    <a href="#standards">Standards</a>
+    <a href="/pe-games/">PE Games</a>
+    <a href="/">Home</a>
+  </nav>
+
+  <div class="page">
+
+    <section class="hero">
+      <div class="hero-inner hero-center">
+        <p class="welcome-eyebrow">SLAM! Nevada K-5 · Physical Education</p>
+        <h1 class="section-title" style="margin:.4rem 0 .6rem">PE PACING GUIDE 2026-27</h1>
+        <p class="section-intro">
+          Thirty-six weeks for every grade, built on the real 2026-27 calendar and
+          mapped to the Nevada PE content standards. Weeks 1-3 are procedures,
+          every quarter reopens with a reset, and the last six weeks build to field day.
+        </p>
+      </div>
+    </section>
+
+    <div class="pg-wrap">
+
+      <div class="pg-stats">
+        <div class="pg-stat"><b>36</b><span>Weeks per grade</span></div>
+        <div class="pg-stat"><b>163</b><span>Student days</span></div>
+        <div class="pg-stat"><b>6</b><span>Grade levels</span></div>
+        <div class="pg-stat"><b>24</b><span>Nevada indicators</span></div>
+        <div class="pg-stat"><b>27</b><span>Class sections per week</span></div>
+      </div>
+
+      <p class="section-intro" style="margin-bottom:1.4rem">
+        <a class="pg-btn" href="SLAM_K5_PE_PACING_GUIDE_2026_27.xlsx" download>&#8595; Download the spreadsheet</a>
+      </p>
+
+      <section id="guide">
+        <div class="pg-tabs" role="tablist" id="pgTabs"></div>
+        <div class="pg-tools">
+          <input class="pg-search" id="pgSearch" type="search"
+                 placeholder="Search units, standards, activities, vocabulary…"
+                 aria-label="Search the pacing guide" />
+          <span class="pg-count" id="pgCount"></span>
+        </div>
+        <div id="pgWeeks"><p class="pg-empty">Loading the guide…</p></div>
+      </section>
+
+      <section id="games" style="margin-top:3.4rem">
+        <div class="section-header">
+          <p class="section-eyebrow">Placed by age band</p>
+          <h2 class="section-title">Game bank</h2>
+          <p class="section-intro">
+            Every game is placed in a specific pacing window with its equipment and
+            its safety note. Adapt space, equipment, rules, cues and the movement
+            itself so each student can take part.
+          </p>
+        </div>
+        <div class="pg-games" id="pgGames"></div>
+      </section>
+
+      <section id="standards" style="margin-top:3.4rem">
+        <div class="section-header">
+          <p class="section-eyebrow">Nevada PE content standards</p>
+          <h2 class="section-title">Coverage crosswalk</h2>
+          <p class="section-intro">
+            How many weeks each grade spends on each indicator. K-2 indicators apply
+            to Kinder through Grade 2, and 3-5 indicators to Grades 3 through 5.
+          </p>
+        </div>
+        <div class="pg-scroll">
+          <table class="pg-table" id="pgCross">
+            <thead><tr>
+              <th>Code</th><th>Nevada expectation</th>
+              <th>K</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="section-header" style="margin-top:2.6rem">
+          <h2 class="section-title" style="font-size:1.4rem">Sources</h2>
+        </div>
+        <div class="pg-scroll">
+          <table class="pg-table" id="pgSources">
+            <thead><tr><th>Source</th><th>Used for</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <p class="pg-note">
+          This guide sets the weekly destination, not the daily lesson plan. Build a
+          row by settling the standard and the evidence first, then choosing or
+          adapting the activity.
+        </p>
+      </section>
+
+    </div>
+  </div>
+
+<script>
+(function () {
+  var GRADES = ['Kinder', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5'];
+  // Kenny teaches 4 classes per grade in K-2 and 5 per grade in 3-5.
+  var CLASSES = { 'Kinder': 4, 'Grade 1': 4, 'Grade 2': 4, 'Grade 3': 5, 'Grade 4': 5, 'Grade 5': 5 };
+  var data = null, grade = 'Kinder', query = '';
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* Quarter boundaries come from the same 2026-27 calendar the workbook was
+     rebuilt against: Q1 ends week 9, Q2 week 18, Q3 week 27. */
+  function quarterOf(n) { return n <= 9 ? 1 : n <= 18 ? 2 : n <= 27 ? 3 : 4; }
+  var Q_LABEL = {
+    1: 'Procedures, then movement foundations',
+    2: 'Object control, rhythm, fitness foundations',
+    3: 'Fitness application and game strategy',
+    4: 'Cooperation, then the field-day build'
+  };
+
+  function accent(row) {
+    var u = (row.unit || '').toLowerCase();
+    if (u.indexOf('procedure') > -1 || u.indexOf('policy') > -1) return ' is-proc';
+    if (u.indexOf('field day') > -1) return ' is-field';
+    return '';
+  }
+
+  function field(label, value) {
+    if (!value) return '';
+    return '<div class="pg-f"><dt>' + esc(label) + '</dt><dd>' + esc(value) + '</dd></div>';
+  }
+
+  function matches(row) {
+    if (!query) return true;
+    return ['week', 'unit', 'question', 'vocab', 'standards', 'focus', 'activity', 'assessment', 'cross', 'highfive']
+      .some(function (k) { return (row[k] || '').toLowerCase().indexOf(query) > -1; });
+  }
+
+  function renderWeeks() {
+    var rows = data.grades[grade] || [];
+    var host = document.getElementById('pgWeeks');
+    var html = '', lastQ = 0, shown = 0;
+
+    rows.forEach(function (r) {
+      if (r.kind === 'meta') return;
+
+      if (r.kind === 'break') {
+        // A break only makes sense in an unfiltered read of the year.
+        if (query) return;
+        html += '<div class="pg-break"><span>' + esc(r.off || 'Break') + '</span>' +
+                '<span>' + esc(r.dates) + '</span></div>';
+        return;
+      }
+
+      if (!matches(r)) return;
+      shown++;
+
+      var n = parseInt((r.week || '').replace(/\D/g, ''), 10) || 0;
+      var q = quarterOf(n);
+      if (q !== lastQ && !query) {
+        html += '<div class="pg-q"><h2>Quarter ' + q + '</h2><span>' + esc(Q_LABEL[q]) + '</span></div>';
+        lastQ = q;
+      }
+
+      html += '<article class="pg-week' + accent(r) + '">' +
+        '<div class="pg-head">' +
+          '<span class="pg-no">' + esc(r.week) + '</span>' +
+          '<span class="pg-dates">' + esc(r.dates) + '</span>' +
+          (r.days ? '<span class="pg-days">' + esc(r.days) + ' student days</span>' : '') +
+          (r.off ? '<span class="pg-off">' + esc(r.off) + '</span>' : '') +
+        '</div>' +
+        (r.unit ? '<p class="pg-unit">' + esc(r.unit) + '</p>' : '') +
+        (r.question ? '<p class="pg-qn">' + esc(r.question) + '</p>' : '') +
+        '<dl class="pg-grid">' +
+          field('Nevada standard', r.standards) +
+          field('Weekly focus', r.focus) +
+          field('Activity', r.activity) +
+          field('Assessment', r.assessment) +
+          field('Vocabulary', r.vocab) +
+          field('SLAM High Five', r.highfive) +
+          field('Cross-curricular', r.cross) +
+          field('Notes', r.notes) +
+        '</dl>' +
+      '</article>';
+    });
+
+    host.innerHTML = html || '<p class="pg-empty">Nothing matches &ldquo;' + esc(query) + '&rdquo;.</p>';
+
+    var days = rows.filter(function (r) { return r.kind === 'week'; })
+                   .reduce(function (a, r) { return a + (parseFloat(r.days) || 0); }, 0);
+    document.getElementById('pgCount').textContent = query
+      ? (shown + ' matching weeks')
+      : (shown + ' weeks · ' + days + ' student days · ' + CLASSES[grade] + ' classes of ' + grade);
+  }
+
+  function renderTabs() {
+    document.getElementById('pgTabs').innerHTML = GRADES.map(function (g) {
+      return '<button class="pg-tab" role="tab" data-g="' + esc(g) + '" ' +
+             'aria-selected="' + (g === grade) + '">' + esc(g) + '</button>';
+    }).join('');
+  }
+
+  function renderGames() {
+    document.getElementById('pgGames').innerHTML = (data.games || []).map(function (g) {
+      var link = /^https?:/.test(g.source)
+        ? '<a href="' + esc(g.source) + '" target="_blank" rel="noopener">Watch it</a>' : esc(g.source);
+      return '<article class="pg-game"><h3>' + esc(g.game) + '</h3><dl>' +
+        field('Grades', g.grades) +
+        field('Equipment', g.equipment) +
+        field('Pacing window', g.window) +
+        field('Teaches', g.connection) +
+        field('Safety / adaptation', g.safety) +
+        '<div class="pg-f"><dt>Source</dt><dd>' + link + '</dd></div>' +
+      '</dl></article>';
+    }).join('');
+  }
+
+  function renderTables() {
+    document.querySelector('#pgCross tbody').innerHTML = (data.crosswalk || []).map(function (c) {
+      return '<tr><td>' + esc(c.code) + '</td><td>' + esc(c.text) + '</td>' +
+        GRADES.map(function (g) { return '<td>' + esc(c.counts[g] || '-') + '</td>'; }).join('') + '</tr>';
+    }).join('');
+
+    document.querySelector('#pgSources tbody').innerHTML = (data.sources || []).map(function (s) {
+      var loc = /^https?:/.test(s.location)
+        ? '<a href="' + esc(s.location) + '" target="_blank" rel="noopener">' + esc(s.source) + '</a>'
+        : esc(s.source);
+      return '<tr><td>' + loc + '</td><td>' + esc(s.use) + '</td><td>' + esc(s.status) + '</td></tr>';
+    }).join('');
+  }
+
+  document.getElementById('pgTabs').addEventListener('click', function (e) {
+    var b = e.target.closest('.pg-tab');
+    if (!b) return;
+    grade = b.dataset.g;
+    renderTabs();
+    renderWeeks();
+  });
+
+  var t;
+  document.getElementById('pgSearch').addEventListener('input', function (e) {
+    clearTimeout(t);
+    var v = e.target.value.trim().toLowerCase();
+    t = setTimeout(function () { query = v; renderWeeks(); }, 120);
+  });
+
+  fetch('data/pacing.json')
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (j) {
+      data = j;
+      renderTabs(); renderWeeks(); renderGames(); renderTables();
+    })
+    .catch(function (err) {
+      document.getElementById('pgWeeks').innerHTML =
+        '<p class="pg-empty">Could not load the guide (' + esc(err.message) + '). ' +
+        'The spreadsheet download above still works.</p>';
+    });
+})();
+</script>
+</body>
+</html>
