@@ -367,6 +367,14 @@ kbd{font-family:var(--mono);font-size:.78em;background:var(--surface-2);
   .shot{position:static}
   .seg-l{display:none}
 }
+/* On a phone the fixed bar sits over the tail of every long slide, and the
+   88px of slide padding only clears it once you have scrolled all the way
+   down. Swipe already advances slides at this width, so let the controls take
+   their place in the flow instead of covering the content being read. */
+@media (max-width:620px){
+  .controls{position:static;background:none;padding:1.1rem 1rem 1.7rem;pointer-events:auto}
+  .slide{padding-bottom:1.25rem}
+}
 @media (prefers-reduced-motion:reduce){
   .slide:not([hidden]){animation:none}
   *{transition-duration:.01ms !important}
