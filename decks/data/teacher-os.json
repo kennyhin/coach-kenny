@@ -195,7 +195,7 @@
       "persona": "Teacher",
       "eyebrow": "Top of your screen",
       "title": "Hit the goal — Athletics feeds the teachers",
-      "lede": "The bar at the top of your check-in page tracks the whole school. Hit the Home Run goal by season's end and Athletics provides food for the teachers — not the students or athletes. Marking Home Runs and submitting the week is what moves the bar.",
+      "lede": "The bar at the top of your check-in page tracks the whole school. Hit the Home Run goal by season&rsquo;s end and Athletics provides food for the teachers. Marking Home Runs and submitting the week is what moves the bar.",
       "steps": [
         {
           "h": "The bull shows where we are",
@@ -423,10 +423,22 @@
           "One of our SLAM High 5 is <b>accountability</b>. As a result, <b>Jordan Smith</b> has been <b>placed on probation</b>. Please talk with your student about their grades and behavior this week."
         ],
         "facts": [
-          ["Student", "Jordan Smith"],
-          ["Team", "Flag Football"],
-          ["Week", "Sep 18"],
-          ["Status", "Probation"]
+          [
+            "Student",
+            "Jordan Smith"
+          ],
+          [
+            "Team",
+            "Flag Football"
+          ],
+          [
+            "Week",
+            "Sep 18"
+          ],
+          [
+            "Status",
+            "Probation"
+          ]
         ],
         "noteLabel": "Teacher's Note",
         "note": "Missing three homework assignments this week.",
