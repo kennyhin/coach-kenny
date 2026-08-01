@@ -346,30 +346,27 @@
       .card  { width: 100%; max-width: 340px; }
     }
 
-    /* small private link — not a hero card */
-    .hero-tools {
-      margin-top: -28px;
-      margin-bottom: 36px;
+    /* ── MINI LINKS — small pills, not cards ── */
+    .mini-links {
+      position: relative; z-index: 1;
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; margin-top: 28px;
     }
-    .hub-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      border-radius: 999px;
+    .mini-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 16px; border-radius: 999px;
+      background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.03);
-      color: #9ca3af;
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      color: #9ca3af; text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
     }
-    .hub-pill:hover {
-      color: #e5e7eb;
-      border-color: rgba(140,198,63,0.45);
-      background: rgba(140,198,63,0.08);
+    .mini-link:hover {
+      background: rgba(56,189,248,0.1);
+      border-color: rgba(56,189,248,0.5);
+      color: #e5e7eb; transform: translateY(-1px);
     }
   </style>
 </head>
@@ -489,9 +486,9 @@
 
     </div>
 
-    <p class="hero-tools">
-      <a href="/fantasy-draft/" class="hub-pill" title="PIN required">🏈 Fantasy draft board</a>
-    </p>
+    <div class="mini-links">
+      <a href="/fantasy/" class="mini-link">🔒 Draft Board</a>
+    </div>
   </section>
 
   <!-- DIVIDER -->

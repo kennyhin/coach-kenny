@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /memory-wiki/
+Disallow: /fantasy/
 Disallow: /fantasy-draft/
