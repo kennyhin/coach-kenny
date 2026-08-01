@@ -207,7 +207,7 @@
                    .reduce(function (a, r) { return a + (parseFloat(r.days) || 0); }, 0);
     document.getElementById('pgCount').textContent = query
       ? (shown + ' matching weeks')
-      : (shown + ' weeks · ' + days + ' student days · ' + CLASSES[grade] + ' classes of ' + grade);
+      : (shown + ' weeks · ' + days + ' student days · ' + CLASSES[grade] + ' ' + grade + ' classes');
   }
 
   function renderTabs() {
