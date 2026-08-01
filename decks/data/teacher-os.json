@@ -355,30 +355,54 @@
       "persona": "Teacher"
     },
     {
-      "kind": "text",
+      "kind": "flow",
       "act": "who",
       "eyebrow": "On submit",
       "title": "Who gets the email",
       "lede": "Only athletes who were marked down that week trigger anything. Everyone else is silent.",
-      "steps": [
+      "stages": [
         {
-          "h": "The parents get it",
-          "b": "It goes <b>to</b> the parent email on file &mdash; both, if the school has two."
+          "n": "1",
+          "h": "Mark athlete down",
+          "b": "Flip HR or BC red and save the note."
         },
         {
-          "h": "You are copied",
-          "b": "So you have a record of exactly what went out and when."
-        },
-        {
-          "h": "The coaches are copied",
-          "b": "Head coach and any assistants, so they are not blindsided at the next practice."
-        },
-        {
-          "h": "Kenny is copied",
-          "b": "The athletic director sees every one."
+          "n": "2",
+          "h": "Submit the week",
+          "b": "That is the only moment mail goes out."
         }
       ],
-      "note": "No parent email on file? The athlete shows a small 'no parent email' tag and no message is sent — tell the office."
+      "hub": {
+        "k": "System sends",
+        "h": "One email per marked-down athlete",
+        "b": "Your note is the body. Clean athletes stay silent."
+      },
+      "recipients": [
+        {
+          "role": "TO",
+          "h": "Parents",
+          "b": "Primary. Both parent emails if the school has two."
+        },
+        {
+          "role": "CC",
+          "h": "You",
+          "b": "A record of exactly what went out and when."
+        },
+        {
+          "role": "CC",
+          "h": "Coaches",
+          "b": "Head coach and assistants &mdash; no surprises at practice."
+        },
+        {
+          "role": "CC",
+          "h": "Kenny",
+          "b": "Athletic director is copied on every one."
+        }
+      ],
+      "branch": {
+        "h": "No send + &ldquo;no parent email&rdquo; tag",
+        "b": "The athlete still shows on your screen with that tag &mdash; tell the office so they can add an address."
+      }
     },
     {
       "kind": "grid",

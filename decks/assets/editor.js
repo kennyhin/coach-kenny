@@ -26,6 +26,7 @@
     ['divider', 'Section divider'],
     ['shot',    'Screenshot + steps'],
     ['text',    'Steps only (no image)'],
+    ['flow',    'Flow diagram'],
     ['grid',    'Card grid'],
     ['recap',   'Recap columns']
   ];
@@ -413,6 +414,66 @@
         function () { renderForm(); renderPreview(); }));
       f.appendChild(textField('Green note (optional)', s.note, function (v) { s.note = v; renderPreview(); },
         'The highlighted aside under the steps. Leave blank to hide.', true));
+    }
+
+    if (s.kind === 'flow') {
+      if (!s.stages) s.stages = [];
+      if (!s.recipients) s.recipients = [];
+      if (!s.hub) s.hub = { k: 'System sends', h: '', b: '' };
+      if (!s.branch) s.branch = { h: '', b: '' };
+      f.appendChild(pairList('Flow stages', s.stages, 'h', 'b', 'Stage heading', 'Stage text',
+        function () { renderForm(); renderPreview(); }));
+      var hubSec = document.createElement('div');
+      hubSec.className = 'ed-sec';
+      hubSec.innerHTML = '<h3>Send hub</h3>';
+      hubSec.appendChild(textField('Hub label', s.hub.k, function (v) { s.hub.k = v; renderPreview(); }, 'e.g. <b>System sends</b>'));
+      hubSec.appendChild(textField('Hub heading', s.hub.h, function (v) { s.hub.h = v; renderPreview(); }));
+      hubSec.appendChild(textField('Hub text', s.hub.b, function (v) { s.hub.b = v; renderPreview(); }, null, true));
+      f.appendChild(hubSec);
+      var recSec = document.createElement('div');
+      recSec.className = 'ed-sec';
+      var rh = document.createElement('h3');
+      rh.textContent = 'Recipients';
+      recSec.appendChild(rh);
+      s.recipients.forEach(function (r, n) {
+        var row = document.createElement('div');
+        row.className = 'row';
+        var top = document.createElement('div');
+        top.className = 'row-top';
+        var num = document.createElement('span');
+        num.className = 'row-n';
+        num.textContent = 'Recipient ' + (n + 1);
+        top.appendChild(num);
+        [['↑', n === 0, function () { s.recipients.splice(n - 1, 0, s.recipients.splice(n, 1)[0]); }],
+         ['↓', n === s.recipients.length - 1, function () { s.recipients.splice(n + 1, 0, s.recipients.splice(n, 1)[0]); }],
+         ['✕', false, function () { s.recipients.splice(n, 1); }]
+        ].forEach(function (b) {
+          var btn = document.createElement('button');
+          btn.className = 'xbtn'; btn.textContent = b[0]; btn.disabled = b[1];
+          btn.addEventListener('click', function () { b[2](); markDirty(); renderForm(); renderPreview(); });
+          top.appendChild(btn);
+        });
+        row.appendChild(top);
+        row.appendChild(textField('Role (TO / CC)', r.role, function (v) { r.role = v; renderPreview(); }));
+        row.appendChild(textField('Who', r.h, function (v) { r.h = v; renderPreview(); }));
+        row.appendChild(textField('Detail', r.b, function (v) { r.b = v; renderPreview(); }, null, true));
+        recSec.appendChild(row);
+      });
+      var addRec = document.createElement('button');
+      addRec.className = 'addbtn';
+      addRec.textContent = '+ Add recipient';
+      addRec.addEventListener('click', function () {
+        s.recipients.push({ role: 'CC', h: '', b: '' });
+        markDirty(); renderForm(); renderPreview();
+      });
+      recSec.appendChild(addRec);
+      f.appendChild(recSec);
+      var brSec = document.createElement('div');
+      brSec.className = 'ed-sec';
+      brSec.innerHTML = '<h3>No-email branch</h3>';
+      brSec.appendChild(textField('Branch heading', s.branch.h, function (v) { s.branch.h = v; renderPreview(); }));
+      brSec.appendChild(textField('Branch text', s.branch.b, function (v) { s.branch.b = v; renderPreview(); }, null, true));
+      f.appendChild(brSec);
     }
 
     if (s.kind === 'grid') {

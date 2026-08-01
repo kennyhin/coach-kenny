@@ -123,6 +123,66 @@ window.DeckRender = (function () {
         '</div>';
     }
 
+    if (k === 'flow') {
+      var stages = (s.stages || []).map(function (st, i) {
+        return (i ? '<div class="flow-arrow" aria-hidden="true"></div>' : '') +
+          '<div class="flow-stage">' +
+            '<span class="flow-n mono">' + esc(st.n || String(i + 1)) + '</span>' +
+            '<div class="flow-stage-b">' +
+              '<h4>' + (st.h || '') + '</h4>' +
+              (st.b ? '<p>' + st.b + '</p>' : '') +
+            '</div>' +
+          '</div>';
+      }).join('');
+
+      var hub = s.hub
+        ? '<div class="flow-hub">' +
+            '<p class="flow-hub-k mono">' + esc(s.hub.k || 'Email') + '</p>' +
+            '<h4>' + (s.hub.h || '') + '</h4>' +
+            (s.hub.b ? '<p>' + s.hub.b + '</p>' : '') +
+          '</div>'
+        : '';
+
+      var recipients = (s.recipients || []).map(function (r) {
+        var role = String(r.role || 'CC').toUpperCase();
+        var primary = role === 'TO' ? ' flow-rec-to' : '';
+        return '<article class="flow-rec' + primary + '">' +
+          '<p class="flow-role mono">' + esc(role) + '</p>' +
+          '<h4>' + (r.h || '') + '</h4>' +
+          (r.b ? '<p>' + r.b + '</p>' : '') +
+          '</article>';
+      }).join('');
+
+      var branch = s.branch
+        ? '<aside class="flow-branch">' +
+            '<p class="flow-branch-k mono">If no parent email</p>' +
+            '<h4>' + (s.branch.h || '') + '</h4>' +
+            (s.branch.b ? '<p>' + s.branch.b + '</p>' : '') +
+          '</aside>'
+        : '';
+
+      return '' +
+        '<div class="pad">' +
+          '<header class="shead shead-wide">' +
+            (s.eyebrow ? '<p class="eyebrow mono">' + esc(s.eyebrow) + '</p>' : '') +
+            '<h2>' + (s.title || '') + '</h2>' +
+            (s.lede ? '<p class="lede">' + s.lede + '</p>' : '') +
+          '</header>' +
+          '<div class="flow">' +
+            (stages ? '<div class="flow-stages">' + stages + '</div>' : '') +
+            (hub || recipients
+              ? '<div class="flow-arrow flow-arrow-down" aria-hidden="true"></div>' +
+                '<div class="flow-send">' + hub +
+                  (recipients ? '<div class="flow-recs">' + recipients + '</div>' : '') +
+                '</div>'
+              : '') +
+            (branch
+              ? '<div class="flow-arrow flow-arrow-down flow-arrow-branch" aria-hidden="true"></div>' + branch
+              : '') +
+          '</div>' +
+        '</div>';
+    }
+
     return '<div class="pad"><p class="lede">Unknown slide type: ' + esc(k) + '</p></div>';
   }
 

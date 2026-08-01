@@ -204,6 +204,65 @@ kbd{font-family:var(--mono);font-size:.78em;background:var(--surface-2);
   text-transform:uppercase;letter-spacing:.015em;color:var(--text)}
 .card p{margin:0;color:var(--text-2);font-size:.88rem;line-height:1.62;text-wrap:pretty}
 
+/* flow diagram */
+.flow{margin-top:1.8rem;display:flex;flex-direction:column;align-items:stretch;gap:0;max-width:920px}
+.flow-stages{display:flex;align-items:stretch;gap:.55rem;flex-wrap:wrap}
+.flow-stage{flex:1 1 180px;display:flex;gap:.75rem;align-items:flex-start;
+  background:var(--surface);border:1px solid var(--line);border-radius:11px;
+  padding:1rem 1.05rem;min-width:0}
+.flow-n{width:1.55rem;height:1.55rem;border-radius:99px;display:grid;place-items:center;
+  background:var(--surface-2);border:1px solid var(--line-2);color:var(--red);
+  font-size:.63rem;letter-spacing:0;flex-shrink:0;margin-top:.12rem}
+.flow-stage-b{min-width:0}
+.flow-stage-b h4,.flow-hub h4,.flow-rec h4,.flow-branch h4{
+  margin:0 0 .25rem;font-size:.98rem;font-weight:650;letter-spacing:-.005em;color:var(--text)}
+.flow-stage-b p,.flow-hub p:not(.flow-hub-k),.flow-rec p:not(.flow-role),.flow-branch p:not(.flow-branch-k){
+  margin:0;color:var(--text-2);font-size:.86rem;line-height:1.55;text-wrap:pretty}
+.flow-arrow{flex:0 0 auto;width:1.4rem;align-self:center;height:1.4rem;position:relative}
+.flow-arrow::before{content:"";position:absolute;inset:42% 0 auto;height:2px;background:var(--red-fill);
+  border-radius:2px}
+.flow-arrow::after{content:"";position:absolute;right:0;top:50%;width:0;height:0;
+  border-top:.32rem solid transparent;border-bottom:.32rem solid transparent;
+  border-left:.42rem solid var(--red-fill);transform:translateY(-50%)}
+.flow-arrow-down{width:100%;height:1.55rem}
+.flow-arrow-down::before{inset:0 auto auto 50%;width:2px;height:100%;transform:translateX(-50%)}
+.flow-arrow-down::after{right:auto;left:50%;top:auto;bottom:0;
+  border-left:.32rem solid transparent;border-right:.32rem solid transparent;
+  border-top:.42rem solid var(--red-fill);border-bottom:0;transform:translateX(-50%)}
+.flow-arrow-branch::before,.flow-arrow-branch::after{background:var(--green);border-top-color:var(--green);
+  border-left-color:transparent}
+.flow-arrow-branch::before{background:var(--green)}
+.flow-send{display:flex;flex-direction:column;gap:.85rem}
+.flow-hub{background:color-mix(in srgb,var(--red) 12%,var(--surface));
+  border:1px solid color-mix(in srgb,var(--red) 45%,var(--line));
+  border-radius:12px;padding:1.05rem 1.2rem}
+.flow-hub-k{color:var(--red);margin:0 0 .35rem;font-size:.6rem}
+.flow-recs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem}
+.flow-rec{background:var(--surface);border:1px solid var(--line);border-radius:11px;
+  padding:.95rem 1rem;border-top:2px solid var(--line-2)}
+.flow-rec-to{border-top-color:var(--red-fill);
+  background:color-mix(in srgb,var(--red) 8%,var(--surface))}
+.flow-role{color:var(--text-3);margin:0 0 .4rem;font-size:.58rem}
+.flow-rec-to .flow-role{color:var(--red)}
+.flow-branch{margin:0;padding:1rem 1.1rem;border-left:2px solid var(--green);
+  background:color-mix(in srgb,var(--green) 9%,transparent);border-radius:0 8px 8px 0}
+.flow-branch-k{color:var(--green-txt);margin:0 0 .35rem;font-size:.6rem}
+.flow-branch h4{color:var(--green-txt)}
+.flow-branch p{color:var(--green-txt);font-family:var(--mono);font-size:.82rem;
+  text-transform:none;letter-spacing:.005em}
+@media (max-width:820px){
+  .flow-stages{flex-direction:column}
+  .flow-arrow:not(.flow-arrow-down){width:100%;height:1.4rem}
+  .flow-arrow:not(.flow-arrow-down)::before{inset:0 auto auto 50%;width:2px;height:100%;transform:translateX(-50%)}
+  .flow-arrow:not(.flow-arrow-down)::after{right:auto;left:50%;top:auto;bottom:0;
+    border-left:.32rem solid transparent;border-right:.32rem solid transparent;
+    border-top:.42rem solid var(--red-fill);border-bottom:0;transform:translateX(-50%)}
+  .flow-recs{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:480px){
+  .flow-recs{grid-template-columns:1fr}
+}
+
 /* recap */
 .recap{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(288px,1fr));gap:1.1rem}
 .rc{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:1.35rem 1.4rem}
