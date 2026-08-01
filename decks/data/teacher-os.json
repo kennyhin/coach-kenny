@@ -185,7 +185,7 @@
       "act": "goal",
       "num": "Part 2",
       "title": "The Home Run goal",
-      "lede": "Your marks are not just record-keeping — they add up to something the whole school is chasing.",
+      "lede": "Your marks are not just record-keeping — they move a school-wide goal, and when we hit it Athletics feeds the teachers.",
       "persona": "Teacher"
     },
     {
@@ -194,8 +194,8 @@
       "img": "05-goal.jpg",
       "persona": "Teacher",
       "eyebrow": "Top of your screen",
-      "title": "Every Home Run counts toward lunch",
-      "lede": "The bar at the top of your check-in page tracks the whole school. Hit the goal by the end of the season and athletics buys lunch.",
+      "title": "Hit the goal — Athletics feeds the teachers",
+      "lede": "The bar at the top of your check-in page tracks the whole school. Hit the Home Run goal by season&rsquo;s end and Athletics provides food for the teachers — not the students or athletes. Marking Home Runs and submitting the week is what moves the bar.",
       "steps": [
         {
           "h": "The bull shows where we are",
@@ -210,7 +210,7 @@
           "b": "The big number is home runs earned so far. The one after the slash is the goal. The small line tells you how many are still needed."
         }
       ],
-      "note": "Green HR = a home run for the school. Red HR = a missed one. That is the only thing that moves the bar."
+      "note": "Green HR = a home run for the school. Red HR = a missed one. That is the only thing that moves the bar — and the teacher food reward."
     },
     {
       "kind": "text",
@@ -258,8 +258,8 @@
           "b": "A red week costs one home run and the bar keeps moving. Next week is a fresh chance."
         },
         {
-          "h": "There is a real reward",
-          "b": "Hit the goal and lunch is on athletics. Point at the bar and tell them how close they are."
+          "h": "Show them the bar",
+          "b": "Point at the school-wide total and tell them how close we are. Every green week they earn moves the school forward."
         }
       ]
     },
@@ -474,7 +474,7 @@
             "Every green <b>HR</b> is one home run for the school.",
             "Goal = <b>80%</b> of all athlete-weeks submitted.",
             "Only <b>submitted</b> weeks count — submit on time.",
-            "Hit it by season's end and <b>lunch is on athletics</b>."
+            "Hit it by season's end and <b>Athletics provides food for the teachers</b> (not students)."
           ]
         }
       ]
