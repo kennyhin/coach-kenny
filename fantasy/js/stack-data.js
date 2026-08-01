@@ -1,11 +1,12 @@
 /**
- * Eagles stack complements — rosters verified Aug 2026.
+ * Eagles stack complements — rosters verified against ESPN team pages.
  * Criteria: high-volume passing QB, top pass + rush offense, bye ≠ PHI (W9), excludes PHI & DEN rosters.
  * PHI/DEN matchup weeks from 2025 schedule (proxy for 2026).
  */
 window.EAGLES_STACK = {
   eaglesBye: 9,
   rosterAsOf: '2026-08-01',
+  rosterSource: 'https://www.espn.com/nfl/players',
   excludedNote: 'Philadelphia (your core stack) and Denver (elite defense) rosters excluded.',
   teams: [
     {
@@ -20,6 +21,7 @@ window.EAGLES_STACK = {
       players: [
         { pos: 'QB', name: 'Jared Goff', adp: 108, proj: 268 },
         { pos: 'RB', name: 'Jahmyr Gibbs', adp: 1.5, proj: 341 },
+        { pos: 'RB', name: 'Isiah Pacheco', adp: 82, proj: 192 },
         { pos: 'WR', name: 'Amon-Ra St. Brown', adp: 12, proj: 298 },
         { pos: 'WR', name: 'Jameson Williams', adp: 74, proj: 212 },
         { pos: 'TE', name: 'Sam LaPorta', adp: 96, proj: 192 },
@@ -56,8 +58,8 @@ window.EAGLES_STACK = {
         { pos: 'QB', name: 'Patrick Mahomes', adp: 88, proj: 285 },
         { pos: 'WR', name: 'Rashee Rice', adp: 28, proj: 296 },
         { pos: 'WR', name: 'Xavier Worthy', adp: 44, proj: 245 },
-        { pos: 'WR', name: 'Hollywood Brown', adp: 112, proj: 185 },
-        { pos: 'RB', name: 'Isiah Pacheco', adp: 58, proj: 218 },
+        { pos: 'WR', name: 'Tyquan Thornton', adp: 148, proj: 162 },
+        { pos: 'RB', name: 'Kenneth Walker III', adp: 38, proj: 248 },
         { pos: 'TE', name: 'Travis Kelce', adp: 72, proj: 205 },
       ],
     },
@@ -211,13 +213,14 @@ window.EAGLES_STACK = {
       passRank: 13,
       rushRank: 11,
       qb: { name: 'Jordan Love', note: 'Top-10 pass attempt pace' },
-      wr1: 'Romeo Doubs',
+      wr1: 'Christian Watson',
       vsPhiDen: ['W10 @PHI', 'W9 vs DEN'],
       players: [
         { pos: 'QB', name: 'Jordan Love', adp: 98, proj: 258 },
         { pos: 'RB', name: 'Josh Jacobs', adp: 18, proj: 278 },
-        { pos: 'WR', name: 'Romeo Doubs', adp: 88, proj: 218 },
+        { pos: 'WR', name: 'Christian Watson', adp: 68, proj: 228 },
         { pos: 'WR', name: 'Jayden Reed', adp: 72, proj: 235 },
+        { pos: 'WR', name: 'Matthew Golden', adp: 95, proj: 205 },
         { pos: 'TE', name: 'Tucker Kraft', adp: 84.5, proj: 198 },
       ],
     },
@@ -245,12 +248,12 @@ window.EAGLES_STACK = {
       passRank: 16,
       rushRank: 7,
       qb: { name: 'Anthony Richardson', note: 'Dual-threat with rushing upside' },
-      wr1: 'Michael Pittman Jr.',
+      wr1: 'Alec Pierce',
       vsPhiDen: ['W12 vs PHI', 'W7 @DEN'],
       players: [
         { pos: 'QB', name: 'Anthony Richardson', adp: 385, proj: 172 },
         { pos: 'RB', name: 'Jonathan Taylor', adp: 8.5, proj: 302 },
-        { pos: 'WR', name: 'Michael Pittman Jr.', adp: 68, proj: 225 },
+        { pos: 'WR', name: 'Alec Pierce', adp: 78, proj: 232 },
         { pos: 'WR', name: 'Josh Downs', adp: 102, proj: 243 },
         { pos: 'TE', name: 'Tyler Warren', adp: 145, proj: 158 },
       ],
@@ -267,8 +270,8 @@ window.EAGLES_STACK = {
       players: [
         { pos: 'QB', name: 'Sam Darnold', adp: 165, proj: 228 },
         { pos: 'WR', name: 'Jaxon Smith-Njigba', adp: 22, proj: 285 },
-        { pos: 'RB', name: 'Kenneth Walker III', adp: 38, proj: 248 },
-        { pos: 'RB', name: 'Zach Charbonnet', adp: 166.5, proj: 182 },
+        { pos: 'RB', name: 'Jadarian Price', adp: 92, proj: 215 },
+        { pos: 'RB', name: 'Zach Charbonnet', adp: 148, proj: 178 },
         { pos: 'WR', name: 'Cooper Kupp', adp: 95, proj: 195 },
         { pos: 'WR', name: 'Rashid Shaheed', adp: 128, proj: 172 },
       ],

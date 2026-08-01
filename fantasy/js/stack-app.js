@@ -87,7 +87,8 @@
   }
 
   function updateSummary(count) {
-    summaryEl.textContent = `${count} team${count === 1 ? '' : 's'} · Eagles bye Week ${data.eaglesBye} · excludes PHI & DEN rosters`;
+    const src = data.rosterSource ? ` · rosters via ESPN (${data.rosterAsOf || 'current'})` : '';
+    summaryEl.textContent = `${count} team${count === 1 ? '' : 's'} · Eagles bye Week ${data.eaglesBye} · excludes PHI & DEN rosters${src}`;
   }
 
   function render() {
