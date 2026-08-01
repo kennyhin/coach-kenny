@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eagles Stack Complements — Coach Kenny</title>
+  <meta name="description" content="High-volume passing offenses with different bye weeks than the Eagles — stack complements for fantasy draft.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="lock" id="lock" data-key="ck-ff-ok">
+    <div class="lock-in">
+      <div class="lock-icon">&#128274;</div>
+      <h1>Draft board</h1>
+      <p>Enter the 3-digit code to continue.</p>
+      <div class="pin-row" id="pin-row">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 1">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3">
+      </div>
+      <p class="lock-msg" id="lock-msg" role="alert"></p>
+      <a class="lock-back" href="/">&larr; Back to coachkenny.org</a>
+    </div>
+  </div>
+
+  <header>
+    <a class="brand" href="/">Coach Kenny</a>
+    <h1>Fantasy Draft Hub</h1>
+    <p>Eagles stack complements — high-volume offenses, different bye weeks</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Contract Year</a>
+    <a href="eagles-stack.html" class="active">Eagles Stack</a>
+  </nav>
+
+  <div class="toolbar stack-toolbar">
+    <p class="hint">Teams with high-volume QBs and top pass + rush offenses. <strong>Bye ≠ Eagles (Week 9).</strong> PHI and DEN rosters excluded. Each panel lists fantasy-relevant players; expand by team or jump via WR1.</p>
+    <div class="stack-actions">
+      <button type="button" id="expand-all">Expand all</button>
+      <button type="button" id="collapse-all">Collapse all</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <label>
+      <span>Filter by team</span>
+      <select id="filter-team">
+        <option value="">All teams</option>
+      </select>
+    </label>
+    <label>
+      <span>Jump to WR1</span>
+      <select id="filter-wr1">
+        <option value="">All WR1s</option>
+      </select>
+    </label>
+    <p class="filter-summary" id="stack-summary"></p>
+  </div>
+
+  <main id="stack-teams" class="stack-teams" aria-label="Eagles stack complement teams"></main>
+
+  <footer>
+    Bye weeks: 2025 NFL schedule (2026 proxy). Offense tiers: pass/rush volume + EPA proxy.
+    ADP: FantasyPros PPR · Proj: Draft Sharks PPR (Aug 2026).
+  </footer>
+
+  <script src="/decks/assets/lock.js"></script>
+  <script src="js/stack-data.js"></script>
+  <script src="js/stack-app.js"></script>
+</body>
+</html>
