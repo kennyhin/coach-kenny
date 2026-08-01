@@ -11,24 +11,31 @@
    The 3-digit code is stored as a salted SHA-256 hash so the digits do
    not sit in the page source in plain text. Unlock lasts for this
    browser tab session (sessionStorage).
+
+   Optional data-* on #lock for other gates (e.g. teacher guide):
+   data-salt, data-hash, data-key, data-unlock-event
    ============================================================ */
 (function () {
   'use strict';
-
-  var SALT = 'ck-decks-v1';
-  var HASH = '5a256ddc46bf8d274387ed51f7c461f1d20aec28ecbebfd582dbfbab01cbd2bc';
-  var KEY  = 'ck-deck-edit-ok';
 
   var lock = document.getElementById('lock');
   var row  = document.getElementById('pin-row');
   var msg  = document.getElementById('lock-msg');
   if (!lock || !row) return;
 
+  var SALT = lock.dataset.salt || 'ck-decks-v1';
+  var HASH = lock.dataset.hash || '5a256ddc46bf8d274387ed51f7c461f1d20aec28ecbebfd582dbfbab01cbd2bc';
+  var KEY  = lock.dataset.key || 'ck-deck-edit-ok';
+  var UNLOCK_EVENT = lock.dataset.unlockEvent || '';
+
   var inputs = [].slice.call(row.querySelectorAll('input'));
 
   function unlock() {
     lock.remove();
     document.body.style.overflow = '';
+    if (UNLOCK_EVENT) {
+      document.dispatchEvent(new CustomEvent(UNLOCK_EVENT));
+    }
   }
 
   if (sessionStorage.getItem(KEY) === HASH) { unlock(); return; }

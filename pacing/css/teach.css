@@ -1,0 +1,95 @@
+/* ============================================================
+   Teacher guide view — PIN gate + lesson layout on pe-styles.css
+   ============================================================ */
+
+/* --- PIN gate -------------------------------------------------------- */
+.teach-lock{position:fixed;inset:0;z-index:200;display:grid;place-items:center;
+  background:var(--bg);padding:1.2rem}
+.teach-lock-in{width:100%;max-width:22rem;text-align:center}
+.teach-lock-icon{font-size:2.2rem;line-height:1;margin-bottom:.9rem}
+.teach-lock-in h1{font-family:var(--font-display);font-size:1.7rem;
+  margin:0 0 .45rem;color:var(--fg)}
+.teach-lock-in p{margin:0 0 1.5rem;color:var(--fg-muted);font-size:.9rem;line-height:1.6}
+.teach-pin-row{display:flex;gap:.5rem;justify-content:center;margin-bottom:1rem}
+.teach-pin-row input{width:3.1rem;height:3.6rem;text-align:center;
+  font-family:var(--font-mono);font-size:1.5rem;font-weight:700;color:var(--fg);
+  background:var(--bg-surface);border:1px solid var(--border-strong);
+  border-radius:var(--radius-sm);outline:none;
+  transition:border-color var(--dur-fast),box-shadow var(--dur-fast)}
+.teach-pin-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(227,24,55,.25)}
+.teach-lock.bad .teach-pin-row,
+.teach-lock.bad .pin-row{animation:teach-shake .4s}
+.teach-lock.bad .teach-pin-row input,
+.teach-lock.bad .pin-row input{border-color:var(--accent)}
+@keyframes teach-shake{
+  0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-7px)}
+  40%,80%{transform:translateX(7px)}
+}
+.teach-lock-msg{min-height:1.3rem;font-size:.83rem;color:var(--accent);margin:0 0 1.1rem}
+.teach-lock-back{color:var(--fg-dim);font-size:.83rem;text-decoration:none}
+.teach-lock-back:hover{color:var(--fg)}
+.teach-lock-note{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--fg-dim);margin-top:1.4rem;line-height:1.5}
+@media (prefers-reduced-motion:reduce){ .teach-lock.bad .teach-pin-row{animation:none} }
+
+/* --- teacher shell --------------------------------------------------- */
+.teach-badge{display:inline-flex;align-items:center;gap:.35rem;
+  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent-2);
+  border:1px solid var(--border-strong);border-radius:var(--radius-pill);
+  padding:.22rem .65rem;margin-bottom:.6rem}
+.teach-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:1.4rem}
+@media (min-width:960px){
+  .teach-layout.has-sidebar{grid-template-columns:minmax(220px,260px) minmax(0,1fr)}
+}
+
+.teach-sidebar{position:sticky;top:0;align-self:start;max-height:calc(100vh - 2rem);
+  overflow-y:auto;padding-right:.4rem}
+.teach-sidebar h2{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--fg-dim);margin:0 0 .7rem}
+.teach-weeklist{list-style:none;margin:0;padding:0;display:grid;gap:.35rem}
+.teach-weeklist button{width:100%;text-align:left;font-family:var(--font-sans);
+  font-size:.84rem;padding:.45rem .65rem;border-radius:var(--radius-sm);
+  border:1px solid transparent;background:transparent;color:var(--fg-muted);
+  cursor:pointer;transition:background var(--dur-fast),color var(--dur-fast),border-color var(--dur-fast)}
+.teach-weeklist button:hover{color:var(--fg);background:var(--bg-surface)}
+.teach-weeklist button[aria-current="true"]{
+  color:var(--fg);background:var(--bg-surface);border-color:var(--border-strong);
+  border-left:3px solid var(--accent);font-weight:600}
+.teach-weeklist .tw-dates{display:block;font-family:var(--font-mono);
+  font-size:.58rem;color:var(--fg-dim);margin-top:.12rem}
+
+/* --- guide panel ----------------------------------------------------- */
+.teach-panel{background:var(--bg-surface);border:1px solid var(--border);
+  border-radius:var(--radius-md);padding:1.2rem 1.35rem}
+.teach-panel-head{margin-bottom:1.1rem;padding-bottom:.85rem;border-bottom:1px solid var(--border)}
+.teach-panel-head h2{font-family:var(--font-display);font-size:1.45rem;margin:0 0 .35rem;color:var(--fg)}
+.teach-panel-meta{display:flex;flex-wrap:wrap;gap:.5rem .9rem;
+  font-family:var(--font-mono);font-size:.68rem;color:var(--fg-dim)}
+.teach-question{font-size:1rem;font-style:italic;color:var(--fg-muted);
+  margin:0 0 1rem;line-height:1.55;border-left:2px solid var(--accent-2);
+  padding-left:.85rem}
+
+.teach-sections{display:grid;gap:.85rem}
+.teach-sec{background:rgba(128,255,0,.04);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:.85rem 1rem}
+.teach-sec h3{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--accent-2);margin:0 0 .45rem}
+.teach-sec p,.teach-sec ul{margin:0;font-size:.9rem;line-height:1.6;color:var(--fg-muted)}
+.teach-sec ul{padding-left:1.1rem}
+.teach-sec li{margin-bottom:.25rem}
+
+.teach-pending{text-align:center;padding:2rem 1rem;color:var(--fg-dim);
+  border:1px dashed var(--border-strong);border-radius:var(--radius-md)}
+.teach-pending p{margin:0 0 .5rem;font-size:.92rem;line-height:1.55}
+.teach-pacing-ref{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border)}
+.teach-pacing-ref h3{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--fg-dim);margin:0 0 .6rem}
+.teach-pacing-ref dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.5rem .8rem}
+.teach-pacing-ref dt{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--fg-dim);margin-bottom:.15rem}
+.teach-pacing-ref dd{margin:0;font-size:.86rem;line-height:1.5;color:var(--fg-muted)}
+
+.teach-navlink{font-family:var(--font-sans);font-weight:600;font-size:.88rem;
+  color:var(--accent-2);text-decoration:none}
+.teach-navlink:hover{text-decoration:underline}

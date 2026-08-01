@@ -26,6 +26,8 @@
   background:var(--accent);border:1px solid var(--accent);color:#fff;
   transition:background var(--dur-fast),transform var(--dur-fast)}
 .pg-btn:hover{background:var(--slam-red-deep);transform:translateY(-1px)}
+.pg-btn-ghost{background:transparent;color:var(--accent);border-color:var(--accent)}
+.pg-btn-ghost:hover{background:rgba(227,24,55,.08);color:var(--slam-red-deep)}
 
 /* --- grade switcher -------------------------------------------------- */
 .pg-tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1.1rem;

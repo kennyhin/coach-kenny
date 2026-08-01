@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Guide — PE Pacing 2026-27</title>
+  <meta name="description" content="PIN-gated teacher guides for the SLAM! Nevada K-5 PE pacing map — answers, lesson flow, cues, and safety notes keyed by grade and week." />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/pe-games/css/pe-styles.css" />
+  <link rel="stylesheet" href="../css/pacing.css" />
+  <link rel="stylesheet" href="../css/teach.css" />
+</head>
+<body>
+
+  <!-- PIN gate — convenience only on a static site; not real authentication. -->
+  <div class="teach-lock lock" id="lock"
+       data-salt="ck-pacing-teach-v1"
+       data-hash="b9e2e4b29ed93ff4cc294a552d96bade5a341e15d479443c32a0d9e04903e951"
+       data-key="ck-pacing-teach-ok"
+       data-unlock-event="teach-unlocked">
+    <div class="teach-lock-in lock-in">
+      <div class="teach-lock-icon" aria-hidden="true">&#128274;</div>
+      <h1>Teacher guide</h1>
+      <p>Enter the 3-digit staff code to view answers and teaching notes for each week.</p>
+      <div class="teach-pin-row pin-row" id="pin-row">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 1" />
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2" />
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3" />
+      </div>
+      <p class="teach-lock-msg lock-msg" id="lock-msg" role="alert"></p>
+      <a class="teach-lock-back" href="../index.html">&#8592; Back to pacing guide</a>
+      <p class="teach-lock-note">Static-site PIN — discourages casual access only</p>
+    </div>
+  </div>
+
+  <nav class="side-nav">
+    <a href="/pacing/" class="side-nav-logo">SLAM<span>PE</span></a>
+    <a href="../index.html#guide">Pacing map</a>
+    <a href="../index.html#games">Games</a>
+    <a href="/pe-games/">PE Games</a>
+    <a href="/">Home</a>
+  </nav>
+
+  <div class="page">
+    <section class="hero">
+      <div class="hero-inner hero-center">
+        <p class="welcome-eyebrow">Staff only &middot; SLAM! Nevada K-5 PE</p>
+        <span class="teach-badge">Teacher view</span>
+        <h1 class="section-title" style="margin:.4rem 0 .6rem">PE TEACHER GUIDE 2026-27</h1>
+        <p class="section-intro">
+          Answers to each week&rsquo;s question, plus the full teaching sequence &mdash;
+          objective, equipment, opening, instruction, practice, game, closure, cues,
+          assessment, adaptations, and safety.
+        </p>
+      </div>
+    </section>
+
+    <div class="pg-wrap">
+      <div class="pg-tabs" role="tablist" id="teachTabs"></div>
+      <div class="teach-layout" id="teachLayout">
+        <aside class="teach-sidebar" aria-label="Weeks">
+          <h2>Weeks</h2>
+          <ul class="teach-weeklist" id="teachWeekList"></ul>
+        </aside>
+        <main id="teachPanel">
+          <p class="teach-pending">Unlock with the staff code to load guides&hellip;</p>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="/decks/assets/lock.js"></script>
+  <script src="../js/teach.js"></script>
+</body>
+</html>
