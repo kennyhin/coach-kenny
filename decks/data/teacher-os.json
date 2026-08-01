@@ -405,29 +405,35 @@
       }
     },
     {
-      "kind": "grid",
+      "kind": "email",
       "act": "who",
       "eyebrow": "What it says",
       "title": "What lands in the family&rsquo;s inbox",
-      "lede": "Two versions, depending on where the athlete landed on the ladder.",
-      "cards": [
-        {
-          "h": "Probation email",
-          "b": "Names the student, the team and the week, says they have been placed on probation, and includes your note."
-        },
-        {
-          "h": "Suspension email",
-          "b": "Same details, but says they are suspended from the next game and names which one."
-        },
-        {
-          "h": "Your note is the body",
-          "b": "The specific thing you typed is the part parents actually read. Everything else is a template."
-        },
-        {
-          "h": "Sent from the school",
-          "b": "It goes out as an official school email, not from your personal address."
-        }
-      ]
+      "lede": "Here is a real probation email, with sample names. Your note is the highlighted part parents actually read.",
+      "example": "Example — names are fictional",
+      "mail": {
+        "from": "SLAM! Athletics (school account)",
+        "to": "Parents (both addresses if on file)",
+        "cc": "You · Coaches · Kenny",
+        "subject": "Jordan Smith — Probation Notice (Flag Football)",
+        "badge": "Accountability Check — Probation",
+        "headline": "Jordan Smith",
+        "body": [
+          "Hello coaches and parents &mdash; for the week of <b>Sep 18</b>, <b>Jordan Smith</b> did not fulfill their commitment on their team, <b>Flag Football</b>.",
+          "One of our SLAM High 5 is <b>accountability</b>. As a result, <b>Jordan Smith</b> has been <b>placed on probation</b>. Please talk with your student about their grades and behavior this week."
+        ],
+        "facts": [
+          ["Student", "Jordan Smith"],
+          ["Team", "Flag Football"],
+          ["Week", "Sep 18"],
+          ["Status", "Probation"]
+        ],
+        "noteLabel": "Teacher's Note",
+        "note": "Missing three homework assignments this week.",
+        "footer": "<b>What probation means:</b> if marked down again next week for Home Run (grades) or Bulls Commitment (behavior), they will be <b>suspended for the following game</b>. A clean week resets the slate.",
+        "sentBy": "Sent by Ms. Rivera through the SLAM! Teacher Hub. Questions? Reply directly to this email."
+      },
+      "note": "Suspension emails use the same layout — subject and status say Suspension, and the next game is named."
     },
     {
       "kind": "recap",

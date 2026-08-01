@@ -27,6 +27,7 @@
     ['shot',    'Screenshot + steps'],
     ['text',    'Steps only (no image)'],
     ['flow',    'Flow diagram'],
+    ['email',   'Email mockup'],
     ['grid',    'Card grid'],
     ['recap',   'Recap columns']
   ];
@@ -474,6 +475,72 @@
       brSec.appendChild(textField('Branch heading', s.branch.h, function (v) { s.branch.h = v; renderPreview(); }));
       brSec.appendChild(textField('Branch text', s.branch.b, function (v) { s.branch.b = v; renderPreview(); }, null, true));
       f.appendChild(brSec);
+    }
+
+    if (s.kind === 'email') {
+      if (!s.mail) s.mail = { from: '', to: '', cc: '', subject: '', badge: '', headline: '', body: [], facts: [], noteLabel: "Teacher's Note", note: '', footer: '', sentBy: '' };
+      if (!s.mail.body) s.mail.body = [];
+      if (!s.mail.facts) s.mail.facts = [];
+      f.appendChild(textField('Example tag (optional)', s.example, function (v) { s.example = v; renderPreview(); },
+        'Small label above the mock, e.g. Example — names are fictional'));
+      var mailSec = document.createElement('div');
+      mailSec.className = 'ed-sec';
+      mailSec.innerHTML = '<h3>Inbox headers</h3>';
+      mailSec.appendChild(textField('From', s.mail.from, function (v) { s.mail.from = v; renderPreview(); }));
+      mailSec.appendChild(textField('To', s.mail.to, function (v) { s.mail.to = v; renderPreview(); }));
+      mailSec.appendChild(textField('Cc', s.mail.cc, function (v) { s.mail.cc = v; renderPreview(); }));
+      mailSec.appendChild(textField('Subject', s.mail.subject, function (v) { s.mail.subject = v; renderPreview(); }));
+      f.appendChild(mailSec);
+      var bodySec = document.createElement('div');
+      bodySec.className = 'ed-sec';
+      bodySec.innerHTML = '<h3>Email body</h3>';
+      bodySec.appendChild(textField('Badge line', s.mail.badge, function (v) { s.mail.badge = v; renderPreview(); }, 'e.g. Accountability Check — Probation'));
+      bodySec.appendChild(textField('Headline', s.mail.headline, function (v) { s.mail.headline = v; renderPreview(); }));
+      bodySec.appendChild(stringList('Body paragraphs', s.mail.body, 'Paragraph', function () { renderForm(); renderPreview(); }));
+      f.appendChild(bodySec);
+      var factSec = document.createElement('div');
+      factSec.className = 'ed-sec';
+      var fh = document.createElement('h3');
+      fh.textContent = 'Info grid';
+      factSec.appendChild(fh);
+      s.mail.facts.forEach(function (fact, n) {
+        var row = document.createElement('div');
+        row.className = 'row';
+        var top = document.createElement('div');
+        top.className = 'row-top';
+        var num = document.createElement('span');
+        num.className = 'row-n';
+        num.textContent = 'Fact ' + (n + 1);
+        top.appendChild(num);
+        [['↑', n === 0, function () { s.mail.facts.splice(n - 1, 0, s.mail.facts.splice(n, 1)[0]); }],
+         ['↓', n === s.mail.facts.length - 1, function () { s.mail.facts.splice(n + 1, 0, s.mail.facts.splice(n, 1)[0]); }],
+         ['✕', false, function () { s.mail.facts.splice(n, 1); }]
+        ].forEach(function (b) {
+          var btn = document.createElement('button');
+          btn.className = 'xbtn'; btn.textContent = b[0]; btn.disabled = b[1];
+          btn.addEventListener('click', function () { b[2](); markDirty(); renderForm(); renderPreview(); });
+          top.appendChild(btn);
+        });
+        row.appendChild(top);
+        row.appendChild(textField('Label', fact[0], function (v) { fact[0] = v; renderPreview(); }));
+        row.appendChild(textField('Value', fact[1], function (v) { fact[1] = v; renderPreview(); }));
+        factSec.appendChild(row);
+      });
+      var addFact = document.createElement('button');
+      addFact.className = 'addbtn';
+      addFact.textContent = '+ Add fact';
+      addFact.addEventListener('click', function () {
+        s.mail.facts.push(['', '']);
+        markDirty(); renderForm(); renderPreview();
+      });
+      factSec.appendChild(addFact);
+      f.appendChild(factSec);
+      f.appendChild(textField('Note label', s.mail.noteLabel, function (v) { s.mail.noteLabel = v; renderPreview(); }));
+      f.appendChild(textField("Teacher's note (highlighted)", s.mail.note, function (v) { s.mail.note = v; renderPreview(); }, null, true));
+      f.appendChild(textField('Footer blurb', s.mail.footer, function (v) { s.mail.footer = v; renderPreview(); }, null, true));
+      f.appendChild(textField('Sent-by line', s.mail.sentBy, function (v) { s.mail.sentBy = v; renderPreview(); }));
+      f.appendChild(textField('Green note (optional)', s.note, function (v) { s.note = v; renderPreview(); },
+        'The highlighted aside under the mock. Leave blank to hide.', true));
     }
 
     if (s.kind === 'grid') {

@@ -183,6 +183,60 @@ window.DeckRender = (function () {
         '</div>';
     }
 
+    if (k === 'email') {
+      var m = s.mail || {};
+      var headers = [
+        ['From', m.from],
+        ['To', m.to],
+        ['Cc', m.cc],
+        ['Subject', m.subject]
+      ].filter(function (row) { return row[1]; }).map(function (row) {
+        return '<div class="em-row">' +
+          '<span class="em-k mono">' + esc(row[0]) + '</span>' +
+          '<span class="em-v' + (row[0] === 'Subject' ? ' em-subject' : '') + '">' + row[1] + '</span>' +
+        '</div>';
+      }).join('');
+
+      var paras = (m.body || []).map(function (p) {
+        return '<p class="em-p">' + p + '</p>';
+      }).join('');
+
+      var facts = (m.facts || []).map(function (f) {
+        return '<div class="em-fact">' +
+          '<span class="em-fact-k mono">' + esc(f[0] || '') + '</span>' +
+          '<span class="em-fact-v">' + (f[1] || '') + '</span>' +
+        '</div>';
+      }).join('');
+
+      return '' +
+        '<div class="pad">' +
+          '<header class="shead shead-wide">' +
+            (s.eyebrow ? '<p class="eyebrow mono">' + esc(s.eyebrow) + '</p>' : '') +
+            '<h2>' + (s.title || '') + '</h2>' +
+            (s.lede ? '<p class="lede">' + s.lede + '</p>' : '') +
+          '</header>' +
+          '<article class="em">' +
+            (s.example ? '<p class="em-tag mono">' + esc(s.example) + '</p>' : '') +
+            '<div class="em-chrome">' + headers + '</div>' +
+            '<div class="em-body">' +
+              (m.badge ? '<p class="em-badge mono">' + esc(m.badge) + '</p>' : '') +
+              (m.headline ? '<h3 class="em-h">' + m.headline + '</h3>' : '') +
+              paras +
+              (facts ? '<div class="em-facts">' + facts + '</div>' : '') +
+              (m.note
+                ? '<div class="em-note">' +
+                    '<p class="em-note-k mono">' + esc(m.noteLabel || "Teacher's Note") + '</p>' +
+                    '<p class="em-note-v">' + m.note + '</p>' +
+                  '</div>'
+                : '') +
+              (m.footer ? '<p class="em-footer">' + m.footer + '</p>' : '') +
+              (m.sentBy ? '<p class="em-sent mono">' + m.sentBy + '</p>' : '') +
+            '</div>' +
+          '</article>' +
+          (s.note ? '<p class="note mono">' + s.note + '</p>' : '') +
+        '</div>';
+    }
+
     return '<div class="pad"><p class="lede">Unknown slide type: ' + esc(k) + '</p></div>';
   }
 
