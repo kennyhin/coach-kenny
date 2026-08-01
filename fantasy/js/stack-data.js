@@ -1,11 +1,12 @@
 /**
- * Eagles stack complements — Aug 2026.
+ * Eagles stack complements — rosters verified Aug 2026.
  * Criteria: high-volume passing QB, top pass + rush offense, bye ≠ PHI (W9), excludes PHI & DEN rosters.
  * PHI/DEN matchup weeks from 2025 schedule (proxy for 2026).
  */
 window.EAGLES_STACK = {
   eaglesBye: 9,
-  excludedNote: 'Philadelphia (your core stack) and Denver (elite defense — hard weekly ceiling) rosters excluded.',
+  rosterAsOf: '2026-08-01',
+  excludedNote: 'Philadelphia (your core stack) and Denver (elite defense) rosters excluded.',
   teams: [
     {
       abbr: 'DET',
@@ -19,7 +20,6 @@ window.EAGLES_STACK = {
       players: [
         { pos: 'QB', name: 'Jared Goff', adp: 108, proj: 268 },
         { pos: 'RB', name: 'Jahmyr Gibbs', adp: 1.5, proj: 341 },
-        { pos: 'RB', name: 'David Montgomery', adp: 68, proj: 198 },
         { pos: 'WR', name: 'Amon-Ra St. Brown', adp: 12, proj: 298 },
         { pos: 'WR', name: 'Jameson Williams', adp: 74, proj: 212 },
         { pos: 'TE', name: 'Sam LaPorta', adp: 96, proj: 192 },
@@ -68,12 +68,14 @@ window.EAGLES_STACK = {
       passRank: 4,
       rushRank: 8,
       qb: { name: 'Josh Allen', note: 'Top pass + rush volume QB' },
-      wr1: 'Khalil Shakir',
+      wr1: 'DJ Moore',
       vsPhiDen: ['W6 @PHI', 'W18 vs DEN'],
       players: [
         { pos: 'QB', name: 'Josh Allen', adp: 22, proj: 355 },
         { pos: 'RB', name: 'James Cook', adp: 26, proj: 272 },
+        { pos: 'WR', name: 'DJ Moore', adp: 48, proj: 245 },
         { pos: 'WR', name: 'Khalil Shakir', adp: 82, proj: 228 },
+        { pos: 'WR', name: 'Joshua Palmer', adp: 135, proj: 168 },
         { pos: 'WR', name: 'Keon Coleman', adp: 118, proj: 178 },
         { pos: 'TE', name: 'Dalton Kincaid', adp: 135, proj: 168 },
       ],
@@ -126,25 +128,9 @@ window.EAGLES_STACK = {
         { pos: 'WR', name: 'Nico Collins', adp: 14, proj: 305 },
         { pos: 'WR', name: 'Tank Dell', adp: 209.5, proj: 175 },
         { pos: 'WR', name: 'Xavier Hutchinson', adp: 273, proj: 152 },
-        { pos: 'RB', name: 'Joe Mixon', adp: 48, proj: 235 },
+        { pos: 'RB', name: 'David Montgomery', adp: 68, proj: 198 },
+        { pos: 'RB', name: 'Woody Marks', adp: 88, proj: 185 },
         { pos: 'TE', name: 'Dalton Schultz', adp: 195, proj: 138 },
-      ],
-    },
-    {
-      abbr: 'MIA',
-      name: 'Miami Dolphins',
-      bye: 12,
-      passRank: 7,
-      rushRank: 20,
-      qb: { name: 'Tua Tagovailoa', note: 'Pass-first offense when healthy' },
-      wr1: 'Tyreek Hill',
-      vsPhiDen: ['W14 @PHI', 'W17 vs DEN'],
-      players: [
-        { pos: 'QB', name: 'Tua Tagovailoa', adp: 95, proj: 258 },
-        { pos: 'WR', name: 'Tyreek Hill', adp: 20, proj: 288 },
-        { pos: 'WR', name: 'Jaylen Waddle', adp: 62, proj: 232 },
-        { pos: 'RB', name: 'De\'Von Achane', adp: 8, proj: 318 },
-        { pos: 'TE', name: 'Jonnu Smith', adp: 185, proj: 128 },
       ],
     },
     {
@@ -153,14 +139,14 @@ window.EAGLES_STACK = {
       bye: 5,
       passRank: 11,
       rushRank: 6,
-      qb: { name: 'Michael Penix Jr.', note: 'Ascending pass volume' },
+      qb: { name: 'Michael Penix Jr.', note: 'Penix + Tua Tagovailoa compete post-ACL' },
       wr1: 'Drake London',
       vsPhiDen: ['W4 vs PHI', 'W13 @DEN'],
       players: [
         { pos: 'QB', name: 'Michael Penix Jr.', adp: 125, proj: 242 },
+        { pos: 'QB', name: 'Tua Tagovailoa', adp: 999, proj: 165 },
         { pos: 'RB', name: 'Bijan Robinson', adp: 1.5, proj: 347 },
         { pos: 'WR', name: 'Drake London', adp: 32, proj: 268 },
-        { pos: 'WR', name: 'Darnell Mooney', adp: 205, proj: 172 },
         { pos: 'TE', name: 'Kyle Pitts', adp: 155, proj: 155 },
       ],
     },
@@ -177,6 +163,7 @@ window.EAGLES_STACK = {
         { pos: 'QB', name: 'J.J. McCarthy', adp: 115, proj: 255 },
         { pos: 'WR', name: 'Justin Jefferson', adp: 6, proj: 318 },
         { pos: 'WR', name: 'Jordan Addison', adp: 99.5, proj: 250 },
+        { pos: 'WR', name: 'Jauan Jennings', adp: 152, proj: 198 },
         { pos: 'RB', name: 'Aaron Jones', adp: 122, proj: 200 },
         { pos: 'RB', name: 'Jordan Mason', adp: 121.5, proj: 204 },
         { pos: 'TE', name: 'T.J. Hockenson', adp: 166.5, proj: 165 },
@@ -206,12 +193,13 @@ window.EAGLES_STACK = {
       passRank: 14,
       rushRank: 3,
       qb: { name: 'Brock Purdy', note: 'Efficient high-scoring offense' },
-      wr1: 'Jauan Jennings',
+      wr1: 'Mike Evans',
       vsPhiDen: ['W16 @PHI', 'W6 vs DEN'],
       players: [
         { pos: 'QB', name: 'Brock Purdy', adp: 105, proj: 252 },
         { pos: 'RB', name: 'Christian McCaffrey', adp: 5, proj: 325 },
-        { pos: 'WR', name: 'Jauan Jennings', adp: 152, proj: 198 },
+        { pos: 'WR', name: 'Mike Evans', adp: 38, proj: 255 },
+        { pos: 'WR', name: 'Deebo Samuel', adp: 72, proj: 218 },
         { pos: 'WR', name: 'Christian Kirk', adp: 217, proj: 165 },
         { pos: 'TE', name: 'George Kittle', adp: 42, proj: 228 },
       ],
@@ -281,7 +269,8 @@ window.EAGLES_STACK = {
         { pos: 'WR', name: 'Jaxon Smith-Njigba', adp: 22, proj: 285 },
         { pos: 'RB', name: 'Kenneth Walker III', adp: 38, proj: 248 },
         { pos: 'RB', name: 'Zach Charbonnet', adp: 166.5, proj: 182 },
-        { pos: 'TE', name: 'Noah Fant', adp: 285, proj: 105 },
+        { pos: 'WR', name: 'Cooper Kupp', adp: 95, proj: 195 },
+        { pos: 'WR', name: 'Rashid Shaheed', adp: 128, proj: 172 },
       ],
     },
   ],
