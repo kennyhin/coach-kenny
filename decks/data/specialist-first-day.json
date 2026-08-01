@@ -80,14 +80,14 @@
         },
         {
           "h": "Sign in with your school account",
-          "b": "It is a slamnv.org Google Site. A personal Gmail will be refused."
+          "b": "It is a slamnv.org Google Site. A personal account may not have access."
         },
         {
           "h": "Bookmark the hub, not this page",
           "b": "Come back out to coachkenny.org before the next slide."
         }
       ],
-      "note": "Blocker: test the Rotations card on a phone signed in as @slamnv.org. It was reported as a 404."
+      "note": "If it does not open, check that your phone is signed in to your slamnv.org account."
     },
 
     {
@@ -116,7 +116,7 @@
           "b": "The icon lands on your home screen. That is your one tap."
         }
       ],
-      "note": "Must be Safari &mdash; Chrome on iPhone cannot do this."
+      "note": "Safari path shown. Chrome on iPhone also works: Share &rsaquo; Add to Home Screen."
     },
 
     {
@@ -187,7 +187,7 @@
       "act": "pacing",
       "eyebrow": "Read one row together",
       "title": "One week, all the way across",
-      "lede": "The worked PE example on the <b>Master Copy</b> tab. Read it in this order &mdash; standard first, then evidence, then the activity.",
+      "lede": "The worked PE example on the <b>Master Copy</b> tab. Read straight across the row. When you build your own, settle the standard and the evidence before you pick the activity.",
       "steps": [
         {
           "h": "Week and student days",
