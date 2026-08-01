@@ -8,14 +8,15 @@
    only Kenny has. Without that token the editor can do nothing
    but produce a JSON file on your own machine.
 
-   The code is stored as a salted SHA-256 hash so the digits do
-   not sit in the page source in plain text.
+   The 3-digit code is stored as a salted SHA-256 hash so the digits do
+   not sit in the page source in plain text. Unlock lasts for this
+   browser tab session (sessionStorage).
    ============================================================ */
 (function () {
   'use strict';
 
   var SALT = 'ck-decks-v1';
-  var HASH = '1b8cd500fde527333890a03d2f83d3186be28ff24064413bfcca03657a9727a4';
+  var HASH = '5a256ddc46bf8d274387ed51f7c461f1d20aec28ecbebfd582dbfbab01cbd2bc';
   var KEY  = 'ck-deck-edit-ok';
 
   var lock = document.getElementById('lock');
@@ -30,7 +31,7 @@
     document.body.style.overflow = '';
   }
 
-  if (localStorage.getItem(KEY) === HASH) { unlock(); return; }
+  if (sessionStorage.getItem(KEY) === HASH) { unlock(); return; }
 
   document.body.style.overflow = 'hidden';
   setTimeout(function () { inputs[0].focus(); }, 60);
@@ -68,7 +69,7 @@
         return;
       }
       if (h === HASH) {
-        localStorage.setItem(KEY, HASH);
+        sessionStorage.setItem(KEY, HASH);
         unlock();
       } else {
         fail('That code is not right.');
