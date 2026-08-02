@@ -30,10 +30,6 @@
     details.dataset.wr1 = team.wr1;
     details.id = `team-${team.abbr.toLowerCase()}`;
 
-    const matchups = team.vsPhiDen.length
-      ? team.vsPhiDen.join(' · ')
-      : 'None on 2025 schedule proxy';
-
     details.innerHTML = `
       <summary class="team-summary">
         <span class="team-abbr">${team.abbr}</span>
@@ -48,7 +44,7 @@
         <div class="team-meta">
           <p><strong>QB:</strong> ${team.qb.name} — ${team.qb.note}</p>
           <p><strong>Offense ranks (2025 proxy):</strong> Pass #${team.passRank} · Rush #${team.rushRank}</p>
-          <p><strong>vs PHI / DEN defenses:</strong> ${matchups}</p>
+          <p><strong>Schedule:</strong> No games vs PHI or DEN (${data.scheduleSource || '2025 proxy'})</p>
         </div>
         <table class="player-table">
           <thead>
@@ -88,7 +84,7 @@
 
   function updateSummary(count) {
     const src = data.rosterSource ? ` · rosters via ESPN (${data.rosterAsOf || 'current'})` : '';
-    summaryEl.textContent = `${count} team${count === 1 ? '' : 's'} · Eagles bye Week ${data.eaglesBye} · excludes PHI & DEN rosters${src}`;
+    summaryEl.textContent = `${count} team${count === 1 ? '' : 's'} · bye ≠ Eagles (W${data.eaglesBye}) · no PHI/DEN on schedule${src}`;
   }
 
   function render() {
