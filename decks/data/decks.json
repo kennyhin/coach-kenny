@@ -5,40 +5,40 @@
       "title": "Specialist First Day",
       "label": "Specialist walkthrough",
       "icon": "🏃",
-      "blurb": "The rotation schedule on your phone in four taps — and how to read the 2026-27 pacing guide.",
-      "updated": "2026-08-01"
+      "blurb": "Open the specialist schedule, save it, and read the 2026-27 pacing guide.",
+      "updated": "2026-08-02"
     },
     {
       "slug": "slam-reservations",
       "title": "Space Reservations",
       "label": "Staff walkthrough",
       "icon": "📅",
-      "blurb": "Booking the Cafegym, ES Turf and Kinder Playground — plus coach season schedules and the approver dashboard.",
-      "updated": "2026-07-28"
+      "blurb": "Request school spaces, submit coach season schedules, and review bookings.",
+      "updated": "2026-08-02"
     },
     {
       "slug": "teacher-os",
       "title": "Teacher Check-In",
       "label": "Teacher walkthrough",
       "icon": "✅",
-      "blurb": "Marking Home Run and Bulls Commitment each week — and what probation, suspension and the emails home actually mean.",
-      "updated": "2026-07-30"
+      "blurb": "Submit weekly athlete checks and understand probation, suspension, and family emails.",
+      "updated": "2026-08-02"
     },
     {
       "slug": "coach-os",
       "title": "Coach OS",
       "label": "Coach walkthrough",
       "icon": "🏆",
-      "blurb": "Your team hub — tryouts and the draft, roster, attendance, playing time, scores and drills.",
-      "updated": "2026-07-30"
+      "blurb": "Run tryouts, build the roster, track attendance and playing time, and report scores.",
+      "updated": "2026-08-02"
     },
     {
       "slug": "fundraising-field-trips",
       "title": "Fundraising & Field Trips",
       "label": "Staff walkthrough",
       "icon": "🎟️",
-      "blurb": "Submitting a fundraiser or field trip, the pre-approval checklist, and how approval reaches the master calendar.",
-      "updated": "2026-07-28"
+      "blurb": "Submit a fundraiser or field trip, follow approval, and reach the master calendar.",
+      "updated": "2026-08-02"
     }
   ]
 }
