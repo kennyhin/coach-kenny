@@ -39,24 +39,24 @@
       "kind": "shot",
       "act": "intro",
       "img": "follow-along.png",
-      "eyebrow": "Follow along",
-      "title": "Scan to open this deck",
+      "eyebrow": "Open the app",
+      "title": "Scan to open the coach app",
       "lede": "",
       "steps": [
         {
           "h": "Point your camera at the code",
-          "b": "Or open <b>coachkenny.org/decks</b> and tap this deck."
+          "b": "Or type <b>athleticsos.io/coach</b>."
         },
         {
-          "h": "Follow on your phone",
-          "b": "Same slides as the projector — swipe at your own pace."
+          "h": "Enter your team PIN",
+          "b": "Three digits from your athletic director."
         },
         {
           "h": "Stay with the room",
-          "b": "The link opens slide 1 of this Coach OS walkthrough."
+          "b": "Same Coach OS app this walkthrough covers."
         }
       ],
-      "note": "Hold here until every phone shows the deck."
+      "note": "Hold here until every phone shows the coach app."
     },
     {
       "kind": "grid",
