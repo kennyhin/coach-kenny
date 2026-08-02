@@ -32,15 +32,6 @@
       ]
     },
     {
-      "kind": "grid", "act": "intro",
-      "eyebrow": "Roles", "title": "Who does what",
-      "cards": [
-        { "h": "You", "b": "Fill out the form, attach the required files, then watch your email for the decision." },
-        { "h": "Admin &amp; reviewers", "b": "Get notified the moment you submit, open the review link, and approve or deny with a note." },
-        { "h": "The system", "b": "Files everything, emails the reviewers, emails you the decision, and prepares the calendar entry and field trip forms." }
-      ]
-    },
-    {
       "kind": "text", "act": "intro",
       "eyebrow": "The whole process", "title": "Five steps, start to finish",
       "lede": "Every request &mdash; fundraiser or field trip &mdash; follows the same path.",
@@ -65,7 +56,6 @@
       "lede": "Your name, your school email, your grade or group &mdash; then pick which kind of request this is.",
       "steps": [
         { "h": "Fundraising or Field Trip", "b": "This one choice decides everything you are asked from here on. The form skips anything that does not apply." },
-        { "h": "Watch the progress bar", "b": "It shows Step X of Y and updates as your answers change the path." },
         { "h": "One request per event", "b": "Running two separate events? Submit the form twice." }
       ]
     },
@@ -84,9 +74,7 @@
       "lede": "Covers fundraisers and use of space. Tell it what you are running, when, and where.",
       "steps": [
         { "h": "Type of fundraiser", "b": "Chocolates, concessions, ticket sales, fireworks booth, or something else." },
-        { "h": "Multiple dates welcome", "b": "Selling for a week? Add a date and time row for each day on the one request." },
-        { "h": "Where", "b": "MPR, CAFE, Turf, Grass, Lobby or Online." },
-        { "h": "Main Gym is separate", "b": "The Main Gym is <b>not</b> on this list &mdash; request it from Mike.Cofer@slamnv.org." }
+        { "h": "Where", "b": "MPR, CAFE, Turf, Grass, Lobby or Online." }
       ],
       "note": "Main Gym does not go through this form. Email Mike Cofer directly."
     },
@@ -105,8 +93,7 @@
       "lede": "The single most important answer on a field trip &mdash; it changes your deadline and how much paperwork you owe.",
       "steps": [
         { "h": "Local, not overnight", "b": "Minimum <b>30 days</b> ahead." },
-        { "h": "Overnight", "b": "Minimum <b>60 days</b> ahead, and a hotel and rooming step gets added later on." },
-        { "h": "The checklist retitles itself", "b": "Pick overnight and the checklist heading, the deadline and the extra hotel section all update on the spot." }
+        { "h": "Overnight", "b": "Minimum <b>60 days</b> ahead, and a hotel and rooming step gets added later on." }
       ]
     },
     {
@@ -155,9 +142,7 @@
       "lede": "All of this is automatic. You do not have to email anybody to tell them it is there.",
       "steps": [
         { "h": "Your request is filed", "b": "Saved with a status of <b>Pending</b>, and your uploads are filed together with a summary." },
-        { "h": "Reviewers are emailed", "b": "One email with your full summary and a green <b>Review this request</b> button." },
-        { "h": "Field trips: you get the checklist", "b": "A pre-approval checklist email lands in your inbox straight away." },
-        { "h": "Submitted is not approved", "b": "There is no decision email yet. That comes after an admin reviews it." }
+        { "h": "Reviewers are emailed", "b": "One email with your full summary and a green <b>Review this request</b> button." }
       ],
       "note": "Submitting ≠ approved. Approval comes later, by email, then by calendar invite."
     },
@@ -174,7 +159,6 @@
       "lede": "Nobody has to go looking for new requests &mdash; the email arrives as soon as you hit submit.",
       "steps": [
         { "h": "Who gets it", "b": "Kenny, plus everyone on the Notify List. Add or remove reviewers there without touching the form." },
-        { "h": "What is in it", "b": "Who submitted, the request type, your full set of answers, and a link to your attached files." },
         { "h": "One button", "b": "<b>Review this request</b> opens the decision page directly." },
         { "h": "First decision wins", "b": "If two reviewers open it at once, only the first decision counts &mdash; you will never get two conflicting emails." }
       ]
@@ -186,7 +170,6 @@
       "steps": [
         { "h": "What the admin sees", "b": "A pill saying Fundraising or Field Trip, your name and group, every answer you gave, and a link to open your attachments." },
         { "h": "Add a note", "b": "Optional on approve, strongly encouraged on deny &mdash; it goes to you word for word." },
-        { "h": "Confirm before it sends", "b": "There is a confirmation step, so a stray click cannot email you by accident." },
         { "h": "Already decided?", "b": "If someone else got there first, the page just shows who decided and when." }
       ]
     },

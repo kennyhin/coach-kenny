@@ -29,7 +29,6 @@
       "eyebrow": "Step 1", "title": "Sign in",
       "lede": "Go to slamnvreserve.org. Leave \"Sign in as\" on Staff Teacher, type your school email, and press Confirm Email.",
       "steps": [
-        { "h": "Staff Teacher is the default", "b": "That is the one almost everybody uses. Staff Admin is only for approvers." },
         { "h": "No password for teachers", "b": "It confirms your <b>@slamnv.org</b> Google account. A personal Gmail will be turned away." }
       ],
       "note": "Bookmark it: slamnvreserve.org"
@@ -40,8 +39,6 @@
       "lede": "The calendar opens first on purpose — look before you request, and you will avoid most conflicts.",
       "steps": [
         { "h": "The dot tells you the space", "b": "Red is the Cafegym, green is the ES Turf, grey is the Kinder Playground. Same colors in the sidebar." },
-        { "h": "Three ways to look", "b": "Switch between <b>5 Days</b>, <b>Month</b> and <b>List</b> in the top right." },
-        { "h": "Click any booking", "b": "The panel on the right shows who has it, what for, and the exact time." },
         { "h": "Shortcut", "b": "Click an empty day and it jumps straight into the request form with that date already filled in." }
       ]
     },
@@ -50,11 +47,9 @@
       "eyebrow": "Step 3", "title": "Tell it who you are",
       "lede": "Your name, then your building — and the building opens up to show every role in it.",
       "steps": [
-        { "h": "Pick your building first", "b": "Elementary, Middle School, High School, or Coach." },
-        { "h": "Then pick your exact role", "b": "Grade levels plus Special Teams, Admin, Instructional Assistant, Instructional Coach and Office Staff. Elementary also has Specialist." },
+        { "h": "Pick your building, then your exact role", "b": "Elementary, Middle School, High School, or Coach — then the specific role in it." },
         { "h": "Coach is its own button", "b": "Choosing Coach unlocks the repeating practice schedule builder — that is Part 2." }
-      ],
-      "note": "Your role rides along on the request so the approver knows which building it came from"
+      ]
     },
     {
       "kind": "shot", "act": "teacher", "img": "04-step2.jpg", "persona": "Teacher / Staff",
@@ -80,7 +75,6 @@
       "lede": "One request can carry as many dates as you need — add them one at a time and they stack up in a list.",
       "steps": [
         { "h": "Set the date, start and end", "b": "Then press <b>Add Date</b>. Repeat for each one you want." },
-        { "h": "Remove a mistake", "b": "Hit the &times; on any date in the list." },
         { "h": "Each date is judged separately", "b": "If three of your four dates are clear, those three get approved and only the fourth gets flagged." }
       ]
     },
@@ -99,8 +93,7 @@
       "lede": "You are finished. Two emails go out immediately: a confirmation to you, and a notification to the approver.",
       "steps": [
         { "h": "Pending, not booked", "b": "It does <b>not</b> appear on the shared calendar until it is approved." },
-        { "h": "You will hear back by email", "b": "Approved, denied with a reason, or flagged as a conflict." },
-        { "h": "When approved", "b": "You get a Google Calendar invite, so it lands on your own calendar automatically." }
+        { "h": "You will hear back by email", "b": "Approved, denied with a reason, or flagged as a conflict — then a calendar invite lands automatically." }
       ]
     },
 
@@ -113,11 +106,7 @@
     {
       "kind": "shot", "act": "coach", "img": "09-coach1.jpg", "persona": "Coach",
       "eyebrow": "Step 1", "title": "Choose Coach",
-      "lede": "Coach sits alongside the three buildings and switches the rest of the form into season mode.",
-      "steps": [
-        { "h": "No sub-roles to pick", "b": "Coach selects immediately — there is nothing to expand." },
-        { "h": "The form changes behind it", "b": "Steps 2 and 4 become coach-specific from here on." }
-      ]
+      "lede": "Coach sits alongside the three buildings. Pick it and the rest of the form switches into season mode."
     },
     {
       "kind": "shot", "act": "coach", "img": "10-coach2.jpg", "persona": "Coach",
@@ -133,8 +122,7 @@
       "eyebrow": "Step 3", "title": "Describe the pattern once",
       "lede": "This is the part that saves the most time. Pick your days, set the times, give it a season, and press Generate.",
       "steps": [
-        { "h": "Up to five days a week", "b": "Tap Mon through Fri — as few as one, as many as all five." },
-        { "h": "Different times per day", "b": "Monday can run 3:30&ndash;5:00 and Wednesday 4:00&ndash;5:30. Each selected day gets its own start and end." },
+        { "h": "Tap your days, set your times", "b": "Up to five a week — Monday can run 3:30&ndash;5:00 and Wednesday 4:00&ndash;5:30, each day keeps its own start and end." },
         { "h": "First and last practice", "b": "Set the season range and press <b>Generate Schedule</b>." },
         { "h": "School holidays drop out", "b": "Any date on the Holidays list is skipped automatically and it tells you how many it removed." }
       ],
@@ -145,8 +133,7 @@
       "eyebrow": "Step 4", "title": "One request, every date",
       "lede": "The whole season submits together and stays grouped for the approver, who can clear it in one action.",
       "steps": [
-        { "h": "Still reviewed date by date", "b": "Clear dates get approved; only the ones that collide get flagged." },
-        { "h": "One email, not thirty", "b": "The approver gets a single notification listing the full schedule." }
+        { "h": "One email, not thirty", "b": "The approver gets a single notification listing the full schedule — clear dates get approved, only collisions get flagged." }
       ]
     },
 
@@ -171,9 +158,7 @@
       "lede": "Four counts across the top, then the queue. Conflicts are sorted to the front because they need a decision.",
       "steps": [
         { "h": "The tiles are filters", "b": "Click <b>Conflicts</b> to see only conflicts. Click it again to clear." },
-        { "h": "Two tabs", "b": "<b>Needs Review</b> is your working queue. <b>All Requests</b> is the full history." },
-        { "h": "Coach seasons collapse", "b": "A whole season shows as one row — here Wanda Walton&rsquo;s four practices — instead of flooding the list." },
-        { "h": "Manage Locations", "b": "Add spaces, paste their Google Calendar IDs, pick colors, and choose who gets notified." }
+        { "h": "Two tabs", "b": "<b>Needs Review</b> is your working queue. <b>All Requests</b> is the full history." }
       ]
     },
     {
@@ -182,9 +167,7 @@
       "lede": "Expand a coach season and you can approve every clear date in one press, or cherry-pick with checkboxes.",
       "steps": [
         { "h": "Fastest route", "b": "Press <b>&check; All</b> on the header row to approve every pending date without even expanding it." },
-        { "h": "Or be selective", "b": "Expand, tick the dates you want, then <b>Approve Selected</b> or <b>Deny Selected</b>." },
-        { "h": "Select All Pending", "b": "Ticks everything still awaiting a decision and skips what is already approved or denied." },
-        { "h": "Watch it work", "b": "It processes one at a time and shows &ldquo;Approving 3 of 12&hellip;&rdquo; as it goes." }
+        { "h": "Or be selective", "b": "Expand, tick the dates you want, then <b>Approve Selected</b> or <b>Deny Selected</b>." }
       ],
       "note": "Denying in bulk asks once for a reason and sends it on every date"
     },
@@ -193,7 +176,6 @@
       "eyebrow": "Step 4", "title": "Look at a conflict properly",
       "lede": "Press Review on any request and you get the details next to a live calendar for that space.",
       "steps": [
-        { "h": "The conflict is spelled out", "b": "It names the event in the way and its exact time — here a Track Meet from 9:00 to 12:00." },
         { "h": "Purple is the request", "b": "The purple pin is what is being asked for; the colored bars are what is already booked." },
         { "h": "Three ways out", "b": "Approve anyway, deny it, or send a conflict email asking the teacher to pick another slot." }
       ]
@@ -212,9 +194,7 @@
       "eyebrow": "Step 6", "title": "Approved — and it is on the calendar",
       "lede": "Approving is the moment the booking becomes real. Everything after this is automatic.",
       "steps": [
-        { "h": "The event gets created", "b": "On that space&rsquo;s own Google Calendar, titled with the space, the person and their role." },
-        { "h": "People get invited", "b": "The teacher is added as a guest. Cafegym bookings also invite the three Cafegym approvers." },
-        { "h": "Checked one more time", "b": "It re-checks for a conflict at the moment of approval, in case something was booked in the meantime." }
+        { "h": "The event gets created and everyone is invited", "b": "It lands on that space&rsquo;s own Google Calendar. The teacher is added as a guest — Cafegym bookings also invite the three Cafegym approvers." }
       ]
     },
 
