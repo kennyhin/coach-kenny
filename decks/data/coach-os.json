@@ -1,200 +1,349 @@
 {
   "slug": "coach-os",
   "title": "Coach OS",
-  "eyebrow": "SLAM! Nevada Athletics · Coach walkthrough",
-  "subtitle": "Your team hub — tryouts, roster, attendance, playing time and drills, all on your phone.",
-  "theme": { "accent": "#22D3EE", "accentLight": "#0E7490" },
+  "eyebrow": "SLAM! Nevada Athletics · Coaches",
+  "subtitle": "",
+  "theme": {
+    "accent": "#22D3EE",
+    "accentLight": "#0E7490"
+  },
   "contents": [
-    "Getting in and finding your team",
-    "Tryouts and the draft",
-    "Running your season"
+    "Run tryouts",
+    "Manage the season",
+    "Track what matters"
   ],
   "acts": [
-    { "id": "intro",   "label": "Start" },
-    { "id": "tryouts", "label": "Tryouts" },
-    { "id": "season",  "label": "Season" },
-    { "id": "wrap",    "label": "Wrap" }
+    {
+      "id": "intro",
+      "label": "Start"
+    },
+    {
+      "id": "tryouts",
+      "label": "Tryouts"
+    },
+    {
+      "id": "season",
+      "label": "Season"
+    },
+    {
+      "id": "wrap",
+      "label": "Wrap"
+    }
   ],
   "slides": [
-    { "kind": "cover", "act": "intro" },
-
     {
-      "kind": "grid", "act": "intro",
+      "kind": "cover",
+      "act": "intro"
+    },
+    {
+      "kind": "grid",
+      "act": "intro",
       "eyebrow": "The short version",
-      "title": "One place for everything about your team",
-      "lede": "No more group texts asking who is on the roster, when practice is, or who played last game.",
+      "title": "One hub for your team",
+      "lede": "",
       "cards": [
-        { "h": "On your phone", "b": "Built to use standing on a field with one hand. No app to install &mdash; it is a website you can save to your home screen." },
-        { "h": "Only your team", "b": "You see your roster, your schedule, your athletes. Nothing from anybody else&rsquo;s team." },
-        { "h": "Always current", "b": "When the athletic director updates a practice or adds a player, it is on your screen. Nobody has to resend anything." },
-        { "h": "Nothing to set up", "b": "Your team, roster and schedule are already loaded before you log in the first time." }
+        {
+          "h": "On your phone",
+          "b": "Built to use standing on a field with one hand. No app to install &mdash; it is a website you can save to your home screen."
+        },
+        {
+          "h": "Only your team",
+          "b": "You see your roster, your schedule, your athletes. Nothing from anybody else&rsquo;s team."
+        },
+        {
+          "h": "Always current",
+          "b": "When the athletic director updates a practice or adds a player, it is on your screen. Nobody has to resend anything."
+        },
+        {
+          "h": "Nothing to set up",
+          "b": "Your team, roster and schedule are already loaded before you log in the first time."
+        }
       ]
     },
     {
-      "kind": "text", "act": "intro",
-      "eyebrow": "Step 1", "title": "Getting in",
-      "lede": "Go to athleticsos.io/coach and enter the three-digit PIN the athletic director gave you.",
+      "kind": "text",
+      "act": "intro",
+      "eyebrow": "Step 1",
+      "title": "Sign in",
+      "lede": "",
       "steps": [
-        { "h": "Just a PIN", "b": "No username, no password to forget. Three digits and you are in." },
-        { "h": "It remembers you", "b": "On your own phone you will usually stay signed in, so it is one tap next time." },
-        { "h": "You land on your roster", "b": "That is the home base. Everything else is a tab across the top." },
-        { "h": "PIN not working?", "b": "Check with the athletic director &mdash; PINs are issued per team." }
+        {
+          "h": "Just a PIN",
+          "b": "No username, no password to forget. Three digits and you are in."
+        },
+        {
+          "h": "It remembers you",
+          "b": "On your own phone you will usually stay signed in, so it is one tap next time."
+        },
+        {
+          "h": "You land on your roster",
+          "b": "That is the home base. Everything else is a tab across the top."
+        },
+        {
+          "h": "PIN not working?",
+          "b": "Check with the athletic director &mdash; PINs are issued per team."
+        }
       ],
       "note": "Save athleticsos.io/coach to your phone's home screen and it opens like an app."
     },
     {
-      "kind": "grid", "act": "intro",
-      "eyebrow": "The tabs", "title": "What is on your hub",
-      "lede": "Seven tabs, plus a Draft tab that only shows up when there is a draft running.",
+      "kind": "grid",
+      "act": "intro",
+      "eyebrow": "The tabs",
+      "title": "Know the tabs",
+      "lede": "",
       "cards": [
-        { "h": "Roster", "b": "Every athlete on your team, with jersey info and whether their registration and fees are cleared." },
-        { "h": "Tryouts", "b": "During tryouts, the athletes checking in right now &mdash; and where you rate them." },
-        { "h": "Attendance", "b": "Take attendance at practice in a few taps, and see the whole season at a glance." },
-        { "h": "Schedule", "b": "Your practices and games, upcoming and past." },
-        { "h": "Scores &amp; Stats", "b": "Report a final score after a game, and turn a paper stat sheet into real numbers." },
-        { "h": "Resources", "b": "Drills you can run, with setup, coaching cues and video." },
-        { "h": "PT Tracker", "b": "Live playing-time tracker so every kid gets their minutes." },
-        { "h": "Contacts", "b": "Your coaching staff, and the players and families on your team." }
+        {
+          "h": "Roster",
+          "b": "Every athlete on your team, with jersey info and whether their registration and fees are cleared."
+        },
+        {
+          "h": "Tryouts",
+          "b": "During tryouts, the athletes checking in right now &mdash; and where you rate them."
+        },
+        {
+          "h": "Attendance",
+          "b": "Take attendance at practice in a few taps, and see the whole season at a glance."
+        },
+        {
+          "h": "Schedule",
+          "b": "Your practices and games, upcoming and past."
+        },
+        {
+          "h": "Scores &amp; Stats",
+          "b": "Report a final score after a game, and turn a paper stat sheet into real numbers."
+        },
+        {
+          "h": "Resources",
+          "b": "Drills you can run, with setup, coaching cues and video."
+        },
+        {
+          "h": "PT Tracker",
+          "b": "Live playing-time tracker so every kid gets their minutes."
+        },
+        {
+          "h": "Contacts",
+          "b": "Your coaching staff, and the players and families on your team."
+        }
       ]
     },
-
     {
-      "kind": "divider", "act": "tryouts", "num": "Part 1",
-      "title": "Tryouts",
-      "lede": "The busiest two hours of your season. Here is exactly what happens and what you do.",
-      "persona": "Coach"
-    },
-    {
-      "kind": "text", "act": "tryouts",
-      "eyebrow": "Before tryout day", "title": "What the athletic director sets up",
-      "lede": "You do not have to do any of this &mdash; it is here so you know where the athletes on your screen came from.",
+      "kind": "text",
+      "act": "tryouts",
+      "eyebrow": "On tryout day",
+      "title": "Athletes appear as they check in",
+      "lede": "",
       "steps": [
-        { "h": "Families register online", "b": "Each athlete gets a tryout number, and their grade, sizes and physical/waiver status are recorded." },
-        { "h": "The tryout schedule is built and published", "b": "Dates and times go out to families as a ClassDojo image and a PDF." },
-        { "h": "You are assigned to a team", "b": "That assignment is what decides which athletes show up on your hub." }
-      ]
-    },
-    {
-      "kind": "text", "act": "tryouts",
-      "eyebrow": "On tryout day", "title": "Athletes appear as they check in",
-      "lede": "You do not refresh anything or ask for a list. Watch the Tryouts tab.",
-      "steps": [
-        { "h": "The tab lights up green", "b": "It turns into <b>Tryouts (12)</b> and the number climbs as athletes check in at the table." },
-        { "h": "It updates on its own", "b": "Every few seconds, even if you are sitting on a different tab." },
-        { "h": "You only see your sport", "b": "The check-in table decides which teams each athlete is sent to, so your list stays clean." },
-        { "h": "Each athlete is a card", "b": "Tryout number, first name and grade &mdash; enough to find them on the floor." }
+        {
+          "h": "The tab lights up green",
+          "b": "It turns into <b>Tryouts (12)</b> and the number climbs as athletes check in at the table."
+        },
+        {
+          "h": "It updates on its own",
+          "b": "Every few seconds, even if you are sitting on a different tab."
+        },
+        {
+          "h": "You only see your sport",
+          "b": "The check-in table decides which teams each athlete is sent to, so your list stays clean."
+        },
+        {
+          "h": "Each athlete is a card",
+          "b": "Tryout number, first name and grade &mdash; enough to find them on the floor."
+        }
       ],
       "note": "If an athlete is standing in front of you but not on your screen, they have not checked in at the table yet."
     },
     {
-      "kind": "text", "act": "tryouts",
-      "eyebrow": "Your job", "title": "Rate them as you watch",
-      "lede": "Tap stars and jot a note. That is the whole job &mdash; do it live so you are not rebuilding it from memory at 9pm.",
+      "kind": "text",
+      "act": "tryouts",
+      "eyebrow": "Your job",
+      "title": "Rate athletes live",
+      "lede": "",
       "steps": [
-        { "h": "One to five stars", "b": "Tap the stars on the athlete&rsquo;s card. Change it any time during the session." },
-        { "h": "Notes are for you", "b": "&ldquo;Great hands, needs conditioning&rdquo; beats trying to remember number 34 later." },
-        { "h": "Sort two ways", "b": "By check-in order to find someone fast, or by rating to see your board taking shape." },
-        { "h": "Your ratings are yours", "b": "Every coach rates on their own hub. Another coach cannot see your stars or notes." }
+        {
+          "h": "One to five stars",
+          "b": "Tap the stars on the athlete&rsquo;s card. Change it any time during the session."
+        },
+        {
+          "h": "Notes are for you",
+          "b": "&ldquo;Great hands, needs conditioning&rdquo; beats trying to remember number 34 later."
+        },
+        {
+          "h": "Sort two ways",
+          "b": "By check-in order to find someone fast, or by rating to see your board taking shape."
+        },
+        {
+          "h": "Your ratings are yours",
+          "b": "Every coach rates on their own hub. Another coach cannot see your stars or notes."
+        }
       ],
       "note": "It saves as you tap. There is no submit button and nothing to lose if your phone locks."
     },
     {
-      "kind": "text", "act": "tryouts",
-      "eyebrow": "After tryouts", "title": "The draft",
-      "lede": "When it is time to place athletes on teams, the athletic director opens a draft and every coach joins from their own phone.",
+      "kind": "text",
+      "act": "tryouts",
+      "eyebrow": "After tryouts",
+      "title": "The draft",
+      "lede": "",
       "steps": [
-        { "h": "A Draft tab appears", "b": "Yellow while everyone is gathering, green when the draft goes live." },
-        { "h": "Tap Join Draft", "b": "Do this in the lobby so the draft can start with everyone in." },
-        { "h": "Picks go in order", "b": "It snakes &mdash; last pick in a round picks first in the next, so nobody is stuck picking last every time." },
-        { "h": "There is a clock", "b": "You get a set amount of time on your turn. If it runs out the draft moves on, so have your board ready." },
-        { "h": "Your ratings are right there", "b": "This is why rating live during tryouts matters &mdash; your stars are what you draft from." }
+        {
+          "h": "A Draft tab appears",
+          "b": "Yellow while everyone is gathering, green when the draft goes live."
+        },
+        {
+          "h": "Tap Join Draft",
+          "b": "Do this in the lobby so the draft can start with everyone in."
+        },
+        {
+          "h": "Picks go in order",
+          "b": "It snakes &mdash; last pick in a round picks first in the next, so nobody is stuck picking last every time."
+        },
+        {
+          "h": "There is a clock",
+          "b": "You get a set amount of time on your turn. If it runs out the draft moves on, so have your board ready."
+        },
+        {
+          "h": "Your ratings are right there",
+          "b": "This is why rating live during tryouts matters &mdash; your stars are what you draft from."
+        }
       ]
     },
-
     {
-      "kind": "divider", "act": "season", "num": "Part 2",
-      "title": "Running your season",
-      "lede": "What you will actually open every week once teams are set.",
-      "persona": "Coach"
-    },
-    {
-      "kind": "text", "act": "season",
-      "eyebrow": "Roster", "title": "Who is on your team",
-      "lede": "Your home screen. Every athlete, with the paperwork status you would otherwise have to chase.",
+      "kind": "text",
+      "act": "season",
+      "eyebrow": "Roster",
+      "title": "Who is on your team",
+      "lede": "",
       "steps": [
-        { "h": "Jersey info", "b": "Numbers and sizes, so you are not texting for them at uniform handout." },
-        { "h": "Registration and fees", "b": "Flags show you who is not fully cleared yet. You do not chase it &mdash; but you know before game day." },
-        { "h": "Medical and gear notes", "b": "Anything the office has flagged that you should know about an athlete." }
+        {
+          "h": "Jersey info",
+          "b": "Numbers and sizes, so you are not texting for them at uniform handout."
+        },
+        {
+          "h": "Registration and fees",
+          "b": "Flags show you who is not fully cleared yet. You do not chase it &mdash; but you know before game day."
+        },
+        {
+          "h": "Medical and gear notes",
+          "b": "Anything the office has flagged that you should know about an athlete."
+        }
       ]
     },
     {
-      "kind": "text", "act": "season",
-      "eyebrow": "Attendance", "title": "Take attendance in a few taps",
-      "lede": "Pick the practice, tap the kids who are there, done. It takes about fifteen seconds.",
+      "kind": "text",
+      "act": "season",
+      "eyebrow": "Attendance",
+      "title": "Take attendance at practice",
+      "lede": "",
       "steps": [
-        { "h": "Present or excused", "b": "Tap present for who showed. Mark excused when a parent let you know. Anyone left unmarked is absent." },
-        { "h": "Tied to real practices", "b": "You pick from your actual scheduled practices, so records line up with the calendar." },
-        { "h": "Season view", "b": "See a whole athlete&rsquo;s attendance at a glance &mdash; useful for the playing-time and eligibility conversations." }
+        {
+          "h": "Present or excused",
+          "b": "Tap present for who showed. Mark excused when a parent let you know. Anyone left unmarked is absent."
+        },
+        {
+          "h": "Tied to real practices",
+          "b": "You pick from your actual scheduled practices, so records line up with the calendar."
+        },
+        {
+          "h": "Season view",
+          "b": "See a whole athlete&rsquo;s attendance at a glance &mdash; useful for the playing-time and eligibility conversations."
+        }
       ],
       "note": "Do it at practice, not after. It is faster and you will not misremember who was there."
     },
     {
-      "kind": "text", "act": "season",
-      "eyebrow": "PT Tracker", "title": "Playing time, tracked live",
-      "lede": "This is the tool that protects you. At this level every kid deserves their minutes, and this proves they got them.",
+      "kind": "text",
+      "act": "season",
+      "eyebrow": "PT Tracker",
+      "title": "Track playing time live",
+      "lede": "",
       "steps": [
-        { "h": "Start a game", "b": "Enter the opponent, choose quarters or halves, how long each period is, and how many players are on the floor at once." },
-        { "h": "Pick your mode", "b": "<b>Equal playing time</b> gives every athlete a target. Or track by practice attendance instead." },
-        { "h": "Tap players on and off", "b": "The clock runs and each athlete&rsquo;s minutes add up. You can see at a glance who is short." },
-        { "h": "Games are saved", "b": "Finished games are archived, so if a parent asks how much their kid played, you have the answer." }
+        {
+          "h": "Start a game",
+          "b": "Enter the opponent, choose quarters or halves, how long each period is, and how many players are on the floor at once."
+        },
+        {
+          "h": "Pick your mode",
+          "b": "<b>Equal playing time</b> gives every athlete a target. Or track by practice attendance instead."
+        },
+        {
+          "h": "Tap players on and off",
+          "b": "The clock runs and each athlete&rsquo;s minutes add up. You can see at a glance who is short."
+        },
+        {
+          "h": "Games are saved",
+          "b": "Finished games are archived, so if a parent asks how much their kid played, you have the answer."
+        }
       ]
     },
     {
-      "kind": "text", "act": "season",
-      "eyebrow": "Scores &amp; Stats", "title": "After the game",
-      "lede": "Two things: report the score, and if you keep a stat sheet, get it off paper.",
+      "kind": "text",
+      "act": "season",
+      "eyebrow": "Scores &amp; Stats",
+      "title": "After the game",
+      "lede": "",
       "steps": [
-        { "h": "Report the score", "b": "Opponent, our score, and a notes box for anything the athletic director should know." },
-        { "h": "Photograph your stat sheet", "b": "Upload a picture of the paper sheet and it is read into player stats automatically &mdash; no typing rows in." },
-        { "h": "Season stats build up", "b": "Individual and season totals for your team, without a spreadsheet." }
+        {
+          "h": "Report the score",
+          "b": "Opponent, our score, and a notes box for anything the athletic director should know."
+        },
+        {
+          "h": "Photograph your stat sheet",
+          "b": "Upload a picture of the paper sheet and it is read into player stats automatically &mdash; no typing rows in."
+        },
+        {
+          "h": "Season stats build up",
+          "b": "Individual and season totals for your team, without a spreadsheet."
+        }
       ]
     },
     {
-      "kind": "text", "act": "season",
-      "eyebrow": "Schedule &amp; Contacts", "title": "The everyday stuff",
-      "lede": "The two tabs you will check without thinking about it.",
+      "kind": "text",
+      "act": "season",
+      "eyebrow": "Schedule &amp; Contacts",
+      "title": "The everyday stuff",
+      "lede": "",
       "steps": [
-        { "h": "Schedule", "b": "Practices and games, split into upcoming and past, with cancellations marked. It is the same calendar the office edits, so it is never stale." },
-        { "h": "Contacts", "b": "Your head and assistant coaches, plus players and families &mdash; so you are not digging for a phone number at 6pm." }
+        {
+          "h": "Schedule",
+          "b": "Practices and games, split into upcoming and past, with cancellations marked. It is the same calendar the office edits, so it is never stale."
+        },
+        {
+          "h": "Contacts",
+          "b": "Your head and assistant coaches, plus players and families &mdash; so you are not digging for a phone number at 6pm."
+        }
       ]
     },
     {
-      "kind": "text", "act": "season",
-      "eyebrow": "Resources", "title": "Drills you can run tomorrow",
-      "lede": "A practice plan library written so you can read it on the way to the field.",
+      "kind": "text",
+      "act": "season",
+      "eyebrow": "Resources",
+      "title": "Open a practice plan",
+      "lede": "",
       "steps": [
-        { "h": "Every drill is laid out the same", "b": "What skill it builds, how to set it up, the main coaching cues, how to run it, and what to watch for." },
-        { "h": "Video where it helps", "b": "Some drills include a clip so you can see it before you teach it." },
-        { "h": "Grouped by skill", "b": "Find something for the thing your team is actually bad at this week." },
-        { "h": "Flag football first", "b": "The library is built out for flag football right now. Other sports say &ldquo;coming soon&rdquo; until theirs is added." }
+        {
+          "h": "Every drill is laid out the same",
+          "b": "What skill it builds, how to set it up, the main coaching cues, how to run it, and what to watch for."
+        },
+        {
+          "h": "Video where it helps",
+          "b": "Some drills include a clip so you can see it before you teach it."
+        },
+        {
+          "h": "Grouped by skill",
+          "b": "Find something for the thing your team is actually bad at this week."
+        },
+        {
+          "h": "Flag football first",
+          "b": "The library is built out for flag football right now. Other sports say &ldquo;coming soon&rdquo; until theirs is added."
+        }
       ]
     },
-
     {
-      "kind": "grid", "act": "wrap",
-      "eyebrow": "How the two sides fit together",
-      "title": "The office sets it up, you use it",
-      "lede": "You never have to go into the admin side. This is just so you know why things appear when they do.",
-      "cards": [
-        { "h": "They build, you see", "b": "Teams, rosters, practices and games are set up by the athletic director. Your hub is the view of that for your team." },
-        { "h": "Tryout check-in routes athletes", "b": "The check-in table decides which coaches an athlete shows up for. That is why your list only has your sport." },
-        { "h": "Your ratings feed the draft", "b": "Stars and notes you enter during tryouts are what you draft from afterwards." },
-        { "h": "What you enter goes back", "b": "Scores, stats and attendance you record are visible to the office without you emailing anyone." }
-      ]
-    },
-    {
-      "kind": "recap", "act": "wrap",
-      "eyebrow": "Take this away", "title": "The short version",
+      "kind": "recap",
+      "act": "wrap",
+      "eyebrow": "Take this away",
+      "title": "The short version",
       "columns": [
         {
           "k": "Every day",

@@ -1,16 +1,16 @@
 {
   "slug": "specialist-first-day",
   "title": "Specialist First Day",
-  "eyebrow": "SLAM! Nevada K-5 · Specialist team · 2026-27",
-  "subtitle": "Your rotation schedule, saved to your phone in four taps &mdash; and the pacing guide that keeps every specialist pointed at the same weekly destination.",
+  "eyebrow": "SLAM! Nevada K-5 · Specialists · 2026-27",
+  "subtitle": "",
   "theme": {
     "accent": "#F0B429",
     "accentLight": "#8A5B00"
   },
   "contents": [
-    "Find the schedule",
-    "Save it to your phone",
-    "Read the pacing guide"
+    "Open the schedule",
+    "Save the shortcut",
+    "Read one pacing row"
   ],
   "acts": [
     {
@@ -36,46 +36,24 @@
       "act": "intro"
     },
     {
-      "kind": "grid",
-      "act": "intro",
-      "eyebrow": "Today's finish line",
-      "title": "Three things",
-      "lede": "",
-      "cards": [
-        {
-          "h": "Schedule access",
-          "b": "You can find the specialist rotation from your phone, without asking anyone or digging through email."
-        },
-        {
-          "h": "A phone shortcut",
-          "b": "It lives on your home screen by the time you leave this room. One tap, no searching."
-        },
-        {
-          "h": "Pacing that lines us up",
-          "b": "You can read a pacing row and say the unit, the standard, and the evidence out loud."
-        }
-      ]
-    },
-    {
       "kind": "shot",
       "act": "access",
       "img": "qr-coachkenny.png",
-      "persona": "Everyone, phones up",
-      "eyebrow": "One front door",
-      "title": "Scan this, then wait on the hub",
-      "lede": "Point your camera at the code. It opens <b>coachkenny.org</b> &mdash; the single address that holds everything we use.",
+      "eyebrow": "Open the hub",
+      "title": "Scan coachkenny.org",
+      "lede": "",
       "steps": [
         {
-          "h": "Camera app is enough",
-          "b": "No scanner app needed. Point, then tap the banner."
+          "h": "Scan or type",
+          "b": "<b>coachkenny.org</b>"
         },
         {
-          "h": "Or just type it",
-          "b": "<b>coachkenny.org</b> &mdash; if the scan is fussy, type it."
+          "h": "Stop on the hub",
+          "b": "Wait until everyone is on the same page."
         },
         {
-          "h": "Why the hub, not the schedule",
-          "b": "Schedule links change. The hub does not. Bookmark it once."
+          "h": "Save the hub",
+          "b": "The schedule link may change; the hub does not."
         }
       ],
       "note": "Hold here until every phone shows the hub."
@@ -84,22 +62,21 @@
       "kind": "shot",
       "act": "access",
       "img": "open-the-schedule.png",
-      "persona": "Everyone, phones up",
       "eyebrow": "From the hub",
-      "title": "Getting to the rotation schedule",
-      "lede": "Three taps from the front door. Scroll past the athletics cards to the <b>Rotations</b> card.",
+      "title": "Open the rotation schedule",
+      "lede": "",
       "steps": [
         {
-          "h": "Scroll to Rotations",
-          "b": "It sits below <b>Decks</b> in the card list. The card is labelled <b>Specialist Calendar</b>."
+          "h": "Tap Rotations",
+          "b": "Choose <b>Specialist Calendar</b>."
         },
         {
-          "h": "Sign in with your school account",
-          "b": "It is a slamnv.org Google Site. A personal account may not have access."
+          "h": "Use your school account",
+          "b": "Sign in with <b>@slamnv.org</b> if Google asks."
         },
         {
-          "h": "Bookmark the hub, not this page",
-          "b": "Come back out to coachkenny.org before the next slide."
+          "h": "Return to the hub",
+          "b": "Bookmark coachkenny.org on the next slide."
         }
       ],
       "note": "If it does not open, check that your phone is signed in to your slamnv.org account."
@@ -111,7 +88,7 @@
       "persona": "iPhone",
       "eyebrow": "Save it — iPhone",
       "title": "Add to Home Screen in Safari",
-      "lede": "In Safari, with <b>coachkenny.org</b> open:",
+      "lede": "",
       "steps": [
         {
           "h": "Tap Share",
@@ -139,7 +116,7 @@
       "persona": "Android",
       "eyebrow": "Save it — Android",
       "title": "Add to Home screen in Chrome",
-      "lede": "Same idea, different menu. In Chrome:",
+      "lede": "",
       "steps": [
         {
           "h": "Tap the three-dot menu",
@@ -164,32 +141,24 @@
       "kind": "grid",
       "act": "pacing",
       "eyebrow": "The other half of today",
-      "title": "A pacing guide is the map, not the drive",
-      "lede": "It sets the destination for each week. It does not tell you minute by minute how to get there &mdash; that is your lesson plan.",
+      "title": "Read four things in every pacing row",
+      "lede": "",
       "cards": [
         {
-          "h": "Calendar",
-          "b": "Which week, the real dates, and how many student days you actually get. A four-day week is not a five-day week."
+          "h": "Week",
+          "b": "Dates and actual student days."
         },
         {
-          "h": "Unit and question",
-          "b": "The strand you are in, and the essential question the week is trying to answer."
+          "h": "Question + standard",
+          "b": "What students are learning and the Nevada indicator behind it."
         },
         {
-          "h": "Standard",
-          "b": "The Nevada indicator the week is accountable to. This is the part that has to be defensible."
-        },
-        {
-          "h": "Focus and activity",
-          "b": "What students should be able to do on cue, and the activity that gets them there."
+          "h": "Focus + activity",
+          "b": "The weekly skill destination and an activity that can get students there."
         },
         {
           "h": "Evidence",
-          "b": "How you will know they got it. A checklist, an exit cue, an observation &mdash; something you can point at."
-        },
-        {
-          "h": "What it is not",
-          "b": "It is not a script, and it is not fixed. Weather, assemblies and one hard class all move it. Move it on purpose."
+          "b": "The observation, checklist, or exit cue that shows learning."
         }
       ]
     },
@@ -197,8 +166,8 @@
       "kind": "text",
       "act": "pacing",
       "eyebrow": "Read one row together",
-      "title": "One week, all the way across",
-      "lede": "One real week from the PE guide &mdash; the whole thing is at <a href=\"/pacing/\" style=\"color:var(--red);text-decoration:underline;text-underline-offset:3px\"><b>coachkenny.org/pacing</b></a>, all six grades, with the spreadsheet to download. Read straight across the row.",
+      "title": "Read one row from left to right",
+      "lede": "Open <a href=\"/pacing/\" style=\"color:var(--red);text-decoration:underline;text-underline-offset:3px\"><b>coachkenny.org/pacing</b></a> and use Week 11.",
       "steps": [
         {
           "h": "Week and student days",
@@ -227,7 +196,7 @@
       "act": "pacing",
       "eyebrow": "PE, K-5",
       "title": "The year at a glance",
-      "lede": "36 weeks, 163 student days, every Nevada K-2 and 3-5 indicator covered in its own band. <b>Every quarter opens with a procedures reset, on purpose.</b>",
+      "lede": "36 weeks · 163 student days · quarterly procedure resets · field-day practice in Weeks 31-36.",
       "stages": [
         {
           "n": "Q1",
@@ -259,8 +228,8 @@
       "kind": "grid",
       "act": "pacing",
       "eyebrow": "Same destination, different road",
-      "title": "What consistency actually looks like",
-      "lede": "Two specialists can run completely different rooms and still be aligned. Alignment is about the destination and the evidence, not the drill.",
+      "title": "Same destination, different lesson",
+      "lede": "",
       "cards": [
         {
           "h": "K-2: explore and imitate",
@@ -284,8 +253,8 @@
       "kind": "recap",
       "act": "wrap",
       "eyebrow": "Before we leave",
-      "title": "Three things to walk out with",
-      "lede": "Turn to the person next to you and check each other. Nobody leaves this room without the shortcut on their phone.",
+      "title": "Before you leave",
+      "lede": "",
       "columns": [
         {
           "k": "On your phone",
@@ -303,24 +272,6 @@
             "Say the <b>unit</b> out loud.",
             "Say the <b>standard</b> out loud.",
             "Say what <b>evidence</b> you will collect."
-          ]
-        },
-        {
-          "k": "This year's shape",
-          "items": [
-            "Weeks 1-3: procedures and safety.",
-            "Every quarter reopens with a reset.",
-            "Weeks 31-36: field day practice.",
-            "36 weeks, 163 student days."
-          ]
-        },
-        {
-          "k": "If you get stuck",
-          "items": [
-            "Ask before the week starts, not after.",
-            "Moving a week is fine &mdash; move it on purpose.",
-            "Standard and evidence first, activity second.",
-            "Bring it to the next specialist meeting."
           ]
         }
       ]

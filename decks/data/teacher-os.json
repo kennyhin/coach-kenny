@@ -1,16 +1,16 @@
 {
   "slug": "teacher-os",
   "title": "Teacher Check-In",
-  "eyebrow": "SLAM! Nevada Athletics · Teacher walkthrough",
-  "subtitle": "Two taps per athlete, once a week. That is the whole job — and here is exactly what it does.",
+  "eyebrow": "SLAM! Nevada Athletics · Teachers",
+  "subtitle": "",
   "theme": {
     "accent": "#38BDF8",
     "accentLight": "#0369A1"
   },
   "contents": [
-    "Marking your athletes",
-    "Probation and suspension",
-    "Who hears about it"
+    "Mark the week",
+    "Understand the consequence",
+    "Know what families receive"
   ],
   "acts": [
     {
@@ -47,24 +47,24 @@
       "kind": "grid",
       "act": "intro",
       "eyebrow": "Why you",
-      "title": "You are the only one who sees them all week",
-      "lede": "Coaches see athletes at practice. You see them in class. That is why the check-in is yours.",
+      "title": "Your weekly job",
+      "lede": "",
       "cards": [
         {
-          "h": "Only your athletes",
-          "b": "You see the students in <b>your</b> homeroom who are on a team. Nobody else&rsquo;s kids, and not your whole class."
+          "h": "Who",
+          "b": "Athletes in your homeroom."
         },
         {
-          "h": "Once a week",
-          "b": "Marks are due on Fridays. It takes about a minute for a whole roster."
+          "h": "When",
+          "b": "Once each week, due Friday."
         },
         {
-          "h": "Two things per athlete",
-          "b": "Did they take care of the academic side, and did they behave. That is it."
+          "h": "What",
+          "b": "<b>HR</b> for academics and <b>BC</b> for behavior. Everyone starts green; mark exceptions."
         },
         {
-          "h": "It has real teeth",
-          "b": "What you mark decides whether an athlete plays in the next game. It is not paperwork."
+          "h": "Why",
+          "b": "Submitted marks determine the next status and the family email."
         }
       ]
     },
@@ -72,10 +72,9 @@
       "kind": "shot",
       "act": "intro",
       "img": "01-login.jpg",
-      "persona": "Teacher",
       "eyebrow": "Step 1",
-      "title": "Signing in",
-      "lede": "Go to athleticsos.io/teacher, enter your school email, then the PIN for your grade.",
+      "title": "Sign in",
+      "lede": "",
       "steps": [
         {
           "h": "Your email",
@@ -92,21 +91,12 @@
       ]
     },
     {
-      "kind": "divider",
-      "act": "mark",
-      "num": "Part 1",
-      "title": "Marking your athletes",
-      "lede": "What the screen looks like and what the two buttons mean.",
-      "persona": "Teacher"
-    },
-    {
       "kind": "shot",
       "act": "mark",
       "img": "02-grid.jpg",
-      "persona": "Teacher",
       "eyebrow": "The screen",
-      "title": "Everything on one page",
-      "lede": "Your athletes down the middle, the week you are marking across the top, and a watch list up top.",
+      "title": "Choose the week and mark exceptions",
+      "lede": "",
       "steps": [
         {
           "h": "Pick the week first",
@@ -131,10 +121,9 @@
       "kind": "shot",
       "act": "mark",
       "img": "03-reason.jpg",
-      "persona": "Teacher",
       "eyebrow": "Marking a problem",
-      "title": "Tap the button, then say what happened",
-      "lede": "Tapping a green button turns it red and asks you one question. The answer is not optional and it matters.",
+      "title": "Flag the issue and write the reason",
+      "lede": "",
       "steps": [
         {
           "h": "Tap HR or BC to flip it red",
@@ -160,7 +149,7 @@
       "act": "mark",
       "eyebrow": "Finishing up",
       "title": "Submitting the week",
-      "lede": "Nothing counts until you press submit. That is the moment it becomes real.",
+      "lede": "",
       "steps": [
         {
           "h": "The button tells you the count",
@@ -181,21 +170,12 @@
       ]
     },
     {
-      "kind": "divider",
-      "act": "goal",
-      "num": "Part 2",
-      "title": "The Home Run goal",
-      "lede": "Your marks are not just record-keeping — they move a school-wide goal, and when we hit it Athletics feeds the teachers.",
-      "persona": "Teacher"
-    },
-    {
       "kind": "shot",
       "act": "goal",
       "img": "05-goal.jpg",
-      "persona": "Teacher",
       "eyebrow": "Top of your screen",
-      "title": "Hit the goal — Athletics feeds the teachers",
-      "lede": "The bar at the top of your check-in page tracks the whole school. Hit the Home Run goal by season&rsquo;s end and Athletics provides food for the teachers. Marking Home Runs and submitting the week is what moves the bar.",
+      "title": "The Home Run goal",
+      "lede": "",
       "steps": [
         {
           "h": "The bull shows where we are",
@@ -213,37 +193,11 @@
       "note": "Green HR = a home run for the school. Red HR = a missed one. That is the only thing that moves the bar — and the teacher food reward."
     },
     {
-      "kind": "text",
-      "act": "goal",
-      "eyebrow": "The math",
-      "title": "Where the goal number comes from",
-      "lede": "Nothing complicated, and nothing is counted before you submit it.",
-      "steps": [
-        {
-          "h": "Each athlete gets one chance per week",
-          "b": "One athlete, one submitted week, one chance at a home run."
-        },
-        {
-          "h": "The goal is 80% of those chances",
-          "b": "If 90 athletes have been marked for 6 weeks, that is 540 chances, so the goal is 432 home runs."
-        },
-        {
-          "h": "Only submitted weeks count",
-          "b": "A week you have not submitted is not a missed home run — it simply is not counted yet. The goal and the total grow together."
-        },
-        {
-          "h": "Submitting on time is the whole job",
-          "b": "An unsubmitted week means your athletes' home runs never get added. That is the one way a class holds the school back."
-        }
-      ],
-      "note": "Kenny can adjust the 80% target, so the number on your screen is always the current one."
-    },
-    {
       "kind": "grid",
       "act": "goal",
       "eyebrow": "What to tell your athletes",
       "title": "Why this matters to them",
-      "lede": "The point is not the paperwork — it is giving kids something concrete to aim at.",
+      "lede": "",
       "cards": [
         {
           "h": "A home run is simple",
@@ -264,18 +218,10 @@
       ]
     },
     {
-      "kind": "divider",
-      "act": "ladder",
-      "num": "Part 3",
-      "title": "What a red mark actually does",
-      "lede": "The part teachers ask about most. It is simpler than it sounds.",
-      "persona": "Teacher"
-    },
-    {
       "kind": "text",
       "act": "ladder",
       "eyebrow": "The ladder",
-      "title": "Three steps, and only three",
+      "title": "The status ladder",
       "lede": "A red on either button counts the same. It does not matter whether it was HR or BC, or whether both went red.",
       "steps": [
         {
@@ -302,7 +248,7 @@
       "act": "ladder",
       "eyebrow": "Worked examples",
       "title": "How it plays out",
-      "lede": "Same rule, four common patterns.",
+      "lede": "",
       "cards": [
         {
           "h": "Good, good, good",
@@ -326,7 +272,7 @@
       "kind": "text",
       "act": "ladder",
       "eyebrow": "Good to know",
-      "title": "A few things that trip people up",
+      "title": "Avoid these mistakes",
       "steps": [
         {
           "h": "HR and BC weigh the same",
@@ -347,19 +293,11 @@
       ]
     },
     {
-      "kind": "divider",
-      "act": "who",
-      "num": "Part 4",
-      "title": "Who finds out",
-      "lede": "The question everyone asks before they press submit.",
-      "persona": "Teacher"
-    },
-    {
       "kind": "flow",
       "act": "who",
       "eyebrow": "On submit",
       "title": "Who gets the email",
-      "lede": "Only athletes who were marked down that week trigger anything. Everyone else is silent.",
+      "lede": "",
       "stages": [
         {
           "n": "1",
@@ -408,7 +346,7 @@
       "kind": "email",
       "act": "who",
       "eyebrow": "What it says",
-      "title": "What lands in the family&rsquo;s inbox",
+      "title": "What the family receives",
       "lede": "Here is a real probation email, with sample names. Your note is the highlighted part parents actually read.",
       "example": "Example — names are fictional",
       "mail": {
