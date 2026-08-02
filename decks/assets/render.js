@@ -39,12 +39,13 @@ window.DeckRender = (function () {
       var items = (deck.contents || []).map(function (c, i) {
         return '<li><span class="mono">' + String(i + 1).padStart(2, '0') + '</span>' + c + '</li>';
       }).join('');
+      var subtitle = String(deck.subtitle == null ? '' : deck.subtitle).trim();
       return '' +
         '<div class="cover">' +
           '<div class="cover-mark" aria-hidden="true"><span class="cm-1">SLAM</span><span class="cm-2">!</span></div>' +
           '<p class="cover-eyebrow mono">' + esc(deck.eyebrow || '') + '</p>' +
           '<h1 class="cover-h">' + (deck.title || '') + '</h1>' +
-          '<p class="cover-lede">' + (deck.subtitle || '') + '</p>' +
+          (subtitle ? '<p class="cover-lede">' + subtitle + '</p>' : '') +
           (items ? '<ul class="cover-meta">' + items + '</ul>' : '') +
           '<p class="cover-hint">Use <kbd>&rarr;</kbd> <kbd>&larr;</kbd> or the arrows below to move through the deck</p>' +
         '</div>';

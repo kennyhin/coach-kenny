@@ -50,6 +50,13 @@
   var prev  = document.getElementById('prev');
   var next  = document.getElementById('next');
   var deck = null, slides = [], ticks = [], i = 0;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  try {
+    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', function (ev) {
+      reduceMotion = ev.matches;
+      if (reduceMotion) stage.removeAttribute('data-dir');
+    });
+  } catch (_) {}
 
   /* ---- theme toggle ---- */
   var saved = localStorage.getItem('ck-theme');
@@ -137,8 +144,24 @@
 
   function show(n, keepScroll) {
     if (!slides.length) return;
-    i = Math.max(0, Math.min(slides.length - 1, n));
-    [].slice.call(stage.children).forEach(function (el, k) { el.hidden = (k !== i); });
+    var from = i;
+    var target = Math.max(0, Math.min(slides.length - 1, n));
+    /* Enter animation is CSS-only; index flips synchronously so keyboard/click never wait. */
+    var dir = 'none';
+    if (!reduceMotion && !keepScroll && target !== from) {
+      dir = target > from ? 'forward' : 'back';
+    }
+    stage.setAttribute('data-dir', dir);
+    i = target;
+    [].slice.call(stage.children).forEach(function (el, k) {
+      var on = (k === i);
+      /* Force a fresh enter animation when revisiting a slide. */
+      if (on) {
+        el.hidden = true;
+        void el.offsetWidth;
+      }
+      el.hidden = !on;
+    });
     ticks.forEach(function (t) {
       var g = parseInt(t.dataset.goto, 10);
       t.setAttribute('aria-current', g === i ? 'true' : 'false');

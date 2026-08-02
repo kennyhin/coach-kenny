@@ -127,10 +127,63 @@ a{color:inherit}
 .tick[aria-current="true"]{background:var(--red)}
 .tick.done{background:color-mix(in srgb,var(--red) 42%,transparent)}
 
-.stage{flex:1}
+.stage{flex:1;overflow-x:clip}
 .slide{padding:clamp(1.5rem,4vw,3.25rem) clamp(1.1rem,4vw,3.25rem) 5.5rem}
-.slide:not([hidden]){animation:slidein .34s cubic-bezier(.22,.9,.3,1) both}
-@keyframes slidein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* Direction-aware enter only — show() flips [hidden] immediately so nav is never gated on animation. */
+.slide:not([hidden]){animation:slide-in-fwd .32s cubic-bezier(.22,.9,.3,1) both}
+.stage[data-dir="back"] .slide:not([hidden]){animation-name:slide-in-back}
+.stage[data-dir="none"] .slide:not([hidden]){animation-name:slide-in-soft}
+@keyframes slide-in-fwd{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes slide-in-back{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+@keyframes slide-in-soft{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* Soft content reveals after the slide shell enters. Delays are visual only. */
+@keyframes content-reveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  .slide:not([hidden]) .shead,
+  .slide:not([hidden]) .cover-eyebrow,
+  .slide:not([hidden]) .cover-h,
+  .slide:not([hidden]) .cover-lede,
+  .slide:not([hidden]) .cover-meta,
+  .slide:not([hidden]) .cover-hint,
+  .slide:not([hidden]) .divider > *,
+  .slide:not([hidden]) .shot,
+  .slide:not([hidden]) .step,
+  .slide:not([hidden]) .card,
+  .slide:not([hidden]) .rc,
+  .slide:not([hidden]) .em,
+  .slide:not([hidden]) .note{
+    animation:content-reveal .34s cubic-bezier(.22,.9,.3,1) both;
+  }
+  .slide:not([hidden]) .shead{animation-delay:.04s}
+  .slide:not([hidden]) .cover-eyebrow{animation-delay:.02s}
+  .slide:not([hidden]) .cover-h{animation-delay:.06s}
+  .slide:not([hidden]) .cover-lede{animation-delay:.1s}
+  .slide:not([hidden]) .cover-meta{animation-delay:.14s}
+  .slide:not([hidden]) .cover-hint{animation-delay:.18s}
+  .slide:not([hidden]) .divider > *:nth-child(1){animation-delay:.04s}
+  .slide:not([hidden]) .divider > *:nth-child(2){animation-delay:.08s}
+  .slide:not([hidden]) .divider > *:nth-child(3){animation-delay:.12s}
+  .slide:not([hidden]) .divider > *:nth-child(4){animation-delay:.16s}
+  .slide:not([hidden]) .shot{animation-delay:.08s}
+  .slide:not([hidden]) .step:nth-child(1){animation-delay:.1s}
+  .slide:not([hidden]) .step:nth-child(2){animation-delay:.15s}
+  .slide:not([hidden]) .step:nth-child(3){animation-delay:.2s}
+  .slide:not([hidden]) .step:nth-child(4){animation-delay:.25s}
+  .slide:not([hidden]) .step:nth-child(5){animation-delay:.3s}
+  .slide:not([hidden]) .card:nth-child(1){animation-delay:.1s}
+  .slide:not([hidden]) .card:nth-child(2){animation-delay:.15s}
+  .slide:not([hidden]) .card:nth-child(3){animation-delay:.2s}
+  .slide:not([hidden]) .card:nth-child(4){animation-delay:.25s}
+  .slide:not([hidden]) .card:nth-child(5){animation-delay:.3s}
+  .slide:not([hidden]) .card:nth-child(6){animation-delay:.35s}
+  .slide:not([hidden]) .rc:nth-child(1){animation-delay:.1s}
+  .slide:not([hidden]) .rc:nth-child(2){animation-delay:.16s}
+  .slide:not([hidden]) .rc:nth-child(3){animation-delay:.22s}
+  .slide:not([hidden]) .em{animation-delay:.1s}
+  .slide:not([hidden]) .note{animation-delay:.18s}
+}
 
 .eyebrow{color:var(--red);margin:0 0 .5rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
 .shead h2{font-family:var(--display);font-size:clamp(1.85rem,3.6vw,3rem);font-weight:700;
@@ -418,7 +471,20 @@ kbd{font-family:var(--mono);font-size:.78em;background:var(--surface-2);
   .count{padding:.4rem .85rem}
 }
 @media (prefers-reduced-motion:reduce){
-  .slide:not([hidden]){animation:none}
+  .slide:not([hidden]),
+  .slide:not([hidden]) .shead,
+  .slide:not([hidden]) .cover-eyebrow,
+  .slide:not([hidden]) .cover-h,
+  .slide:not([hidden]) .cover-lede,
+  .slide:not([hidden]) .cover-meta,
+  .slide:not([hidden]) .cover-hint,
+  .slide:not([hidden]) .divider > *,
+  .slide:not([hidden]) .shot,
+  .slide:not([hidden]) .step,
+  .slide:not([hidden]) .card,
+  .slide:not([hidden]) .rc,
+  .slide:not([hidden]) .em,
+  .slide:not([hidden]) .note{animation:none !important}
   *{transition-duration:.01ms !important}
 }
 @media print{
