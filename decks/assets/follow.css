@@ -1,0 +1,32 @@
+.follow-btn{display:inline-flex;align-items:center;gap:.42rem}
+
+.follow-dialog{width:min(92vw,34rem);margin:auto;padding:2rem 2.2rem 1.7rem;
+  border:1px solid var(--line-2);border-radius:14px;background:var(--surface);
+  color:var(--text);text-align:center;box-shadow:var(--shadow)}
+.follow-dialog::backdrop{background:rgba(0,0,0,.76);backdrop-filter:blur(4px)}
+.follow-dialog[open]{animation:follow-in .2s cubic-bezier(.22,.9,.3,1) both}
+.follow-dialog .follow-k{margin:0 2rem .35rem;color:var(--red);font-size:.68rem;
+  letter-spacing:.12em;text-transform:uppercase}
+.follow-dialog h2{margin:0 2rem 1rem;font-family:var(--display);font-size:clamp(1.5rem,4vw,2.25rem);
+  line-height:1.05;letter-spacing:0;text-transform:uppercase}
+.follow-dialog img{display:block;width:min(64vw,22rem);height:auto;margin:0 auto 1rem;
+  border:10px solid #fff;background:#fff;image-rendering:pixelated}
+.follow-url{display:block;overflow-wrap:anywhere;color:var(--text-2);font-size:.72rem;line-height:1.45}
+.follow-url:hover{color:var(--text)}
+.follow-close{position:absolute;top:.8rem;right:.8rem;width:2.5rem;height:2.5rem;
+  border:1px solid var(--line-2);border-radius:50%;background:var(--surface-2);color:var(--text);
+  font-size:1.55rem;line-height:1;cursor:pointer}
+.follow-close:hover,.follow-close:focus-visible{border-color:var(--red);outline:none}
+
+@keyframes follow-in{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:none}}
+
+@media (max-width:720px){
+  .follow-btn{font-size:0;width:2.45rem;padding-inline:0;justify-content:center}
+  .follow-btn span{font-size:1rem}
+  .follow-dialog{padding:1.5rem 1.1rem 1.2rem}
+  .follow-dialog img{width:min(76vw,20rem)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .follow-dialog[open]{animation:none}
+}
