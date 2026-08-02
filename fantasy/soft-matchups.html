@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soft Defense Matchups — Coach Kenny</title>
+  <meta name="description" content="Weakest NFL defenses and offenses with soft schedules — bye week different from Eagles.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="lock" id="lock" data-key="ck-ff-ok">
+    <div class="lock-in">
+      <div class="lock-icon">&#128274;</div>
+      <h1>Draft board</h1>
+      <p>Enter the 3-digit code to continue.</p>
+      <div class="pin-row" id="pin-row">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 1">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2">
+        <input type="password" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3">
+      </div>
+      <p class="lock-msg" id="lock-msg" role="alert"></p>
+      <a class="lock-back" href="/">&larr; Back to coachkenny.org</a>
+    </div>
+  </div>
+
+  <header>
+    <a class="brand" href="/">Coach Kenny</a>
+    <h1>Fantasy Draft Hub</h1>
+    <p>Soft defense matchups — target offenses on easy schedules</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Contract Year</a>
+    <a href="eagles-stack.html">Eagles Stack</a>
+    <a href="soft-matchups.html" class="active">Soft Matchups</a>
+  </nav>
+
+  <div class="toolbar stack-toolbar">
+    <p class="hint">Bottom-12 defenses by fantasy points allowed (higher = softer). Offenses listed only if <strong>bye ≠ Eagles (Week 9)</strong> — so they fill your lineup when PHI is idle. Schedule uses 2025 as 2026 proxy.</p>
+    <div class="stack-actions">
+      <button type="button" id="expand-all">Expand all</button>
+      <button type="button" id="collapse-all">Collapse all</button>
+    </div>
+  </div>
+
+  <section class="soft-section" aria-labelledby="weak-def-heading">
+    <h2 id="weak-def-heading" class="section-heading">Weakest defenses (bottom 12)</h2>
+    <div id="weak-defenses" class="weak-defenses"></div>
+  </section>
+
+  <section class="soft-section" aria-labelledby="offense-heading">
+    <h2 id="offense-heading" class="section-heading">Offenses vs soft defenses</h2>
+    <div class="filters">
+      <label>
+        <span>Filter by offense</span>
+        <select id="filter-offense">
+          <option value="">All offenses</option>
+        </select>
+      </label>
+      <label>
+        <span>Filter by weak defense</span>
+        <select id="filter-defense">
+          <option value="">All bottom-12</option>
+        </select>
+      </label>
+      <p class="filter-summary" id="soft-summary"></p>
+    </div>
+    <main id="soft-offenses" class="stack-teams" aria-label="Offenses with soft defensive matchups"></main>
+  </section>
+
+  <footer>
+    Defense ranks: <a href="https://draftedge.com/nfl/nfl-defense-vs-pos/" target="_blank" rel="noopener">DraftEdge DVP</a> (2026).
+    Schedule: 2025 NFL season (2026 proxy).
+    Player names from <a href="https://www.espn.com/nfl/players" target="_blank" rel="noopener">ESPN</a>.
+  </footer>
+
+  <script src="/decks/assets/lock.js"></script>
+  <script src="js/soft-data.js"></script>
+  <script src="js/soft-app.js"></script>
+</body>
+</html>
