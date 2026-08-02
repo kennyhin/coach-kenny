@@ -1,6 +1,6 @@
 .follow-btn{display:inline-flex;align-items:center;gap:.42rem}
 
-.follow-dialog{width:min(92vw,34rem);margin:auto;padding:2rem 2.2rem 1.7rem;
+.follow-dialog{width:min(92vw,38rem);margin:auto;padding:1.7rem 2.2rem 1.5rem;
   border:1px solid var(--line-2);border-radius:14px;background:var(--surface);
   color:var(--text);text-align:center;box-shadow:var(--shadow)}
 .follow-dialog::backdrop{background:rgba(0,0,0,.76);backdrop-filter:blur(4px)}
@@ -9,9 +9,10 @@
   letter-spacing:.12em;text-transform:uppercase}
 .follow-dialog h2{margin:0 2rem 1rem;font-family:var(--display);font-size:clamp(1.5rem,4vw,2.25rem);
   line-height:1.05;letter-spacing:0;text-transform:uppercase}
-.follow-dialog img{display:block;width:min(64vw,22rem);height:auto;margin:0 auto 1rem;
+.follow-dialog img{display:block;width:min(70vw,26rem);height:auto;margin:0 auto 1rem;
   border:10px solid #fff;background:#fff;image-rendering:pixelated}
-.follow-url{display:block;overflow-wrap:anywhere;color:var(--text-2);font-size:.72rem;line-height:1.45}
+.follow-url{display:block;color:var(--text);font-size:1.05rem;font-weight:700;line-height:1.45}
+.follow-url span{color:var(--text-2);font-weight:500}
 .follow-url:hover{color:var(--text)}
 .follow-close{position:absolute;top:.8rem;right:.8rem;width:2.5rem;height:2.5rem;
   border:1px solid var(--line-2);border-radius:50%;background:var(--surface-2);color:var(--text);

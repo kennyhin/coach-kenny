@@ -28,7 +28,7 @@
     '<p class="follow-k mono">Open this deck on your phone</p>' +
     '<h2 id="follow-title">Follow along</h2>' +
     '<img src="img/follow/' + encodeURIComponent(slug) + '.png" alt="QR code for this deck">' +
-    '<a class="follow-url mono" href="' + followUrl + '">' + followUrl + '</a>';
+    '<a class="follow-url" href="https://coachkenny.org/decks/"><span>Can\'t scan?</span> coachkenny.org/decks</a>';
   document.body.appendChild(dialog);
 
   var close = dialog.querySelector('.follow-close');
