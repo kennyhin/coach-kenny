@@ -464,7 +464,23 @@ kbd{font-family:var(--mono);font-size:.78em;background:var(--surface-2);
   .rc-k{margin-bottom:.7rem}
 
   .flow{margin-top:1.1rem}
-  .flow-step{padding-bottom:.55rem}
+  .flow-step{padding-bottom:.3rem}
+  .flow-step-hub .flow-body{padding:.5rem .85rem}
+  .flow-recs{gap:.45rem;margin-top:.3rem}
+  .flow-rec{padding:.55rem .7rem}
+  .flow-rec>p:not(.flow-role){line-height:1.35}
+  .flow-branch{padding:.45rem .7rem}
+
+  /* Keep tall product captures inside a 720p projector frame. The image is
+     contextual; the adjacent steps carry the readable instruction. */
+  .shot img{display:block;width:100%;height:calc(100vh - 14rem);
+    object-fit:cover;object-position:top}
+
+  .em{margin-top:1rem}
+  .em-chrome{padding:.45rem 1rem .7rem;gap:.3rem}
+  .em-body{padding:.8rem 1rem 1rem}
+  .em-h{margin-bottom:.65rem}
+  .em-p,.em-note,.em-footer{margin-bottom:.6rem}
 
   .controls{padding:.45rem 1rem}
   .nav{width:2.15rem;height:2.15rem}
