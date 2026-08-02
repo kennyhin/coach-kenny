@@ -20,6 +20,30 @@
     { "kind": "cover", "act": "intro" },
 
     {
+      "kind": "shot",
+      "act": "intro",
+      "img": "follow-along.png",
+      "eyebrow": "Follow along",
+      "title": "Scan to open this deck",
+      "lede": "",
+      "steps": [
+        {
+          "h": "Point your camera at the code",
+          "b": "Or open <b>coachkenny.org/decks</b> and tap this deck."
+        },
+        {
+          "h": "Follow on your phone",
+          "b": "Same slides as the projector — swipe at your own pace."
+        },
+        {
+          "h": "Stay with the room",
+          "b": "The link opens slide 1 of this Fundraising &amp; Field Trips walkthrough."
+        }
+      ],
+      "note": "Hold here until every phone shows the deck."
+    },
+
+    {
       "kind": "grid", "act": "intro",
       "eyebrow": "Why this matters",
       "title": "One form. Clear checklist. Official approval.",
