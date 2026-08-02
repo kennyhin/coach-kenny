@@ -40,7 +40,7 @@
       "act": "intro",
       "eyebrow": "Today's finish line",
       "title": "Three things",
-      "lede": "This is a working session, not a sit-and-listen. Have your phone out, and have the pacing file open.",
+      "lede": "",
       "cards": [
         {
           "h": "Schedule access",
@@ -95,11 +95,11 @@
         },
         {
           "h": "Sign in with your school account",
-          "b": "The live calendar is a slamnv.org Google Site. A personal account may not have access."
+          "b": "It is a slamnv.org Google Site. A personal account may not have access."
         },
         {
-          "h": "Come back to the Rotations page to save it",
-          "b": "Use <b>coachkenny.org/rotations.html</b> for Add to Home Screen &mdash; that keeps the bull icon. Saving the Google Sites page itself shows a letter <b>S</b>."
+          "h": "Bookmark the hub, not this page",
+          "b": "Come back out to coachkenny.org before the next slide."
         }
       ],
       "note": "If it does not open, check that your phone is signed in to your slamnv.org account."
@@ -111,7 +111,7 @@
       "persona": "iPhone",
       "eyebrow": "Save it — iPhone",
       "title": "Add to Home Screen in Safari",
-      "lede": "In Safari, with <b>coachkenny.org/rotations.html</b> open:",
+      "lede": "In Safari, with <b>coachkenny.org</b> open:",
       "steps": [
         {
           "h": "Tap Share",
@@ -127,10 +127,10 @@
         },
         {
           "h": "Tap Add",
-          "b": "You should see the SLAM bull icon on your home screen."
+          "b": "The icon lands on your home screen. That is your one tap."
         }
       ],
-      "note": "Do not save the Google Sites URL &mdash; that icon is a letter S we cannot change from here."
+      "note": "Safari path shown. Chrome on iPhone also works: Share &rsaquo; Add to Home Screen."
     },
     {
       "kind": "shot",
@@ -139,7 +139,7 @@
       "persona": "Android",
       "eyebrow": "Save it — Android",
       "title": "Add to Home screen in Chrome",
-      "lede": "Same idea, different menu. In Chrome, open <b>coachkenny.org/rotations.html</b>:",
+      "lede": "Same idea, different menu. In Chrome:",
       "steps": [
         {
           "h": "Tap the three-dot menu",
@@ -155,7 +155,7 @@
         },
         {
           "h": "Check your home screen",
-          "b": "Do not leave until the bull icon is there and it opens the schedule."
+          "b": "Do not leave until the icon is there and it opens the hub."
         }
       ],
       "note": "Illustrations, not device captures. Wording shifts by version."
