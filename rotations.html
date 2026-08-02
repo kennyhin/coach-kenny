@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Specialist Rotations — SLAM! Nevada</title>
+  <meta name="description" content="SLAM! Nevada specialist rotation schedule. Add this page to your Home Screen for the bull icon, then open the live calendar." />
+  <meta name="theme-color" content="#0B0B0B" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Specials" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green: #8CC63F;
+      --red: #E31837;
+      --black: #0B0B0B;
+      --card: #16191f;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--black);
+      color: #e5e7eb;
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 360px; width: 100%; }
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
+      border-radius: 28px;
+      object-fit: cover;
+      background: #000;
+      box-shadow: 0 0 0 1px rgba(140, 198, 63, 0.25);
+    }
+    h1 {
+      font-family: "Barlow Condensed", system-ui, sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 8vw, 2.6rem);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 10px;
+    }
+    h1 span { color: var(--green); }
+    p {
+      color: #9ca3af;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      margin-bottom: 22px;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: var(--green);
+      color: #0b0b0b;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+    }
+    .btn:active { transform: scale(0.98); }
+    .note {
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+  </style>
+  <script>
+    // Home Screen shortcuts keep THIS page's bull icon. Only auto-open the
+    // Google Sites calendar when launched as a saved app (standalone), so
+    // people can still Add to Home Screen without being redirected away.
+    var SCHEDULE_URL = "https://sites.google.com/slamnv.org/slamspecialist/special-rotations";
+    var standalone = window.matchMedia("(display-mode: standalone)").matches
+      || window.navigator.standalone === true;
+    if (standalone || new URLSearchParams(location.search).get("go") === "1") {
+      location.replace(SCHEDULE_URL);
+    }
+  </script>
+</head>
+<body>
+  <main class="wrap">
+    <img class="logo" src="apple-touch-icon.png" width="180" height="180" alt="SLAM! Nevada bull" />
+    <h1>Specialist <span>Rotations</span></h1>
+    <p>Opening the live schedule. Sign in with your <strong>slamnv.org</strong> account if prompted.</p>
+    <a class="btn" href="https://sites.google.com/slamnv.org/slamspecialist/special-rotations">Open schedule</a>
+    <p class="note">Tip: Add <strong>this</strong> page to your Home Screen for the bull icon. Saving the Google Sites page itself shows a letter “S”.</p>
+  </main>
+</body>
+</html>
