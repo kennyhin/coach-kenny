@@ -99,14 +99,14 @@
     {
       "kind": "shot", "act": "teacher", "img": "08-tripdetails.jpg", "persona": "Teacher / Staff",
       "eyebrow": "Path B", "title": "The pre-approval checklist",
-      "lede": "Shown in full, in the form, before you are asked for anything &mdash; and emailed to you the moment you submit.",
+      "lede": "Read it in the form before you submit; a copy arrives by email.",
       "steps": [
-        { "h": "Transportation", "b": "Charter bus through a local company, admin approval, costs included, quote attached." },
-        { "h": "Parent letter &amp; itinerary", "b": "Times, activities, cost, lunch plan and what to bring &mdash; stapled to the Permission Form and Parent Protocol." },
-        { "h": "Chaperones", "b": "Fingerprinted through Victoria or Maria, listed for approval, waivers to Karla or Cynthia." },
-        { "h": "Lunch and payment", "b": "Kitchen needs two weeks&rsquo; notice through Odalys. Tell the front office the amount, your name and the trip name." }
+        { "h": "Transportation", "b": "Approved charter bus, cost, and quote." },
+        { "h": "Parent package", "b": "Letter, itinerary, permission form, and parent protocol." },
+        { "h": "Chaperones", "b": "Fingerprinted and listed for approval." },
+        { "h": "Lunch + payment", "b": "Give the kitchen and front office the required notice." }
       ],
-      "note": "The checklist also lists what happens after approval — student spreadsheet, forms to Cynthia or Karla, and picking up the binder on trip day."
+      "note": ""
     },
     {
       "kind": "shot", "act": "teacher", "img": "09-transport.jpg", "persona": "Teacher / Staff",
