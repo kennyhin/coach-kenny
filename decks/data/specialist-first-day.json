@@ -3,26 +3,43 @@
   "title": "Specialist First Day",
   "eyebrow": "SLAM! Nevada K-5 · Specialist team · 2026-27",
   "subtitle": "Your rotation schedule, saved to your phone in four taps &mdash; and the pacing guide that keeps every specialist pointed at the same weekly destination.",
-  "theme": { "accent": "#F0B429", "accentLight": "#8A5B00" },
+  "theme": {
+    "accent": "#F0B429",
+    "accentLight": "#8A5B00"
+  },
   "contents": [
     "Find the schedule",
     "Save it to your phone",
     "Read the pacing guide"
   ],
   "acts": [
-    { "id": "intro", "label": "Start" },
-    { "id": "access", "label": "Your Phone" },
-    { "id": "pacing", "label": "Pacing" },
-    { "id": "wrap", "label": "Wrap" }
+    {
+      "id": "intro",
+      "label": "Start"
+    },
+    {
+      "id": "access",
+      "label": "Your Phone"
+    },
+    {
+      "id": "pacing",
+      "label": "Pacing"
+    },
+    {
+      "id": "wrap",
+      "label": "Wrap"
+    }
   ],
   "slides": [
-    { "kind": "cover", "act": "intro" },
-
+    {
+      "kind": "cover",
+      "act": "intro"
+    },
     {
       "kind": "grid",
       "act": "intro",
       "eyebrow": "Today's finish line",
-      "title": "Three things, and then we go set up our gyms",
+      "title": "Three things",
       "lede": "This is a working session, not a sit-and-listen. Have your phone out, and have the pacing file open.",
       "cards": [
         {
@@ -39,7 +56,6 @@
         }
       ]
     },
-
     {
       "kind": "shot",
       "act": "access",
@@ -64,7 +80,6 @@
       ],
       "note": "Hold here until every phone shows the hub."
     },
-
     {
       "kind": "shot",
       "act": "access",
@@ -89,7 +104,6 @@
       ],
       "note": "If it does not open, check that your phone is signed in to your slamnv.org account."
     },
-
     {
       "kind": "shot",
       "act": "access",
@@ -118,7 +132,6 @@
       ],
       "note": "Safari path shown. Chrome on iPhone also works: Share &rsaquo; Add to Home Screen."
     },
-
     {
       "kind": "shot",
       "act": "access",
@@ -147,7 +160,6 @@
       ],
       "note": "Illustrations, not device captures. Wording shifts by version."
     },
-
     {
       "kind": "grid",
       "act": "pacing",
@@ -181,7 +193,6 @@
         }
       ]
     },
-
     {
       "kind": "text",
       "act": "pacing",
@@ -211,7 +222,6 @@
         }
       ]
     },
-
     {
       "kind": "flow",
       "act": "pacing",
@@ -245,7 +255,6 @@
         }
       ]
     },
-
     {
       "kind": "grid",
       "act": "pacing",
@@ -271,7 +280,6 @@
         }
       ]
     },
-
     {
       "kind": "recap",
       "act": "wrap",
