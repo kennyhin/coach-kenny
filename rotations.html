@@ -82,9 +82,9 @@
   </style>
   <script>
     // Home Screen shortcuts keep THIS page's bull icon. Only auto-open the
-    // Google Sites calendar when launched as a saved app (standalone), so
-    // people can still Add to Home Screen without being redirected away.
-    var SCHEDULE_URL = "https://sites.google.com/slamnv.org/slamspecialist/special-rotations";
+    // schedule when launched as a saved app (standalone), so people can still
+    // Add to Home Screen without being redirected away.
+    var SCHEDULE_URL = "specialist-schedule.html";
     var standalone = window.matchMedia("(display-mode: standalone)").matches
       || window.navigator.standalone === true;
     if (standalone || new URLSearchParams(location.search).get("go") === "1") {
@@ -96,9 +96,9 @@
   <main class="wrap">
     <img class="logo" src="apple-touch-icon.png" width="180" height="180" alt="SLAM! Nevada bull" />
     <h1>Specialist <span>Rotations</span></h1>
-    <p>Opening the live schedule. Sign in with your <strong>slamnv.org</strong> account if prompted.</p>
-    <a class="btn" href="https://sites.google.com/slamnv.org/slamspecialist/special-rotations">Open schedule</a>
-    <p class="note">Tip: Add <strong>this</strong> page to your Home Screen for the bull icon. Saving the Google Sites page itself shows a letter “S”.</p>
+    <p>K–5 specialist schedule for 2026–27 — open it below, or save this page to your Home Screen first. No school Google sign-in needed.</p>
+    <a class="btn" href="specialist-schedule.html">Open schedule</a>
+    <p class="note">Tip: Add <strong>this</strong> page to your Home Screen for the bull icon, then tap Open schedule.</p>
   </main>
 </body>
 </html>
