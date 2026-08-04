@@ -71,15 +71,15 @@
           "b": "Choose <b>Specialist Calendar</b>."
         },
         {
-          "h": "Use your school account",
-          "b": "Sign in with <b>@slamnv.org</b> if Google asks."
+          "h": "Check today’s day",
+          "b": "The board shows <b>Day 1–8</b> for K–2 and the weekday for 3–5."
         },
         {
           "h": "Return to the hub",
           "b": "Bookmark coachkenny.org on the next slide."
         }
       ],
-      "note": "If it does not open, check that your phone is signed in to your slamnv.org account."
+      "note": "No separate school Site login — the schedule lives on coachkenny.org."
     },
     {
       "kind": "shot",
