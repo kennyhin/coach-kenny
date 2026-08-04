@@ -1,0 +1,31 @@
+{
+  "name": "Listen & Summarize — Coach Kenny",
+  "short_name": "Listen",
+  "description": "Listen to a conversation, transcribe it live, then get a bullet summary and follow-ups.",
+  "start_url": "/listen/",
+  "scope": "/listen/",
+  "display": "standalone",
+  "background_color": "#0B0B0B",
+  "theme_color": "#0B0B0B",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
