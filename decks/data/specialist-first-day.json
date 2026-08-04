@@ -71,15 +71,15 @@
           "b": "Choose <b>Specialist Calendar</b>."
         },
         {
-          "h": "Tap Open schedule",
-          "b": "That loads the K–5 specialist rotation for 2026–27. No school Google sign-in needed — works on any phone."
+          "h": "Use your school account",
+          "b": "Sign in with <b>@slamnv.org</b> if Google asks."
         },
         {
           "h": "Return to the hub",
           "b": "Bookmark coachkenny.org on the next slide."
         }
       ],
-      "note": "If it does not open, check that you are on coachkenny.org/rotations.html."
+      "note": "If it does not open, check that your phone is signed in to your slamnv.org account."
     },
     {
       "kind": "shot",
@@ -261,7 +261,7 @@
           "items": [
             "<b>coachkenny.org</b> is the one address.",
             "Shortcut is on your home screen.",
-            "You opened the schedule with no school login.",
+            "You are signed in as <b>@slamnv.org</b>.",
             "Your partner watched you open it."
           ]
         },
