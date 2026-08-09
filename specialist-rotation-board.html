@@ -140,6 +140,22 @@
     background:var(--slam-red); color:#fff;
     box-shadow:0 2px 12px rgba(227, 30, 36, 0.5), inset 0 1px 0 rgba(255,255,255,0.2);
   }
+  .attendance-link{
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    min-height:39px; padding:8px 13px; border-radius:10px;
+    background:rgba(255,255,255,0.08); color:#fff;
+    border:1px solid rgba(255,255,255,0.18);
+    font-family:'Inter',sans-serif; font-size:12px; font-weight:700;
+    text-decoration:none; white-space:nowrap;
+    transition:background .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  .attendance-link:hover{
+    background:rgba(227,30,36,0.22); border-color:var(--slam-red);
+  }
+  .attendance-link:active{ transform:scale(0.97); }
+  .attendance-link:focus-visible{
+    outline:3px solid rgba(227,30,36,0.45); outline-offset:2px;
+  }
 
   .day-panel{ min-width:0; width:100%; text-align:center; }
   .datebar{ display:flex; flex-direction:row; align-items:center; justify-content:center; gap:8px; margin-top:0; flex-wrap:wrap; }
@@ -393,6 +409,7 @@
     .mobile-nav-alt .grade-group .teacher-list button.active{ background:var(--slam-red); color:#fff; }
     .mode-switch{ width:100%; max-width:100%; min-width:0; }
     .mode-switch button{ padding:10px 8px; font-size:11.5px; }
+    .attendance-link{ width:100%; min-height:44px; }
     .header-brand-row{ flex-direction:column; gap:10px; }
     main{ padding:18px 16px 50px; text-align:center; }
     .today-callout{ flex-wrap:wrap; justify-content:center; text-align:center; }
@@ -438,7 +455,7 @@
 
   @media print{
     body{ background:#fff !important; color:#000; }
-    body::before, .board-header, nav.rail, .mobile-tabs, .mobile-nav-alt, .print-btn, .print-all-bar, .daypicker, .datebar, .mode-switch{ display:none !important; }
+    body::before, .board-header, nav.rail, .mobile-tabs, .mobile-nav-alt, .print-btn, .print-all-bar, .daypicker, .datebar, .mode-switch, .attendance-link{ display:none !important; }
     main{ padding:0; }
     .page-head h2, .today-callout .big, .card h3, .glance-card h4{ color:#000 !important; }
     .today-callout, table.board, .glance-card, .note{ background:#fff !important; color:#000 !important; border-color:#ccc !important; box-shadow:none !important; }
@@ -461,6 +478,9 @@
       </div>
     </div>
       <div class="mode-switch" id="modeSwitch" role="tablist" aria-label="Board view"></div>
+      <a class="attendance-link" href="https://www.athleticsos.io/admin/attendance" aria-label="Open Coach K Attendance">
+        ✓ Coach K Attendance
+      </a>
       </div>
       <div class="day-panel">
         <div class="big-banner" id="bigBanner"></div>
