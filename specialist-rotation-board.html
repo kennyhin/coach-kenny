@@ -563,7 +563,7 @@ const G35_PATTERNS = {
 };
 
 const TEACHERS = [
-  {name:"Molanari", gradeKey:"kinder", band:"k2", position:"A"},
+  {name:"Fredrickson", gradeKey:"kinder", band:"k2", position:"A"},
   {name:"Gray", gradeKey:"kinder", band:"k2", position:"B"},
   {name:"Rollans", gradeKey:"kinder", band:"k2", position:"C"},
   {name:"Vela", gradeKey:"kinder", band:"k2", position:"D"},
@@ -600,9 +600,9 @@ const specialists = [
   {
     id:"theo", name:"Coach Theo", subject:"Sports Fundamentals", tag:"SF", color:"#DE9272",
     k2:[
-      {day:1,kinder:"Molanari",first:"Luangrath",second:"J. Casipong"},
+      {day:1,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
       {day:2,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:3,kinder:"Molanari",first:"Luangrath",second:"J. Casipong"},
+      {day:3,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
       {day:4,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:5,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:6,kinder:"Vela",first:"Davis",second:"Gomez"},
@@ -624,9 +624,9 @@ const specialists = [
       {day:2,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:3,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:4,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:5,kinder:"Molanari",first:"Luangrath",second:"J. Casipong"},
+      {day:5,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
       {day:6,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:7,kinder:"Molanari",first:"Luangrath",second:"J. Casipong"},
+      {day:7,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
       {day:8,kinder:"Vela",first:"Davis",second:"Gomez"}
     ],
     g35:[
@@ -642,13 +642,13 @@ const specialists = [
     id:"marc", name:"Coach Marc", subject:"STEAM/PE", tag:"STEAM/PE", color:"#72DE99",
     k2:[
       {day:1,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:2,kinder:"Molanari",first:"Luangrath",second:"J. Casipong"},
+      {day:2,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
       {day:3,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:4,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:5,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:6,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:7,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:8,kinder:"Molanari",first:"Luangrath",second:"J. Casipong"}
+      {day:8,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"}
     ],
     g35:[
       {day:"Thursday",third:"J. Ramirez",fourth:"Hernandez",fifth:"Christensen"}
@@ -661,9 +661,9 @@ const specialists = [
       {day:1,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:2,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:3,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:4,kinder:"Molanari",first:"Luangrath",second:"J. Casipong"},
+      {day:4,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
       {day:5,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:6,kinder:"Molanari",first:"Luangrath",second:"J. Casipong"},
+      {day:6,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
       {day:7,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:8,kinder:"Rollans",first:"Reyes",second:"Garritano"}
     ],
@@ -1075,7 +1075,7 @@ function renderTeacherMain(){
 
 /* ============================== DEEP LINKING (URL hash) ============================== */
 // Keeps the URL in sync with the current view so pages can be bookmarked/shared.
-// Format examples:  #glance  |  #specialist/theo  |  #teacher/Molanari
+// Format examples:  #glance  |  #specialist/theo  |  #teacher/Fredrickson
 let suppressHashWrite = false;
 function syncHash(){
   if(suppressHashWrite) return;
