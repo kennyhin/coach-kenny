@@ -8,6 +8,7 @@
     "accentLight": "#0369A1"
   },
   "contents": [
+    "Why Teacher OS exists",
     "Mark the week",
     "Understand the consequence",
     "Know what families receive"
@@ -44,6 +45,56 @@
       "act": "intro"
     },
     {
+      "kind": "grid",
+      "act": "intro",
+      "eyebrow": "Why we built this",
+      "title": "The problem",
+      "lede": "Teachers, coaches, parents, and the athletic director need one shared story &mdash; especially when probation or suspension is on the line.",
+      "cards": [
+        {
+          "h": "Too many threads",
+          "b": "Updates bounce between teachers, coaches, parents, and Kenny in separate chats and hallway handoffs. The message changes each time it moves."
+        },
+        {
+          "h": "Director in the middle",
+          "b": "Kenny gets stuck relaying who is on probation, who is suspended, and which game they miss &mdash; instead of everyone reading the same note."
+        },
+        {
+          "h": "Standing is fuzzy",
+          "b": "People are unsure who is still playing, who sits the next game, and what triggered it. Accountability stalls when the facts disagree."
+        },
+        {
+          "h": "Not the same page",
+          "b": "The real failure is simple: not everyone is on the same thread. When the story splits, nobody can hold the student accountable together."
+        }
+      ]
+    },
+    {
+      "kind": "grid",
+      "act": "intro",
+      "eyebrow": "What Teacher OS does",
+      "title": "One thread for everyone",
+      "lede": "Your weekly check-in becomes the shared record. Write it once &mdash; coach, parents, and Kenny see the same thing.",
+      "cards": [
+        {
+          "h": "Weekly HR + BC",
+          "b": "Every week, mark <b>Home Run</b> (academics) and <b>Bulls Commitment</b> (behavior). Kenny reminds teachers every Thursday."
+        },
+        {
+          "h": "Your note notifies",
+          "b": "When you write the reason and submit, the system automatically notifies the coach and the parents. No more phone-tree relay."
+        },
+        {
+          "h": "Standing is clear",
+          "b": "Probation, suspension, and which game they sit are on the shared record &mdash; so coaches and families know what to expect."
+        },
+        {
+          "h": "Same page, same ask",
+          "b": "Teachers, coaches, parents, and the director work from one thread. Everyone can hold the student accountable with the same facts."
+        }
+      ]
+    },
+    {
       "kind": "shot",
       "act": "intro",
       "img": "follow-along.png",
@@ -65,31 +116,6 @@
         }
       ],
       "note": "Hold here until every phone shows the teacher app."
-    },
-    {
-      "kind": "grid",
-      "act": "intro",
-      "eyebrow": "Why you",
-      "title": "Your weekly job",
-      "lede": "",
-      "cards": [
-        {
-          "h": "Who",
-          "b": "Athletes in your homeroom."
-        },
-        {
-          "h": "When",
-          "b": "Once each week, due Friday."
-        },
-        {
-          "h": "What",
-          "b": "<b>HR</b> for academics and <b>BC</b> for behavior. Everyone starts green; mark exceptions."
-        },
-        {
-          "h": "Why",
-          "b": "Submitted marks determine the next status and the family email."
-        }
-      ]
     },
     {
       "kind": "shot",
@@ -198,7 +224,7 @@
       "img": "05-goal.jpg",
       "eyebrow": "Top of your screen",
       "title": "The Home Run goal",
-      "lede": "",
+      "lede": "Students earn the home runs. Teachers win when the school hits the goal.",
       "steps": [
         {
           "h": "The bull shows where we are",
@@ -211,32 +237,36 @@
         {
           "h": "The two numbers",
           "b": "The big number is home runs earned so far. The one after the slash is the goal. The small line tells you how many are still needed."
+        },
+        {
+          "h": "Hit the goal &rarr; staff lunch",
+          "b": "If the school hits it by season&rsquo;s end, <b>Elementary Athletics buys lunch for the entire staff</b>."
         }
       ],
-      "note": "Green HR = a home run for the school. Red HR = a missed one. That is the only thing that moves the bar — and the teacher food reward."
+      "note": "Green HR = a home run for the school. Red HR = a missed one. That is the only thing that moves the bar &mdash; and unlocks the staff lunch."
     },
     {
       "kind": "grid",
       "act": "goal",
-      "eyebrow": "What to tell your athletes",
-      "title": "Why this matters to them",
-      "lede": "",
+      "eyebrow": "Students and teachers",
+      "title": "Why this matters to both",
+      "lede": "Athletes chase the home runs. Staff share the win.",
       "cards": [
         {
-          "h": "A home run is simple",
-          "b": "Keep up with your work for the week. That is it. Do that and you scored one for the school."
+          "h": "For students",
+          "b": "Keep up with your work for the week. That green <b>HR</b> is one home run for the school."
         },
         {
           "h": "Everybody contributes",
           "b": "There is no star player here. One athlete having a good week counts exactly as much as any other."
         },
         {
-          "h": "Missing one is not the end",
-          "b": "A red week costs one home run and the bar keeps moving. Next week is a fresh chance."
-        },
-        {
           "h": "Show them the bar",
           "b": "Point at the school-wide total and tell them how close we are. Every green week they earn moves the school forward."
+        },
+        {
+          "h": "For teachers",
+          "b": "Hit the school goal and <b>Elementary Athletics buys lunch for the entire staff</b> &mdash; not just athletics."
         }
       ]
     },
@@ -423,8 +453,8 @@
           "items": [
             "Every green <b>HR</b> is one home run for the school.",
             "Goal = <b>80%</b> of all athlete-weeks submitted.",
-            "Only <b>submitted</b> weeks count — submit on time.",
-            "Hit it by season's end and <b>Athletics provides food for the teachers</b> (not students)."
+            "Students earn it; teachers win too.",
+            "Hit it by season&rsquo;s end and <b>Elementary Athletics buys lunch for the entire staff</b>."
           ]
         }
       ]
