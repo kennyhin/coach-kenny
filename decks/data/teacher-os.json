@@ -8,6 +8,7 @@
     "accentLight": "#0369A1"
   },
   "contents": [
+    "Why Teacher OS exists",
     "Mark the week",
     "Understand the consequence",
     "Know what families receive"
@@ -42,6 +43,56 @@
     {
       "kind": "cover",
       "act": "intro"
+    },
+    {
+      "kind": "grid",
+      "act": "intro",
+      "eyebrow": "Why we built this",
+      "title": "The problem",
+      "lede": "Teachers, coaches, parents, and the athletic director need one shared story &mdash; especially when probation or suspension is on the line.",
+      "cards": [
+        {
+          "h": "Too many threads",
+          "b": "Updates bounce between teachers, coaches, parents, and Kenny in separate chats and hallway handoffs. The message changes each time it moves."
+        },
+        {
+          "h": "Director in the middle",
+          "b": "Kenny gets stuck relaying who is on probation, who is suspended, and which game they miss &mdash; instead of everyone reading the same note."
+        },
+        {
+          "h": "Standing is fuzzy",
+          "b": "People are unsure who is still playing, who sits the next game, and what triggered it. Accountability stalls when the facts disagree."
+        },
+        {
+          "h": "Not the same page",
+          "b": "The real failure is simple: not everyone is on the same thread. When the story splits, nobody can hold the student accountable together."
+        }
+      ]
+    },
+    {
+      "kind": "grid",
+      "act": "intro",
+      "eyebrow": "What Teacher OS does",
+      "title": "One thread for everyone",
+      "lede": "Your weekly check-in becomes the shared record. Write it once &mdash; coach, parents, and Kenny see the same thing.",
+      "cards": [
+        {
+          "h": "Weekly HR + BC",
+          "b": "Every week, mark <b>Home Run</b> (academics) and <b>Bulls Commitment</b> (behavior). Kenny reminds teachers every Thursday."
+        },
+        {
+          "h": "Your note notifies",
+          "b": "When you write the reason and submit, the system automatically notifies the coach and the parents. No more phone-tree relay."
+        },
+        {
+          "h": "Standing is clear",
+          "b": "Probation, suspension, and which game they sit are on the shared record &mdash; so coaches and families know what to expect."
+        },
+        {
+          "h": "Same page, same ask",
+          "b": "Teachers, coaches, parents, and the director work from one thread. Everyone can hold the student accountable with the same facts."
+        }
+      ]
     },
     {
       "kind": "shot",
@@ -79,7 +130,7 @@
         },
         {
           "h": "When",
-          "b": "Once each week, due Friday."
+          "b": "Kenny reminds Thursday. Submit by Friday."
         },
         {
           "h": "What",
@@ -87,7 +138,7 @@
         },
         {
           "h": "Why",
-          "b": "Submitted marks determine the next status and the family email."
+          "b": "One submitted note puts teachers, coaches, parents, and Kenny on the same page."
         }
       ]
     },
