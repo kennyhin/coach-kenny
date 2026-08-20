@@ -323,7 +323,7 @@
     opacity:0.06; pointer-events:none;
   }
   .card:hover{ transform:translateY(-3px); background:var(--card-hover); border-color:var(--line-strong); box-shadow:0 8px 24px rgba(0,0,0,0.3), 0 0 0 1px var(--accent, transparent); }
-  .card h3{ margin:0 0 4px; font-family:'Space Grotesk',sans-serif; font-size:17px; color:#fff; }
+  .card h3{ margin:0 0 4px; font-family:'Space Grotesk',sans-serif; font-size:17px; color:#fff; display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
   .card .subj{ font-size:13px; color:var(--muted-strong); }
   .card .card-avatar{ width:52px; height:52px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid var(--accent,#999); box-shadow:0 2px 8px rgba(0,0,0,0.3); position:relative; z-index:1; }
 
@@ -388,6 +388,39 @@
   .glance-row .who{ color:var(--muted-strong); font-size:12.5px; }
   .glance-row .what{ font-weight:600; text-align:right; }
   .subj-chip{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; font-weight:600; letter-spacing:0.04em; padding:2px 5px; border-radius:4px; border:1px solid currentColor; margin-right:7px; vertical-align:middle; opacity:0.9; }
+  .duty-badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:700;
+    letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap;
+    color:#0b1220; background:var(--amber);
+    border-radius:999px; padding:3px 8px; margin-left:7px; vertical-align:middle;
+    box-shadow:0 0 12px rgba(242,169,59,0.35);
+  }
+  .duty-strip{
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:8px 10px;
+    background:rgba(242,169,59,0.10); border:1px solid rgba(242,169,59,0.35);
+    border-radius:12px; padding:10px 14px; margin:0 0 18px;
+  }
+  .duty-strip.off{
+    background:rgba(255,255,255,0.03); border-color:var(--line);
+  }
+  .duty-strip-label{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--amber);
+  }
+  .duty-strip.off .duty-strip-label{ color:var(--muted-strong); }
+  .duty-strip-who{ font-weight:700; color:#fff; font-size:14px; }
+  .duty-strip.off .duty-strip-who{ color:var(--muted-strong); font-weight:600; }
+  .card h3 .duty-badge{ margin-left:0; }
+  .page-head .duty-badge{ margin-left:0; }
+  nav.rail button.flat .duty-badge,
+  .mobile-tabs button .duty-badge{
+    margin-left:auto; font-size:9px; padding:2px 6px; box-shadow:none;
+  }
+  nav.rail button.flat.active .duty-badge,
+  .mobile-tabs button.active .duty-badge{
+    background:#fff; color:var(--slam-red);
+  }
   .glance-empty{ padding:18px; color:var(--muted); font-size:13.5px; font-style:italic; text-align:center; }
   .placeholder-box{ background:var(--card); border:1px dashed var(--line-strong); border-radius:14px; padding:36px; text-align:center; color:var(--muted-strong); font-size:14px; }
 
@@ -446,6 +479,11 @@
     .section-label::after{ flex:1; width:auto; height:1px; background:var(--line); }
     .section-label::before{ background:var(--line); }
     .glance-grid{ justify-items:stretch; }
+    .duty-badge{ font-size:11px; padding:4px 9px; }
+    .duty-strip{ margin:0 auto 16px; text-align:center; }
+    .duty-strip-who{ font-size:15px; }
+    .glance-row{ flex-wrap:wrap; justify-content:center; row-gap:6px; }
+    .glance-row .what{ width:100%; text-align:center; }
   }
 
   .print-all-bar{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:32px; padding-top:20px; border-top:1px solid var(--line); }
@@ -462,6 +500,9 @@
     table.board th{ background:#eee !important; color:#000 !important; -webkit-print-color-adjust:exact; }
     table.board td{ color:#000 !important; }
     .subj-chip{ border-color:#999 !important; }
+    .duty-badge{ background:#f2a93b !important; color:#000 !important; box-shadow:none !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    .duty-strip{ background:#fff8e8 !important; border-color:#e0b45a !important; }
+    .duty-strip-label, .duty-strip-who{ color:#000 !important; }
   }
 </style>
 </head>
@@ -739,6 +780,63 @@ function getWeekDates(dt){
 }
 const DOW3_TO_FULL = {Mon:"Monday",Tue:"Tuesday",Wed:"Wednesday",Thu:"Thursday",Fri:"Friday",Sat:"Saturday",Sun:"Sunday"};
 
+/* Crosswalk duty: alternate pairs every weekday. Aug 20, 2026 (Thu) = Pair A. */
+const CROSSWALK_START = parseISO("2026-08-20");
+const CROSSWALK_PAIR_A = [
+  { id:"theo", name:"Coach Theo" },
+  { id:"matthew", name:"Mr. Matthew" }
+];
+const CROSSWALK_PAIR_B = [
+  { id:"marc", name:"Coach Marc" },
+  { id:"ccasipong", name:"Ms. C. Casipong" }
+];
+
+function isWeekendDate(dt){
+  const d = dt.getDay();
+  return d===0 || d===6;
+}
+function daysBetween(a, b){
+  const A = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const B = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+  return Math.round((B - A) / 86400000);
+}
+function weekdayOffsetFromStart(dt){
+  const days = daysBetween(CROSSWALK_START, dt);
+  const startDow = CROSSWALK_START.getDay(); // Thursday = 4
+  let n = 0;
+  if(days >= 0){
+    for(let i=0;i<days;i++){
+      const dow = (startDow + i + 1) % 7;
+      if(dow!==0 && dow!==6) n++;
+    }
+  } else {
+    for(let i=0;i<-days;i++){
+      const dow = ((startDow - i - 1) % 7 + 7) % 7;
+      if(dow!==0 && dow!==6) n--;
+    }
+  }
+  return n;
+}
+function onDutyPair(dt){
+  if(isWeekendDate(dt)) return [];
+  const offset = weekdayOffsetFromStart(dt);
+  return ((offset % 2) + 2) % 2 === 0 ? CROSSWALK_PAIR_A : CROSSWALK_PAIR_B;
+}
+function isOnDuty(id, dt){
+  return onDutyPair(dt || selectedDate).some(p=>p.id===id);
+}
+function dutyBadgeHtml(id, dt){
+  if(!isOnDuty(id, dt || selectedDate)) return "";
+  return `<span class="duty-badge" title="Crosswalk duty">On duty</span>`;
+}
+function dutyStripHtml(dt){
+  const pair = onDutyPair(dt);
+  if(!pair.length){
+    return `<div class="duty-strip off"><span class="duty-strip-label">Crosswalk</span><span class="duty-strip-who">No duty on weekends</span></div>`;
+  }
+  return `<div class="duty-strip"><span class="duty-strip-label">Crosswalk</span><span class="duty-strip-who">${pair.map(p=>p.name).join(" · ")}</span><span class="duty-badge">On duty</span></div>`;
+}
+
 /* ============================== STATE ============================== */
 let selectedDate = new Date();
 let mode = "glance"; // glance | specialist | teacher
@@ -782,12 +880,13 @@ function initDateBar(){
     if(!input.value) return;
     selectedDate = parseISO(input.value);
     renderBanner();
+    renderRail();
     renderMain();
   });
   document.getElementById('jumpToday').addEventListener('click', ()=>{
     selectedDate = new Date();
     input.value = toISO(selectedDate);
-    renderBanner(); renderMain();
+    renderBanner(); renderRail(); renderMain();
   });
 }
 
@@ -817,8 +916,8 @@ function renderRail(){
     let mobileHtml = `<button data-id="__all__" class="${activeSpecialistId===null?'active':''}"><span class="dot" style="background:#E31E24"></span>Overview</button>`;
     specialists.forEach(s=>{
       const on = activeSpecialistId===s.id;
-      railHtml += `<button class="flat ${on?'active':''}" data-id="${s.id}"><span class="dot" style="background:${s.color}"></span>${s.name}</button>`;
-      mobileHtml += `<button data-id="${s.id}" class="${on?'active':''}"><span class="dot" style="background:${s.color}"></span>${s.name}</button>`;
+      railHtml += `<button class="flat ${on?'active':''}" data-id="${s.id}"><span class="dot" style="background:${s.color}"></span>${s.name}${dutyBadgeHtml(s.id)}</button>`;
+      mobileHtml += `<button data-id="${s.id}" class="${on?'active':''}"><span class="dot" style="background:${s.color}"></span>${s.name}${dutyBadgeHtml(s.id)}</button>`;
     });
     railHtml += `</div>`;
     rail.innerHTML = railHtml;
@@ -877,10 +976,11 @@ function wireAccordion(container){
 
 /* ============================== SPECIALIST VIEW (reference, unchanged) ============================== */
 function overviewHtml(){
-  let html = `<div class="grid-cards">`;
+  let html = dutyStripHtml(selectedDate);
+  html += `<div class="grid-cards">`;
   specialists.forEach(s=>{
     html += `<div class="card" style="--accent:${s.color}" data-id="${s.id}">
-      <div class="card-text"><h3>${s.name}</h3><div class="subj">${s.subject}</div></div>
+      <div class="card-text"><h3>${s.name}${dutyBadgeHtml(s.id)}</h3><div class="subj">${s.subject}</div></div>
       <img class="card-avatar" src="${PHOTO_DATA[s.id]}" alt="${s.name}">
     </div>`;
   });
@@ -936,7 +1036,7 @@ function fullDayHtml(s){
 function specialistHtml(s){
   const info = calFor(selectedDate);
   const todayFull = info.school ? DOW3_TO_FULL[info.dow3] : null;
-  let html = `<div class="page-head"><span class="swatch" style="background:${s.color}"></span><h2>${s.name}</h2><span class="tag" style="color:${s.color}">${s.tag}</span></div><p class="page-sub">${s.subject}</p>`;
+  let html = `<div class="page-head"><span class="swatch" style="background:${s.color}"></span><h2>${s.name}</h2><span class="tag" style="color:${s.color}">${s.tag}</span>${dutyBadgeHtml(s.id)}</div><p class="page-sub">${s.subject}</p>`;
   if(s.k2 && s.g35){
     html += `<div class="section-label">Full Day, In Order</div>` + fullDayHtml(s);
   }
@@ -969,7 +1069,7 @@ function glanceGradeCard(gradeKey, band, timeLabel, k2day, weekdayFull, isSchool
       const pattern = band==="k2" ? K2_PATTERNS[t.position] : G35_PATTERNS[t.position];
       const code = band==="k2" ? pattern[k2day-1] : pattern[WEEKDAYS.indexOf(weekdayFull)];
       const spec = resolveSpecialist(code, band, weekdayFull);
-      rows += `<div class="glance-row"><span class="who">${t.name}</span><span class="what" style="color:${spec.color}"><span class="subj-chip">${SUBJECT_META[code].abbr}</span>${spec.name}</span></div>`;
+      rows += `<div class="glance-row"><span class="who">${t.name}</span><span class="what" style="color:${spec.color}"><span class="subj-chip">${SUBJECT_META[code].abbr}</span>${spec.name}${dutyBadgeHtml(spec.id)}</span></div>`;
     });
   }
   return `<div class="glance-card"><h4>${GRADE_LABELS[gradeKey]}<span class="gt">${timeLabel}</span></h4>${rows}</div>`;
@@ -980,7 +1080,7 @@ function glanceHtml(){
   const weekdayFull = isSchool ? DOW3_TO_FULL[info.dow3] : null;
   const k2day = isSchool ? info.k2day : null;
 
-  let html = ``;
+  let html = dutyStripHtml(selectedDate);
 
   html += `<div class="section-label">Kindergarten – 2nd Grade</div>`;
   html += `<div class="glance-grid">`;
@@ -1021,7 +1121,7 @@ function teacherTodayHtml(t){
   const msg = SPECIALIST_MESSAGES[spec.id];
   const bubble = msg ? `<div class="callout-bubble">${msg}</div>` : ``;
   return `<div class="today-callout" style="--callout-color:${spec.color}">
-    <div><span class="lbl">Today · ${fmtLong(selectedDate)} · ${dayTag}</span><div class="big" style="color:${spec.color}">${SUBJECT_META[code].label} — ${spec.name}</div><div class="time">${timeLabel}</div></div>
+    <div><span class="lbl">Today · ${fmtLong(selectedDate)} · ${dayTag}</span><div class="big" style="color:${spec.color}">${SUBJECT_META[code].label} — ${spec.name}${dutyBadgeHtml(spec.id)}</div><div class="time">${timeLabel}</div></div>
     <div class="avatar-group">${bubble}<img class="callout-avatar" src="${PHOTO_DATA[spec.id]}" alt="${spec.name}"></div>
   </div>`;
 }
@@ -1040,7 +1140,7 @@ function teacherWeekHtml(t){
       const code = t.band==="k2" ? pattern[info.k2day-1] : pattern[WEEKDAYS.indexOf(weekdayFull)];
       const spec = resolveSpecialist(code, t.band, weekdayFull);
       const tag = t.band==="k2" ? ` (Day ${info.k2day})` : '';
-      html += `<tr><td class="daycol">${label}</td><td><span style="color:${spec.color};font-weight:600"><span class="subj-chip">${SUBJECT_META[code].abbr}</span>${SUBJECT_META[code].label} — ${spec.name}</span>${tag}</td></tr>`;
+      html += `<tr><td class="daycol">${label}</td><td><span style="color:${spec.color};font-weight:600"><span class="subj-chip">${SUBJECT_META[code].abbr}</span>${SUBJECT_META[code].label} — ${spec.name}</span>${dutyBadgeHtml(spec.id, d)}${tag}</td></tr>`;
     }
   });
   html += `</tbody></table></div>`;
