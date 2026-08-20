@@ -780,15 +780,15 @@ function getWeekDates(dt){
 }
 const DOW3_TO_FULL = {Mon:"Monday",Tue:"Tuesday",Wed:"Wednesday",Thu:"Thursday",Fri:"Friday",Sat:"Saturday",Sun:"Sunday"};
 
-/* Crosswalk duty: alternate pairs every weekday. Aug 20, 2026 (Thu) = Pair A. */
+/* Crosswalk duty: alternate pairs every weekday. Aug 20, 2026 (Thu) = Pair A (Marc + Crestil). */
 const CROSSWALK_START = parseISO("2026-08-20");
 const CROSSWALK_PAIR_A = [
-  { id:"theo", name:"Coach Theo" },
-  { id:"matthew", name:"Mr. Matthew" }
-];
-const CROSSWALK_PAIR_B = [
   { id:"marc", name:"Coach Marc" },
   { id:"ccasipong", name:"Ms. C. Casipong" }
+];
+const CROSSWALK_PAIR_B = [
+  { id:"theo", name:"Coach Theo" },
+  { id:"matthew", name:"Mr. Matthew" }
 ];
 
 function isWeekendDate(dt){
