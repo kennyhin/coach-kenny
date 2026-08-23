@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fun Friday · Homerun Reward</title>
+  <style>
+    :root {
+      --ink: #111318;
+      --muted: #5b616c;
+      --line: #d8dde6;
+      --paper: #f7f4ee;
+      --card: #ffffff;
+      --kinder: #c23b3b;
+      --big: #5b4d9a;
+      --enter: #e38a9a;
+      --field: #e6c84a;
+      --grass: #8fbf6b;
+      --slam: #0b3d2e;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: #e8e4dc;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .page {
+      width: 8.5in;
+      min-height: 11in;
+      margin: 24px auto;
+      padding: 0.42in 0.48in 0.38in;
+      background: var(--paper);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.12);
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      border-bottom: 3px solid var(--slam);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .eyebrow {
+      margin: 0 0 4px;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .meta {
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .meta strong { color: var(--ink); }
+    .rule {
+      margin: 12px 0 16px;
+      padding: 10px 12px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+    }
+    h2 {
+      margin: 0 0 8px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .session {
+      display: grid;
+      grid-template-columns: 86px 1fr 1fr;
+      gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      margin-bottom: 8px;
+      min-height: 92px;
+    }
+    .when {
+      background: var(--slam);
+      color: #fff;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .when .n {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+    .when .t {
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-top: 4px;
+    }
+    .yard {
+      padding: 10px 10px 8px;
+    }
+    .yard.kinder { border-top: 4px solid var(--kinder); }
+    .yard.big { border-top: 4px solid var(--big); }
+    .pill {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .kinder .pill { color: var(--kinder); }
+    .big .pill { color: var(--big); }
+    .grade {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .leave {
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+    .gap {
+      font-size: 11px;
+      color: var(--muted);
+      padding: 0 0 8px 8px;
+    }
+    .map-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 10px;
+    }
+    svg { width: 100%; height: auto; display: block; }
+    .flow {
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .flow strong { display: block; margin-bottom: 4px; }
+    footer {
+      margin-top: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    @media print {
+      html, body { background: #fff; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        width: auto;
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <article class="page">
+    <header>
+      <div>
+        <p class="eyebrow">SLAM! Elementary · Weekly Reward</p>
+        <h1>Fun Friday</h1>
+      </div>
+      <div class="meta">
+        <div><strong>Window:</strong> 1:05–2:20 PM</div>
+        <div><strong>Out:</strong> 10 minutes · <strong>Walk:</strong> 5 minutes</div>
+        <div><strong>Who:</strong> Homerun earners only</div>
+      </div>
+    </header>
+
+    <p class="rule">
+      Only students who earned a <strong>homerun</strong> that week go outside. The rest of the class stays and keeps working.
+      In each pair, the <strong>younger grade uses the Kinder playground</strong> and the <strong>older grade uses the big playground</strong>.
+    </p>
+
+    <div class="grid">
+      <section>
+        <h2>Sessions</h2>
+
+        <div class="session">
+          <div class="when">
+            <span class="n">Session 1</span>
+            <span class="t">1:25–<br>1:35</span>
+          </div>
+          <div class="yard kinder">
+            <div class="pill">Kinder playground</div>
+            <div class="grade">2nd</div>
+            <div class="leave">Leaves Science</div>
+          </div>
+          <div class="yard big">
+            <div class="pill">Big playground</div>
+            <div class="grade">3rd</div>
+            <div class="leave">Leaves Power Hour</div>
+          </div>
+        </div>
+        <p class="gap">1:35–1:40 · transition / walk back</p>
+
+        <div class="session">
+          <div class="when">
+            <span class="n">Session 2</span>
+            <span class="t">2:00–<br>2:10</span>
+          </div>
+          <div class="yard kinder">
+            <div class="pill">Kinder playground</div>
+            <div class="grade">K</div>
+            <div class="leave">Homerun kids leave Math 30</div>
+          </div>
+          <div class="yard big">
+            <div class="pill">Big playground</div>
+            <div class="grade">5th</div>
+            <div class="leave">Leaves Science / Power Hour</div>
+          </div>
+        </div>
+        <p class="gap">2:10–2:15 · transition / walk back</p>
+
+        <div class="session">
+          <div class="when">
+            <span class="n">Session 3</span>
+            <span class="t">2:15–<br>2:25</span>
+          </div>
+          <div class="yard kinder">
+            <div class="pill">Kinder playground</div>
+            <div class="grade">1st</div>
+            <div class="leave">Homerun kids leave Math 45</div>
+          </div>
+          <div class="yard big">
+            <div class="pill">Big playground</div>
+            <div class="grade">4th</div>
+            <div class="leave">Leaves Science / Power Hour</div>
+          </div>
+        </div>
+        <p class="gap">Session 3 ends 5 minutes after 2:20 so playgrounds can clear. For a hard 2:20 stop, start Session 2 walking at 2:08 and run Session 3 2:10–2:20.</p>
+      </section>
+
+      <aside class="map-card">
+        <h2>Enter &amp; exit</h2>
+        <svg viewBox="0 0 360 300" role="img" aria-label="Campus playground map with enter and exit path">
+          <rect x="0" y="0" width="360" height="300" fill="#d9e8c8"/>
+          <rect x="18" y="18" width="110" height="72" rx="6" fill="#6b5ca5"/>
+          <text x="73" y="58" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">PLAYGROUND</text>
+          <text x="73" y="74" text-anchor="middle" fill="#efeaf8" font-size="10">2–6 / bigger</text>
+
+          <rect x="138" y="22" width="150" height="52" rx="6" fill="#e6c84a"/>
+          <text x="213" y="53" text-anchor="middle" fill="#3d3208" font-size="13" font-weight="700">SOCCER FIELD</text>
+
+          <rect x="200" y="92" width="128" height="86" rx="6" fill="#c23b3b"/>
+          <text x="264" y="132" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">KINDER</text>
+          <text x="264" y="148" text-anchor="middle" fill="#ffe8e8" font-size="12" font-weight="700">PLAYGROUND</text>
+
+          <rect x="18" y="214" width="150" height="64" rx="18" fill="#f4f4f4" stroke="#cfd3da"/>
+          <text x="93" y="251" text-anchor="middle" fill="#333" font-size="13" font-weight="700">CAFE GYM</text>
+
+          <rect x="178" y="222" width="52" height="48" rx="8" fill="#e38a9a"/>
+          <text x="204" y="251" text-anchor="middle" fill="#4a1020" font-size="12" font-weight="800">ENTER</text>
+
+          <rect x="292" y="18" width="50" height="48" rx="8" fill="#e38a9a"/>
+          <text x="317" y="46" text-anchor="middle" fill="#4a1020" font-size="12" font-weight="800">EXIT</text>
+
+          <path d="M204 222 L120 200 L120 150" fill="none" stroke="#111" stroke-width="7" stroke-linecap="square"/>
+          <polygon points="120,128 108,150 132,150" fill="#111"/>
+          <path d="M342 42 L350 70 L350 250" fill="none" stroke="#111" stroke-width="7" stroke-linecap="square"/>
+          <polygon points="350,268 338,246 362,246" fill="#111"/>
+        </svg>
+        <div class="flow">
+          <strong>Traffic</strong>
+          Walk in at <strong>ENTER</strong> (by Cafe Gym) → left, then up onto the yard.
+          Kinder playground is the red pad. Big playground is the purple pad.
+          Leave through <strong>EXIT</strong> at the top right — do not reverse through ENTER.
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      <span>Younger grade → Kinder playground · Older grade → big playground</span>
+      <span>Do not pull Writing, whole-class Specials, or a full Math block</span>
+    </footer>
+  </article>
+</body>
+</html>
