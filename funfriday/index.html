@@ -3,299 +3,636 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fun Friday · Homerun Reward</title>
+  <title>Fun Friday</title>
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink: #111318;
-      --muted: #5b616c;
-      --line: #d8dde6;
-      --paper: #f7f4ee;
-      --card: #ffffff;
-      --kinder: #c23b3b;
-      --big: #5b4d9a;
-      --enter: #e38a9a;
-      --field: #e6c84a;
-      --grass: #8fbf6b;
-      --slam: #0b3d2e;
+      --black: #0B0B0B;
+      --card: #14171c;
+      --card-2: #1b1f27;
+      --line: rgba(255,255,255,0.08);
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --green: #8CC63F;
+      --kinder: #c21832;
+      --big: #9b7ae8;
+      --pink: #f000c8;
     }
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
-      background: #e8e4dc;
-      color: var(--ink);
-      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100%;
+      background: var(--black);
+      color: var(--text);
+      font-family: Inter, system-ui, sans-serif;
     }
-    .page {
-      width: 8.5in;
-      min-height: 11in;
-      margin: 24px auto;
-      padding: 0.42in 0.48in 0.38in;
-      background: var(--paper);
-      box-shadow: 0 18px 50px rgba(0,0,0,0.12);
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(140,198,63,0.08), transparent 60%),
+        radial-gradient(ellipse 40% 40% at 100% 80%, rgba(240,0,200,0.06), transparent 55%);
+    }
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 24px 48px;
     }
     header {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       gap: 16px;
-      border-bottom: 3px solid var(--slam);
-      padding-bottom: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 22px;
     }
     .eyebrow {
       margin: 0 0 4px;
       font-size: 11px;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--green);
       font-weight: 700;
     }
     h1 {
       margin: 0;
-      font-size: 34px;
-      line-height: 0.95;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(48px, 8vw, 84px);
+      font-weight: 900;
+      line-height: 0.88;
       letter-spacing: -0.03em;
       text-transform: uppercase;
     }
-    .meta {
-      text-align: right;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.45;
+    .tools {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
-    .meta strong { color: var(--ink); }
-    .rule {
-      margin: 12px 0 16px;
-      padding: 10px 12px;
-      background: #fff;
+    button.tool {
+      appearance: none;
       border: 1px solid var(--line);
-      font-size: 13px;
-      line-height: 1.45;
+      background: var(--card);
+      color: var(--text);
+      font: 600 12px/1 Inter, sans-serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor: pointer;
     }
-    .grid {
+    button.tool:hover { border-color: var(--green); color: var(--green); }
+    .hint {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .layout {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 14px;
+      grid-template-columns: minmax(320px, 0.95fr) minmax(340px, 1.05fr);
+      gap: 22px;
+      align-items: start;
     }
     h2 {
-      margin: 0 0 8px;
+      margin: 0 0 12px;
       font-size: 12px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
+      color: var(--muted);
     }
     .session {
-      display: grid;
-      grid-template-columns: 86px 1fr 1fr;
-      gap: 8px;
       background: var(--card);
       border: 1px solid var(--line);
-      margin-bottom: 8px;
-      min-height: 92px;
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 12px;
     }
-    .when {
-      background: var(--slam);
-      color: #fff;
-      padding: 10px 8px;
+    .session-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .session-name {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .times {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .times label {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-    }
-    .when .n {
-      font-size: 11px;
-      letter-spacing: 0.12em;
+      gap: 3px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      opacity: 0.75;
+      color: var(--muted);
+      font-weight: 700;
     }
-    .when .t {
-      font-size: 15px;
-      font-weight: 800;
-      line-height: 1.15;
-      margin-top: 4px;
+    .times input[type="time"] {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #0d0f13;
+      color: #fff;
+      font: 700 16px/1 Inter, sans-serif;
+      padding: 8px 8px 8px 10px;
+      border-radius: 10px;
+      color-scheme: dark;
+    }
+    .times .dash { color: var(--muted); padding-top: 16px; }
+    .walk {
+      margin: 0 0 12px;
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 600;
+    }
+    .yards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
     .yard {
-      padding: 10px 10px 8px;
+      min-height: 92px;
+      border: 1px dashed rgba(255,255,255,0.16);
+      border-radius: 14px;
+      padding: 10px;
+      background: var(--card-2);
+      transition: border-color 0.15s, background 0.15s;
     }
-    .yard.kinder { border-top: 4px solid var(--kinder); }
-    .yard.big { border-top: 4px solid var(--big); }
+    .yard.over {
+      border-color: var(--green);
+      background: rgba(140,198,63,0.12);
+    }
+    .yard.kinder { border-top: 3px solid var(--kinder); }
+    .yard.big { border-top: 3px solid var(--big); }
     .pill {
-      display: inline-block;
       font-size: 10px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
-    .kinder .pill { color: var(--kinder); }
-    .big .pill { color: var(--big); }
+    .kinder .pill { color: #f87171; }
+    .big .pill { color: #c4b5fd; }
+    .grades {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 44px;
+    }
     .grade {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: #111318;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-family: "Barlow Condensed", sans-serif;
       font-size: 22px;
-      font-weight: 900;
-      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
     }
-    .leave {
-      margin-top: 6px;
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.3;
+    .grade:active { cursor: grabbing; }
+    .grade input {
+      width: 4.2ch;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: center;
+      outline: none;
     }
-    .gap {
-      font-size: 11px;
+    .add-grade {
+      appearance: none;
+      border: 0;
+      background: transparent;
       color: var(--muted);
-      padding: 0 0 8px 8px;
+      font: 700 11px/1 Inter, sans-serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 8px 4px;
+    }
+    .add-grade:hover { color: var(--green); }
+    .ghost {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 50;
+      pointer-events: none;
+      opacity: 0.92;
+      transform: scale(1.05);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
     }
     .map-card {
-      background: #fff;
+      background: var(--card);
       border: 1px solid var(--line);
-      padding: 10px;
+      border-radius: 18px;
+      padding: 14px;
+      position: sticky;
+      top: 16px;
     }
-    svg { width: 100%; height: auto; display: block; }
-    .flow {
+    .map-card svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+    .legend {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
       margin-top: 10px;
       font-size: 12px;
-      line-height: 1.45;
-    }
-    .flow strong { display: block; margin-bottom: 4px; }
-    footer {
-      margin-top: 12px;
-      border-top: 1px solid var(--line);
-      padding-top: 8px;
-      font-size: 11px;
       color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
+    }
+    .legend b { color: var(--text); }
+    .gate-swatch {
+      display: inline-block;
+      width: 22px;
+      height: 0;
+      border-top: 3px dashed #d4a05a;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      .map-card { position: static; }
+      h1 { font-size: 56px; }
     }
     @media print {
-      html, body { background: #fff; }
-      .page {
-        margin: 0;
-        box-shadow: none;
-        width: auto;
-        min-height: auto;
-      }
+      body::before { display: none; }
+      .tools, .hint { display: none; }
+      .wrap { padding: 0; max-width: none; }
+      .map-card { position: static; }
+      .times input { border-color: #333; }
     }
   </style>
 </head>
 <body>
-  <article class="page">
+  <div class="wrap">
     <header>
       <div>
-        <p class="eyebrow">SLAM! Elementary · Weekly Reward</p>
+        <p class="eyebrow">SLAM! Elementary</p>
         <h1>Fun Friday</h1>
       </div>
-      <div class="meta">
-        <div><strong>Window:</strong> 1:05–2:20 PM</div>
-        <div><strong>Out:</strong> 10 minutes · <strong>Walk:</strong> 5 minutes</div>
-        <div><strong>Who:</strong> Homerun earners only</div>
+      <div class="tools">
+        <button class="tool" id="add-session" type="button">Add session</button>
+        <button class="tool" id="reset" type="button">Reset lineup</button>
       </div>
     </header>
+    <p class="hint">Drag grade blocks between yards. Click a name to edit it. Change session times — walk-back is always 5 minutes after.</p>
 
-    <p class="rule">
-      Only students who earned a <strong>homerun</strong> that week go outside. The rest of the class stays and keeps working.
-      In each pair, the <strong>younger grade uses the Kinder playground</strong> and the <strong>older grade uses the big playground</strong>.
-    </p>
-
-    <div class="grid">
+    <div class="layout">
       <section>
         <h2>Sessions</h2>
-
-        <div class="session">
-          <div class="when">
-            <span class="n">Session 1</span>
-            <span class="t">1:25–<br>1:35</span>
-          </div>
-          <div class="yard kinder">
-            <div class="pill">Kinder playground</div>
-            <div class="grade">2nd</div>
-            <div class="leave">Leaves Science</div>
-          </div>
-          <div class="yard big">
-            <div class="pill">Big playground</div>
-            <div class="grade">3rd</div>
-            <div class="leave">Leaves Power Hour</div>
-          </div>
-        </div>
-        <p class="gap">1:35–1:40 · transition / walk back</p>
-
-        <div class="session">
-          <div class="when">
-            <span class="n">Session 2</span>
-            <span class="t">2:00–<br>2:10</span>
-          </div>
-          <div class="yard kinder">
-            <div class="pill">Kinder playground</div>
-            <div class="grade">K</div>
-            <div class="leave">Homerun kids leave Math 30</div>
-          </div>
-          <div class="yard big">
-            <div class="pill">Big playground</div>
-            <div class="grade">5th</div>
-            <div class="leave">Leaves Science / Power Hour</div>
-          </div>
-        </div>
-        <p class="gap">2:10–2:15 · transition / walk back</p>
-
-        <div class="session">
-          <div class="when">
-            <span class="n">Session 3</span>
-            <span class="t">2:15–<br>2:25</span>
-          </div>
-          <div class="yard kinder">
-            <div class="pill">Kinder playground</div>
-            <div class="grade">1st</div>
-            <div class="leave">Homerun kids leave Math 45</div>
-          </div>
-          <div class="yard big">
-            <div class="pill">Big playground</div>
-            <div class="grade">4th</div>
-            <div class="leave">Leaves Science / Power Hour</div>
-          </div>
-        </div>
-        <p class="gap">Session 3 ends 5 minutes after 2:20 so playgrounds can clear. For a hard 2:20 stop, start Session 2 walking at 2:08 and run Session 3 2:10–2:20.</p>
+        <div id="sessions"></div>
       </section>
-
       <aside class="map-card">
         <h2>Enter &amp; exit</h2>
-        <svg viewBox="0 0 360 300" role="img" aria-label="Campus playground map with enter and exit path">
-          <rect x="0" y="0" width="360" height="300" fill="#d9e8c8"/>
-          <rect x="18" y="18" width="110" height="72" rx="6" fill="#6b5ca5"/>
-          <text x="73" y="58" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">PLAYGROUND</text>
-          <text x="73" y="74" text-anchor="middle" fill="#efeaf8" font-size="10">2–6 / bigger</text>
+        <svg viewBox="0 0 1020 580" role="img" aria-label="Campus map. Enter by Cafe Gym, walk left then up along the gate, exit top right.">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M0 0 L10 5 L0 10 z" fill="#111"/>
+            </marker>
+          </defs>
 
-          <rect x="138" y="22" width="150" height="52" rx="6" fill="#e6c84a"/>
-          <text x="213" y="53" text-anchor="middle" fill="#3d3208" font-size="13" font-weight="700">SOCCER FIELD</text>
+          <rect width="1020" height="580" fill="#8fa8a0"/>
+          <rect x="736" y="52" width="272" height="516" fill="#6d6d6d"/>
 
-          <rect x="200" y="92" width="128" height="86" rx="6" fill="#c23b3b"/>
-          <text x="264" y="132" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">KINDER</text>
-          <text x="264" y="148" text-anchor="middle" fill="#ffe8e8" font-size="12" font-weight="700">PLAYGROUND</text>
+          <rect x="72" y="52" width="664" height="338" rx="8" fill="#00964c"/>
 
-          <rect x="18" y="214" width="150" height="64" rx="18" fill="#f4f4f4" stroke="#cfd3da"/>
-          <text x="93" y="251" text-anchor="middle" fill="#333" font-size="13" font-weight="700">CAFE GYM</text>
+          <rect x="88" y="70" width="198" height="94" fill="#aa86df"/>
+          <text x="187" y="124" text-anchor="middle" fill="#fff" font-size="22" font-family="Arial, sans-serif" font-weight="700">PLAYGROUND</text>
 
-          <rect x="178" y="222" width="52" height="48" rx="8" fill="#e38a9a"/>
-          <text x="204" y="251" text-anchor="middle" fill="#4a1020" font-size="12" font-weight="800">ENTER</text>
+          <rect x="302" y="70" width="336" height="94" fill="#ffde59"/>
+          <text x="470" y="126" text-anchor="middle" fill="#3d3208" font-size="22" font-family="Arial, sans-serif" font-weight="700">SOCCER FIELD</text>
 
-          <rect x="292" y="18" width="50" height="48" rx="8" fill="#e38a9a"/>
-          <text x="317" y="46" text-anchor="middle" fill="#4a1020" font-size="12" font-weight="800">EXIT</text>
+          <rect x="654" y="70" width="66" height="94" fill="#f000c8"/>
+          <text x="687" y="126" text-anchor="middle" fill="#fff" font-size="18" font-family="Arial, sans-serif" font-weight="800">EXIT</text>
 
-          <path d="M204 222 L120 200 L120 150" fill="none" stroke="#111" stroke-width="7" stroke-linecap="square"/>
-          <polygon points="120,128 108,150 132,150" fill="#111"/>
-          <path d="M342 42 L350 70 L350 250" fill="none" stroke="#111" stroke-width="7" stroke-linecap="square"/>
-          <polygon points="350,268 338,246 362,246" fill="#111"/>
+          <rect x="188" y="188" width="278" height="186" fill="#f7f7f7"/>
+          <rect x="80" y="270" width="96" height="104" fill="#f7f7f7"/>
+
+          <rect x="516" y="208" width="204" height="166" fill="#c21832"/>
+          <text x="618" y="284" text-anchor="middle" fill="#fff" font-size="20" font-family="Arial, sans-serif" font-weight="700">KINDER</text>
+          <text x="618" y="308" text-anchor="middle" fill="#ffe4e4" font-size="18" font-family="Arial, sans-serif" font-weight="700">PLAYGROUND</text>
+
+          <!-- corridor along the gate, between the building and Kinder -->
+          <rect x="472" y="188" width="40" height="202" fill="#d7e8d4"/>
+          <rect x="72" y="390" width="664" height="14" fill="#e8eee8"/>
+
+          <rect x="80" y="408" width="396" height="124" rx="28" fill="#f4f4f4"/>
+          <text x="278" y="480" text-anchor="middle" fill="#222" font-size="22" font-family="Arial, sans-serif" font-weight="700">CAFE GYM</text>
+
+          <rect x="492" y="448" width="78" height="112" rx="20" fill="#f000c8"/>
+          <text x="531" y="512" text-anchor="middle" fill="#fff" font-size="18" font-family="Arial, sans-serif" font-weight="800">ENTER</text>
+
+          <!-- Gates / fences: walk along the vertical gate in the corridor -->
+          <g fill="none" stroke="#e8b25a" stroke-width="7" stroke-dasharray="14 8" stroke-linecap="round">
+            <path d="M78 58 H728"/>
+            <path d="M302 176 H488"/>
+            <path d="M548 176 H728"/>
+            <path d="M508 200 V372"/>
+          </g>
+          <rect x="488" y="168" width="60" height="28" rx="4" fill="#00964c"/>
+          <text x="518" y="188" text-anchor="middle" fill="#d4a05a" font-size="11" font-family="Arial, sans-serif" font-weight="800">GATE</text>
+
+          <!-- In: ENTER onto the walkway, left into the corridor, up along the gate -->
+          <path d="M531 448 V397 H492" fill="none" stroke="#111" stroke-width="10" stroke-linecap="square" stroke-linejoin="miter" marker-end="url(#arrow)"/>
+          <path d="M492 397 V176" fill="none" stroke="#111" stroke-width="10" stroke-linecap="square" marker-end="url(#arrow)"/>
+
+          <!-- Out: EXIT right, then down the pavement -->
+          <path d="M720 117 H820" fill="none" stroke="#111" stroke-width="10" stroke-linecap="square" marker-end="url(#arrow)"/>
+          <path d="M830 130 L980 520" fill="none" stroke="#111" stroke-width="10" stroke-linecap="square" marker-end="url(#arrow)"/>
         </svg>
-        <div class="flow">
-          <strong>Traffic</strong>
-          Walk in at <strong>ENTER</strong> (by Cafe Gym) → left, then up onto the yard.
-          Kinder playground is the red pad. Big playground is the purple pad.
-          Leave through <strong>EXIT</strong> at the top right — do not reverse through ENTER.
+        <div class="legend">
+          <span><span class="gate-swatch"></span><b>Gate / fence</b></span>
+          <span>In at <b>ENTER</b> → left → up along the gate</span>
+          <span>Out at <b>EXIT</b> → right, then down. Do not reverse through ENTER.</span>
         </div>
       </aside>
     </div>
+  </div>
 
-    <footer>
-      <span>Younger grade → Kinder playground · Older grade → big playground</span>
-      <span>Do not pull Writing, whole-class Specials, or a full Math block</span>
-    </footer>
-  </article>
+  <script>
+    const STORAGE = "funfriday-board-v1";
+    const DEFAULTS = [
+      { name: "Session 1", start: "13:25", end: "13:35", kinder: ["2nd"], big: ["3rd"] },
+      { name: "Session 2", start: "14:00", end: "14:10", kinder: ["K"], big: ["5th"] },
+      { name: "Session 3", start: "14:15", end: "14:25", kinder: ["1st"], big: ["4th"] }
+    ];
+
+    let sessions = load();
+    let drag = null;
+
+    function load() {
+      try {
+        const raw = localStorage.getItem(STORAGE);
+        if (!raw) return structuredClone(DEFAULTS);
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed) || !parsed.length) return structuredClone(DEFAULTS);
+        return parsed;
+      } catch {
+        return structuredClone(DEFAULTS);
+      }
+    }
+
+    function save() {
+      localStorage.setItem(STORAGE, JSON.stringify(sessions));
+    }
+
+    function pad(n) { return String(n).padStart(2, "0"); }
+
+    function addMinutes(hhmm, mins) {
+      const [h, m] = hhmm.split(":").map(Number);
+      const total = h * 60 + m + mins;
+      const wrapped = ((total % 1440) + 1440) % 1440;
+      return pad(Math.floor(wrapped / 60)) + ":" + pad(wrapped % 60);
+    }
+
+    function pretty(hhmm) {
+      const [h, m] = hhmm.split(":").map(Number);
+      const hour = ((h + 11) % 12) + 1;
+      return hour + ":" + pad(m);
+    }
+
+    function render() {
+      const root = document.getElementById("sessions");
+      root.innerHTML = sessions.map((s, i) => {
+        const walkStart = s.end;
+        const walkEnd = addMinutes(s.end, 5);
+        return `
+          <article class="session" data-session="${i}">
+            <div class="session-top">
+              <div class="session-name">${escapeHtml(s.name)}</div>
+              <div class="times">
+                <label>Start <input type="time" data-field="start" value="${s.start}"></label>
+                <span class="dash">–</span>
+                <label>End <input type="time" data-field="end" value="${s.end}"></label>
+                ${sessions.length > 1 ? `<button class="tool" data-remove="${i}" type="button">Remove</button>` : ""}
+              </div>
+            </div>
+            <p class="walk">Walk back ${pretty(walkStart)}–${pretty(walkEnd)}</p>
+            <div class="yards">
+              ${yardHtml(i, "kinder", "Kinder playground", s.kinder)}
+              ${yardHtml(i, "big", "Big playground", s.big)}
+            </div>
+          </article>
+        `;
+      }).join("");
+      bind();
+    }
+
+    function yardHtml(sessionIdx, yard, label, grades) {
+      const chips = grades.map((g, gi) => `
+        <div class="grade" draggable="true" data-grade="${sessionIdx}:${yard}:${gi}">
+          <input value="${escapeAttr(g)}" maxlength="8" aria-label="${yard} grade">
+        </div>
+      `).join("");
+      return `
+        <div class="yard ${yard}" data-drop="${sessionIdx}:${yard}">
+          <div class="pill">${label}</div>
+          <div class="grades">${chips}<button class="add-grade" data-add="${sessionIdx}:${yard}" type="button">+ Grade</button></div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, ch => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[ch]));
+    }
+    function escapeAttr(str) {
+      return escapeHtml(str);
+    }
+
+    function bind() {
+      document.querySelectorAll(".times input[type='time']").forEach(input => {
+        const apply = e => {
+          const article = e.target.closest("[data-session]");
+          const idx = Number(article.dataset.session);
+          const field = e.target.dataset.field;
+          sessions[idx][field] = e.target.value || sessions[idx][field];
+          const s = sessions[idx];
+          article.querySelector(".walk").textContent =
+            "Walk back " + pretty(s.end) + "–" + pretty(addMinutes(s.end, 5));
+          save();
+        };
+        input.addEventListener("input", apply);
+        input.addEventListener("change", apply);
+      });
+      document.querySelectorAll("[data-remove]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          sessions.splice(Number(btn.dataset.remove), 1);
+          sessions.forEach((s, i) => { s.name = "Session " + (i + 1); });
+          save();
+          render();
+        });
+      });
+      document.querySelectorAll(".grade").forEach(el => {
+        el.addEventListener("pointerdown", e => {
+          if (e.pointerType === "touch" || e.pointerType === "pen") onPointerDown(e);
+        });
+        el.addEventListener("dragstart", e => {
+          const [si, yard, gi] = el.dataset.grade.split(":");
+          drag = { from: { si: Number(si), yard, gi: Number(gi) } };
+          e.dataTransfer.setData("text/plain", el.dataset.grade);
+          e.dataTransfer.effectAllowed = "move";
+        });
+      });
+      document.querySelectorAll(".yard").forEach(z => {
+        z.addEventListener("dragover", e => {
+          e.preventDefault();
+          z.classList.add("over");
+        });
+        z.addEventListener("dragleave", () => z.classList.remove("over"));
+        z.addEventListener("drop", e => {
+          e.preventDefault();
+          z.classList.remove("over");
+          const payload = e.dataTransfer.getData("text/plain") || "";
+          const from = drag?.from || (() => {
+            const [si, yard, gi] = payload.split(":");
+            return { si: Number(si), yard, gi: Number(gi) };
+          })();
+          const [tsi, tyard] = z.dataset.drop.split(":");
+          moveGrade(from, { si: Number(tsi), yard: tyard });
+          drag = null;
+        });
+      });
+      document.querySelectorAll("[data-add]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const [si, yard] = btn.dataset.add.split(":");
+          sessions[Number(si)][yard].push("Grade");
+          save();
+          render();
+        });
+      });
+      document.querySelectorAll(".grade input").forEach(input => {
+        input.addEventListener("change", e => {
+          const [si, yard, gi] = e.target.closest("[data-grade]").dataset.grade.split(":");
+          sessions[Number(si)][yard][Number(gi)] = e.target.value.trim() || e.target.value;
+          save();
+        });
+        input.addEventListener("pointerdown", e => e.stopPropagation()); // keep so a click can edit the name
+      });
+    }
+
+    function onPointerDown(e) {
+      if (e.button != null && e.button !== 0) return;
+      const el = e.currentTarget;
+      const [si, yard, gi] = el.dataset.grade.split(":");
+      const rect = el.getBoundingClientRect();
+      drag = {
+        from: { si: Number(si), yard, gi: Number(gi) },
+        label: sessions[Number(si)][yard][Number(gi)],
+        startX: e.clientX,
+        startY: e.clientY,
+        offsetX: e.clientX - rect.left,
+        offsetY: e.clientY - rect.top,
+        moved: false,
+        ghost: null,
+        pointerId: e.pointerId
+      };
+      el.setPointerCapture(e.pointerId);
+      el.addEventListener("pointermove", onPointerMove);
+      el.addEventListener("pointerup", onPointerUp);
+      el.addEventListener("pointercancel", onPointerUp);
+    }
+
+    function onPointerMove(e) {
+      if (!drag) return;
+      const dist = Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY);
+      if (!drag.moved && dist < 8) return;
+      if (!drag.moved) {
+        drag.moved = true;
+        const src = e.currentTarget;
+        const ghost = src.cloneNode(true);
+        ghost.classList.add("ghost");
+        ghost.style.width = src.offsetWidth + "px";
+        document.body.appendChild(ghost);
+        drag.ghost = ghost;
+        src.style.opacity = "0.35";
+      }
+      drag.ghost.style.left = (e.clientX - drag.offsetX) + "px";
+      drag.ghost.style.top = (e.clientY - drag.offsetY) + "px";
+      const over = dropzoneAt(e.clientX, e.clientY);
+      document.querySelectorAll(".yard").forEach(z => z.classList.toggle("over", z === over));
+    }
+
+    function onPointerUp(e) {
+      const el = e.currentTarget;
+      el.releasePointerCapture(drag?.pointerId || e.pointerId);
+      el.removeEventListener("pointermove", onPointerMove);
+      el.removeEventListener("pointerup", onPointerUp);
+      el.removeEventListener("pointercancel", onPointerUp);
+      if (!drag) return;
+
+      const over = drag.moved ? dropzoneAt(e.clientX, e.clientY) : null;
+      if (drag.ghost) drag.ghost.remove();
+      document.querySelectorAll(".yard").forEach(z => z.classList.remove("over"));
+      el.style.opacity = "";
+
+      if (over) {
+        const [tsi, tyard] = over.dataset.drop.split(":");
+        moveGrade(drag.from, { si: Number(tsi), yard: tyard });
+      }
+      drag = null;
+    }
+
+    function dropzoneAt(x, y) {
+      const stack = document.elementsFromPoint(x, y);
+      return stack.find(n => n.classList?.contains("yard")) || null;
+    }
+
+    function moveGrade(from, to) {
+      if (from.si === to.si && from.yard === to.yard) return;
+      const item = sessions[from.si][from.yard].splice(from.gi, 1)[0];
+      sessions[to.si][to.yard].push(item);
+      save();
+      render();
+    }
+
+    document.getElementById("add-session").addEventListener("click", () => {
+      const last = sessions[sessions.length - 1];
+      const start = addMinutes(last.end, 5);
+      const end = addMinutes(start, 10);
+      sessions.push({
+        name: "Session " + (sessions.length + 1),
+        start,
+        end,
+        kinder: [],
+        big: []
+      });
+      save();
+      render();
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+      sessions = structuredClone(DEFAULTS);
+      save();
+      render();
+    });
+
+    render();
+  </script>
 </body>
 </html>
