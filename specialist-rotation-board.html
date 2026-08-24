@@ -405,12 +405,17 @@
     background:rgba(255,255,255,0.03); border-color:var(--line);
   }
   .duty-strip-label{
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:700;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:700;
     letter-spacing:0.14em; text-transform:uppercase; color:var(--amber);
   }
   .duty-strip.off .duty-strip-label{ color:var(--muted-strong); }
-  .duty-strip-who{ font-weight:700; color:#fff; font-size:14px; }
-  .duty-strip.off .duty-strip-who{ color:var(--muted-strong); font-weight:600; }
+  .duty-strip-photos{ display:flex; align-items:center; gap:8px; }
+  .duty-strip-photo{
+    width:42px; height:42px; border-radius:50%; object-fit:cover; flex-shrink:0;
+    border:2px solid var(--amber); box-shadow:0 0 12px rgba(242,169,59,0.4);
+    background:#111;
+  }
+  .duty-strip.off .duty-strip-who{ color:var(--muted-strong); font-weight:600; font-size:14px; }
   .card h3 .duty-badge{ margin-left:0; }
   .page-head .duty-badge{ margin-left:0; }
   nav.rail button.flat .duty-badge,
@@ -481,7 +486,7 @@
     .glance-grid{ justify-items:stretch; }
     .duty-badge{ font-size:11px; padding:4px 9px; }
     .duty-strip{ margin:0 auto 16px; text-align:center; }
-    .duty-strip-who{ font-size:15px; }
+    .duty-strip-photo{ width:46px; height:46px; }
     .glance-row{ flex-wrap:wrap; justify-content:center; row-gap:6px; }
     .glance-row .what{ width:100%; text-align:center; }
   }
@@ -503,6 +508,7 @@
     .duty-badge{ background:#f2a93b !important; color:#000 !important; box-shadow:none !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     .duty-strip{ background:#fff8e8 !important; border-color:#e0b45a !important; }
     .duty-strip-label, .duty-strip-who{ color:#000 !important; }
+    .duty-strip-photo{ border-color:#e0b45a !important; }
   }
 </style>
 </head>
@@ -624,7 +630,7 @@ const G35_PATTERNS = {
 };
 
 const TEACHERS = [
-  {name:"Fredrickson", gradeKey:"kinder", band:"k2", position:"A"},
+  {name:"Molinari", gradeKey:"kinder", band:"k2", position:"A"},
   {name:"Gray", gradeKey:"kinder", band:"k2", position:"B"},
   {name:"Rollans", gradeKey:"kinder", band:"k2", position:"C"},
   {name:"Vela", gradeKey:"kinder", band:"k2", position:"D"},
@@ -661,9 +667,9 @@ const specialists = [
   {
     id:"theo", name:"Coach Theo", subject:"Sports Fundamentals", tag:"SF", color:"#DE9272",
     k2:[
-      {day:1,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
+      {day:1,kinder:"Molinari",first:"Luangrath",second:"J. Casipong"},
       {day:2,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:3,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
+      {day:3,kinder:"Molinari",first:"Luangrath",second:"J. Casipong"},
       {day:4,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:5,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:6,kinder:"Vela",first:"Davis",second:"Gomez"},
@@ -685,9 +691,9 @@ const specialists = [
       {day:2,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:3,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:4,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:5,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
+      {day:5,kinder:"Molinari",first:"Luangrath",second:"J. Casipong"},
       {day:6,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:7,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
+      {day:7,kinder:"Molinari",first:"Luangrath",second:"J. Casipong"},
       {day:8,kinder:"Vela",first:"Davis",second:"Gomez"}
     ],
     g35:[
@@ -703,13 +709,13 @@ const specialists = [
     id:"marc", name:"Coach Marc", subject:"STEAM/PE", tag:"STEAM/PE", color:"#72DE99",
     k2:[
       {day:1,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:2,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
+      {day:2,kinder:"Molinari",first:"Luangrath",second:"J. Casipong"},
       {day:3,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:4,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:5,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:6,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:7,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:8,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"}
+      {day:8,kinder:"Molinari",first:"Luangrath",second:"J. Casipong"}
     ],
     g35:[
       {day:"Thursday",third:"J. Ramirez",fourth:"Hernandez",fifth:"Christensen"}
@@ -722,9 +728,9 @@ const specialists = [
       {day:1,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:2,kinder:"Rollans",first:"Reyes",second:"Garritano"},
       {day:3,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:4,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
+      {day:4,kinder:"Molinari",first:"Luangrath",second:"J. Casipong"},
       {day:5,kinder:"Gray",first:"Weber",second:"Guzman"},
-      {day:6,kinder:"Fredrickson",first:"Luangrath",second:"J. Casipong"},
+      {day:6,kinder:"Molinari",first:"Luangrath",second:"J. Casipong"},
       {day:7,kinder:"Vela",first:"Davis",second:"Gomez"},
       {day:8,kinder:"Rollans",first:"Reyes",second:"Garritano"}
     ],
@@ -780,15 +786,18 @@ function getWeekDates(dt){
 }
 const DOW3_TO_FULL = {Mon:"Monday",Tue:"Tuesday",Wed:"Wednesday",Thu:"Thursday",Fri:"Friday",Sat:"Saturday",Sun:"Sunday"};
 
-/* Crosswalk duty: alternate pairs every weekday. Aug 20, 2026 (Thu) = Pair A (Marc + Crestil). */
+/* Crosswalk duty: alternate pairs every weekday.
+   After Marc covered for Matthew on Fri Aug 21, the pairs flipped:
+   Pair A = Matthew + Casipong, Pair B = Marc + Theo.
+   Aug 20, 2026 (Thu) is still the even/odd start, so Mon 8/24 = Pair A. */
 const CROSSWALK_START = parseISO("2026-08-20");
 const CROSSWALK_PAIR_A = [
-  { id:"marc", name:"Coach Marc" },
+  { id:"matthew", name:"Mr. Matthew" },
   { id:"ccasipong", name:"Ms. C. Casipong" }
 ];
 const CROSSWALK_PAIR_B = [
-  { id:"theo", name:"Coach Theo" },
-  { id:"matthew", name:"Mr. Matthew" }
+  { id:"marc", name:"Coach Marc" },
+  { id:"theo", name:"Coach Theo" }
 ];
 
 function isWeekendDate(dt){
@@ -822,19 +831,13 @@ function onDutyPair(dt){
   const offset = weekdayOffsetFromStart(dt);
   return ((offset % 2) + 2) % 2 === 0 ? CROSSWALK_PAIR_A : CROSSWALK_PAIR_B;
 }
-function isOnDuty(id, dt){
-  return onDutyPair(dt || selectedDate).some(p=>p.id===id);
-}
-function dutyBadgeHtml(id, dt){
-  if(!isOnDuty(id, dt || selectedDate)) return "";
-  return `<span class="duty-badge" title="Crosswalk duty">On duty</span>`;
-}
 function dutyStripHtml(dt){
   const pair = onDutyPair(dt);
   if(!pair.length){
-    return `<div class="duty-strip off"><span class="duty-strip-label">Crosswalk</span><span class="duty-strip-who">No duty on weekends</span></div>`;
+    return `<div class="duty-strip off"><span class="duty-strip-label">Duty:</span><span class="duty-strip-who">None on weekends</span></div>`;
   }
-  return `<div class="duty-strip"><span class="duty-strip-label">Crosswalk</span><span class="duty-strip-who">${pair.map(p=>p.name).join(" · ")}</span><span class="duty-badge">On duty</span></div>`;
+  const photos = pair.map(p=>`<img class="duty-strip-photo" src="${PHOTO_DATA[p.id]}" alt="${p.name}" title="${p.name}">`).join("");
+  return `<div class="duty-strip"><span class="duty-strip-label">Duty:</span><span class="duty-strip-photos">${photos}</span></div>`;
 }
 
 /* ============================== STATE ============================== */
@@ -916,8 +919,8 @@ function renderRail(){
     let mobileHtml = `<button data-id="__all__" class="${activeSpecialistId===null?'active':''}"><span class="dot" style="background:#E31E24"></span>Overview</button>`;
     specialists.forEach(s=>{
       const on = activeSpecialistId===s.id;
-      railHtml += `<button class="flat ${on?'active':''}" data-id="${s.id}"><span class="dot" style="background:${s.color}"></span>${s.name}${dutyBadgeHtml(s.id)}</button>`;
-      mobileHtml += `<button data-id="${s.id}" class="${on?'active':''}"><span class="dot" style="background:${s.color}"></span>${s.name}${dutyBadgeHtml(s.id)}</button>`;
+      railHtml += `<button class="flat ${on?'active':''}" data-id="${s.id}"><span class="dot" style="background:${s.color}"></span>${s.name}</button>`;
+      mobileHtml += `<button data-id="${s.id}" class="${on?'active':''}"><span class="dot" style="background:${s.color}"></span>${s.name}</button>`;
     });
     railHtml += `</div>`;
     rail.innerHTML = railHtml;
@@ -980,7 +983,7 @@ function overviewHtml(){
   html += `<div class="grid-cards">`;
   specialists.forEach(s=>{
     html += `<div class="card" style="--accent:${s.color}" data-id="${s.id}">
-      <div class="card-text"><h3>${s.name}${dutyBadgeHtml(s.id)}</h3><div class="subj">${s.subject}</div></div>
+      <div class="card-text"><h3>${s.name}</h3><div class="subj">${s.subject}</div></div>
       <img class="card-avatar" src="${PHOTO_DATA[s.id]}" alt="${s.name}">
     </div>`;
   });
@@ -1036,7 +1039,7 @@ function fullDayHtml(s){
 function specialistHtml(s){
   const info = calFor(selectedDate);
   const todayFull = info.school ? DOW3_TO_FULL[info.dow3] : null;
-  let html = `<div class="page-head"><span class="swatch" style="background:${s.color}"></span><h2>${s.name}</h2><span class="tag" style="color:${s.color}">${s.tag}</span>${dutyBadgeHtml(s.id)}</div><p class="page-sub">${s.subject}</p>`;
+  let html = `<div class="page-head"><span class="swatch" style="background:${s.color}"></span><h2>${s.name}</h2><span class="tag" style="color:${s.color}">${s.tag}</span></div><p class="page-sub">${s.subject}</p>`;
   if(s.k2 && s.g35){
     html += `<div class="section-label">Full Day, In Order</div>` + fullDayHtml(s);
   }
@@ -1069,7 +1072,7 @@ function glanceGradeCard(gradeKey, band, timeLabel, k2day, weekdayFull, isSchool
       const pattern = band==="k2" ? K2_PATTERNS[t.position] : G35_PATTERNS[t.position];
       const code = band==="k2" ? pattern[k2day-1] : pattern[WEEKDAYS.indexOf(weekdayFull)];
       const spec = resolveSpecialist(code, band, weekdayFull);
-      rows += `<div class="glance-row"><span class="who">${t.name}</span><span class="what" style="color:${spec.color}"><span class="subj-chip">${SUBJECT_META[code].abbr}</span>${spec.name}${dutyBadgeHtml(spec.id)}</span></div>`;
+      rows += `<div class="glance-row"><span class="who">${t.name}</span><span class="what" style="color:${spec.color}"><span class="subj-chip">${SUBJECT_META[code].abbr}</span>${spec.name}</span></div>`;
     });
   }
   return `<div class="glance-card"><h4>${GRADE_LABELS[gradeKey]}<span class="gt">${timeLabel}</span></h4>${rows}</div>`;
@@ -1121,7 +1124,7 @@ function teacherTodayHtml(t){
   const msg = SPECIALIST_MESSAGES[spec.id];
   const bubble = msg ? `<div class="callout-bubble">${msg}</div>` : ``;
   return `<div class="today-callout" style="--callout-color:${spec.color}">
-    <div><span class="lbl">Today · ${fmtLong(selectedDate)} · ${dayTag}</span><div class="big" style="color:${spec.color}">${SUBJECT_META[code].label} — ${spec.name}${dutyBadgeHtml(spec.id)}</div><div class="time">${timeLabel}</div></div>
+    <div><span class="lbl">Today · ${fmtLong(selectedDate)} · ${dayTag}</span><div class="big" style="color:${spec.color}">${SUBJECT_META[code].label} — ${spec.name}</div><div class="time">${timeLabel}</div></div>
     <div class="avatar-group">${bubble}<img class="callout-avatar" src="${PHOTO_DATA[spec.id]}" alt="${spec.name}"></div>
   </div>`;
 }
@@ -1140,7 +1143,7 @@ function teacherWeekHtml(t){
       const code = t.band==="k2" ? pattern[info.k2day-1] : pattern[WEEKDAYS.indexOf(weekdayFull)];
       const spec = resolveSpecialist(code, t.band, weekdayFull);
       const tag = t.band==="k2" ? ` (Day ${info.k2day})` : '';
-      html += `<tr><td class="daycol">${label}</td><td><span style="color:${spec.color};font-weight:600"><span class="subj-chip">${SUBJECT_META[code].abbr}</span>${SUBJECT_META[code].label} — ${spec.name}</span>${dutyBadgeHtml(spec.id, d)}${tag}</td></tr>`;
+      html += `<tr><td class="daycol">${label}</td><td><span style="color:${spec.color};font-weight:600"><span class="subj-chip">${SUBJECT_META[code].abbr}</span>${SUBJECT_META[code].label} — ${spec.name}</span>${tag}</td></tr>`;
     }
   });
   html += `</tbody></table></div>`;
@@ -1195,7 +1198,7 @@ function renderTeacherMain(){
 
 /* ============================== DEEP LINKING (URL hash) ============================== */
 // Keeps the URL in sync with the current view so pages can be bookmarked/shared.
-// Format examples:  #glance  |  #specialist/theo  |  #teacher/Fredrickson
+// Format examples:  #glance  |  #specialist/theo  |  #teacher/Molinari
 let suppressHashWrite = false;
 function syncHash(){
   if(suppressHashWrite) return;
