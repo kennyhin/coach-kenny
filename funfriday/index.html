@@ -247,14 +247,17 @@
       border: 1px solid var(--line);
       border-radius: 18px;
       padding: 14px;
-      position: sticky;
-      top: 16px;
     }
     .map-card svg {
       width: 100%;
       height: auto;
       display: block;
       border-radius: 12px;
+    }
+    .hall-block {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
     }
     .legend {
       display: flex;
@@ -307,7 +310,7 @@
         <div id="sessions"></div>
       </section>
       <aside class="map-card">
-        <h2>Enter &amp; exit</h2>
+        <h2>Yard enter &amp; exit</h2>
         <svg viewBox="0 0 1020 580" role="img" aria-label="Campus map. Enter by Cafe Gym, walk left then up along the gate, exit top right.">
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
@@ -368,6 +371,97 @@
           <span><span class="gate-swatch"></span><b>Gate / fence</b></span>
           <span>In at <b>ENTER</b> → left → up along the gate</span>
           <span>Out at <b>EXIT</b> → right, then down. Do not reverse through ENTER.</span>
+        </div>
+
+        <div class="hall-block">
+          <h2>Hallway · proper enter &amp; exit</h2>
+          <svg viewBox="0 0 1020 470" role="img" aria-label="Hallway map. Enter front doors and go up the east stairs. Come down the west stairs, walk left, then up toward the cafe.">
+            <defs>
+              <marker id="hall-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0 0 L10 5 L0 10 z" fill="#0B0B0B"/>
+              </marker>
+            </defs>
+
+            <rect width="1020" height="470" rx="12" fill="#1a1e24"/>
+
+            <!-- Main hallway + side halls -->
+            <rect x="88" y="198" width="844" height="88" rx="10" fill="#9aa3b2"/>
+            <rect x="88" y="36" width="78" height="162" rx="10" fill="#9aa3b2"/>
+            <rect x="368" y="286" width="72" height="148" rx="10" fill="#9aa3b2"/>
+            <text x="127" y="58" text-anchor="middle" fill="#111827" font-size="11" font-family="Arial, sans-serif" font-weight="800">TO CAFE</text>
+
+            <!-- CAFE / front doors -->
+            <rect x="12" y="148" width="68" height="188" rx="12" fill="#e07a28"/>
+            <text x="46" y="236" text-anchor="middle" fill="#fff" font-size="15" font-family="Arial, sans-serif" font-weight="800">CAFE</text>
+            <rect x="940" y="148" width="68" height="188" rx="12" fill="#e07a28"/>
+            <text x="974" y="228" text-anchor="middle" fill="#fff" font-size="13" font-family="Arial, sans-serif" font-weight="800">FRONT</text>
+            <text x="974" y="248" text-anchor="middle" fill="#fff" font-size="13" font-family="Arial, sans-serif" font-weight="800">DOORS</text>
+            <text x="974" y="272" text-anchor="middle" fill="#fff7ed" font-size="11" font-family="Arial, sans-serif" font-weight="700">IN</text>
+
+            <!-- Top rooms -->
+            <rect x="178" y="68" width="96" height="112" rx="10" fill="#7eb8e8"/>
+            <text x="226" y="130" text-anchor="middle" fill="#0f2744" font-size="13" font-family="Arial, sans-serif" font-weight="700">Bathrooms</text>
+
+            <!-- GO DOWN stairs (west) -->
+            <g>
+              <rect x="286" y="150" width="108" height="20" rx="3" fill="#d8dbe3"/>
+              <rect x="297" y="128" width="86" height="20" rx="3" fill="#c4c9d4"/>
+              <rect x="308" y="106" width="64" height="20" rx="3" fill="#b0b6c4"/>
+              <rect x="319" y="84" width="42" height="20" rx="3" fill="#9aa1b2"/>
+              <rect x="286" y="36" width="108" height="42" rx="8" fill="#c21832"/>
+              <text x="340" y="54" text-anchor="middle" fill="#fff" font-size="15" font-family="Arial, sans-serif" font-weight="800">GO DOWN</text>
+              <text x="340" y="70" text-anchor="middle" fill="#ffe4e4" font-size="11" font-family="Arial, sans-serif" font-weight="700">these stairs</text>
+            </g>
+
+            <rect x="406" y="68" width="100" height="112" rx="10" fill="#2aa39a"/>
+            <text x="456" y="130" text-anchor="middle" fill="#fff" font-size="13" font-family="Arial, sans-serif" font-weight="700">Workroom</text>
+
+            <rect x="518" y="68" width="88" height="112" rx="10" fill="#3b6fd6"/>
+            <text x="562" y="130" text-anchor="middle" fill="#fff" font-size="13" font-family="Arial, sans-serif" font-weight="700">Kinder</text>
+
+            <rect x="618" y="68" width="88" height="112" rx="10" fill="#c21832"/>
+            <text x="662" y="130" text-anchor="middle" fill="#fff" font-size="13" font-family="Arial, sans-serif" font-weight="700">Kinder</text>
+
+            <!-- GO UP stairs (east, by front doors) -->
+            <g>
+              <rect x="718" y="150" width="130" height="20" rx="3" fill="#d8dbe3"/>
+              <rect x="732" y="128" width="102" height="20" rx="3" fill="#c4c9d4"/>
+              <rect x="746" y="106" width="74" height="20" rx="3" fill="#b0b6c4"/>
+              <rect x="760" y="84" width="46" height="20" rx="3" fill="#9aa1b2"/>
+              <rect x="718" y="36" width="130" height="42" rx="8" fill="#8CC63F"/>
+              <text x="783" y="54" text-anchor="middle" fill="#0B0B0B" font-size="16" font-family="Arial, sans-serif" font-weight="800">GO UP</text>
+              <text x="783" y="70" text-anchor="middle" fill="#14330a" font-size="11" font-family="Arial, sans-serif" font-weight="700">these stairs</text>
+            </g>
+
+            <!-- Bottom rooms -->
+            <rect x="108" y="308" width="108" height="118" rx="10" fill="#3ecfc0"/>
+            <text x="162" y="374" text-anchor="middle" fill="#08332e" font-size="13" font-family="Arial, sans-serif" font-weight="700">Kinder</text>
+
+            <rect x="230" y="308" width="108" height="118" rx="10" fill="#8b5cf6"/>
+            <text x="284" y="374" text-anchor="middle" fill="#fff" font-size="13" font-family="Arial, sans-serif" font-weight="700">Kinder</text>
+
+            <text x="404" y="430" text-anchor="middle" fill="#111827" font-size="12" font-family="Arial, sans-serif" font-weight="800">Lounge</text>
+
+            <rect x="460" y="308" width="108" height="118" rx="10" fill="#c4b5fd"/>
+            <text x="514" y="374" text-anchor="middle" fill="#2e1064" font-size="13" font-family="Arial, sans-serif" font-weight="700">Nurse</text>
+
+            <rect x="582" y="308" width="148" height="118" rx="10" fill="#e8c547"/>
+            <text x="656" y="368" text-anchor="middle" fill="#3d3208" font-size="14" font-family="Arial, sans-serif" font-weight="800">Front office</text>
+
+            <!-- Traffic: IN front doors → GO UP -->
+            <path d="M936 242 H820" fill="none" stroke="#0B0B0B" stroke-width="10" stroke-linecap="square" marker-end="url(#hall-arrow)"/>
+            <path d="M783 198 V92" fill="none" stroke="#0B0B0B" stroke-width="10" stroke-linecap="square" marker-end="url(#hall-arrow)"/>
+
+            <!-- Traffic: GO DOWN → left → up toward cafe -->
+            <path d="M340 178 V242" fill="none" stroke="#0B0B0B" stroke-width="10" stroke-linecap="square" marker-end="url(#hall-arrow)"/>
+            <path d="M328 242 H150" fill="none" stroke="#0B0B0B" stroke-width="10" stroke-linecap="square" marker-end="url(#hall-arrow)"/>
+            <path d="M127 198 V70" fill="none" stroke="#0B0B0B" stroke-width="10" stroke-linecap="square" marker-end="url(#hall-arrow)"/>
+          </svg>
+          <div class="legend">
+            <span><b style="color:#8CC63F">GO UP</b> the stairs by the front doors</span>
+            <span><b style="color:#f87171">GO DOWN</b> the stairs by the workroom / bathrooms</span>
+            <span>Then walk left and up toward the <b>Cafe</b>. Do not use the up stairs to come back down.</span>
+          </div>
         </div>
       </aside>
     </div>
