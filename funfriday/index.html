@@ -28,6 +28,7 @@
       background: var(--black);
       color: var(--text);
       font-family: Inter, system-ui, sans-serif;
+      overflow-x: hidden;
     }
     body::before {
       content: "";
@@ -143,15 +144,18 @@
       color: var(--muted);
       font-weight: 700;
     }
+    html { -webkit-text-size-adjust: 100%; }
     .times input[type="time"] {
       appearance: none;
       border: 1px solid var(--line);
       background: #0d0f13;
       color: #fff;
       font: 700 16px/1 Inter, sans-serif;
+      min-height: 44px;
       padding: 8px 8px 8px 10px;
       border-radius: 10px;
       color-scheme: dark;
+      max-width: 100%;
     }
     .times .dash { color: var(--muted); padding-top: 16px; }
     .walk {
@@ -276,14 +280,134 @@
       vertical-align: middle;
       margin-right: 6px;
     }
+    .ad-scrim {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      background: rgba(0,0,0,0.72);
+      padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+      overflow: auto;
+      align-items: center;
+      justify-content: center;
+    }
+    .ad-scrim.open { display: flex; }
+    .ad-card {
+      position: relative;
+      width: min(520px, 100%);
+      background: #10141c;
+      border: 1px solid rgba(242,169,59,0.35);
+      border-radius: 20px;
+      padding: 22px 20px 18px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+    }
+    .ad-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #0d0f13;
+      color: #fff;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .ad-kicker {
+      margin: 0 40px 6px 0;
+      color: #f2a93b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .ad-card h2 {
+      margin: 0 36px 8px 0;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: clamp(28px, 7vw, 40px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.95;
+    }
+    .ad-lead {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .ad-events {
+      display: grid;
+      gap: 10px;
+    }
+    .ad-event {
+      background: #0b0d12;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .ad-event h3 {
+      margin: 0 0 8px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #f2a93b;
+    }
+    .ad-event p {
+      margin: 0 0 4px;
+      font-size: 14px;
+      color: #e5e7eb;
+    }
+    .ad-event p:last-child { margin-bottom: 0; }
+    .ad-event .who {
+      color: var(--green);
+      font-weight: 700;
+    }
+    .ad-ok {
+      display: block;
+      width: 100%;
+      margin-top: 14px;
+      min-height: 48px;
+      border: 0;
+      border-radius: 999px;
+      background: #f2a93b;
+      color: #0B0B0B;
+      font: 800 14px/1 Inter, sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
     @media (max-width: 860px) {
+      .wrap { padding: 16px 14px 36px; }
       .layout { grid-template-columns: 1fr; }
       .map-card { position: static; }
-      h1 { font-size: 56px; }
+      header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      h1 { font-size: clamp(40px, 14vw, 56px); }
+      .tools { justify-content: stretch; }
+      button.tool { min-height: 44px; flex: 1; }
+      .session-top {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .times { width: 100%; }
+      .times input[type="time"] { flex: 1; width: 100%; }
+    }
+    @media (max-width: 520px) {
+      .yards { grid-template-columns: 1fr; }
+      .hint { font-size: 12px; }
+      .legend { font-size: 11px; gap: 8px; }
     }
     @media print {
       body::before { display: none; }
-      .tools, .hint { display: none; }
+      .tools, .hint, .ad-scrim { display: none !important; }
       .wrap { padding: 0; max-width: none; }
       .map-card { position: static; }
       .times input { border-color: #333; }
@@ -291,6 +415,30 @@
   </style>
 </head>
 <body>
+  <div class="ad-scrim" id="support-ad" role="dialog" aria-modal="true" aria-labelledby="ad-title">
+    <div class="ad-card">
+      <button class="ad-close" type="button" aria-label="Close">&times;</button>
+      <p class="ad-kicker">This weekend · Elementary only</p>
+      <h2 id="ad-title">Come support our teams</h2>
+      <p class="ad-lead">Teachers — SLAM Elementary is in NCSAA preseason. Come cheer them on.</p>
+      <div class="ad-events">
+        <article class="ad-event">
+          <h3>Flag football</h3>
+          <p>Saturday, September 5</p>
+          <p>Ed Fountain Park</p>
+          <p class="who">Elementary 4–5</p>
+        </article>
+        <article class="ad-event">
+          <h3>Volleyball</h3>
+          <p>Friday–Saturday, September 4–5</p>
+          <p>Las Vegas Basketball Center</p>
+          <p class="who">Girls 3–5</p>
+          <p>$5 spectators / day</p>
+        </article>
+      </div>
+      <button class="ad-ok" type="button">Got it</button>
+    </div>
+  </div>
   <div class="wrap">
     <header>
       <div>
@@ -298,6 +446,7 @@
         <h1>Fun Friday</h1>
       </div>
       <div class="tools">
+        <button class="tool" id="show-ad" type="button">Support our teams</button>
         <button class="tool" id="add-session" type="button">Add session</button>
         <button class="tool" id="reset" type="button">Reset lineup</button>
       </div>
@@ -727,6 +876,29 @@
     });
 
     render();
+
+    (function supportAd() {
+      const KEY = "funfriday-preseason-ad-v1";
+      const scrim = document.getElementById("support-ad");
+      const afterEvents = new Date("2026-09-06T00:00:00").getTime();
+      if (Date.now() >= afterEvents) return;
+
+      const open = () => {
+        scrim.classList.add("open");
+        document.body.style.overflow = "hidden";
+      };
+      const close = () => {
+        scrim.classList.remove("open");
+        document.body.style.overflow = "";
+        localStorage.setItem(KEY, "1");
+      };
+
+      if (!localStorage.getItem(KEY)) open();
+      scrim.querySelector(".ad-close").addEventListener("click", close);
+      scrim.querySelector(".ad-ok").addEventListener("click", close);
+      scrim.addEventListener("click", e => { if (e.target === scrim) close(); });
+      document.getElementById("show-ad").addEventListener("click", open);
+    })();
   </script>
 </body>
 </html>
