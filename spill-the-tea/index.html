@@ -218,12 +218,26 @@
       const [showPaywall, setShowPaywall] = useState(false);
       const [barUnlocked, setBarUnlocked] = useState(false);
       const [flip, setFlip] = useState(false);
+      const [showPin, setShowPin] = useState(false);
+      const [pin, setPin] = useState("");
+      const [pinError, setPinError] = useState("");
 
       const currentLevel = LEVELS[level];
 
+      const resetPin = () => {
+        setShowPin(false);
+        setPin("");
+        setPinError("");
+      };
+
+      const openPaywall = () => {
+        resetPin();
+        setShowPaywall(true);
+      };
+
       const startGame = () => {
         if (level === 4 && !barUnlocked) {
-          setShowPaywall(true);
+          openPaywall();
           return;
         }
         const shuffled = shuffle(QUESTIONS[level]);
@@ -254,7 +268,7 @@
         const v = parseInt(val);
         if (v === 4 && !barUnlocked) {
           setLevel(4);
-          setShowPaywall(true);
+          openPaywall();
         } else {
           setLevel(v);
         }
@@ -263,11 +277,46 @@
       const unlockBar = () => {
         setBarUnlocked(true);
         setShowPaywall(false);
+        resetPin();
         setLevel(4);
+      };
+
+      const handleIPaid = () => {
+        if (!showPin) {
+          setShowPin(true);
+          setPin("");
+          setPinError("");
+          return;
+        }
+        submitPin();
+      };
+
+      const handlePinChange = (value) => {
+        const digits = String(value).replace(/\D/g, "").slice(0, 4);
+        setPin(digits);
+        setPinError("");
+        if (digits.length === 4) {
+          if (digits === "1234") {
+            unlockBar();
+          } else {
+            setPinError("Wrong PIN");
+            setPin("");
+          }
+        }
+      };
+
+      const submitPin = () => {
+        if (pin === "1234") {
+          unlockBar();
+        } else {
+          setPinError("Wrong PIN");
+          setPin("");
+        }
       };
 
       const dismissPaywall = () => {
         setShowPaywall(false);
+        resetPin();
         if (!barUnlocked) {
           setLevel(3);
         }
@@ -335,6 +384,24 @@
               border: 3px solid #fff;
               box-shadow: 0 0 16px ${currentLevel.color}99;
               cursor: grab;
+            }
+            .pin-input {
+              width: 100%;
+              box-sizing: border-box;
+              text-align: center;
+              letter-spacing: 0.4em;
+              font-size: 22px;
+              font-weight: 700;
+              font-family: inherit;
+              padding: 12px 14px;
+              border-radius: 14px;
+              border: 1px solid rgba(255,255,255,0.16);
+              background: rgba(255,255,255,0.06);
+              color: #F0F0F0;
+              outline: none;
+            }
+            .pin-input:focus {
+              border-color: #EF4444;
             }
           `}</style>
 
@@ -668,6 +735,46 @@
                   Coach K 🎳
                 </div>
 
+                {showPin && (
+                  <div style={{ marginBottom: 16 }}>
+                    <label
+                      htmlFor="bar-pin"
+                      style={{
+                        display: "block",
+                        fontSize: 11,
+                        letterSpacing: "0.16em",
+                        textTransform: "uppercase",
+                        color: "rgba(255,255,255,0.45)",
+                        fontWeight: 700,
+                        marginBottom: 8,
+                      }}
+                    >
+                      Enter PIN
+                    </label>
+                    <input
+                      id="bar-pin"
+                      className="pin-input"
+                      type="password"
+                      inputMode="numeric"
+                      autoComplete="one-time-code"
+                      pattern="[0-9]*"
+                      maxLength={4}
+                      value={pin}
+                      aria-label="PIN"
+                      autoFocus
+                      onChange={(e) => handlePinChange(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") submitPin();
+                      }}
+                    />
+                    {pinError ? (
+                      <div style={{ marginTop: 8, fontSize: 13, fontWeight: 700, color: "#EF4444" }}>
+                        {pinError}
+                      </div>
+                    ) : null}
+                  </div>
+                )}
+
                 <div style={{ display: "flex", gap: 10 }}>
                   <button
                     type="button"
@@ -689,7 +796,7 @@
                   </button>
                   <button
                     type="button"
-                    onClick={unlockBar}
+                    onClick={handleIPaid}
                     style={{
                       flex: 1,
                       padding: "13px 12px",
