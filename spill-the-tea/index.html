@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0B0E14" />
+  <title>Spill the Tea — Bowling Night Edition</title>
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    html, body, #root {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: #0B0E14;
+    }
+    * { box-sizing: border-box; }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.10/babel.min.js"></script>
+  <script type="text/babel">
+    const { useState } = React;
+
+    const LEVELS = [
+      { id: 0, label: "Safe", emoji: "😇", color: "#4ADE80", bg: "rgba(74,222,128,0.12)" },
+      { id: 1, label: "Coffee Shop", emoji: "☕", color: "#FBBF24", bg: "rgba(251,191,36,0.12)" },
+      { id: 2, label: "Lunch Date", emoji: "🍽️", color: "#FB923C", bg: "rgba(251,146,60,0.12)" },
+      { id: 3, label: "Dinner", emoji: "🍷", color: "#F472B6", bg: "rgba(244,114,182,0.12)" },
+      { id: 4, label: "Bar 🔞", emoji: "🍺", color: "#EF4444", bg: "rgba(239,68,68,0.12)" },
+    ];
+
+    const DESCRIPTIONS = [
+      "Icebreakers only. Grandma-approved. Nothing you wouldn't say in the bowling alley lobby.",
+      "Warming up. The kind of stuff you share over a latte between frames.",
+      "Getting into it. Stories, feelings, a little vulnerability with the nachos.",
+      "After-dinner honesty. Petty, messy, and a little too real.",
+      "Last call. No filter. What happens at bowling night stays at bowling night.",
+    ];
+
+    const QUESTIONS = {
+      0: [
+        "What's your favorite color and why?",
+        "If you could visit anywhere in the world, where would you go?",
+        "What's a hobby you've always wanted to pick up?",
+        "What's the last movie you watched and loved?",
+        "Dogs or cats — and why?",
+        "What's your go-to comfort food?",
+        "If you won the lottery tomorrow, what's the first thing you'd buy?",
+        "What song is stuck in your head right now?",
+        "What's your favorite season and what do you love about it?",
+        "If you could have dinner with any celebrity, who would it be?",
+        "What's a fun fact about you most people don't know?",
+        "What's your favorite thing to do on a lazy Sunday?",
+        "Beach vacation or mountain getaway?",
+        "What's a TV show you could rewatch forever?",
+        "If you could learn any language instantly, which one?",
+        "What's your go-to karaoke song?",
+        "Early bird or night owl?",
+        "What's the best gift you've ever received?",
+        "If you could have any superpower, what would it be?",
+        "What's on your bucket list?",
+      ],
+      1: [
+        "What's the most spontaneous thing you've ever done?",
+        "What's your love language?",
+        "What's your biggest pet peeve?",
+        "What's your guilty pleasure that you're not actually guilty about?",
+        "What does your ideal weekend look like?",
+        "What's something you're passionate about that surprises people?",
+        "Have you ever had a moment that completely changed your perspective on life?",
+        "What's the best piece of advice you've ever gotten?",
+        "What's a deal-breaker for you in friendships?",
+        "If you could relive one day of your life, which would it be?",
+        "What's the most interesting thing on your phone's camera roll right now?",
+        "What were you like in high school?",
+        "What's a tradition you have that you'd never give up?",
+        "What's the most underrated thing about you?",
+        "Do you believe in astrology? What's your sign?",
+        "What's the weirdest food combo you secretly love?",
+        "What's something you've changed your mind about recently?",
+        "What keeps you up at night — in a good way?",
+        "If your life was a movie, what genre would it be?",
+        "What's a hill you'll die on?",
+      ],
+      2: [
+        "What's something you wish you could tell your younger self?",
+        "Have you ever been in love? What did it teach you?",
+        "What's the hardest lesson you've had to learn?",
+        "What are your non-negotiable deal-breakers in a relationship?",
+        "What's the most vulnerable thing you could share right now?",
+        "What does success actually mean to you?",
+        "What's something you pretend to like but actually don't?",
+        "If you knew you couldn't fail, what would you attempt?",
+        "What relationship in your life has shaped you the most?",
+        "What's a belief you hold that most people would disagree with?",
+        "When was the last time you cried and why?",
+        "What's the biggest risk you've ever taken?",
+        "How do you handle conflict — fight, flight, or freeze?",
+        "What do you think people misunderstand about you?",
+        "What's a boundary you've set that changed your life?",
+        "What would you do differently if nobody was watching?",
+        "What scares you the most about the future?",
+        "What does your inner critic sound like?",
+        "Do you think people can truly change?",
+        "What's a question you wish someone would ask you?",
+      ],
+      3: [
+        "What's your most embarrassing moment — the real one?",
+        "What's the biggest lie you've ever told?",
+        "What's a secret talent nobody knows about?",
+        "What's the pettiest reason you've ended a relationship?",
+        "What's the worst date you've ever been on?",
+        "If you could read one person's mind for a day, who and why?",
+        "What's something you've done that you'll never do again?",
+        "Have you ever ghosted someone? Why?",
+        "What's the most unhinged thing you've done for love?",
+        "What's a toxic trait you're working on?",
+        "What's the wildest DM you've ever sent or received?",
+        "Have you ever had a crush on a friend's partner?",
+        "What's the biggest regret of your dating life?",
+        "What's a confession you need to get off your chest?",
+        "If your ex described you in three words, what would they say?",
+        "What's the most jealous you've ever been?",
+        "What's a rule you live by that most people would find weird?",
+        "Have you ever pretended to be someone you're not to impress someone?",
+        "What's the most expensive impulse purchase you've made?",
+        "Truth: who in this room are you most curious about?",
+      ],
+      4: [
+        "What's the wildest thing you've done at a party?",
+        "What's your body count? Just kidding… unless?",
+        "Have you ever sent a spicy text to the wrong person?",
+        "What's the most scandalous thing on your phone right now?",
+        "What's the craziest place you've ever hooked up?",
+        "Have you ever been caught doing something you shouldn't?",
+        "What's your most unhinged 2 AM decision?",
+        "What's a red flag you've completely ignored because they were hot?",
+        "Marry, kiss, or avoid — pick three people in this room.",
+        "What's the worst hangover decision you've ever made?",
+        "What's a secret your friends would be shocked to learn?",
+        "Have you ever lied about your age to get into somewhere?",
+        "What's something you'd only admit after three drinks?",
+        "If you had to kiss someone in this room, who?",
+        "What's the most embarrassing thing in your search history?",
+        "Have you ever had a walk of shame? Tell us everything.",
+        "What's the biggest romantic L you've taken?",
+        "Would you rather give up intimacy or social media for a year?",
+        "What's the most chaotic first date you've been on?",
+        "Confess something right now that you've never said out loud.",
+      ],
+    };
+
+    function FakeQR() {
+      const size = 140;
+      const cells = 11;
+      const cellSize = size / cells;
+      const pattern = [
+        [1,1,1,1,1,1,1,0,1,1,1],
+        [1,0,0,0,0,0,1,0,0,1,0],
+        [1,0,1,1,1,0,1,0,1,0,1],
+        [1,0,1,1,1,0,1,0,0,1,1],
+        [1,0,1,1,1,0,1,0,1,0,0],
+        [1,0,0,0,0,0,1,0,1,1,1],
+        [1,1,1,1,1,1,1,0,1,0,1],
+        [0,0,0,0,0,0,0,0,0,1,0],
+        [1,0,1,0,1,1,1,0,1,1,1],
+        [0,1,0,1,0,0,0,0,0,0,1],
+        [1,1,1,0,1,0,1,1,1,1,1],
+      ];
+      return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ borderRadius: 8 }}>
+          <rect width={size} height={size} fill="white" rx={4}/>
+          {pattern.map((row, y) =>
+            row.map((cell, x) =>
+              cell ? (
+                <rect
+                  key={`${x}-${y}`}
+                  x={x * cellSize + 1}
+                  y={y * cellSize + 1}
+                  width={cellSize - 1}
+                  height={cellSize - 1}
+                  fill="#111"
+                  rx={1}
+                />
+              ) : null
+            )
+          )}
+        </svg>
+      );
+    }
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function App() {
+      const [screen, setScreen] = useState("start");
+      const [level, setLevel] = useState(0);
+      const [questions, setQuestions] = useState([]);
+      const [currentQ, setCurrentQ] = useState(0);
+      const [showPaywall, setShowPaywall] = useState(false);
+      const [barUnlocked, setBarUnlocked] = useState(false);
+      const [flip, setFlip] = useState(false);
+
+      const currentLevel = LEVELS[level];
+
+      const startGame = () => {
+        if (level === 4 && !barUnlocked) {
+          setShowPaywall(true);
+          return;
+        }
+        const shuffled = shuffle(QUESTIONS[level]);
+        setQuestions(shuffled);
+        setCurrentQ(0);
+        setFlip(false);
+        setScreen("play");
+      };
+
+      const nextQuestion = () => {
+        setFlip(true);
+        setTimeout(() => {
+          if (currentQ + 1 >= questions.length) {
+            setCurrentQ(0);
+          } else {
+            setCurrentQ(currentQ + 1);
+          }
+          setFlip(false);
+        }, 250);
+      };
+
+      const goBack = () => {
+        setScreen("start");
+        setCurrentQ(0);
+      };
+
+      const handleSlider = (val) => {
+        const v = parseInt(val);
+        if (v === 4 && !barUnlocked) {
+          setLevel(4);
+          setShowPaywall(true);
+        } else {
+          setLevel(v);
+        }
+      };
+
+      const unlockBar = () => {
+        setBarUnlocked(true);
+        setShowPaywall(false);
+        setLevel(4);
+      };
+
+      const dismissPaywall = () => {
+        setShowPaywall(false);
+        if (!barUnlocked) {
+          setLevel(3);
+        }
+      };
+
+      const sliderGradient = `linear-gradient(90deg, #4ADE80 0%, #FBBF24 25%, #FB923C 50%, #F472B6 75%, #EF4444 100%)`;
+
+      return (
+        <div style={{
+          minHeight: "100dvh",
+          background: "#0B0E14",
+          color: "#F0F0F0",
+          fontFamily: "'Inter', 'SF Pro Display', -apple-system, sans-serif",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "24px 16px",
+          position: "relative",
+          overflow: "hidden",
+        }}>
+          <div style={{
+            position: "fixed",
+            top: "-30%",
+            left: "-20%",
+            width: "140%",
+            height: "80%",
+            background: `radial-gradient(ellipse at center, ${currentLevel.color}18 0%, transparent 70%)`,
+            pointerEvents: "none",
+            transition: "background 0.6s ease",
+            zIndex: 0,
+          }}/>
+
+          <style>{`
+            @keyframes fadeUp {
+              from { opacity: 0; transform: translateY(16px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            .spice-slider {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 100%;
+              height: 8px;
+              border-radius: 99px;
+              outline: none;
+              cursor: pointer;
+              background: ${sliderGradient};
+            }
+            .spice-slider::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 26px;
+              height: 26px;
+              border-radius: 50%;
+              background: ${currentLevel.color};
+              border: 3px solid #fff;
+              box-shadow: 0 0 16px ${currentLevel.color}99;
+              cursor: grab;
+            }
+            .spice-slider::-moz-range-thumb {
+              width: 26px;
+              height: 26px;
+              border-radius: 50%;
+              background: ${currentLevel.color};
+              border: 3px solid #fff;
+              box-shadow: 0 0 16px ${currentLevel.color}99;
+              cursor: grab;
+            }
+          `}</style>
+
+          <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: 420 }}>
+            {screen === "start" && (
+              <div style={{ textAlign: "center", animation: "fadeUp 0.45s ease" }}>
+                <div style={{ fontSize: 56, lineHeight: 1, marginBottom: 8 }} aria-hidden="true">🎳</div>
+                <h1 style={{
+                  fontSize: "clamp(36px, 10vw, 52px)",
+                  fontWeight: 800,
+                  letterSpacing: "-0.03em",
+                  margin: "0 0 6px",
+                  background: "linear-gradient(135deg, #4ADE80 0%, #FBBF24 28%, #FB923C 55%, #F472B6 78%, #EF4444 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}>
+                  Spill the Tea
+                </h1>
+                <p style={{
+                  fontSize: 12,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.4)",
+                  margin: "0 0 32px",
+                  fontWeight: 600,
+                }}>
+                  bowling night edition
+                </p>
+
+                <div style={{
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: 20,
+                  padding: "22px 20px 18px",
+                  marginBottom: 18,
+                  textAlign: "left",
+                }}>
+                  <div style={{
+                    fontSize: 11,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.45)",
+                    fontWeight: 700,
+                    marginBottom: 16,
+                    textAlign: "center",
+                  }}>
+                    Vibe Check
+                  </div>
+
+                  <input
+                    className="spice-slider"
+                    type="range"
+                    min="0"
+                    max="4"
+                    step="1"
+                    value={level}
+                    aria-label="Spice level"
+                    onChange={(e) => handleSlider(e.target.value)}
+                  />
+
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: 10 }}>
+                    {LEVELS.map((l) => (
+                      <span
+                        key={l.id}
+                        style={{
+                          fontSize: 18,
+                          opacity: level === l.id ? 1 : 0.32,
+                          transform: level === l.id ? "scale(1.25)" : "scale(1)",
+                          transition: "all 0.2s ease",
+                          filter: level === l.id ? "none" : "grayscale(0.4)",
+                        }}
+                        aria-hidden="true"
+                      >
+                        {l.emoji}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div style={{
+                    marginTop: 18,
+                    padding: "14px 16px",
+                    borderRadius: 14,
+                    background: currentLevel.bg,
+                    border: `1px solid ${currentLevel.color}44`,
+                    transition: "background 0.3s ease, border-color 0.3s ease",
+                  }}>
+                    <div style={{ fontSize: 17, fontWeight: 700, color: currentLevel.color }}>
+                      {currentLevel.emoji} {currentLevel.label}
+                    </div>
+                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.62)", marginTop: 6, lineHeight: 1.45 }}>
+                      {DESCRIPTIONS[level]}
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={startGame}
+                  style={{
+                    width: "100%",
+                    padding: "16px 24px",
+                    borderRadius: 16,
+                    border: "none",
+                    background: currentLevel.color,
+                    color: "#0B0E14",
+                    fontSize: 17,
+                    fontWeight: 800,
+                    fontFamily: "inherit",
+                    cursor: "pointer",
+                    boxShadow: `0 8px 32px ${currentLevel.color}44`,
+                    transition: "background 0.3s ease, box-shadow 0.3s ease",
+                  }}
+                >
+                  {level === 4 && !barUnlocked ? "Unlock & Start 🔒" : "Start 🍵"}
+                </button>
+              </div>
+            )}
+
+            {screen === "play" && (
+              <div style={{ animation: "fadeUp 0.4s ease" }}>
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 10,
+                  marginBottom: 22,
+                }}>
+                  <button
+                    type="button"
+                    onClick={goBack}
+                    style={{
+                      background: "rgba(255,255,255,0.06)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      color: "#F0F0F0",
+                      borderRadius: 12,
+                      padding: "8px 14px",
+                      fontSize: 14,
+                      fontWeight: 600,
+                      fontFamily: "inherit",
+                      cursor: "pointer",
+                    }}
+                  >
+                    ← Back
+                  </button>
+                  <div style={{
+                    padding: "6px 12px",
+                    borderRadius: 999,
+                    background: currentLevel.bg,
+                    border: `1px solid ${currentLevel.color}55`,
+                    color: currentLevel.color,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    whiteSpace: "nowrap",
+                  }}>
+                    {currentLevel.emoji} {currentLevel.label}
+                  </div>
+                  <div style={{
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: "rgba(255,255,255,0.45)",
+                    minWidth: 52,
+                    textAlign: "right",
+                  }}>
+                    {currentQ + 1} / {questions.length || 20}
+                  </div>
+                </div>
+
+                <div style={{
+                  minHeight: 260,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "36px 24px",
+                  borderRadius: 24,
+                  background: currentLevel.bg,
+                  border: `1px solid ${currentLevel.color}40`,
+                  boxShadow: `0 20px 60px ${currentLevel.color}14`,
+                  transform: flip ? "rotateY(90deg) scale(0.96)" : "rotateY(0deg) scale(1)",
+                  opacity: flip ? 0 : 1,
+                  transition: "transform 0.25s ease, opacity 0.2s ease",
+                  marginBottom: 22,
+                }}>
+                  <p style={{
+                    fontSize: "clamp(20px, 5.4vw, 26px)",
+                    fontWeight: 650,
+                    lineHeight: 1.35,
+                    textAlign: "center",
+                    margin: 0,
+                  }}>
+                    {questions[currentQ]}
+                  </p>
+                </div>
+
+                <div style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: 5,
+                  flexWrap: "wrap",
+                  marginBottom: 20,
+                }}>
+                  {questions.map((_, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        background: i === currentQ ? currentLevel.color : "rgba(255,255,255,0.14)",
+                        boxShadow: i === currentQ ? `0 0 8px ${currentLevel.color}` : "none",
+                        transition: "background 0.2s ease",
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={nextQuestion}
+                  style={{
+                    width: "100%",
+                    padding: "16px 24px",
+                    borderRadius: 16,
+                    border: "none",
+                    background: currentLevel.color,
+                    color: "#0B0E14",
+                    fontSize: 17,
+                    fontWeight: 800,
+                    fontFamily: "inherit",
+                    cursor: "pointer",
+                    boxShadow: `0 8px 32px ${currentLevel.color}44`,
+                  }}
+                >
+                  Next Question
+                </button>
+              </div>
+            )}
+          </div>
+
+          {showPaywall && (
+            <div
+              onClick={dismissPaywall}
+              style={{
+                position: "fixed",
+                inset: 0,
+                zIndex: 20,
+                background: "rgba(5,6,10,0.78)",
+                backdropFilter: "blur(8px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 16,
+              }}
+            >
+              <div
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  width: "100%",
+                  maxWidth: 360,
+                  background: "#141820",
+                  border: "1px solid rgba(239,68,68,0.28)",
+                  borderRadius: 24,
+                  padding: "28px 22px 20px",
+                  textAlign: "center",
+                  boxShadow: "0 24px 80px rgba(239,68,68,0.18)",
+                  animation: "fadeUp 0.3s ease",
+                }}
+              >
+                <div style={{
+                  display: "inline-block",
+                  fontSize: 11,
+                  fontWeight: 800,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "#EF4444",
+                  background: "rgba(239,68,68,0.12)",
+                  border: "1px solid rgba(239,68,68,0.35)",
+                  borderRadius: 999,
+                  padding: "4px 10px",
+                  marginBottom: 10,
+                }}>
+                  18+
+                </div>
+                <div style={{ fontSize: 42, lineHeight: 1, marginBottom: 8 }}>🍺</div>
+                <h2 style={{ margin: "0 0 6px", fontSize: 24, fontWeight: 800 }}>
+                  Premium Content
+                </h2>
+                <p style={{ margin: "0 0 18px", fontSize: 13, color: "rgba(255,255,255,0.55)", lineHeight: 1.45 }}>
+                  Unlock Bar-level questions. Joke paywall. Honor system.
+                </p>
+
+                <div style={{ marginBottom: 18 }}>
+                  <span style={{
+                    color: "rgba(255,255,255,0.35)",
+                    textDecoration: "line-through",
+                    fontSize: 18,
+                    marginRight: 10,
+                    fontWeight: 600,
+                  }}>
+                    $199
+                  </span>
+                  <span style={{ color: "#EF4444", fontSize: 36, fontWeight: 800 }}>$1</span>
+                </div>
+
+                <div style={{
+                  fontSize: 11,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.4)",
+                  fontWeight: 700,
+                  marginBottom: 10,
+                }}>
+                  Scan to pay
+                </div>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+                  <FakeQR />
+                </div>
+                <div style={{
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: "#F0F0F0",
+                  marginBottom: 4,
+                }}>
+                  Venmo / CashApp
+                </div>
+                <div style={{
+                  fontSize: 13,
+                  color: "rgba(255,255,255,0.5)",
+                  marginBottom: 20,
+                }}>
+                  Coach K
+                </div>
+
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button
+                    type="button"
+                    onClick={dismissPaywall}
+                    style={{
+                      flex: 1,
+                      padding: "13px 12px",
+                      borderRadius: 14,
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      background: "transparent",
+                      color: "rgba(255,255,255,0.7)",
+                      fontSize: 14,
+                      fontWeight: 700,
+                      fontFamily: "inherit",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Nah I’m good
+                  </button>
+                  <button
+                    type="button"
+                    onClick={unlockBar}
+                    style={{
+                      flex: 1,
+                      padding: "13px 12px",
+                      borderRadius: 14,
+                      border: "none",
+                      background: "#EF4444",
+                      color: "#fff",
+                      fontSize: 14,
+                      fontWeight: 800,
+                      fontFamily: "inherit",
+                      cursor: "pointer",
+                      boxShadow: "0 8px 24px rgba(239,68,68,0.35)",
+                    }}
+                  >
+                    I Paid
+                  </button>
+                </div>
+                <p style={{
+                  margin: "14px 0 0",
+                  fontSize: 11,
+                  color: "rgba(255,255,255,0.35)",
+                  lineHeight: 1.4,
+                }}>
+                  Honor system. We trust you. Don’t be weird about it.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
