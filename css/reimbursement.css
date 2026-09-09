@@ -336,7 +336,7 @@ html, body {
   align-items: center;
   gap: 16px;
 }
-.totals-row label { font-size: 0.75rem; color: var(--gray-600); min-width: 120px; text-align: right; }
+.totals-row label { font-size: 0.75rem; color: var(--gray-600); min-width: 200px; text-align: right; }
 .totals-row input { width: 100px; text-align: right; }
 .totals-value { font-weight: 700; color: var(--slam-green); font-size: 1rem; }
 

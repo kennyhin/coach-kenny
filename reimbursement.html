@@ -391,6 +391,36 @@
     return true;
   }
 
+  function looksLikeTaxLabel(text) {
+    var s = String(text || '').replace(/\s+/g, ' ').trim();
+    if (!s) return false;
+    if (/\b(pre-?tax|after\s+tax|tax\s*(id|exempt)|tax\s*included|includes?\s+tax)\b/i.test(s)) return false;
+    return /(?:^|\b)(?:sales\s+)?tax\b/i.test(s);
+  }
+
+  function splitTaxFromItems(items) {
+    var kept = [];
+    var taxFromItems = '';
+    (items || []).forEach(function (it) {
+      var desc = String(it.desc || '').trim();
+      var amount = String(it.amount || '').replace(/^\$/, '').trim();
+      var qty = String(it.qty || '1').trim();
+      if (looksLikeTaxLabel(desc)) {
+        if (!taxFromItems && amount) taxFromItems = amount;
+        return;
+      }
+      kept.push({ desc: desc, qty: qty, amount: amount });
+    });
+    return { items: kept, taxFromItems: taxFromItems };
+  }
+
+  function labeledTaxAmount(tax, taxLine, taxFromItems) {
+    var amount = String(tax || '').replace(/^\$/, '').trim();
+    if (amount && looksLikeTaxLabel(taxLine)) return amount;
+    if (taxFromItems) return taxFromItems;
+    return '';
+  }
+
   function applyClaudeResults(data) {
     var vendor = sanitizeVendor(data.vendor || '');
     if (vendor) {
@@ -401,17 +431,19 @@
       STATE.values['rr-date'] = normalizeDate(data.date) || data.date;
       STATE.values['_ocr_rr-date'] = true;
     }
-    if (Array.isArray(data.items) && data.items.length) {
-      STATE.values['items'] = data.items.map(function (it) {
-        return {
-          desc: String(it.desc || '').trim(),
-          qty: String(it.qty || '1').trim(),
-          amount: String(it.amount || '').replace(/^\$/, '').trim(),
-        };
-      });
+    var pulled = splitTaxFromItems(Array.isArray(data.items) ? data.items : []);
+    if (pulled.items.length) {
+      STATE.values['items'] = pulled.items;
       STATE.values['_ocr_items'] = true;
     }
-    if (data.tax) { STATE.values['rr-tax'] = String(data.tax).replace(/^\$/, ''); STATE.values['_ocr_rr-tax'] = true; }
+    var tax = labeledTaxAmount(data.tax, data.tax_line, pulled.taxFromItems);
+    if (tax) {
+      STATE.values['rr-tax'] = tax;
+      STATE.values['_ocr_rr-tax'] = true;
+    } else {
+      delete STATE.values['rr-tax'];
+      delete STATE.values['_ocr_rr-tax'];
+    }
   }
 
   function sanitizeVendor(name) {
@@ -454,7 +486,7 @@
 
   function parseReceiptText(text) {
     var lines = text.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
-    var result = { vendor: '', date: '', total: '', tax: '', items: [] };
+    var result = { vendor: '', date: '', total: '', tax: '', tax_line: '', items: [] };
     var bestVendor = '';
     var bestScore = -100;
 
@@ -477,7 +509,7 @@
       if (!m) return;
       var amt = m[1].replace(/,/g, '');
       if (/sub[\s-]?total/.test(lower)) return;
-      if (/\btax\b/.test(lower)) { result.tax = amt; return; }
+      if (looksLikeTaxLabel(lower)) { result.tax = amt; result.tax_line = line; return; }
       if (/\b(total|amount due|balance due)\b/.test(lower)) { result.total = amt; }
     });
 
@@ -520,16 +552,22 @@
       STATE.values['_ocr_rr-vendor'] = true;
     }
     if (parsed.date) { STATE.values['rr-date'] = parsed.date; STATE.values['_ocr_rr-date'] = true; }
-    if (parsed.items.length) {
-      STATE.values['items'] = parsed.items.map(function (it) {
-        return { desc: it.desc, qty: it.qty || '1', amount: it.amount };
-      });
+    var pulled = splitTaxFromItems(parsed.items || []);
+    if (pulled.items.length) {
+      STATE.values['items'] = pulled.items;
       STATE.values['_ocr_items'] = true;
     } else if (parsed.vendor) {
       STATE.values['items'] = [{ desc: '', qty: '1', amount: parsed.total || '' }];
       STATE.values['_ocr_items'] = true;
     }
-    if (parsed.tax) { STATE.values['rr-tax'] = parsed.tax; STATE.values['_ocr_rr-tax'] = true; }
+    var tax = labeledTaxAmount(parsed.tax, parsed.tax_line, pulled.taxFromItems);
+    if (tax) {
+      STATE.values['rr-tax'] = tax;
+      STATE.values['_ocr_rr-tax'] = true;
+    } else {
+      delete STATE.values['rr-tax'];
+      delete STATE.values['_ocr_rr-tax'];
+    }
   }
 
   function persistAll() {
@@ -696,7 +734,7 @@
     totals.className = 'totals-block';
     totals.innerHTML =
       '<div class="totals-row"><label>Subtotal</label><span>$<span class="subtotal-val">0.00</span></span></div>' +
-      '<div class="totals-row"><label>Tax paid (deduct)</label><input type="number" step="0.01" data-field="rr-tax" placeholder="0.00"' +
+      '<div class="totals-row"><label>Tax (only if receipt says tax)</label><input type="number" step="0.01" data-field="rr-tax" placeholder="0.00"' +
       (STATE.values['rr-tax'] ? ' value="' + STATE.values['rr-tax'] + '"' : '') + ' /></div>' +
       '<div class="totals-row"><label>Reimbursable</label><span class="totals-value">$<span class="total-val">0.00</span></span></div>';
     box.appendChild(totals);
