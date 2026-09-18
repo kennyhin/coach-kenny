@@ -39,7 +39,7 @@
           <div class="upload-actions">
             <label class="btn btn-primary" id="choose-file-label">
               Choose File
-              <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none" />
+              <input type="file" id="file-input" accept="image/*,.heic,.heif,application/pdf" capture="environment" style="display:none" />
             </label>
             <button type="button" class="btn btn-ghost" onclick="app.skipUpload()">Skip — fill manually</button>
           </div>
@@ -77,12 +77,17 @@
             </svg>
           </div>
           <h2 class="card-title">Reimbursement Ready</h2>
-          <p class="card-sub">Your signed PDF is ready. Download it or send directly to Kenny Hin, Athletic Director.</p>
+          <p class="card-sub" id="download-blurb">Your signed PDF is ready. Download it or send directly to Kenny Hin, Athletic Director.</p>
+          <div id="download-status" class="download-status" style="display:none" role="status" aria-live="polite"></div>
           <div class="actions" style="justify-content:center">
-            <button type="button" class="btn btn-primary" onclick="app.generatePDF()">Download PDF</button>
+            <button type="button" class="btn btn-primary" id="download-pdf-btn" onclick="app.generatePDF()">Download PDF</button>
+          </div>
+          <div id="pdf-ready" class="pdf-ready" style="display:none">
+            <a id="pdf-ready-link" class="btn btn-primary" href="#" download>Open PDF</a>
+            <p class="card-sub">If nothing downloaded, tap Open PDF, then use Share → Save to Files.</p>
           </div>
           <div class="actions" style="justify-content:center;margin-top:8px">
-            <button type="button" class="btn btn-outline" onclick="app.sendToAD()">Send to Athletic Director</button>
+            <button type="button" class="btn btn-outline" id="send-ad-btn" onclick="app.sendToAD()">Send to Athletic Director</button>
           </div>
           <div class="actions" style="justify-content:center;margin-top:8px">
             <button type="button" class="btn btn-ghost" onclick="app.resetAll()">Start Another Form</button>
@@ -141,7 +146,16 @@
 
   var AD_EMAIL = 'kenny.hin@slamnv.org';
   var TODAY = new Date().toISOString().slice(0, 10);
-  var STATE = { step: 0, values: {}, ocrRunning: false, scanned: false, sigPad: null };
+  var STATE = {
+    step: 0,
+    values: {},
+    ocrRunning: false,
+    scanned: false,
+    sigPad: null,
+    receiptFile: null,
+    receiptPreviewUrl: '',
+    pdfObjectUrl: ''
+  };
 
   function $(id) { return document.getElementById(id); }
 
@@ -214,6 +228,7 @@
 
   function skipUpload() {
     STATE.scanned = false;
+    resetUploadUi();
     STATE.step = 0;
     show('screen-form');
     buildStep();
@@ -224,10 +239,28 @@
     buildStep();
   }
 
+  function revokeUrl(url) {
+    if (url && String(url).indexOf('blob:') === 0) {
+      try { URL.revokeObjectURL(url); } catch (e) { /* already revoked */ }
+    }
+  }
+
+  function clearReceipt() {
+    revokeUrl(STATE.receiptPreviewUrl);
+    STATE.receiptFile = null;
+    STATE.receiptPreviewUrl = '';
+  }
+
   function resetUploadUi() {
+    clearReceipt();
     $('preview-wrap').style.display = 'none';
     $('receipt-actions').style.display = 'none';
-    $('receipt-img').src = '';
+    var img = $('receipt-img');
+    if (img) {
+      img.src = '';
+      img.style.display = 'block';
+      img.alt = 'Receipt preview';
+    }
     $('upload-zone').style.display = 'flex';
     setOcrStatus(null);
     var input = $('file-input');
@@ -249,10 +282,22 @@
 
   function onPhoto(file) {
     STATE.scanned = true;
+    clearReceipt();
+    STATE.receiptFile = file;
+    STATE.receiptPreviewUrl = URL.createObjectURL(file);
     $('upload-zone').style.display = 'none';
     $('preview-wrap').style.display = 'block';
     $('receipt-actions').style.display = 'flex';
-    $('receipt-img').src = URL.createObjectURL(file);
+    var img = $('receipt-img');
+    if (isPdfFile(file)) {
+      img.style.display = 'none';
+      img.removeAttribute('src');
+      img.alt = 'PDF receipt attached';
+    } else {
+      img.style.display = 'block';
+      img.alt = 'Receipt preview';
+      img.src = STATE.receiptPreviewUrl;
+    }
     runOCR(file);
   }
 
@@ -271,6 +316,7 @@
     STATE.step += 1;
     if (STATE.step >= FORM_STEPS.length) {
       show('screen-download');
+      updateDownloadCopy();
       return;
     }
     buildStep();
@@ -974,6 +1020,222 @@
     return bytes;
   }
 
+  function isPdfFile(file) {
+    if (!file) return false;
+    return file.type === 'application/pdf' || /\.pdf$/i.test(file.name || '');
+  }
+
+  function isHeicFile(file) {
+    if (!file) return false;
+    return /heic|heif/i.test(file.type || '') || /\.(heic|heif)$/i.test(file.name || '');
+  }
+
+  function needsBlobTab() {
+    var ua = navigator.userAgent || '';
+    if (/iPad|iPhone|iPod/.test(ua)) return true;
+    if (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) return true;
+    return false;
+  }
+
+  function loadScriptOnce(src, globalName) {
+    return new Promise(function (resolve, reject) {
+      if (globalName && typeof window[globalName] !== 'undefined') {
+        resolve(window[globalName]);
+        return;
+      }
+      var existing = document.querySelector('script[data-src="' + src + '"]');
+      if (existing) {
+        existing.addEventListener('load', function () { resolve(globalName ? window[globalName] : true); });
+        existing.addEventListener('error', function () { reject(new Error('Failed to load converter')); });
+        return;
+      }
+      var s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.setAttribute('data-src', src);
+      s.onload = function () { resolve(globalName ? window[globalName] : true); };
+      s.onerror = function () { reject(new Error('Failed to load converter')); };
+      document.head.appendChild(s);
+    });
+  }
+
+  async function convertHeicBlob(file) {
+    var convert = await loadScriptOnce(
+      'https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js',
+      'heic2any'
+    );
+    if (typeof convert !== 'function') throw new Error('HEIC converter unavailable');
+    var out = await convert({ blob: file, toType: 'image/jpeg', quality: 0.85 });
+    return Array.isArray(out) ? out[0] : out;
+  }
+
+  function loadImageElement(blob) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(blob);
+      var img = new Image();
+      img.onload = function () { resolve(img); };
+      img.onerror = function () {
+        revokeUrl(url);
+        reject(new Error('Could not read that receipt photo. Try a JPEG or PNG.'));
+      };
+      img.src = url;
+    });
+  }
+
+  function canvasToJpegBytes(canvas, quality) {
+    return new Promise(function (resolve, reject) {
+      if (canvas.toBlob) {
+        canvas.toBlob(function (blob) {
+          if (!blob) { reject(new Error('Could not compress receipt photo')); return; }
+          blob.arrayBuffer().then(function (buf) {
+            resolve(new Uint8Array(buf));
+          }, reject);
+        }, 'image/jpeg', quality);
+        return;
+      }
+      resolve(dataUrlToBytes(canvas.toDataURL('image/jpeg', quality)));
+    });
+  }
+
+  async function drawBlobToJpeg(blob, maxDim, quality) {
+    var img = await loadImageElement(blob);
+    var w = img.naturalWidth || img.width;
+    var h = img.naturalHeight || img.height;
+    if (!w || !h) {
+      revokeUrl(img.src);
+      throw new Error('Receipt image has no dimensions');
+    }
+    var scale = Math.min(1, maxDim / Math.max(w, h));
+    var cw = Math.max(1, Math.round(w * scale));
+    var ch = Math.max(1, Math.round(h * scale));
+    var canvas = document.createElement('canvas');
+    canvas.width = cw;
+    canvas.height = ch;
+    var ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) {
+      revokeUrl(img.src);
+      throw new Error('Could not prepare receipt image');
+    }
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, cw, ch);
+    ctx.drawImage(img, 0, 0, cw, ch);
+    revokeUrl(img.src);
+    var bytes = await canvasToJpegBytes(canvas, quality);
+    return { bytes: bytes, width: cw, height: ch };
+  }
+
+  async function receiptFileToJpeg(file, maxDim, quality) {
+    maxDim = maxDim || 1600;
+    quality = quality == null ? 0.82 : quality;
+    if (isHeicFile(file)) {
+      try {
+        return await drawBlobToJpeg(await convertHeicBlob(file), maxDim, quality);
+      } catch (heicErr) {
+        return await drawBlobToJpeg(file, maxDim, quality);
+      }
+    }
+    try {
+      return await drawBlobToJpeg(file, maxDim, quality);
+    } catch (nativeErr) {
+      try {
+        return await drawBlobToJpeg(await convertHeicBlob(file), maxDim, quality);
+      } catch (heicErr) {
+        throw nativeErr;
+      }
+    }
+  }
+
+  async function appendReceiptToPdf(doc, font, black) {
+    var file = STATE.receiptFile;
+    if (!file) return;
+    if (isPdfFile(file)) {
+      var src = await PDFLib.PDFDocument.load(await file.arrayBuffer());
+      var copied = await doc.copyPages(src, src.getPageIndices());
+      copied.forEach(function (p) { doc.addPage(p); });
+      return;
+    }
+    var jpeg;
+    try {
+      jpeg = await receiptFileToJpeg(file, 1600, 0.82);
+    } catch (e) {
+      throw new Error(e.message || 'Could not read receipt photo');
+    }
+    var img;
+    try {
+      img = await doc.embedJpg(jpeg.bytes);
+    } catch (e) {
+      jpeg = await receiptFileToJpeg(file, 1200, 0.65);
+      img = await doc.embedJpg(jpeg.bytes);
+    }
+    var pageW = 612;
+    var pageH = 792;
+    var page = doc.addPage([pageW, pageH]);
+    var margin = 36;
+    var header = 28;
+    var maxW = pageW - margin * 2;
+    var maxH = pageH - margin - header;
+    var scale = Math.min(maxW / img.width, maxH / img.height, 1);
+    var w = img.width * scale;
+    var h = img.height * scale;
+    page.drawText('Attached receipt', {
+      x: margin,
+      y: pageH - 24,
+      size: 11,
+      font: font,
+      color: black
+    });
+    page.drawImage(img, {
+      x: (pageW - w) / 2,
+      y: margin,
+      width: w,
+      height: h
+    });
+  }
+
+  function updateDownloadCopy() {
+    var blurb = $('download-blurb');
+    if (!blurb) return;
+    blurb.textContent = STATE.receiptFile
+      ? 'Your signed form and receipt photo are ready. Download the PDF or send it to Kenny Hin, Athletic Director.'
+      : 'Your signed PDF is ready. Download it or send directly to Kenny Hin, Athletic Director.';
+  }
+
+  function showDownloadMessage(type, text) {
+    var el = $('download-status');
+    if (!el) return;
+    el.className = 'download-status ' + (type || 'info');
+    el.textContent = text || '';
+    el.style.display = text ? 'flex' : 'none';
+  }
+
+  function setDownloadBusy(busy, label) {
+    var dl = $('download-pdf-btn');
+    var send = $('send-ad-btn');
+    if (dl) {
+      dl.disabled = !!busy;
+      dl.textContent = label || (busy ? 'Preparing PDF…' : 'Download PDF');
+    }
+    if (send) send.disabled = !!busy;
+  }
+
+  function hidePdfReady() {
+    var wrap = $('pdf-ready');
+    if (wrap) wrap.style.display = 'none';
+    revokeUrl(STATE.pdfObjectUrl);
+    STATE.pdfObjectUrl = '';
+  }
+
+  function showPdfReady(url, filename) {
+    var wrap = $('pdf-ready');
+    var link = $('pdf-ready-link');
+    if (!wrap || !link) return;
+    link.href = url;
+    link.setAttribute('download', filename);
+    link.target = '_blank';
+    link.rel = 'noopener';
+    wrap.style.display = 'block';
+  }
+
   async function buildPdfDoc() {
     if (typeof PDFLib === 'undefined') throw new Error('PDF library not loaded.');
     var PDFDocument = PDFLib.PDFDocument;
@@ -1036,44 +1298,112 @@
     }
     t(480, 340, formatPdfDate(v['rr-sign-date'] || v['rr-date']), 9);
 
-    return { bytes: await doc.save(), filename: safeName(lastName(v['rr-name'])) + '_RRF.pdf' };
+    var receiptWarning = '';
+    if (STATE.receiptFile) {
+      try {
+        await appendReceiptToPdf(doc, font, black);
+      } catch (e) {
+        receiptWarning = e.message || 'Receipt photo could not be attached.';
+      }
+    }
+
+    return {
+      bytes: await doc.save(),
+      filename: safeName(lastName(v['rr-name'])) + '_RRF.pdf',
+      receiptWarning: receiptWarning
+    };
   }
 
-  function downloadBytes(bytes, filename) {
+  function downloadBytes(bytes, filename, previewWin) {
     var blob = new Blob([bytes], { type: 'application/pdf' });
+    revokeUrl(STATE.pdfObjectUrl);
     var url = URL.createObjectURL(blob);
+    STATE.pdfObjectUrl = url;
+    showPdfReady(url, filename);
+
     var a = document.createElement('a');
     a.href = url;
     a.download = filename;
+    a.rel = 'noopener';
+    a.style.display = 'none';
+    document.body.appendChild(a);
     a.click();
-    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    a.remove();
+
+    if (previewWin && !previewWin.closed) {
+      try {
+        previewWin.location.href = url;
+      } catch (e) {
+        try { previewWin.location = url; } catch (e2) { /* Open PDF link remains */ }
+      }
+    } else if (needsBlobTab()) {
+      var opened = window.open(url, '_blank');
+      if (!opened) {
+        showDownloadMessage('info', 'Tap Open PDF below if the file did not appear.');
+      }
+    }
+    return url;
   }
 
   async function generatePDF() {
+    var previewWin = needsBlobTab() ? window.open('about:blank', '_blank') : null;
+    if (previewWin) {
+      try {
+        previewWin.document.write('<p style="font-family:sans-serif;padding:24px">Preparing your reimbursement PDF…</p>');
+      } catch (e) { /* some browsers block document.write on the new tab */ }
+    }
     try {
+      setDownloadBusy(true, 'Preparing PDF…');
+      showDownloadMessage('info', STATE.receiptFile
+        ? 'Building form and attaching your receipt…'
+        : 'Building your reimbursement PDF…');
+      hidePdfReady();
       persistAll();
       var result = await buildPdfDoc();
-      downloadBytes(result.bytes, result.filename);
+      downloadBytes(result.bytes, result.filename, previewWin);
+      if (result.receiptWarning) {
+        showDownloadMessage('error', 'PDF is ready, but the receipt was not attached: ' + result.receiptWarning);
+      } else {
+        showDownloadMessage('ok', STATE.receiptFile
+          ? 'PDF ready. Receipt photo is on the following page.'
+          : 'PDF ready.');
+      }
     } catch (err) {
-      alert('PDF generation failed: ' + err.message);
+      if (previewWin && !previewWin.closed) previewWin.close();
+      showDownloadMessage('error', 'Could not create the PDF: ' + (err.message || err));
+    } finally {
+      setDownloadBusy(false, 'Download PDF');
     }
   }
 
   async function sendToAD() {
     try {
+      setDownloadBusy(true, 'Preparing PDF…');
+      showDownloadMessage('info', 'Preparing PDF to send…');
       persistAll();
       var result = await buildPdfDoc();
       var file = new File([result.bytes], result.filename, { type: 'application/pdf' });
+      if (result.receiptWarning) {
+        showDownloadMessage('error', 'Receipt was not attached: ' + result.receiptWarning);
+      }
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({ files: [file], title: 'Coach Reimbursement', text: 'Please send this to ' + AD_EMAIL });
+        if (!result.receiptWarning) showDownloadMessage('ok', 'Share sheet opened.');
       } else {
-        downloadBytes(result.bytes, result.filename);
+        downloadBytes(result.bytes, result.filename, null);
         var subject = encodeURIComponent(result.filename.replace(/\.pdf$/, '').replace(/_/g, ' '));
         var body = encodeURIComponent('Hi Kenny,\n\nAttached is my completed reimbursement form.\n\nThanks!');
         setTimeout(function () { window.location.href = 'mailto:' + AD_EMAIL + '?subject=' + subject + '&body=' + body; }, 300);
+        if (!result.receiptWarning) showDownloadMessage('ok', 'PDF ready. Attach it to the email if it is not already included.');
       }
     } catch (err) {
-      alert('Could not prepare email: ' + err.message);
+      if (err && err.name === 'AbortError') {
+        showDownloadMessage('info', 'Share canceled.');
+        return;
+      }
+      showDownloadMessage('error', 'Could not prepare email: ' + (err.message || err));
+    } finally {
+      setDownloadBusy(false, 'Download PDF');
     }
   }
 
@@ -1083,6 +1413,8 @@
     STATE.ocrRunning = false;
     STATE.scanned = false;
     STATE.sigPad = null;
+    hidePdfReady();
+    showDownloadMessage('', '');
     resetUploadUi();
     show('screen-receipt');
   }
