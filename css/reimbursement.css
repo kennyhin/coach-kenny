@@ -457,6 +457,45 @@ html, body {
 }
 .done-card { text-align: center; }
 
+.download-status {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  text-align: left;
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+.download-status.info {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  color: var(--gray-600);
+}
+.download-status.ok {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: var(--slam-green);
+}
+.download-status.error {
+  background: var(--red-50);
+  border: 1px solid var(--red-200);
+  color: var(--red-700);
+}
+
+.pdf-ready {
+  margin-top: 16px;
+}
+.pdf-ready .btn {
+  display: inline-flex;
+  justify-content: center;
+  text-decoration: none;
+}
+.pdf-ready .card-sub {
+  margin-bottom: 0;
+}
+
 .sig-wrap {
   border: 1px solid var(--gray-300);
   border-radius: 0.75rem;
