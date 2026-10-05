@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0B0B0B"><link rel="icon" type="image/png" sizes="32x32" href="/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<title>Genesis 1 &amp; 2 | Coach Kenny Bible Study</title>
+<meta name="description" content="A visual, verse-by-verse study of Genesis 1 and 2 (KJV) with diagrams and cross-references.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Spectral:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/bible-study/assets/bs.css">
+<style>
+
+  /* Layout: sticky left nav toggling two chapter panels; single reading column of
+     ref → intro → diagram → caption. Parchment ground, indigo deep, gold "light". */
+  :root {
+    --bg: #f4efe4;
+    --panel: #fbf8f0;
+    --fg: #241f18;
+    --muted: #6a6052;
+    --line: #d8cfba;
+    --gold: #c08a2d;
+    --gold-soft: #e9c874;
+    --deep: #1d2a44;
+    --deep-2: #2f4268;
+    --water: #3f6b8f;
+    --water-soft: #7fa8c4;
+    --earth: #7a5a36;
+    --fire: #b4532a;
+    --crystal: #cfe6ef;
+    --good: #4a7a4a;
+    --warn: #9a7b2e;
+    --navbg: #efe8d8;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14110c; --panel: #1d1a13; --fg: #ece4d2; --muted: #a39780; --line: #342e22;
+      --gold: #e2b24e; --gold-soft: #f0d58a; --deep: #0d1526; --deep-2: #1b2a40;
+      --water: #4e7ea3; --water-soft: #93b8d2; --earth: #9a7446; --fire: #d2663a;
+      --crystal: #bfe0ec; --good: #6fa86f; --warn: #cfa94e; --navbg: #1a160f;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14110c; --panel: #1d1a13; --fg: #ece4d2; --muted: #a39780; --line: #342e22;
+    --gold: #e2b24e; --gold-soft: #f0d58a; --deep: #0d1526; --deep-2: #1b2a40;
+    --water: #4e7ea3; --water-soft: #93b8d2; --earth: #9a7446; --fire: #d2663a;
+    --crystal: #bfe0ec; --good: #6fa86f; --warn: #cfa94e; --navbg: #1a160f;
+    color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: Spectral, Georgia, serif; line-height: 1.6; margin: 0; }
+
+  .shell { max-width: 1040px; margin: 0 auto; display: flex; gap: 2rem; align-items: flex-start; padding-inline: 20px; }
+
+  /* ---- Sidebar ---- */
+  .sidebar { position: sticky; top: env(safe-area-inset-top, 0px); flex: none; width: 212px; padding-block: 2.2rem; align-self: flex-start; }
+  .brand { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.5rem; line-height: 1.05; margin: 0 0 1.2rem; }
+  .brand small { display: block; font-family: 'IBM Plex Mono', monospace; font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-top: .35rem; }
+  .chaptabs { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1.1rem; }
+  .chaptab { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; text-align: left; background: var(--navbg); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: .5rem .7rem; cursor: pointer; transition: all .15s; }
+  .chaptab[aria-selected="true"] { background: var(--gold); color: #1d1a13; border-color: var(--gold); }
+  .chaptab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .jump { list-style: none; margin: 0; padding: 0 0 0 .2rem; display: flex; flex-direction: column; gap: .15rem; border-left: 1px solid var(--line); }
+  .jump a { display: block; font-size: .82rem; color: var(--muted); text-decoration: none; padding: .28rem .6rem; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.25; }
+  .jump a:hover { color: var(--fg); }
+  .jump a.active { color: var(--gold); border-left-color: var(--gold); font-weight: 600; }
+  .jump .num { font-family: 'IBM Plex Mono', monospace; font-size: .7rem; color: var(--gold); margin-right: .35rem; }
+
+  /* ---- Content ---- */
+  .content { flex: 1 1 auto; min-width: 0; padding-block: 2.4rem 4rem; max-width: 760px; }
+  header.page { margin-bottom: 1.4rem; }
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 .5rem; }
+  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.05; text-wrap: balance; margin: 0 0 .4rem; }
+  .sub { color: var(--muted); font-size: 1.02rem; max-width: 60ch; margin: 0; }
+
+  .chapter-head { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--fg); background: var(--gold-soft); display: inline-block; padding: .4rem .75rem; border-radius: 6px; margin: 1.6rem 0 .3rem; }
+  .chapter-head.two { background: var(--deep); color: var(--gold-soft); }
+  .chapter-sub { color: var(--muted); font-style: italic; margin: 0 0 .5rem; max-width: 62ch; }
+
+  h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: clamp(1.5rem, 3.6vw, 1.95rem); margin: 2.3rem 0 .25rem; text-wrap: balance; scroll-margin-top: 90px; }
+  h2 .n { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--gold); margin-right: .5rem; vertical-align: middle; }
+  .ref { font-family: 'IBM Plex Mono', monospace; font-size: .73rem; letter-spacing: .03em; color: var(--gold); margin: 0 0 1rem; }
+  p { max-width: 64ch; }
+  .lead { max-width: 64ch; }
+
+  figure { margin: 1.3rem 0 .6rem; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem; overflow-x: auto; }
+  figure svg { display: block; width: 100%; height: auto; max-width: 100%; }
+  figcaption { font-size: .85rem; color: var(--muted); margin-top: .7rem; padding-top: .7rem; border-top: 1px solid var(--line); max-width: none; }
+  figcaption b { color: var(--fg); }
+  .svg-title { font-family: 'Cormorant Garamond', serif; }
+  .svg-label { font-family: Spectral, serif; }
+  .svg-mono { font-family: 'IBM Plex Mono', monospace; letter-spacing: .02em; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; font-size: .8rem; color: var(--muted); margin-top: .8rem; }
+  .legend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .sw { width: 14px; height: 14px; border-radius: 3px; flex: none; border: 1px solid rgba(0,0,0,.15); }
+
+  hr { border: none; border-top: 1px solid var(--line); margin: 2.4rem 0; }
+  footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 720px) {
+    .shell { flex-direction: column; gap: 0; }
+    .sidebar { position: sticky; top: 0; width: auto; padding-block: .7rem; background: var(--bg); z-index: 20; border-bottom: 1px solid var(--line); margin-inline: -20px; padding-inline: 20px; }
+    .brand { display: none; }
+    .chaptabs { flex-direction: row; gap: .5rem; margin-bottom: 0; }
+    .chaptab { flex: 1; text-align: center; font-size: 1rem; padding: .45rem; }
+    .jump { display: none; }
+    .content { padding-block: 1.4rem 3rem; }
+    h2 { scroll-margin-top: 70px; }
+  }
+
+/* page-level: keep the site bar's look independent of the parchment study theme */
+.ck-bar a{text-decoration:none}
+</style>
+</head>
+<body>
+<div class="ck-bar"><a class="ck-brand" href="/">Coach <span>Kenny</span></a><nav class="ck-nav" aria-label="Bible study navigation"><a href="/">Home</a><a href="/bible-study/">Bible Study</a><a href="/bible-study/genesis/" aria-current="page">Genesis 1 &amp; 2</a></nav></div>
+
+
+<div class="shell">
+  <!-- ================= SIDEBAR ================= -->
+  <nav class="sidebar" aria-label="Study navigation">
+    <p class="brand">Genesis<small>Verse-by-verse study</small></p>
+    <div class="chaptabs" role="tablist" aria-label="Chapter">
+      <button class="chaptab" id="tab-1" role="tab" aria-selected="true" aria-controls="chap-1">Genesis 1</button>
+      <button class="chaptab" id="tab-2" role="tab" aria-selected="false" aria-controls="chap-2">Genesis 2</button>
+    </div>
+
+    <ul class="jump" id="jump-1">
+      <li><a href="#g1-01"><span class="num">1:1</span>The first verse</a></li>
+      <li><a href="#g1-02"><span class="num">1:2</span>The formless heart</a></li>
+      <li><a href="#g1-03"><span class="num">1:3</span>Light from God</a></li>
+      <li><a href="#g1-04"><span class="num">1:5</span>Evening, then morning</a></li>
+      <li><a href="#g1-05"><span class="num">1:6</span>Firmament &amp; waters</a></li>
+      <li><a href="#g1-06"><span class="num">1:9</span>Land, sea &amp; "after his kind"</a></li>
+      <li><a href="#g1-07"><span class="num">1:14</span>Lights &amp; the named stars</a></li>
+      <li><a href="#g1-08"><span class="num">1:20</span>Life after its kind</a></li>
+      <li><a href="#g1-09"><span class="num">1:26</span>God's image &amp; the Trinity</a></li>
+      <li><a href="#g1-10"><span class="num">1:28</span>Dominion &amp; the first diet</a></li>
+      <li><a href="#g1-11"><span class="num">1:31</span>The six days at a glance</a></li>
+    </ul>
+
+    <ul class="jump" id="jump-2" hidden="">
+      <li><a href="#g2-01"><span class="num">2:1</span>The seventh day &amp; rest</a></li>
+      <li><a href="#g2-02"><span class="num">2:7</span>Formed from dust</a></li>
+      <li><a href="#g2-03"><span class="num">2:21</span>Bone of my bones</a></li>
+      <li><a href="#g2-04"><span class="num">2:19</span>"So shall it be"</a></li>
+      <li><a href="#g2-05"><span class="num">6:11</span>The word "but"</a></li>
+    </ul>
+  </nav>
+
+  <!-- ================= CONTENT ================= -->
+  <main class="content">
+    <header class="page">
+      <p class="eyebrow">Genesis 1–2 · KJV</p>
+      <h1>Genesis Chapters 1 &amp; 2</h1>
+      <p class="sub">A visual, verse-by-verse study. Use the tabs to move between the two chapters; every diagram is anchored to Scripture you can turn to.</p>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- CHAPTER ONE -->
+    <!-- ============================================================ -->
+    <section id="chap-1" role="tabpanel" aria-labelledby="tab-1">
+      <p class="chapter-head">Genesis 1 — The Creation of the World</p>
+      <p class="chapter-sub">The six days, read on their face and, where the text invites it, as a picture of the heart.</p>
+
+      <!-- 1:1 -->
+      <h2 id="g1-01"><span class="n">01</span>The First Verse Holds It All</h2>
+      <p class="ref">GENESIS 1:1</p>
+      <p class="lead">The opening verse names the basic categories of the physical world — time, motion, energy, space, and matter — each carried by a single word.</p>
+      <figure>
+        <svg viewBox="0 0 640 170" role="img" aria-labelledby="eTitle">
+          <title id="eTitle">Genesis 1:1 words mapped to time, motion, energy, space and matter</title>
+          <g font-family="'IBM Plex Mono', monospace">
+            <text x="20" y="40" font-size="15" fill="var(--fg)">
+              <tspan fill="var(--gold)" font-weight="600">In the beginning</tspan><tspan fill="var(--muted)"> </tspan><tspan fill="var(--fire)" font-weight="600">God created</tspan><tspan fill="var(--muted)"> the </tspan><tspan fill="var(--water)" font-weight="600">heaven</tspan><tspan fill="var(--muted)"> and the </tspan><tspan fill="var(--earth)" font-weight="600">earth.</tspan>
+            </text>
+          </g>
+          <g class="svg-label">
+            <g transform="translate(20,78)"><rect width="112" height="66" rx="8" fill="var(--gold-soft)" opacity="0.45"></rect><text x="56" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">TIME</text><text x="56" y="48" text-anchor="middle" font-size="10.5" fill="var(--muted)">"beginning"</text></g>
+            <g transform="translate(142,78)"><rect width="112" height="66" rx="8" fill="var(--fire)" opacity="0.28"></rect><text x="56" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">MOTION</text><text x="56" y="48" text-anchor="middle" font-size="10.5" fill="var(--muted)">"created" (act)</text></g>
+            <g transform="translate(264,78)"><rect width="112" height="66" rx="8" fill="var(--fire)" opacity="0.5"></rect><text x="56" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">ENERGY</text><text x="56" y="48" text-anchor="middle" font-size="10.5" fill="var(--muted)">"God created"</text></g>
+            <g transform="translate(386,78)"><rect width="112" height="66" rx="8" fill="var(--water)" opacity="0.4"></rect><text x="56" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">SPACE</text><text x="56" y="48" text-anchor="middle" font-size="10.5" fill="var(--muted)">"heaven"</text></g>
+            <g transform="translate(508,78)"><rect width="112" height="66" rx="8" fill="var(--earth)" opacity="0.4"></rect><text x="56" y="26" text-anchor="middle" font-size="13" font-weight="600" fill="var(--fg)">MATTER</text><text x="56" y="48" text-anchor="middle" font-size="10.5" fill="var(--muted)">"earth"</text></g>
+          </g>
+        </svg>
+        <figcaption>One verse answers the big worldview questions at once: God is one, God exists, the world was made rather than self-made, and the universe had a start. <b>Cross-check:</b> John 1:1–3; Colossians 1:16–17; Hebrews 11:3.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:2 heart -->
+      <h2 id="g1-02"><span class="n">02</span>The Heart as the Formless Earth</h2>
+      <p class="ref">GENESIS 1:2–3</p>
+      <p class="lead">Before the light, the earth is "without form, and void," dark and deep — and it cannot lift itself out of that darkness. It stays that way until God speaks. Read as the heart, it is the same story: emptiness no effort of our own can cure, until the Word of God enters and divides the light from the dark.</p>
+      <figure>
+        <svg viewBox="0 0 640 260" role="img" aria-labelledby="hTitle">
+          <title id="hTitle">The earth's condition in verse 2 mapped onto the human heart, changed by the word of God</title>
+          <text x="40" y="34" class="svg-mono" font-size="11" fill="var(--muted)">THE EARTH (verse 2)</text>
+          <text x="40" y="150" class="svg-mono" font-size="11" fill="var(--gold)">THE HEART (the meaning)</text>
+          <g class="svg-label">
+            <rect x="40" y="44" width="150" height="56" rx="8" fill="var(--deep)" opacity="0.9"></rect><text x="115" y="68" text-anchor="middle" font-size="12" font-weight="600" fill="#dfe6f0">Without form</text><text x="115" y="86" text-anchor="middle" font-size="12" font-weight="600" fill="#dfe6f0">&amp; void, dark</text>
+            <rect x="40" y="160" width="150" height="56" rx="8" fill="var(--gold-soft)" opacity="0.4"></rect><text x="115" y="184" text-anchor="middle" font-size="12" fill="var(--fg)">Empty, lonely,</text><text x="115" y="202" text-anchor="middle" font-size="12" fill="var(--fg)">in despair</text>
+            <rect x="245" y="44" width="150" height="56" rx="8" fill="var(--deep-2)" opacity="0.9"></rect><text x="320" y="68" text-anchor="middle" font-size="12" font-weight="600" fill="#dfe6f0">Spirit of God</text><text x="320" y="86" text-anchor="middle" font-size="12" font-weight="600" fill="#dfe6f0">moves (v.2b)</text>
+            <rect x="245" y="160" width="150" height="56" rx="8" fill="var(--gold-soft)" opacity="0.4"></rect><text x="320" y="184" text-anchor="middle" font-size="12" fill="var(--fg)">God draws near</text><text x="320" y="202" text-anchor="middle" font-size="12" fill="var(--fg)">to the heart</text>
+            <rect x="450" y="44" width="150" height="56" rx="8" fill="var(--gold)"></rect><text x="525" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#1d1a13">"Let there be</text><text x="525" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="#1d1a13">light" (v.3)</text>
+            <rect x="450" y="160" width="150" height="56" rx="8" fill="var(--good)" opacity="0.85"></rect><text x="525" y="184" text-anchor="middle" font-size="12" font-weight="600" fill="#fff">The Word of God</text><text x="525" y="202" text-anchor="middle" font-size="12" font-weight="600" fill="#fff">enters — light</text>
+          </g>
+          <g stroke="var(--muted)" stroke-width="1.6" fill="var(--muted)"><line x1="192" y1="72" x2="241" y2="72"></line><path d="M241 72 l-8 -4 v8 z"></path><line x1="397" y1="72" x2="446" y2="72"></line><path d="M446 72 l-8 -4 v8 z"></path></g>
+          <g stroke="var(--gold)" stroke-width="1.2" fill="var(--gold)" stroke-dasharray="3 3"><line x1="115" y1="104" x2="115" y2="156"></line><line x1="320" y1="104" x2="320" y2="156"></line><line x1="525" y1="104" x2="525" y2="156"></line></g>
+          <text x="320" y="246" text-anchor="middle" class="svg-label" font-style="italic" font-size="11.5" fill="var(--muted)">No effort of the earth could end its own darkness — only the word that God spoke.</text>
+        </svg>
+        <figcaption>The heart in darkness cannot argue, medicate, or work its way into light; the change comes when God speaks. <b>Cross-check:</b> 2 Corinthians 4:6 — "God, who commanded the light to shine out of darkness, hath shined in our hearts."</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:3 light -->
+      <h2 id="g1-03"><span class="n">03</span>Light from God</h2>
+      <p class="ref">GENESIS 1:3–5 · JOHN 1 · REVELATION 21–22</p>
+      <p class="lead">Light is spoken into being on day one — three days before the sun. The text calls the light "Day" and the darkness "Night," and the same pairing closes the Bible, where God Himself is the light and there is no night at all.</p>
+      <figure>
+        <svg viewBox="0 0 640 250" role="img" aria-labelledby="lTitle">
+          <title id="lTitle">Light called day and tied to God, darkness called night, matched across Genesis and Revelation</title>
+          <rect x="24" y="24" width="288" height="200" rx="10" fill="var(--gold-soft)" opacity="0.45"></rect>
+          <text x="168" y="54" text-anchor="middle" class="svg-title" font-size="19" font-weight="600" fill="var(--fg)">LIGHT</text>
+          <circle cx="168" cy="90" r="18" fill="var(--gold)"></circle>
+          <g class="svg-label" font-size="12" fill="var(--fg)" text-anchor="middle"><text x="168" y="138">Called <tspan font-weight="600">"Day"</tspan> (Gen 1:5)</text><text x="168" y="160">Spoken by the Word (John 1:3)</text><text x="168" y="182">"God is light" (John 1:4–9)</text><text x="168" y="204">God is the lamp (Rev 21:23)</text></g>
+          <rect x="328" y="24" width="288" height="200" rx="10" fill="var(--deep)" opacity="0.9"></rect>
+          <text x="472" y="54" text-anchor="middle" class="svg-title" font-size="19" font-weight="600" fill="var(--gold-soft)">DARKNESS</text>
+          <circle cx="472" cy="90" r="18" fill="none" stroke="#5a6b86" stroke-width="2"></circle>
+          <g class="svg-label" font-size="12" fill="#dfe6f0" text-anchor="middle"><text x="472" y="138">Called <tspan font-weight="600">"Night"</tspan> (Gen 1:5)</text><text x="472" y="160">Divided from the light (v.4)</text><text x="472" y="182">A sign of the deep (v.2)</text><text x="472" y="204">"No night there" (Rev 22:5)</text></g>
+          <line x1="320" y1="34" x2="320" y2="214" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="4 4"></line>
+          <text x="320" y="18" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--muted)">"God divided the light from the darkness" (v.4)</text>
+        </svg>
+        <figcaption>The day/night pairing at the start of Scripture matches its end: in Revelation 21:23 and 22:5 the city needs no sun, because God is its light. The light of day one and the light of the new creation point to the same source.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:5 evening morning -->
+      <h2 id="g1-04"><span class="n">04</span>Evening, Then Morning</h2>
+      <p class="ref">GENESIS 1:5, 1:8</p>
+      <p class="lead">In God's reckoning the day runs "the evening and the morning" — dark first, then light. That order is a pattern for the life of faith: the things of God often begin hard and dark but end in light, while the things of the world begin sweet and bright but end in darkness.</p>
+      <figure>
+        <svg viewBox="0 0 640 300" role="img" aria-labelledby="emTitle">
+          <title id="emTitle">Two paths — God's way rising from dark to light, the world's way falling from bright to dark</title>
+          <line x1="60" y1="40" x2="60" y2="250" stroke="var(--line)" stroke-width="1.4"></line><line x1="60" y1="250" x2="600" y2="250" stroke="var(--line)" stroke-width="1.4"></line>
+          <text x="30" y="52" class="svg-mono" font-size="9" fill="var(--muted)">bright</text><text x="30" y="246" class="svg-mono" font-size="9" fill="var(--muted)">dark</text>
+          <text x="100" y="272" class="svg-mono" font-size="9" fill="var(--muted)">beginning</text><text x="520" y="272" class="svg-mono" font-size="9" fill="var(--muted)">end</text>
+          <path d="M80 235 C 220 230, 380 120, 580 55" fill="none" stroke="var(--gold)" stroke-width="3.5" stroke-linecap="round"></path>
+          <circle cx="80" cy="235" r="5" fill="var(--deep)"></circle><circle cx="580" cy="55" r="6" fill="var(--gold)"></circle>
+          <text x="300" y="150" class="svg-title" font-size="16" font-weight="600" fill="var(--gold)" transform="rotate(-16 300 150)">God's way</text>
+          <text x="110" y="228" class="svg-label" font-size="10.5" fill="var(--muted)">starts dark, hard</text>
+          <path d="M80 60 C 240 70, 400 185, 580 240" fill="none" stroke="var(--fire)" stroke-width="3.5" stroke-linecap="round"></path>
+          <circle cx="80" cy="60" r="6" fill="var(--fire)"></circle><circle cx="580" cy="240" r="5" fill="var(--deep)"></circle>
+          <text x="300" y="175" class="svg-title" font-size="16" font-weight="600" fill="var(--fire)" transform="rotate(16 300 175)">the world's way</text>
+          <text x="90" y="52" class="svg-label" font-size="10.5" fill="var(--fire)">starts sweet, bright</text>
+          <text x="470" y="236" class="svg-label" font-size="10.5" fill="var(--muted)">ends empty</text>
+        </svg>
+        <div class="legend"><span><span class="sw" style="background:var(--gold)"></span>God's way: the Word, discipline, trials — dark first, then light</span><span><span class="sw" style="background:var(--fire)"></span>The world's way: easy pleasures — bright first, then ruin</span></div>
+        <figcaption>Scripture, discipline, and endurance feel heavy at the start and brighten over time; fast pleasures feel bright at the start and darken over time. "Evening, then morning" quietly teaches which path to trust. <b>Cross-check:</b> Hebrews 12:11; Romans 5:3–5.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:6 firmament -->
+      <h2 id="g1-05"><span class="n">05</span>The Firmament &amp; the Waters</h2>
+      <p class="ref">GENESIS 1:6–8 · 1:17 · REVELATION 4:6</p>
+      <p class="lead">God sets a <em>firmament</em> — the Hebrew <span class="svg-mono" style="font-size:.9em">raqia</span>, a "beaten-out expanse" or vault — in the middle of the waters, dividing the waters <b>above</b> from the waters <b>below</b>. He calls it "Heaven," and the sun, moon and stars are set <em>inside</em> it (v. 17). The expanse is vast and open; its firm part is a thin shell at the very top.</p>
+      <figure>
+        <svg viewBox="0 0 640 540" role="img" aria-labelledby="fTitle">
+          <title id="fTitle">Cross-section of the cosmos: heaven, the waters above as the sea of glass, the firmament of space, the seas below, and the earth</title>
+          <defs>
+            <lineargradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--deep)"></stop><stop offset="1" stop-color="var(--deep-2)"></stop></lineargradient>
+            <lineargradient id="seaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--water-soft)"></stop><stop offset="1" stop-color="var(--water)"></stop></lineargradient>
+          </defs>
+          <rect x="40" y="18" width="560" height="70" rx="8" fill="var(--gold-soft)" opacity="0.5"></rect>
+          <circle cx="320" cy="50" r="17" fill="var(--gold)"></circle><text x="320" y="55" text-anchor="middle" class="svg-mono" font-size="11" fill="#1d1a13">GOD</text>
+          <text x="320" y="34" text-anchor="middle" class="svg-title" font-size="15" font-weight="600" fill="var(--fg)">HEAVEN — the throne of God</text>
+          <text x="56" y="80" class="svg-label" font-size="11" fill="var(--muted)">The Light itself (Rev 21:23) · no sun needed · no night</text>
+          <rect x="40" y="92" width="560" height="26" fill="var(--crystal)"></rect><line x1="40" y1="92" x2="600" y2="92" stroke="var(--water)" stroke-width="1.5"></line><line x1="40" y1="118" x2="600" y2="118" stroke="var(--water)" stroke-width="2.5"></line>
+          <text x="320" y="109" text-anchor="middle" class="svg-label" font-size="12.5" font-weight="600" fill="#1d2a44">WATERS ABOVE = "sea of glass like crystal" (Rev 4:6)</text>
+          <text x="320" y="134" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--gold)">▲ the solid shell / top of the vault (the "firm" part)</text>
+          <rect x="40" y="140" width="560" height="250" rx="2" fill="url(#skyG)"></rect>
+          <g fill="#e9e3cf"><circle cx="95" cy="175" r="1.6"></circle><circle cx="150" cy="210" r="1.2"></circle><circle cx="220" cy="165" r="1.8"></circle><circle cx="300" cy="200" r="1.3"></circle><circle cx="410" cy="170" r="1.6"></circle><circle cx="500" cy="205" r="1.4"></circle><circle cx="555" cy="175" r="1.2"></circle><circle cx="130" cy="330" r="1.4"></circle><circle cx="260" cy="345" r="1.2"></circle><circle cx="470" cy="330" r="1.6"></circle><circle cx="540" cy="350" r="1.3"></circle><circle cx="360" cy="300" r="1.2"></circle></g>
+          <circle cx="150" cy="255" r="20" fill="var(--gold)"></circle><text x="150" y="259" text-anchor="middle" class="svg-mono" font-size="9" fill="#1d1a13">SUN</text>
+          <circle cx="500" cy="265" r="15" fill="#d9d4c4"></circle><path d="M500 250 a15 15 0 1 0 0 30 a11 11 0 1 1 0 -30 z" fill="#b7b2a0"></path><text x="500" y="298" text-anchor="middle" class="svg-mono" font-size="9" fill="#cfe6ef">MOON</text>
+          <text x="320" y="235" text-anchor="middle" class="svg-title" font-size="17" font-weight="600" fill="#e9e3cf">THE FIRMAMENT</text>
+          <text x="320" y="255" text-anchor="middle" class="svg-label" font-size="12" fill="var(--water-soft)">= Heaven (v.8) · the vast open expanse</text>
+          <text x="320" y="373" text-anchor="middle" class="svg-mono" font-size="10" fill="#9fb4cf">"God set them IN the firmament" (v.17)</text>
+          <rect x="40" y="392" width="560" height="60" fill="url(#seaG)"></rect><text x="320" y="420" text-anchor="middle" class="svg-label" font-size="12.5" font-weight="600" fill="#102030">WATERS BELOW → gathered into the SEAS (v.9–10)</text>
+          <path d="M40 392 q20 -6 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" fill="none" stroke="#cfe6ef" stroke-width="1.5" opacity="0.7"></path>
+          <rect x="40" y="452" width="560" height="60" fill="var(--earth)"></rect><text x="320" y="488" text-anchor="middle" class="svg-title" font-size="16" font-weight="600" fill="#f4efe4">EARTH — dry land (v.9)</text>
+          <g stroke="var(--gold)" stroke-width="1.3" fill="var(--gold)"><line x1="616" y1="118" x2="616" y2="390"></line><path d="M612 390 l4 8 l4 -8 z"></path><path d="M612 118 l4 -8 l4 8 z"></path></g>
+          <text x="628" y="260" class="svg-mono" font-size="9" fill="var(--gold)" transform="rotate(90 628 260)" text-anchor="middle">the dividing expanse</text>
+        </svg>
+        <div class="legend"><span><span class="sw" style="background:var(--gold-soft)"></span>Heaven (light)</span><span><span class="sw" style="background:var(--crystal)"></span>Waters above / sea of glass</span><span><span class="sw" style="background:var(--deep-2)"></span>Firmament (expanse)</span><span><span class="sw" style="background:var(--water)"></span>Seas</span><span><span class="sw" style="background:var(--earth)"></span>Earth</span></div>
+        <figcaption>A vault is <em>mostly</em> hollow space with a thin firm shell at the top. The sun and moon hang in the open expanse; the waters resting on it answer to the crystal "sea of glass" before God's throne. <b>Cross-check:</b> Exodus 24:10; Ezekiel 1:22–26; Psalm 148:4 ("waters above the heavens").</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:9 day 3 -->
+      <h2 id="g1-06"><span class="n">06</span>Land, Sea &amp; "After His Kind"</h2>
+      <p class="ref">GENESIS 1:9–13</p>
+      <p class="lead">On the third day the waters gather into seas, dry land appears, and the earth brings forth grass, herbs and fruit trees — each "after his kind, whose seed is in itself." That short phrase, repeated through the chapter, draws a hard line: life reproduces <em>within</em> its kind. A dog yields dogs, never a cat.</p>
+      <figure>
+        <svg viewBox="0 0 640 280" role="img" aria-labelledby="kTitle">
+          <title id="kTitle">Variation within a kind affirmed, change across kinds denied; one common designer rather than one common ancestor</title>
+          <!-- within kind -->
+          <rect x="24" y="24" width="288" height="146" rx="10" fill="var(--good)" opacity="0.18"></rect>
+          <text x="168" y="48" text-anchor="middle" class="svg-title" font-size="15" font-weight="600" fill="var(--fg)">Within a kind ✓</text>
+          <circle cx="168" cy="78" r="12" fill="var(--earth)"></circle><text x="168" y="82" text-anchor="middle" class="svg-mono" font-size="8" fill="#fff">dog</text>
+          <g stroke="var(--good)" stroke-width="1.4"><line x1="168" y1="90" x2="80" y2="124"></line><line x1="168" y1="90" x2="168" y2="124"></line><line x1="168" y1="90" x2="256" y2="124"></line></g>
+          <g fill="var(--earth)" opacity="0.8"><circle cx="80" cy="134" r="9"></circle><circle cx="168" cy="134" r="9"></circle><circle cx="256" cy="134" r="9"></circle></g>
+          <text x="168" y="162" text-anchor="middle" class="svg-label" font-size="10.5" fill="var(--muted)">many breeds — still dogs</text>
+          <!-- across kind -->
+          <rect x="328" y="24" width="288" height="146" rx="10" fill="var(--fire)" opacity="0.14"></rect>
+          <text x="472" y="48" text-anchor="middle" class="svg-title" font-size="15" font-weight="600" fill="var(--fg)">Across kinds ✗</text>
+          <circle cx="408" cy="100" r="12" fill="var(--earth)"></circle><text x="408" y="104" text-anchor="middle" class="svg-mono" font-size="8" fill="#fff">dog</text>
+          <g stroke="var(--fire)" stroke-width="2"><line x1="424" y1="100" x2="520" y2="100"></line></g>
+          <circle cx="540" cy="100" r="12" fill="var(--deep-2)"></circle><text x="540" y="104" text-anchor="middle" class="svg-mono" font-size="8" fill="#fff">cat</text>
+          <g stroke="var(--fire)" stroke-width="3"><line x1="462" y1="86" x2="482" y2="114"></line><line x1="482" y1="86" x2="462" y2="114"></line></g>
+          <text x="472" y="150" text-anchor="middle" class="svg-label" font-size="10.5" fill="var(--muted)">no kind becomes another</text>
+          <!-- bottom -->
+          <text x="320" y="210" text-anchor="middle" class="svg-mono" font-size="11" fill="var(--gold)">COMMON ANCESTRY  ✗        COMMON DESIGNER  ✓</text>
+          <text x="320" y="238" text-anchor="middle" class="svg-label" font-style="italic" font-size="12" fill="var(--muted)">Shared traits across creatures point not to one ancestor,</text>
+          <text x="320" y="256" text-anchor="middle" class="svg-label" font-style="italic" font-size="12" fill="var(--muted)">but to the handiwork of one Maker.</text>
+        </svg>
+        <figcaption>"After his kind" is the Bible's own plain term — not a technical species label. Resemblance across living things reads the way an artist's shared style reads: one designer behind many works, rather than one creature turning into another. <b>Cross-check:</b> Genesis 1:11–12, 21, 24–25; 1 Corinthians 15:38–39.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:14 day 4 -->
+      <h2 id="g1-07"><span class="n">07</span>Lights &amp; the Named Stars</h2>
+      <p class="ref">GENESIS 1:14–19 · PSALM 147:4</p>
+      <p class="lead">On the fourth day God sets the sun, moon and stars in the firmament for signs, seasons, days and years — and almost in passing, "he made the stars also." What science counts with computers over lifetimes, God both numbers and names.</p>
+      <figure>
+        <svg viewBox="0 0 640 250" role="img" aria-labelledby="stTitle">
+          <title id="stTitle">Contrast between mankind struggling to count the stars and God numbering and naming them all</title>
+          <rect x="24" y="24" width="288" height="200" rx="10" fill="var(--panel)" stroke="var(--line)"></rect>
+          <text x="168" y="50" text-anchor="middle" class="svg-title" font-size="15" font-weight="600" fill="var(--fg)">Mankind</text>
+          <g class="svg-label" font-size="11.5" fill="var(--muted)" text-anchor="middle"><text x="168" y="86">counts for lifetimes</text><text x="168" y="112">needs computers to track</text><text x="168" y="138">loses count of the names</text><text x="168" y="164">"trillions… and counting"</text></g>
+          <text x="168" y="200" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--fire)">still not finished</text>
+          <rect x="328" y="24" width="288" height="200" rx="10" fill="var(--deep)"></rect>
+          <g fill="#f0e8cf"><circle cx="360" cy="60" r="1.6"></circle><circle cx="420" cy="80" r="1.2"></circle><circle cx="500" cy="55" r="1.8"></circle><circle cx="560" cy="85" r="1.3"></circle><circle cx="390" cy="115" r="1.4"></circle><circle cx="470" cy="110" r="1.6"></circle><circle cx="540" cy="130" r="1.2"></circle><circle cx="350" cy="150" r="1.3"></circle><circle cx="580" cy="160" r="1.5"></circle></g>
+          <text x="472" y="50" text-anchor="middle" class="svg-title" font-size="15" font-weight="600" fill="var(--gold-soft)">God</text>
+          <g class="svg-label" font-size="12" fill="#ede4cf" text-anchor="middle"><text x="472" y="188">"He telleth the number of the stars;</text><text x="472" y="208">he calleth them all by their names."</text></g>
+          <text x="472" y="150" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--gold-soft)">Psalm 147:4</text>
+        </svg>
+        <figcaption>The sun arrives on day four — <em>after</em> the plants of day three. The order runs opposite to what an evolutionary account would expect, and the days are marked "evening and morning," plain 24-hour days. <b>Cross-check:</b> Psalm 147:4; Isaiah 40:26; Jeremiah 33:22.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:20 day 5-6 -->
+      <h2 id="g1-08"><span class="n">08</span>Life After Its Kind</h2>
+      <p class="ref">GENESIS 1:20–25</p>
+      <p class="lead">Days five and six fill the world: sea creatures and birds, then land animals and creeping things — and over and over the text repeats the same refrain, "after his kind," with the blessing "be fruitful, and multiply." The repetition is the point.</p>
+      <figure>
+        <svg viewBox="0 0 640 250" role="img" aria-labelledby="rTitle">
+          <title id="rTitle">The phrase after his kind repeated across the days of creation as a deliberate refrain</title>
+          <text x="40" y="38" class="svg-title" font-size="15" font-weight="600" fill="var(--fg)">The refrain, verse by verse</text>
+          <g class="svg-label" font-size="12">
+            <g transform="translate(40,54)"><rect width="560" height="30" rx="6" fill="var(--good)" opacity="0.14"></rect><text x="14" y="20" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">v.11–12</tspan>  grass, herb, fruit tree — <tspan font-weight="600">after his kind</tspan></text></g>
+            <g transform="translate(40,90)"><rect width="560" height="30" rx="6" fill="var(--water)" opacity="0.16"></rect><text x="14" y="20" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">v.21</tspan>  great whales, fish, every winged fowl — <tspan font-weight="600">after their kind</tspan></text></g>
+            <g transform="translate(40,126)"><rect width="560" height="30" rx="6" fill="var(--earth)" opacity="0.2"></rect><text x="14" y="20" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">v.24</tspan>  cattle, creeping thing, beast — <tspan font-weight="600">after his kind</tspan></text></g>
+            <g transform="translate(40,162)"><rect width="560" height="30" rx="6" fill="var(--earth)" opacity="0.3"></rect><text x="14" y="20" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">v.25</tspan>  beast, cattle, creeping thing — <tspan font-weight="600">after his kind</tspan></text></g>
+          </g>
+          <text x="320" y="224" text-anchor="middle" class="svg-label" font-style="italic" font-size="12" fill="var(--muted)">Five times in one chapter — and each day closes "it was good," "evening and morning."</text>
+        </svg>
+        <figcaption>Insects, fish, birds, cattle and wild beasts all appear within the same six days — not separated by vast ages. Life first comes "from the waters" (v.20); Scripture later uses that same water-and-Spirit language for the new birth. <b>Cross-check:</b> John 3:5–6; John 7:38–39.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:26 Trinity -->
+      <h2 id="g1-09"><span class="n">09</span>God's Image &amp; the Trinity</h2>
+      <p class="ref">GENESIS 1:26–27</p>
+      <p class="lead">At the summit of creation God says, "Let <em>us</em> make man in <em>our</em> image" — a plural — yet verse 27 says "God created man in <em>his own</em> image" — a singular. One God speaking as more than one person: a first glimpse of the triune God, on the very first page.</p>
+      <figure>
+        <svg viewBox="0 0 640 250" role="img" aria-labelledby="trTitle">
+          <title id="trTitle">Let us (plural) and his own image (singular) together picturing one God in three persons</title>
+          <text x="150" y="40" text-anchor="middle" class="svg-mono" font-size="11" fill="var(--gold)">"Let US make man" (plural)</text>
+          <text x="490" y="40" text-anchor="middle" class="svg-mono" font-size="11" fill="var(--gold)">"in HIS OWN image" (singular)</text>
+          <!-- triangle of persons -->
+          <circle cx="320" cy="80" r="30" fill="var(--gold)" opacity="0.9"></circle><text x="320" y="84" text-anchor="middle" class="svg-label" font-size="12" font-weight="600" fill="#1d1a13">Father</text>
+          <circle cx="250" cy="178" r="30" fill="var(--gold)" opacity="0.9"></circle><text x="250" y="182" text-anchor="middle" class="svg-label" font-size="12" font-weight="600" fill="#1d1a13">Son</text>
+          <circle cx="390" cy="178" r="30" fill="var(--gold)" opacity="0.9"></circle><text x="390" y="182" text-anchor="middle" class="svg-label" font-size="12" font-weight="600" fill="#1d1a13">Spirit</text>
+          <g stroke="var(--deep-2)" stroke-width="2" opacity="0.7"><line x1="320" y1="110" x2="250" y2="148"></line><line x1="320" y1="110" x2="390" y2="148"></line><line x1="280" y1="178" x2="360" y2="178"></line></g>
+          <text x="320" y="238" text-anchor="middle" class="svg-title" font-size="15" font-weight="600" fill="var(--fg)">one God · three persons · "tri-unity"</text>
+        </svg>
+        <figcaption>The "us" is not God speaking to angels — angels do not create, and verse 27 ties the image to God alone. The plural and the singular stand together: one Being, three persons. <b>Cross-check:</b> John 1:1–3; Colossians 1:16; Matthew 28:19.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:28 dominion + diet -->
+      <h2 id="g1-10"><span class="n">10</span>Dominion &amp; the First Diet</h2>
+      <p class="ref">GENESIS 1:28–31 · ISAIAH 11</p>
+      <p class="lead">Mankind is blessed and given dominion — but notice its reach: "over the fish of the sea… the fowl of the air… and over all the <em>earth</em>." Not over the sun, moon and stars. And the first diet, for people and animals alike, is plant-based — a peace the prophets say will return.</p>
+      <figure>
+        <svg viewBox="0 0 640 260" role="img" aria-labelledby="dmTitle">
+          <title id="dmTitle">Dominion given over the earth but not the heavens, and the original and future plant-based peace</title>
+          <!-- dominion scope -->
+          <text x="40" y="36" class="svg-mono" font-size="11" fill="var(--gold)">DOMINION — "over all the EARTH"</text>
+          <g class="svg-label" font-size="11.5">
+            <g transform="translate(40,48)"><rect width="270" height="30" rx="6" fill="var(--good)" opacity="0.18"></rect><text x="135" y="20" text-anchor="middle" fill="var(--fg)">✓ fish · fowl · cattle · creeping things</text></g>
+            <g transform="translate(40,84)"><rect width="270" height="30" rx="6" fill="var(--good)" opacity="0.18"></rect><text x="135" y="20" text-anchor="middle" fill="var(--fg)">✓ all the earth, to subdue it</text></g>
+            <g transform="translate(40,120)"><rect width="270" height="30" rx="6" fill="var(--deep)" opacity="0.85"></rect><text x="135" y="20" text-anchor="middle" fill="#dfe6f0">✗ the sun, moon &amp; stars (the heavens)</text></g>
+          </g>
+          <text x="175" y="176" text-anchor="middle" class="svg-label" font-style="italic" font-size="11" fill="var(--muted)">man rules the earth, not the heavens above it</text>
+          <!-- diet -->
+          <text x="330" y="36" class="svg-mono" font-size="11" fill="var(--gold)">THE FIRST DIET</text>
+          <g transform="translate(330,48)"><rect width="280" height="102" rx="8" fill="var(--good)" opacity="0.14"></rect>
+            <text x="140" y="34" text-anchor="middle" class="svg-label" font-size="12.5" fill="var(--fg)">"every herb… every tree… to you</text>
+            <text x="140" y="54" text-anchor="middle" class="svg-label" font-size="12.5" fill="var(--fg)">it shall be for meat" (v.29)</text>
+            <text x="140" y="82" text-anchor="middle" class="svg-mono" font-size="10.5" fill="var(--good)">people &amp; animals alike — plants</text>
+          </g>
+          <text x="470" y="176" text-anchor="middle" class="svg-label" font-style="italic" font-size="11" fill="var(--muted)">the peace Isaiah 11 says will return</text>
+          <!-- isaiah strip -->
+          <g transform="translate(40,196)"><rect width="570" height="44" rx="8" fill="var(--gold-soft)" opacity="0.4"></rect>
+            <text x="285" y="20" text-anchor="middle" class="svg-label" font-size="12" fill="var(--fg)">"The wolf also shall dwell with the lamb… and the lion shall eat straw like the ox."</text>
+            <text x="285" y="37" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--muted)">Isaiah 11:6–7 — the coming paradise</text>
+          </g>
+        </svg>
+        <figcaption>Day six ends with everything "very good." Human rule is real but bounded — the heavens stay God's — and the original order was without the death of creatures, a harmony the prophets say is restored in the age to come. <b>Cross-check:</b> Psalm 115:16; Isaiah 11:6–9; Romans 8:20–21.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 1:31 six days overview -->
+      <h2 id="g1-11"><span class="n">11</span>The Six Days at a Glance</h2>
+      <p class="ref">GENESIS 1:1–2:3</p>
+      <p class="lead">Seen whole, the six days fall into two matching halves. In days one to three God <em>forms</em> the empty, unshaped places; in days four to six He <em>fills</em> them. Day four fills day one, day five fills day two, day six fills day three — and the seventh crowns it all.</p>
+      <figure>
+        <svg viewBox="0 0 640 330" role="img" aria-labelledby="ovTitle">
+          <title id="ovTitle">The six days as forming days one to three matched by filling days four to six, with the seventh day of rest</title>
+          <text x="170" y="30" text-anchor="middle" class="svg-mono" font-size="11" fill="var(--gold)">FORMING (days 1–3)</text>
+          <text x="470" y="30" text-anchor="middle" class="svg-mono" font-size="11" fill="var(--gold)">FILLING (days 4–6)</text>
+          <g class="svg-label" font-size="12">
+            <!-- row 1 -->
+            <g transform="translate(30,46)"><rect width="270" height="60" rx="8" fill="var(--gold-soft)" opacity="0.45"></rect><text x="16" y="26" font-weight="600" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">DAY 1</tspan>  Light &amp; darkness</text><text x="16" y="46" font-size="10.5" fill="var(--muted)">day / night</text></g>
+            <g transform="translate(340,46)"><rect width="270" height="60" rx="8" fill="var(--gold-soft)" opacity="0.45"></rect><text x="16" y="26" font-weight="600" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">DAY 4</tspan>  Sun, moon &amp; stars</text><text x="16" y="46" font-size="10.5" fill="var(--muted)">lights to rule day &amp; night</text></g>
+            <!-- row 2 -->
+            <g transform="translate(30,116)"><rect width="270" height="60" rx="8" fill="var(--water)" opacity="0.2"></rect><text x="16" y="26" font-weight="600" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">DAY 2</tspan>  Firmament &amp; waters</text><text x="16" y="46" font-size="10.5" fill="var(--muted)">sky &amp; sea</text></g>
+            <g transform="translate(340,116)"><rect width="270" height="60" rx="8" fill="var(--water)" opacity="0.2"></rect><text x="16" y="26" font-weight="600" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">DAY 5</tspan>  Fish &amp; birds</text><text x="16" y="46" font-size="10.5" fill="var(--muted)">fill sea &amp; sky</text></g>
+            <!-- row 3 -->
+            <g transform="translate(30,186)"><rect width="270" height="60" rx="8" fill="var(--earth)" opacity="0.28"></rect><text x="16" y="26" font-weight="600" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">DAY 3</tspan>  Land &amp; plants</text><text x="16" y="46" font-size="10.5" fill="var(--muted)">dry ground, vegetation</text></g>
+            <g transform="translate(340,186)"><rect width="270" height="60" rx="8" fill="var(--earth)" opacity="0.28"></rect><text x="16" y="26" font-weight="600" fill="var(--fg)"><tspan class="svg-mono" fill="var(--gold)" font-size="10">DAY 6</tspan>  Animals &amp; man</text><text x="16" y="46" font-size="10.5" fill="var(--muted)">fill the land</text></g>
+          </g>
+          <!-- match arrows -->
+          <g stroke="var(--gold)" stroke-width="1.4" fill="var(--gold)" opacity="0.8">
+            <line x1="300" y1="76" x2="338" y2="76"></line><path d="M338 76 l-8 -4 v8 z"></path>
+            <line x1="300" y1="146" x2="338" y2="146"></line><path d="M338 146 l-8 -4 v8 z"></path>
+            <line x1="300" y1="216" x2="338" y2="216"></line><path d="M338 216 l-8 -4 v8 z"></path>
+          </g>
+          <!-- day 7 -->
+          <g transform="translate(30,258)"><rect width="580" height="54" rx="9" fill="var(--deep)"></rect><text x="290" y="24" text-anchor="middle" class="svg-title" font-size="15" font-weight="600" fill="var(--gold-soft)">DAY 7 — God rested, blessed it, and made it holy</text><text x="290" y="42" text-anchor="middle" class="svg-mono" font-size="10" fill="#9fb4cf">the finished work, at rest</text></g>
+        </svg>
+        <figcaption>The symmetry is deliberate: God first shapes the realms, then populates them, and declares the whole "very good." The pattern itself testifies to a mind ordering creation on purpose. <b>Cross-check:</b> Genesis 1:31; Exodus 20:11.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- CHAPTER TWO -->
+    <!-- ============================================================ -->
+    <section id="chap-2" role="tabpanel" aria-labelledby="tab-2" hidden="">
+      <p class="chapter-head two">Genesis 2 — Rest, Dust &amp; the Word We Speak</p>
+      <p class="chapter-sub">The seventh day, the making of man and woman, and the deeper reading of salvation underneath them.</p>
+
+      <!-- 2:1 seventh day -->
+      <h2 id="g2-01"><span class="n">01</span>The Seventh Day &amp; Rest</h2>
+      <p class="ref">GENESIS 2:1–3</p>
+      <p class="lead">God finishes His work and, on the seventh day, stops. "Rest" here does not mean He grew tired — in older English it carries the sense of <em>ceasing</em>. He blessed this day and made it holy, setting the number seven apart as a marker that runs through the whole Bible.</p>
+      <figure>
+        <svg viewBox="0 0 640 220" role="img" aria-labelledby="svTitle">
+          <title id="svTitle">Six days of work completed, the seventh day set apart, blessed and made holy</title>
+          <g class="svg-label" font-size="12">
+            <g transform="translate(24,40)"><rect width="74" height="54" rx="7" fill="var(--panel)" stroke="var(--line)"></rect><text x="37" y="24" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--muted)">DAY 1</text><text x="37" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">work</text></g>
+            <g transform="translate(106,40)"><rect width="74" height="54" rx="7" fill="var(--panel)" stroke="var(--line)"></rect><text x="37" y="24" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--muted)">DAY 2</text><text x="37" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">work</text></g>
+            <g transform="translate(188,40)"><rect width="74" height="54" rx="7" fill="var(--panel)" stroke="var(--line)"></rect><text x="37" y="24" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--muted)">DAY 3</text><text x="37" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">work</text></g>
+            <g transform="translate(270,40)"><rect width="74" height="54" rx="7" fill="var(--panel)" stroke="var(--line)"></rect><text x="37" y="24" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--muted)">DAY 4</text><text x="37" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">work</text></g>
+            <g transform="translate(352,40)"><rect width="74" height="54" rx="7" fill="var(--panel)" stroke="var(--line)"></rect><text x="37" y="24" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--muted)">DAY 5</text><text x="37" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">work</text></g>
+            <g transform="translate(434,40)"><rect width="74" height="54" rx="7" fill="var(--panel)" stroke="var(--line)"></rect><text x="37" y="24" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--muted)">DAY 6</text><text x="37" y="42" text-anchor="middle" font-size="10" fill="var(--muted)">work</text></g>
+            <g transform="translate(516,34)"><rect width="100" height="66" rx="9" fill="var(--gold)"></rect><text x="50" y="26" text-anchor="middle" class="svg-mono" font-size="11" fill="#1d1a13" font-weight="600">DAY 7</text><text x="50" y="46" text-anchor="middle" font-size="11" font-weight="600" fill="#1d1a13">rest</text></g>
+          </g>
+          <text x="320" y="138" text-anchor="middle" class="svg-title" font-size="15" font-weight="600" fill="var(--fg)">blessed · sanctified (made holy) · ceased from work</text>
+          <text x="320" y="172" text-anchor="middle" class="svg-label" font-style="italic" font-size="12" fill="var(--muted)">"Rest" = to cease, not to recover — God does not tire (Isaiah 40:28).</text>
+          <text x="320" y="198" text-anchor="middle" class="svg-mono" font-size="10.5" fill="var(--gold)">seven: the thread of Sabbath running through all of Scripture</text>
+        </svg>
+        <figcaption>God did not need to pause for strength — He spoke creation into being. The seventh day is set apart on purpose, and the number seven recurs across the law, the feasts and prophecy as a sign of completion and rest. <b>Cross-check:</b> Exodus 20:8–11; Isaiah 40:28; Hebrews 4:9–10.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 2:7 dust -->
+      <h2 id="g2-02"><span class="n">02</span>Formed from Dust</h2>
+      <p class="ref">GENESIS 2:7</p>
+      <p class="lead">Man is formed "of the dust of the ground." God could have used gold or precious stone; He chose dust — the lowly thing that is stepped on and overlooked, yet the very thing from which all life grows. The lesson is humility: our true image apart from God is dust, and from that low place thankfulness and life spring up.</p>
+      <figure>
+        <svg viewBox="0 0 640 300" role="img" aria-labelledby="dTitle">
+          <title id="dTitle">Dust as the image of humility, and how expectation set against blessing produces emptiness or thankfulness</title>
+          <text x="40" y="34" class="svg-mono" font-size="11" fill="var(--gold)">WHY DUST?</text>
+          <g class="svg-label" font-size="11.5">
+            <rect x="40" y="46" width="250" height="40" rx="7" fill="var(--earth)" opacity="0.3"></rect><text x="54" y="71" fill="var(--fg)">Lowly · stepped on · overlooked</text>
+            <rect x="40" y="96" width="250" height="40" rx="7" fill="var(--earth)" opacity="0.5"></rect><text x="54" y="121" fill="var(--fg)">Yet a seed in it produces life</text>
+            <rect x="40" y="146" width="250" height="40" rx="7" fill="var(--good)" opacity="0.3"></rect><text x="54" y="171" fill="var(--fg)">So the foundation is humbleness</text>
+          </g>
+          <g stroke="var(--muted)" stroke-width="1.4" fill="var(--muted)"><line x1="165" y1="86" x2="165" y2="94"></line><path d="M165 96 l-4 -8 h8 z"></path><line x1="165" y1="136" x2="165" y2="144"></line><path d="M165 146 l-4 -8 h8 z"></path></g>
+          <text x="330" y="34" class="svg-mono" font-size="11" fill="var(--gold)">THE HEART'S LEVEL</text>
+          <g class="svg-label">
+            <text x="330" y="60" font-size="11.5" font-weight="600" fill="var(--fire)">Thinks "I deserve much"</text>
+            <rect x="330" y="68" width="230" height="14" rx="4" fill="var(--line)"></rect><rect x="330" y="68" width="210" height="14" rx="4" fill="var(--fire)" opacity="0.5"></rect>
+            <text x="330" y="98" font-size="10" fill="var(--muted)">expectation far above what comes →</text>
+            <text x="330" y="116" font-size="11.5" fill="var(--fire)" font-weight="600">= never thankful, empty</text>
+          </g>
+          <g class="svg-label">
+            <text x="330" y="168" font-size="11.5" font-weight="600" fill="var(--good)">Thinks "I deserve nothing"</text>
+            <rect x="330" y="176" width="230" height="14" rx="4" fill="var(--line)"></rect><rect x="330" y="176" width="70" height="14" rx="4" fill="var(--good)" opacity="0.6"></rect>
+            <text x="330" y="206" font-size="10" fill="var(--muted)">expectation below what comes →</text>
+            <text x="330" y="224" font-size="11.5" fill="var(--good)" font-weight="600">= thankful for everything, full</text>
+          </g>
+          <text x="40" y="268" class="svg-label" font-style="italic" font-size="11.5" fill="var(--muted)">"When we know we deserve nothing, then by grace we receive everything."</text>
+        </svg>
+        <figcaption>Dust is the image of a humble heart — nothing in itself, yet the ground of life. When our sense of what we deserve runs ahead of what we receive, the result is emptiness; when it runs below, the result is gratitude. <b>Cross-check:</b> Genesis 3:19; Psalm 103:14; James 4:6, 10.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 2:21 rib -->
+      <h2 id="g2-03"><span class="n">03</span>Bone of My Bones</h2>
+      <p class="ref">GENESIS 2:21–24</p>
+      <p class="lead">The woman is not formed from the ground as the man was, but taken from his side while he sleeps. Adam's response — "this is now bone of my bones, and flesh of my flesh" — names a deep kinship: the two are made of one, and in marriage become "one flesh."</p>
+      <figure>
+        <svg viewBox="0 0 640 210" role="img" aria-labelledby="ribTitle">
+          <title id="ribTitle">Man formed from the ground, woman taken from his side, the two becoming one flesh</title>
+          <g class="svg-label" font-size="12" text-anchor="middle">
+            <circle cx="140" cy="80" r="34" fill="var(--earth)" opacity="0.55"></circle><text x="140" y="76" font-weight="600" fill="#fff">Man</text><text x="140" y="94" font-size="10" fill="#fff">from the ground</text>
+            <circle cx="400" cy="80" r="34" fill="var(--gold)" opacity="0.85"></circle><text x="400" y="76" font-weight="600" fill="#1d1a13">Woman</text><text x="400" y="94" font-size="10" fill="#1d1a13">from his side</text>
+            <path d="M178 80 q40 -20 184 0" fill="none" stroke="var(--muted)" stroke-width="1.6"></path><path d="M362 80 l-9 -3 l2 9 z" fill="var(--muted)"></path>
+            <text x="270" y="48" font-size="10.5" fill="var(--muted)">taken from</text>
+            <circle cx="560" cy="80" r="40" fill="var(--good)" opacity="0.3"></circle><text x="560" y="76" font-weight="600" fill="var(--fg)">One</text><text x="560" y="94" font-size="10" fill="var(--fg)">flesh (v.24)</text>
+            <path d="M444 80 h74" fill="none" stroke="var(--gold)" stroke-width="1.8"></path><path d="M518 80 l-9 -4 v8 z" fill="var(--gold)"></path>
+          </g>
+          <text x="320" y="168" text-anchor="middle" class="svg-label" font-style="italic" font-size="12" fill="var(--muted)">"She shall be called Woman, because she was taken out of Man."</text>
+          <text x="320" y="192" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--gold)">one origin · deep kinship · joined again as one</text>
+        </svg>
+        <figcaption>Because she came from him, the man recognizes the woman as his own kind — and marriage reunites what was one. The picture is of belonging and union, not distance. <b>Cross-check:</b> Genesis 2:24; Matthew 19:4–6; Ephesians 5:31.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- 2:19 so shall it be -->
+      <h2 id="g2-04"><span class="n">04</span>"So Shall It Be"</h2>
+      <p class="ref">GENESIS 2:19–20 · MATTHEW 12:37</p>
+      <p class="lead">God brings the animals to the man to name them, and "whatsoever Adam called every living creature, that was the name thereof." Whatever he spoke, it stood. This is the power of the tongue: by our words we are justified or condemned. What we call ourselves tends to become what we live as.</p>
+      <figure>
+        <svg viewBox="0 0 640 280" role="img" aria-labelledby="sTitle">
+          <title id="sTitle">Adam's naming of the animals as a picture of confession — the words we speak over ourselves standing as true</title>
+          <rect x="120" y="22" width="400" height="48" rx="9" fill="var(--gold-soft)" opacity="0.5"></rect>
+          <text x="320" y="44" text-anchor="middle" class="svg-label" font-size="12.5" font-weight="600" fill="var(--fg)">Adam named it → "that was the name thereof"</text>
+          <text x="320" y="62" text-anchor="middle" class="svg-mono" font-size="10" fill="var(--muted)">what he said, stood · so shall it be</text>
+          <g stroke="var(--muted)" stroke-width="1.5" fill="none"><path d="M320 70 L320 92 M320 92 L190 92 M320 92 L450 92 M190 92 L190 112 M450 92 L450 112"></path></g>
+          <g fill="var(--muted)"><path d="M190 112 l-4 -8 h8 z"></path><path d="M450 112 l-4 -8 h8 z"></path></g>
+          <rect x="70" y="114" width="240" height="60" rx="9" fill="var(--deep)" opacity="0.9"></rect>
+          <text x="190" y="140" text-anchor="middle" class="svg-label" font-size="12.5" fill="#dfe6f0">Say: "I am a sinner,</text><text x="190" y="158" text-anchor="middle" class="svg-label" font-size="12.5" fill="#dfe6f0">I sin every day"</text>
+          <rect x="70" y="186" width="240" height="40" rx="9" fill="var(--deep-2)" opacity="0.6"></rect><text x="190" y="211" text-anchor="middle" class="svg-mono" font-size="11" fill="#dfe6f0">→ so shall it be</text>
+          <rect x="330" y="114" width="240" height="60" rx="9" fill="var(--good)" opacity="0.85"></rect>
+          <text x="450" y="140" text-anchor="middle" class="svg-label" font-size="12.5" fill="#fff">Say: "I am righteous</text><text x="450" y="158" text-anchor="middle" class="svg-label" font-size="12.5" fill="#fff">through Jesus Christ"</text>
+          <rect x="330" y="186" width="240" height="40" rx="9" fill="var(--good)" opacity="0.4"></rect><text x="450" y="211" text-anchor="middle" class="svg-mono" font-size="11" fill="var(--fg)">→ so shall it be</text>
+          <text x="320" y="258" text-anchor="middle" class="svg-label" font-style="italic" font-size="11.5" fill="var(--muted)">Matthew 12:37 — "by thy words thou shalt be justified, and by thy words thou shalt be condemned."</text>
+        </svg>
+        <figcaption>The same mouth speaks life or death over a person. Calling yourself by your sin keeps you in it; confessing what Christ has made you aligns your words with the truth of the gospel. <b>Cross-check:</b> Proverbs 18:21; Romans 10:9–10.</figcaption>
+      </figure>
+
+      <hr>
+
+      <!-- but / law vs grace -->
+      <h2 id="g2-05"><span class="n">05</span>The Word "But"</h2>
+      <p class="ref">1 CORINTHIANS 6:9–11 · ROMANS 3:19–20 · JAMES 2:10</p>
+      <p class="lead">A list of the unrighteous ends with one hinge word — <b>"but"</b> — and everything before it is overturned: "such were some of you, <em>but</em> ye are washed, but ye are sanctified, but ye are justified." Each verb is past tense: already done. The law was never the thing that cleans us; it exposes sin and drives us to grace.</p>
+      <figure>
+        <svg viewBox="0 0 640 260" role="img" aria-labelledby="bTitle">
+          <title id="bTitle">The hinge word but turning a list of the unrighteous into washed, sanctified, justified, and law versus grace</title>
+          <rect x="30" y="30" width="200" height="120" rx="10" fill="var(--deep)" opacity="0.9"></rect>
+          <text x="130" y="54" text-anchor="middle" class="svg-mono" font-size="10" fill="#9fb4cf">BEFORE</text>
+          <g class="svg-label" font-size="11.5" fill="#dfe6f0" text-anchor="middle"><text x="130" y="78">"such were</text><text x="130" y="96">some of you"</text><text x="130" y="122" font-size="10" fill="#9fb4cf">the old identity,</text><text x="130" y="138" font-size="10" fill="#9fb4cf">the whole list</text></g>
+          <circle cx="320" cy="90" r="34" fill="var(--gold)"></circle><text x="320" y="96" text-anchor="middle" class="svg-title" font-size="22" font-weight="700" fill="#1d1a13">BUT</text>
+          <g stroke="var(--gold)" stroke-width="2" fill="var(--gold)"><line x1="232" y1="90" x2="284" y2="90"></line><path d="M284 90 l-8 -5 v10 z"></path></g>
+          <rect x="410" y="30" width="200" height="120" rx="10" fill="var(--good)" opacity="0.85"></rect>
+          <text x="510" y="54" text-anchor="middle" class="svg-mono" font-size="10" fill="#eafaea">AFTER (past tense)</text>
+          <g class="svg-label" font-size="12.5" fill="#fff" text-anchor="middle" font-weight="600"><text x="510" y="80">washed</text><text x="510" y="104">sanctified</text><text x="510" y="128">justified</text></g>
+          <g stroke="var(--gold)" stroke-width="2" fill="var(--gold)"><line x1="356" y1="90" x2="406" y2="90"></line><path d="M406 90 l-8 -5 v10 z"></path></g>
+          <rect x="30" y="178" width="285" height="60" rx="9" fill="var(--fire)" opacity="0.22"></rect>
+          <text x="172" y="200" text-anchor="middle" class="svg-label" font-size="12" font-weight="600" fill="var(--fg)">Under the Law</text>
+          <text x="172" y="222" text-anchor="middle" class="svg-label" font-size="10.5" fill="var(--muted)">exposes sin · brings guilt · (Rom 3:20)</text>
+          <rect x="325" y="178" width="285" height="60" rx="9" fill="var(--good)" opacity="0.25"></rect>
+          <text x="467" y="200" text-anchor="middle" class="svg-label" font-size="12" font-weight="600" fill="var(--fg)">Under Grace</text>
+          <text x="467" y="222" text-anchor="middle" class="svg-label" font-size="10.5" fill="var(--muted)">washed · justified · in Christ's name</text>
+        </svg>
+        <figcaption>"Washed," "sanctified," and "justified" are stated as finished, resting on "the name of the Lord Jesus" and "the Spirit of our God" — not on our record. The law shows the need (Romans 3:20; James 2:10 — break one point, guilty of all); grace is what meets it. <b>Cross-check:</b> Galatians 2:16; Ephesians 2:8–9.</figcaption>
+      </figure>
+    </section>
+
+    <footer>
+      A visual study of Genesis 1–2 (KJV): the created world, and the world of the heart it pictures. Every diagram points back to the verses and cross-references named on it — read them in context as you study.
+    </footer>
+  </main>
+</div>
+
+
+<script>
+(function () {
+  var tabs = { 1: document.getElementById('tab-1'), 2: document.getElementById('tab-2') };
+  var panels = { 1: document.getElementById('chap-1'), 2: document.getElementById('chap-2') };
+  var jumps = { 1: document.getElementById('jump-1'), 2: document.getElementById('jump-2') };
+
+  function show(n, scrollTop) {
+    n = (n === 2) ? 2 : 1;
+    [1,2].forEach(function (k) {
+      var on = (k === n);
+      tabs[k].setAttribute('aria-selected', on ? 'true' : 'false');
+      panels[k].hidden = !on;
+      jumps[k].hidden = !on;
+    });
+    try { localStorage.setItem('gen-chapter', String(n)); } catch (e) {}
+    if (scrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateActive();
+  }
+
+  tabs[1].addEventListener('click', function () { show(1, true); });
+  tabs[2].addEventListener('click', function () { show(2, true); });
+
+  // jump links: smooth scroll
+  document.querySelectorAll('.jump a').forEach(function (a) {
+    a.addEventListener('click', function (ev) {
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) { ev.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); history.replaceState(null, '', '#' + id); }
+    });
+  });
+
+  // highlight the jump link nearest the top
+  var allH2 = Array.prototype.slice.call(document.querySelectorAll('h2[id]'));
+  function updateActive() {
+    var activeN = tabs[2].getAttribute('aria-selected') === 'true' ? 2 : 1;
+    var links = jumps[activeN].querySelectorAll('a');
+    var best = null, bestTop = -Infinity;
+    allH2.forEach(function (h) {
+      if (h.offsetParent === null) return; // hidden
+      var top = h.getBoundingClientRect().top;
+      if (top < 120 && top > bestTop) { bestTop = top; best = h.id; }
+    });
+    links.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + best);
+    });
+  }
+  window.addEventListener('scroll', function () { window.requestAnimationFrame(updateActive); }, { passive: true });
+
+  // initial chapter: hash → saved → default 1
+  var start = 1;
+  try {
+    var h = (location.hash || '').replace('#', '');
+    if (/^g2-/.test(h) || h === 'chap-2') start = 2;
+    else if (/^g1-/.test(h) || h === 'chap-1') start = 1;
+    else { var saved = localStorage.getItem('gen-chapter'); if (saved === '2') start = 2; }
+  } catch (e) {}
+  window.addEventListener('hashchange', function () {
+    var hh = (location.hash || '').replace('#', '');
+    if (/^g2-/.test(hh) || hh === 'chap-2') show(2, true); else if (/^g1-/.test(hh) || hh === 'chap-1') show(1, true);
+  });
+  show(start, false);
+  // if a specific section was linked, scroll to it
+  try {
+    var hid = (location.hash || '').replace('#', '');
+    if (/^g[12]-/.test(hid)) { var t = document.getElementById(hid); if (t) t.scrollIntoView({ block: 'start' }); }
+  } catch (e) {}
+})();
+</script>
+
+
+</body>
+</html>

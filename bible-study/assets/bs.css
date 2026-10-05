@@ -1,0 +1,50 @@
+/* Coach Kenny: Bible Study section (shared styles for index + chat pages).
+   Matches the main site: near-black ground, sky-blue / indigo accents, Barlow Condensed + Inter. */
+*,*::before,*::after{box-sizing:border-box}
+:root{--blue:#38bdf8;--indigo:#6366f1;--green:#8CC63F;--black:#0B0B0B;--card:#16191f;--text:#e5e7eb;--muted:#9ca3af}
+html{scroll-behavior:smooth}
+body.ck{margin:0;background:var(--black);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* top bar (shared by every page in this section, including the Genesis study page) */
+.ck-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem 1.4rem;padding:.7rem 20px;background:#0B0B0B;border-bottom:1px solid rgba(56,189,248,.25);position:relative;z-index:50;font-family:'Inter',system-ui,sans-serif}
+.ck-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--blue),var(--indigo),var(--blue),transparent)}
+.ck-brand{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.35rem;letter-spacing:.02em;text-transform:uppercase;color:#fff;text-decoration:none;line-height:1}
+.ck-brand span{background:linear-gradient(90deg,var(--blue),var(--indigo));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ck-nav{display:flex;flex-wrap:wrap;gap:.2rem 1.1rem;margin-left:auto}
+.ck-nav a{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.12em;text-transform:uppercase;color:#9ca3af;text-decoration:none;padding:.35rem 0;border-bottom:2px solid transparent}
+.ck-nav a:hover,.ck-nav a[aria-current="page"]{color:#fff;border-bottom-color:var(--blue)}
+@media(max-width:640px){.ck-nav{margin-left:0;width:100%;gap:.1rem 1rem}}
+
+.wrap{max-width:780px;margin:0 auto;padding:2.2rem 20px 4rem}
+.eyebrow{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin:0 0 .5rem}
+h1.title{font-family:'Barlow Condensed',sans-serif;font-weight:900;text-transform:uppercase;font-size:clamp(2.2rem,8vw,3.6rem);line-height:.95;color:#fff;margin:0 0 1rem}
+h1.title span{background:linear-gradient(90deg,var(--blue),var(--indigo));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--muted);font-size:1.05rem;max-width:60ch;margin:0 0 2rem}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin:1.5rem 0}
+.card{display:flex;flex-direction:column;gap:.35rem;padding:22px;border-radius:16px;background:var(--card);border:1px solid rgba(56,189,248,.18);text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.55);box-shadow:0 14px 40px rgba(56,189,248,.16)}
+.card .k{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.card .t{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.7rem;line-height:1;text-transform:uppercase;color:#fff}
+.card .d{font-size:.88rem;color:var(--muted)}
+.note{font-size:.85rem;color:var(--muted);border-left:3px solid var(--indigo);padding:.2rem 0 .2rem .9rem;margin:1.8rem 0}
+
+/* chat transcript */
+.turn{margin:1.4rem 0;padding:18px 20px;border-radius:14px;background:var(--card);border:1px solid rgba(255,255,255,.07)}
+.turn.user{border-color:rgba(140,198,63,.3)}
+.turn.assistant{border-color:rgba(99,102,241,.35)}
+.who{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;margin:0 0 .6rem}
+.turn.user .who{color:var(--green)}
+.turn.assistant .who{color:#a5b4fc}
+.turn p{margin:.55rem 0;overflow-wrap:anywhere}
+.turn h2{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.5rem;text-transform:uppercase;color:#fff;margin:1.1rem 0 .4rem;line-height:1.1}
+.turn h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin:1.2rem 0 .3rem}
+.turn ul,.turn ol{padding-left:1.3rem;margin:.5rem 0}
+.turn li{margin:.25rem 0}
+.turn a{color:var(--blue)}
+.activity{font-size:.8rem;color:var(--muted);font-style:italic;margin:.6rem 0}
+.artifact{display:block;margin:.8rem 0;padding:12px 16px;border-radius:12px;background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.35);text-decoration:none;color:#fff!important}
+.artifact small{display:block;color:var(--muted);font-size:.78rem}
+.omit,.export-note{font-size:.82rem;color:var(--muted);background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.18);border-radius:10px;padding:.6rem .9rem;margin:.7rem 0}
+.export-note{text-align:center;margin:1.4rem 0}
+.foot{margin-top:3rem;font-size:.8rem;color:#6b7280}
