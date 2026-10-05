@@ -48,3 +48,6 @@ h1.title span{background:linear-gradient(90deg,var(--blue),var(--indigo));-webki
 .omit,.export-note{font-size:.82rem;color:var(--muted);background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.18);border-radius:10px;padding:.6rem .9rem;margin:.7rem 0}
 .export-note{text-align:center;margin:1.4rem 0}
 .foot{margin-top:3rem;font-size:.8rem;color:#6b7280}
+
+/* section headings on the hub and book pages */
+.sec-h{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin:2rem 0 .2rem}
