@@ -1,0 +1,120 @@
+/* Shared style for Bible Study chapter pages (parchment study theme). */
+  /* Layout: sticky left nav toggling two chapter panels; single reading column of
+     ref → intro → diagram → caption. Parchment ground, indigo deep, gold "light". */
+  :root {
+    --bg: #f4efe4;
+    --panel: #fbf8f0;
+    --fg: #241f18;
+    --muted: #6a6052;
+    --line: #d8cfba;
+    --gold: #c08a2d;
+    --gold-soft: #e9c874;
+    --deep: #1d2a44;
+    --deep-2: #2f4268;
+    --water: #3f6b8f;
+    --water-soft: #7fa8c4;
+    --earth: #7a5a36;
+    --fire: #b4532a;
+    --crystal: #cfe6ef;
+    --good: #4a7a4a;
+    --warn: #9a7b2e;
+    --navbg: #efe8d8;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14110c; --panel: #1d1a13; --fg: #ece4d2; --muted: #a39780; --line: #342e22;
+      --gold: #e2b24e; --gold-soft: #f0d58a; --deep: #0d1526; --deep-2: #1b2a40;
+      --water: #4e7ea3; --water-soft: #93b8d2; --earth: #9a7446; --fire: #d2663a;
+      --crystal: #bfe0ec; --good: #6fa86f; --warn: #cfa94e; --navbg: #1a160f;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14110c; --panel: #1d1a13; --fg: #ece4d2; --muted: #a39780; --line: #342e22;
+    --gold: #e2b24e; --gold-soft: #f0d58a; --deep: #0d1526; --deep-2: #1b2a40;
+    --water: #4e7ea3; --water-soft: #93b8d2; --earth: #9a7446; --fire: #d2663a;
+    --crystal: #bfe0ec; --good: #6fa86f; --warn: #cfa94e; --navbg: #1a160f;
+    color-scheme: dark;
+  }
+
+  body { background: var(--bg); color: var(--fg); font-family: Spectral, Georgia, serif; line-height: 1.6; margin: 0; }
+
+  .shell { max-width: 1040px; margin: 0 auto; display: flex; gap: 2rem; align-items: flex-start; padding-inline: 20px; }
+
+  /* ---- Sidebar ---- */
+  .sidebar { position: sticky; top: env(safe-area-inset-top, 0px); flex: none; width: 212px; padding-block: 2.2rem; align-self: flex-start; }
+  .brand { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1.5rem; line-height: 1.05; margin: 0 0 1.2rem; }
+  .brand small { display: block; font-family: 'IBM Plex Mono', monospace; font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-top: .35rem; }
+  .chaptabs { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1.1rem; }
+  .chaptab { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; text-align: left; background: var(--navbg); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: .5rem .7rem; cursor: pointer; transition: all .15s; }
+  .chaptab[aria-selected="true"] { background: var(--gold); color: #1d1a13; border-color: var(--gold); }
+  .chaptab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .jump { list-style: none; margin: 0; padding: 0 0 0 .2rem; display: flex; flex-direction: column; gap: .15rem; border-left: 1px solid var(--line); }
+  .jump a { display: block; font-size: .82rem; color: var(--muted); text-decoration: none; padding: .28rem .6rem; border-left: 2px solid transparent; margin-left: -1px; line-height: 1.25; }
+  .jump a:hover { color: var(--fg); }
+  .jump a.active { color: var(--gold); border-left-color: var(--gold); font-weight: 600; }
+  .jump .num { font-family: 'IBM Plex Mono', monospace; font-size: .7rem; color: var(--gold); margin-right: .35rem; }
+
+  /* ---- Content ---- */
+  .content { flex: 1 1 auto; min-width: 0; padding-block: 2.4rem 4rem; max-width: 760px; }
+  header.page { margin-bottom: 1.4rem; }
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin: 0 0 .5rem; }
+  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.05; text-wrap: balance; margin: 0 0 .4rem; }
+  .sub { color: var(--muted); font-size: 1.02rem; max-width: 60ch; margin: 0; }
+
+  .chapter-head { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--fg); background: var(--gold-soft); display: inline-block; padding: .4rem .75rem; border-radius: 6px; margin: 1.6rem 0 .3rem; }
+  .chapter-head.two { background: var(--deep); color: var(--gold-soft); }
+  .chapter-sub { color: var(--muted); font-style: italic; margin: 0 0 .5rem; max-width: 62ch; }
+
+  h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: clamp(1.5rem, 3.6vw, 1.95rem); margin: 2.3rem 0 .25rem; text-wrap: balance; scroll-margin-top: 90px; }
+  h2 .n { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--gold); margin-right: .5rem; vertical-align: middle; }
+  .ref { font-family: 'IBM Plex Mono', monospace; font-size: .73rem; letter-spacing: .03em; color: var(--gold); margin: 0 0 1rem; }
+  p { max-width: 64ch; }
+  .lead { max-width: 64ch; }
+
+  figure { margin: 1.3rem 0 .6rem; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem; overflow-x: auto; }
+  figure svg { display: block; width: 100%; height: auto; max-width: 100%; }
+  figcaption { font-size: .85rem; color: var(--muted); margin-top: .7rem; padding-top: .7rem; border-top: 1px solid var(--line); max-width: none; }
+  figcaption b { color: var(--fg); }
+  .svg-title { font-family: 'Cormorant Garamond', serif; }
+  .svg-label { font-family: Spectral, serif; }
+  .svg-mono { font-family: 'IBM Plex Mono', monospace; letter-spacing: .02em; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; font-size: .8rem; color: var(--muted); margin-top: .8rem; }
+  .legend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .sw { width: 14px; height: 14px; border-radius: 3px; flex: none; border: 1px solid rgba(0,0,0,.15); }
+
+  hr { border: none; border-top: 1px solid var(--line); margin: 2.4rem 0; }
+  footer { margin-top: 3rem; color: var(--muted); font-size: .85rem; }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 720px) {
+    .shell { flex-direction: column; gap: 0; }
+    .sidebar { position: sticky; top: 0; width: auto; padding-block: .7rem; background: var(--bg); z-index: 20; border-bottom: 1px solid var(--line); margin-inline: -20px; padding-inline: 20px; }
+    .brand { display: none; }
+    .chaptabs { flex-direction: row; gap: .5rem; margin-bottom: 0; }
+    .chaptab { flex: 1; text-align: center; font-size: 1rem; padding: .45rem; }
+    .jump { display: none; }
+    .content { padding-block: 1.4rem 3rem; }
+    h2 { scroll-margin-top: 70px; }
+  }
+
+/* page-level: keep the site bar's look independent of the parchment study theme */
+.ck-bar a{text-decoration:none}
+/* chapter pages: chapter switcher links (were buttons) and prev/next nav */
+a.chaptab{display:block;text-decoration:none}
+a.chaptab[aria-current="page"]{background:var(--gold);color:#1d1a13;border-color:var(--gold)}
+.booklink{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin:0 0 .8rem}
+.booklink:hover{color:var(--gold)}
+.chapnav{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:2.6rem 0 0;padding-top:1.2rem;border-top:1px solid var(--line)}
+.chapnav a{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.15rem;color:var(--fg);text-decoration:none;border:1px solid var(--line);background:var(--navbg);border-radius:8px;padding:.5rem .9rem}
+.chapnav a:hover{border-color:var(--gold)}
+@media (max-width: 720px){ .booklink{display:none} }
+
+/* mobile: full-width chapter row that scrolls sideways once there are many chapters */
+@media (max-width: 720px){
+  .sidebar{align-self:stretch}
+  .chaptabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .chaptab{flex:1 0 auto;white-space:nowrap;min-width:6.5rem}
+}
