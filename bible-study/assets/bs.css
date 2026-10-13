@@ -26,6 +26,7 @@ h1.title span{background:linear-gradient(90deg,var(--blue),var(--indigo));-webki
 .card:hover{transform:translateY(-3px);border-color:rgba(56,189,248,.55);box-shadow:0 14px 40px rgba(56,189,248,.16)}
 .card .k{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
 .card .t{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.7rem;line-height:1;text-transform:uppercase;color:#fff}
+.card .lock{width:.82em;height:.82em;margin-right:.28em;vertical-align:-.08em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .card .d{font-size:.88rem;color:var(--muted)}
 .note{font-size:.85rem;color:var(--muted);border-left:3px solid var(--indigo);padding:.2rem 0 .2rem .9rem;margin:1.8rem 0}
 
