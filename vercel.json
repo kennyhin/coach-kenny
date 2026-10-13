@@ -1,9 +1,0 @@
-{
-  "framework": null,
-  "buildCommand": "",
-  "functions": {
-    "api/transcriber/[...path].js": {
-      "maxDuration": 60
-    }
-  }
-}

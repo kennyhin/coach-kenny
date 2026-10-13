@@ -1,19 +1,7 @@
-// coachkenny.org is GitHub Pages and cannot run the API. When this is set,
-// the page on that host calls the API origin (no trailing slash).
-// Leave empty to use the same origin (local dev, Vercel, Netlify).
-export const REMOTE_API = '';
+// Google Apps Script web app. It checks the PIN again and writes a file to Drive.
+export const DRIVE_URL = 'https://script.google.com/macros/s/AKfycbyu3CYrrun_VM216DBuAduG7MLqbQcdIyZns5Qzp_JZ7bq0Vu3lUfedk5ddDuDSgL6Jxg/exec';
 
-export function apiOrigin() {
-  const remote = String(REMOTE_API || '').replace(/\/$/, '');
-  if (typeof location === 'undefined') return remote;
-  const host = location.hostname;
-  if (
-    host === 'localhost' ||
-    host === '127.0.0.1' ||
-    host.endsWith('.vercel.app') ||
-    host.endsWith('.netlify.app')
-  ) {
-    return '';
-  }
-  return remote;
-}
+// Salted SHA-256, same idea as the other PIN gates: sha256(salt + pin).
+// The digits are not stored in this file. A short PIN is only a light lock.
+export const PIN_SALT = 'ck-transcriber-v1';
+export const PIN_HASH = '8f2a3364d880e50550e2b73a31fbeb50c595ffffd18f72c0e579048d9d08794c';

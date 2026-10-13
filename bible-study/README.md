@@ -32,4 +32,4 @@ bible-study/
 ## Notes
 - Scripture quotes are KJV (public domain in the US).
 - Keep private teacher notes out of this repo. They live in the separate private notes site.
-- `/bible-study/transcriber/` is a PIN-locked tool. The Bible Study hub links to it with a card next to Genesis. Leave it out of the site home page. The PIN is the `TRANSCRIBER_PIN` environment variable, checked by `/api/transcriber`.
+- `/bible-study/transcriber/` is a PIN-locked tool. The Bible Study hub links to it with a card next to Genesis. Leave it out of the site home page. The page checks a hash of the PIN, then Save posts that PIN to the Google Drive Apps Script.

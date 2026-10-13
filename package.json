@@ -2,16 +2,12 @@
   "name": "coach-kenny",
   "private": true,
   "type": "module",
-  "description": "coachkenny.org static site plus the private Bible study transcriber API",
+  "description": "coachkenny.org static site",
   "scripts": {
     "dev": "node server/transcriber.mjs",
-    "test": "node --test lib/transcriber/handler.test.js bible-study/transcriber/text.test.js"
+    "test": "node --test bible-study/transcriber/text.test.js"
   },
   "engines": {
     "node": ">=18"
-  },
-  "dependencies": {
-    "@netlify/blobs": "^11.1.4",
-    "@vercel/blob": "^2.8.1"
   }
 }
