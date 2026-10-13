@@ -37,7 +37,7 @@
 <main class="wrap app" id="app" hidden>
   <p class="eyebrow">Private · Bible study</p>
   <h1 class="title">Trans<span>criber</span></h1>
-  <p class="lede">Tap Start, choose the Chrome tab or screen with the video, and turn audio on. If the video is in another app, share the whole screen and enable system audio. Cancel the share dialog to use the microphone instead. Keep this tab open — a session can run for a few hours.</p>
+  <p class="lede">Tap Start, choose the Chrome tab or screen with the video, and turn audio on. If the video is in another app, share the whole screen and enable system audio. Cancel the share dialog to use the microphone instead. Keep this tab open — a session can run for a few hours. Save stores the words in Google Drive.</p>
   <p class="note" id="browser-note" hidden></p>
 
   <label class="field" for="title">Title
@@ -61,19 +61,10 @@
   <div class="actions">
     <button type="button" class="primary" id="save">Save</button>
     <button type="button" id="copy">Copy</button>
-    <button type="button" id="download">Download</button>
+    <button type="button" id="download">Download .txt</button>
     <button type="button" id="clear">Clear</button>
   </div>
   <p class="status" id="save-msg" role="status"></p>
-
-  <h2 class="sec-h">Saved</h2>
-  <div id="saved" class="saved"></div>
-
-  <details class="assist">
-    <summary>Assistant API</summary>
-    <p>Send the same PIN in the <code>X-Transcriber-Pin</code> header. <code>?full=1</code> includes the transcript text.</p>
-    <pre id="api-help"></pre>
-  </details>
 </main>
 
 <video id="sink" class="sink" playsinline muted></video>

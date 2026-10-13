@@ -2,7 +2,6 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { handleTranscriber } from '../lib/transcriber/handler.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const port = Number(process.env.PORT || 8787);
@@ -31,10 +30,6 @@ const blocked = new Set(['.git', 'node_modules', '.data', '.env', '.netlify', '.
 const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
-    if (url.pathname.startsWith('/api/transcriber')) {
-      await serveApi(req, res, url);
-      return;
-    }
     await serveStatic(req, res, url);
   } catch (err) {
     console.error(err);
@@ -42,31 +37,6 @@ const server = createServer(async (req, res) => {
     res.end('Server error');
   }
 });
-
-async function serveApi(req, res, url) {
-  const chunks = [];
-  for await (const chunk of req) chunks.push(chunk);
-  const body = Buffer.concat(chunks);
-  const headers = new Headers();
-  const skip = new Set(['host', 'connection', 'content-length', 'transfer-encoding']);
-  for (const [key, value] of Object.entries(req.headers)) {
-    if (value == null || skip.has(key.toLowerCase())) continue;
-    if (Array.isArray(value)) value.forEach((item) => headers.append(key, item));
-    else headers.set(key, String(value));
-  }
-  const request = new Request(url, {
-    method: req.method,
-    headers,
-    body: req.method === 'GET' || req.method === 'HEAD' ? undefined : body,
-  });
-  const response = await handleTranscriber(request);
-  res.statusCode = response.status;
-  response.headers.forEach((value, key) => {
-    if (key === 'content-length') return;
-    res.setHeader(key, value);
-  });
-  res.end(Buffer.from(await response.arrayBuffer()));
-}
 
 async function serveStatic(req, res, url) {
   if (req.method !== 'GET' && req.method !== 'HEAD') {

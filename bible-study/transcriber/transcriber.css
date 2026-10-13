@@ -32,6 +32,8 @@
 
 .status{min-height:1.4em;margin:.7rem 0;color:#9ca3af}
 .status.err{color:#f87171}
+.status a{color:#38bdf8}
+#download.offer{box-shadow:0 0 0 2px rgba(56,189,248,.7);color:#fff}
 .meta{display:flex;align-items:center;gap:.8rem;color:#9ca3af;font-variant-numeric:tabular-nums;font-size:.92rem}
 .meter{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
 .meter span{display:block;height:100%;width:0;background:linear-gradient(90deg,#38bdf8,#8CC63F);border-radius:99px}

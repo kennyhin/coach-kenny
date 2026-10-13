@@ -1,7 +1,8 @@
-import { apiOrigin } from './config.js';
+import { DRIVE_URL, PIN_HASH, PIN_SALT } from './config.js';
+import { driveRequest, parseDriveResponse } from './drive.js';
+import { pinHash, sameHash } from './pin.js';
 import { downloadBody, downloadName, joinUtterance } from './text.js';
 
-const TOKEN_KEY = 'ck-transcriber-token';
 const DRAFT_KEY = 'ck-transcriber-draft-v1';
 const CHUNK_MS = 12000;
 const SILENCE_RMS = 0.005;
@@ -27,16 +28,13 @@ const copyBtn = document.getElementById('copy');
 const downloadBtn = document.getElementById('download');
 const clearBtn = document.getElementById('clear');
 const saveMsg = document.getElementById('save-msg');
-const savedEl = document.getElementById('saved');
-const apiHelp = document.getElementById('api-help');
 const browserNote = document.getElementById('browser-note');
 const sink = document.getElementById('sink');
 
-let token = '';
+let enteredPin = '';
 let listening = false;
 let engine = '';
 let source = '';
-let serverStt = false;
 let stream = null;
 let currentStop = null;
 let loopDone = Promise.resolve();
@@ -50,7 +48,6 @@ let audioCtx = null;
 let wakeLock = null;
 let speechRec = null;
 let speechStop = null;
-let savedId = '';
 let draftTimer = 0;
 let whisper = null;
 
@@ -79,25 +76,11 @@ window.addEventListener('beforeunload', (event) => {
 });
 
 restoreDraft();
-renderApiHelp();
 boot();
 
-async function boot() {
-  token = sessionStorage.getItem(TOKEN_KEY) || '';
-  if (!token) {
-    pinInput.focus();
-    return;
-  }
-  gateMsg.textContent = 'Checking…';
-  try {
-    await loadConfig();
-    showApp();
-  } catch {
-    token = '';
-    sessionStorage.removeItem(TOKEN_KEY);
-    gateMsg.textContent = '';
-    pinInput.focus();
-  }
+function boot() {
+  try { sessionStorage.removeItem('ck-transcriber-token'); } catch { /* old API token, if any */ }
+  pinInput.focus();
 }
 
 async function unlock(pin) {
@@ -105,13 +88,13 @@ async function unlock(pin) {
   gateMsg.className = '';
   gateMsg.textContent = 'Checking…';
   try {
-    const data = await api('/api/transcriber/session', { method: 'POST', json: { pin }, auth: false });
-    token = data.token;
-    sessionStorage.setItem(TOKEN_KEY, token);
+    const hash = await pinHash(PIN_SALT, pin);
+    if (!sameHash(hash, PIN_HASH)) throw new Error('Wrong PIN');
+    enteredPin = pin;
     pinInput.value = '';
-    await loadConfig();
     showApp();
   } catch (err) {
+    enteredPin = '';
     gateMsg.className = 'err';
     gateMsg.textContent = err.message || 'Could not unlock';
   } finally {
@@ -121,8 +104,7 @@ async function unlock(pin) {
 
 async function lock() {
   if (listening || runStarted) await stopListening();
-  token = '';
-  sessionStorage.removeItem(TOKEN_KEY);
+  enteredPin = '';
   showGate();
 }
 
@@ -130,8 +112,6 @@ function showApp() {
   gate.hidden = true;
   app.hidden = false;
   lockBtn.hidden = false;
-  renderApiHelp();
-  loadSaved();
   titleInput.focus();
 }
 
@@ -141,11 +121,6 @@ function showGate() {
   gate.hidden = false;
   gateMsg.textContent = '';
   pinInput.focus();
-}
-
-async function loadConfig() {
-  const cfg = await api('/api/transcriber/config');
-  serverStt = Boolean(cfg.serverStt);
 }
 
 async function startListening() {
@@ -265,7 +240,6 @@ async function shareDisplay() {
 }
 
 function chooseEngine(kind, media) {
-  if (serverStt && media) return 'server';
   if (kind === 'mic' && hasSpeech()) return 'webspeech';
   if (media && window.Worker) return 'whisper';
   if (hasSpeech()) return 'webspeech';
@@ -273,8 +247,6 @@ function chooseEngine(kind, media) {
 }
 
 function engineStatus() {
-  if (engine === 'server' && source === 'tab') return 'Listening to the shared audio. Text arrives every few seconds.';
-  if (engine === 'server') return 'Listening to the microphone. Text arrives every few seconds.';
   if (engine === 'webspeech') return 'Listening with Chrome live captions on the microphone. Keep this tab open.';
   return 'Listening to the shared audio in this browser. Keep this tab in the foreground.';
 }
@@ -345,13 +317,6 @@ function enqueue(blob) {
 async function transcribeChunk(blob) {
   const audio = await decodeTo16k(blob);
   if (!audio || rms(audio) < SILENCE_RMS) return;
-  if (engine === 'server') {
-    const body = new FormData();
-    body.append('audio', blob, 'chunk.webm');
-    const data = await api('/api/transcriber/transcribe', { method: 'POST', body });
-    commit(data.text || '');
-    return;
-  }
   setStatus('Transcribing the last few seconds…');
   const text = await whisperText(audio);
   commit(filterWhisper(text));
@@ -640,7 +605,6 @@ function saveDraft() {
   const payload = {
     title: titleInput.value,
     text: transcriptEl.value,
-    id: savedId,
     listenedMs,
     savedAt: Date.now(),
   };
@@ -660,7 +624,6 @@ function restoreDraft() {
     if (!draft || typeof draft !== 'object') return;
     if (draft.title) titleInput.value = draft.title;
     if (draft.text) transcriptEl.value = draft.text;
-    if (draft.id) savedId = draft.id;
     if (draft.listenedMs) listenedMs = draft.listenedMs;
     updateWords();
     timerEl.textContent = formatElapsed(elapsed());
@@ -672,15 +635,15 @@ function restoreDraft() {
 }
 
 async function clearDraft() {
-  if (transcriptEl.value && !confirm('Clear the transcript on screen? Saved copies stay in the list.')) return;
+  if (transcriptEl.value && !confirm('Clear the transcript on this screen? A file already saved to Drive stays there.')) return;
   if (listening || runStarted) await stopListening();
   transcriptEl.value = '';
-  savedId = '';
   listenedMs = 0;
   liveEl.textContent = '';
   updateWords();
   timerEl.textContent = '0:00';
-  saveMsg.textContent = '';
+  downloadBtn.classList.remove('offer');
+  setSave('');
   saveDraft();
   autosaveEl.textContent = 'Cleared.';
 }
@@ -696,99 +659,75 @@ async function saveTranscript() {
     setSave('Nothing to save yet.', true);
     return;
   }
+  if (!enteredPin) {
+    setSave('Unlock again, then tap Save.', true);
+    return;
+  }
+  if (listening || runStarted) await stopListening();
+  const text = transcriptEl.value;
   saveBtn.disabled = true;
+  downloadBtn.classList.remove('offer');
   setSave('Saving…');
   try {
-    const data = await api('/api/transcriber/transcripts', {
-      method: 'POST',
-      json: { title, text: transcriptEl.value, id: savedId || undefined },
-    });
-    savedId = data.id;
-    saveDraft();
-    setSave('Saved.');
-    await loadSaved();
+    const saved = await postDrive(enteredPin, title, text);
+    forgetDraft();
+    showSaved(saved);
   } catch (err) {
-    setSave(err.message || 'Could not save', true);
+    setSave((err.message || 'Could not save') + ' The transcript is still in this browser. Use Download to keep a .txt copy.', true);
+    downloadBtn.classList.add('offer');
+    downloadBtn.focus();
   } finally {
     saveBtn.disabled = false;
   }
 }
 
+async function postDrive(pin, title, text) {
+  const req = driveRequest(DRIVE_URL, pin, title, text);
+  let res;
+  try {
+    res = await fetch(req.url, {
+      method: req.method,
+      headers: req.headers,
+      body: req.body,
+      redirect: req.redirect,
+    });
+  } catch {
+    throw new Error('Could not reach Google Drive.');
+  }
+  const parsed = parseDriveResponse(await res.text());
+  if (!parsed.ok) throw new Error(parsed.error);
+  return parsed;
+}
+
+function showSaved(data) {
+  saveMsg.className = 'status';
+  saveMsg.textContent = '';
+  saveMsg.append('Saved to Drive. ');
+  if (data.url) {
+    const link = document.createElement('a');
+    link.href = data.url;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = data.name || 'Open the file';
+    saveMsg.append(link);
+  }
+}
+
+function forgetDraft() {
+  clearTimeout(draftTimer);
+  try { localStorage.removeItem(DRAFT_KEY); } catch { /* already gone */ }
+  titleInput.value = '';
+  transcriptEl.value = '';
+  listenedMs = 0;
+  liveEl.textContent = '';
+  updateWords();
+  timerEl.textContent = '0:00';
+  autosaveEl.textContent = '';
+}
+
 function setSave(text, isError) {
   saveMsg.textContent = text;
   saveMsg.className = isError ? 'status err' : 'status';
-}
-
-async function loadSaved() {
-  savedEl.textContent = 'Loading…';
-  try {
-    const data = await api('/api/transcriber/transcripts');
-    renderSaved(data.transcripts || []);
-  } catch (err) {
-    savedEl.textContent = '';
-    const p = document.createElement('p');
-    p.className = 'empty';
-    p.textContent = err.message || 'Could not load saved transcripts';
-    savedEl.appendChild(p);
-  }
-}
-
-function renderSaved(items) {
-  savedEl.textContent = '';
-  if (!items.length) {
-    const p = document.createElement('p');
-    p.className = 'empty';
-    p.textContent = 'No saved transcripts yet.';
-    savedEl.appendChild(p);
-    return;
-  }
-  items.forEach((item) => {
-    const card = document.createElement('article');
-    card.className = 'item';
-    const h = document.createElement('h3');
-    h.textContent = item.title;
-    const p = document.createElement('p');
-    const when = item.createdAt ? new Date(item.createdAt).toLocaleString() : '';
-    p.textContent = when + (item.characters ? ' · ' + item.characters.toLocaleString() + ' characters' : '');
-    const row = document.createElement('div');
-    row.className = 'row';
-    row.append(
-      actionButton('Copy', () => withFull(item.id, (doc) => copyText(doc.text))),
-      actionButton('Download', () => withFull(item.id, (doc) => downloadText(doc.title, doc.text, doc.createdAt))),
-      actionButton('Delete', () => removeSaved(item), 'danger'),
-    );
-    card.append(h, p, row);
-    savedEl.appendChild(card);
-  });
-}
-
-function actionButton(label, onClick, className) {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.textContent = label;
-  if (className) button.className = className;
-  button.addEventListener('click', onClick);
-  return button;
-}
-
-async function withFull(id, fn) {
-  try {
-    const doc = await api('/api/transcriber/transcripts/' + id);
-    await fn(doc);
-  } catch (err) {
-    setSave(err.message || 'Could not open that transcript', true);
-  }
-}
-
-async function removeSaved(item) {
-  if (!confirm('Delete “' + item.title + '”?')) return;
-  try {
-    await api('/api/transcriber/transcripts/' + item.id, { method: 'DELETE' });
-    if (savedId === item.id) savedId = '';
-    await loadSaved();
-  } catch (err) {
-    setSave(err.message || 'Could not delete', true);
-  }
 }
 
 async function copyText(text) {
@@ -825,43 +764,3 @@ function downloadText(title, text, when) {
   setTimeout(() => URL.revokeObjectURL(link.href), 1000);
 }
 
-function renderApiHelp() {
-  const base = (apiOrigin() || location.origin).replace(/\/$/, '');
-  apiHelp.textContent = [
-    'GET ' + base + '/api/transcriber/transcripts',
-    'GET ' + base + '/api/transcriber/transcripts?full=1',
-    'GET ' + base + '/api/transcriber/transcripts/{id}',
-    'Header: X-Transcriber-Pin: <pin>',
-  ].join('\n');
-}
-
-async function api(path, opts) {
-  const options = opts || {};
-  const headers = new Headers(options.headers || {});
-  if (options.auth !== false && token) headers.set('Authorization', 'Bearer ' + token);
-  let body = options.body;
-  if (options.json !== undefined) {
-    headers.set('Content-Type', 'application/json');
-    body = JSON.stringify(options.json);
-  }
-  let res;
-  try {
-    res = await fetch(apiOrigin() + path, { method: options.method || 'GET', headers, body });
-  } catch {
-    throw new Error('Could not reach the transcriber API.');
-  }
-  const type = res.headers.get('content-type') || '';
-  let data = null;
-  if (type.includes('json')) data = await res.json();
-  else {
-    const raw = await res.text();
-    if (!res.ok) {
-      throw new Error(raw.trim().startsWith('<') || res.status === 404
-        ? 'The transcriber API is not running on this host. It needs Vercel (Blob + TRANSCRIBER_PIN) or Netlify.'
-        : raw.slice(0, 180));
-    }
-  }
-  if (res.status === 401) throw new Error('Wrong PIN');
-  if (!res.ok) throw new Error((data && data.error) || 'Request failed');
-  return data;
-}
