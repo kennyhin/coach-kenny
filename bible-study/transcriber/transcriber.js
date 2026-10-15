@@ -52,10 +52,7 @@ let draftTimer = 0;
 let whisper = null;
 
 const chromium = /Chrome|Chromium|Edg\//.test(navigator.userAgent);
-if (!chromium) {
-  browserNote.hidden = false;
-  browserNote.textContent = 'Tab audio works in Chrome on a computer. Other browsers can still try the microphone.';
-}
+if (!chromium) { /* no note */ }
 
 gateForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -80,6 +77,9 @@ boot();
 
 function boot() {
   try { sessionStorage.removeItem('ck-transcriber-token'); } catch { /* old API token, if any */ }
+  let handoff = '';
+  try { handoff = sessionStorage.getItem('ck-bs-unlock') || ''; sessionStorage.removeItem('ck-bs-unlock'); } catch { /* none */ }
+  if (handoff) { unlock(handoff); return; }
   pinInput.focus();
 }
 
