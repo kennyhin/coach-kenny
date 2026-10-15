@@ -31,8 +31,49 @@
   </div>
 
   <p class="note">Scripture quotations on these pages are from the King James Version (KJV), which is in the public domain in the United States.</p>
-  <a class="pin-link" href="/bible-study/transcriber/" aria-label="PIN" rel="nofollow"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>PIN</a>
-  <style>.pin-link{display:flex;align-items:center;gap:6px;width:max-content;margin:28px auto 8px;padding:5px 12px;border:1px solid #374151;border-radius:999px;color:#9aa4b2;font:600 .75rem/1 Inter,sans-serif;letter-spacing:.12em;text-decoration:none;opacity:.7;transition:opacity .2s}.pin-link:hover,.pin-link:focus-visible{opacity:1}.pin-link svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
+  <button type="button" class="dot-btn" id="dot-btn"></button>
+  <div class="np-modal" id="np" hidden>
+    <div class="np-card" role="dialog" aria-modal="true">
+      <div class="np-dots" id="np-dots"></div>
+      <div class="np-grid">
+        <button type="button" data-d="1">1</button><button type="button" data-d="2">2</button><button type="button" data-d="3">3</button>
+        <button type="button" data-d="4">4</button><button type="button" data-d="5">5</button><button type="button" data-d="6">6</button>
+        <button type="button" data-d="7">7</button><button type="button" data-d="8">8</button><button type="button" data-d="9">9</button>
+        <button type="button" id="np-close" aria-label="Close">&times;</button><button type="button" data-d="0">0</button><button type="button" id="np-back" aria-label="Backspace">&#9003;</button>
+      </div>
+      <button type="button" class="np-unlock" id="np-unlock">Unlock</button>
+    </div>
+  </div>
+  <style>
+  .dot-btn{display:block;width:12px;height:12px;margin:32px auto 8px;padding:0;border:0;border-radius:50%;background:#4b5563;opacity:.6;cursor:pointer}.dot-btn:hover,.dot-btn:focus-visible{opacity:1}
+  .np-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:50}.np-modal[hidden]{display:none}
+  .np-card{background:#111827;border:1px solid #374151;border-radius:16px;padding:20px;width:260px}
+  .np-dots{height:28px;text-align:center;font-size:1.5rem;letter-spacing:.4em;color:#e5e7eb;margin-bottom:12px}.np-dots.err{color:#ef4444;animation:np-shake .3s}
+  @keyframes np-shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .np-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .np-grid button,.np-unlock{height:52px;border:1px solid #374151;border-radius:12px;background:#1f2937;color:#f3f4f6;font:600 1.3rem Inter,sans-serif;cursor:pointer}
+  .np-grid button:active{background:#374151}
+  .np-unlock{width:100%;margin-top:12px;font-size:1rem;background:#2563eb;border-color:#2563eb}
+  </style>
+  <script type="module">
+  import { PIN_HASH, PIN_SALT } from '/bible-study/transcriber/config.js';
+  import { pinHash, sameHash } from '/bible-study/transcriber/pin.js';
+  const m=document.getElementById('np'),dots=document.getElementById('np-dots');let v='';
+  const draw=()=>{dots.className='np-dots';dots.textContent='\u2022'.repeat(v.length);};
+  const open=()=>{v='';draw();m.hidden=false;};const close=()=>{m.hidden=true;v='';};
+  document.getElementById('dot-btn').onclick=open;
+  document.getElementById('np-close').onclick=close;
+  m.addEventListener('click',e=>{if(e.target===m)close();});
+  m.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{if(v.length<12){v+=b.dataset.d;draw();}});
+  document.getElementById('np-back').onclick=()=>{v=v.slice(0,-1);draw();};
+  document.addEventListener('keydown',e=>{if(m.hidden)return;if(/^[0-9]$/.test(e.key)&&v.length<12){v+=e.key;draw();}else if(e.key==='Backspace'){v=v.slice(0,-1);draw();}else if(e.key==='Enter')unlock();else if(e.key==='Escape')close();});
+  async function unlock(){
+    try{const h=await pinHash(PIN_SALT,v);
+      if(sameHash(h,PIN_HASH)){sessionStorage.setItem('ck-bs-unlock',v);location.href='/bible-study/transcriber/';return;}}catch{}
+    v='';dots.textContent='\u2022\u2022\u2022\u2022';dots.className='np-dots err';setTimeout(draw,600);
+  }
+  document.getElementById('np-unlock').onclick=unlock;
+  </script>
 </main>
 </body>
 </html>

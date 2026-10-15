@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0B0B0B">
-<meta name="description" content="Private Bible study transcriber.">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,19 +24,16 @@
   <form class="gate-card" id="gate-form">
     <p class="eyebrow">Private</p>
     <h1 class="title">Trans<span>criber</span></h1>
-    <p class="lede">Enter the PIN to transcribe a study video.</p>
     <label class="sr" for="pin">PIN</label>
     <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="12" aria-label="PIN" required>
     <button type="submit" id="unlock">Unlock</button>
     <p id="gate-msg" role="alert"></p>
-    <p class="pin-note">A short PIN only discourages casual access. It is not a strong lock.</p>
   </form>
 </div>
 
 <main class="wrap app" id="app" hidden>
   <p class="eyebrow">Private · Bible study</p>
   <h1 class="title">Trans<span>criber</span></h1>
-  <p class="lede">Tap Start, choose the Chrome tab or screen with the video, and turn audio on. If the video is in another app, share the whole screen and enable system audio. Cancel the share dialog to use the microphone instead. Keep this tab open — a session can run for a few hours. Save stores the words in Google Drive.</p>
   <p class="note" id="browser-note" hidden></p>
 
   <label class="field" for="title">Title
@@ -54,7 +50,7 @@
   <p class="live" id="live" aria-live="polite"></p>
 
   <label class="field" for="transcript">Transcript
-    <textarea id="transcript" spellcheck="true" placeholder="Words show up here as the video plays. They are kept in this browser until you tap Save."></textarea>
+    <textarea id="transcript" spellcheck="true"></textarea>
   </label>
   <p class="autosave" id="autosave"></p>
 
