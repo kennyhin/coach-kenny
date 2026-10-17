@@ -118,3 +118,34 @@ a.chaptab[aria-current="page"]{background:var(--gold);color:#1d1a13;border-color
   .chaptabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .chaptab{flex:1 0 auto;white-space:nowrap;min-width:6.5rem}
 }
+
+/* ---- Aha moments + highlighted KJV cross-reference callouts ---- */
+.aha-set{margin:1.7rem 0 .4rem}
+.aha-h{display:flex;align-items:center;gap:.7rem;font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 .2rem;max-width:none}
+.aha-h::after{content:"";flex:1;height:1px;background:var(--line)}
+.aha-card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:1rem 1.15rem 1.1rem;margin:.9rem 0;scroll-margin-top:90px}
+.aha-card h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(1.25rem,3vw,1.45rem);line-height:1.15;margin:.45rem 0 .35rem;text-wrap:balance}
+.aha-card > p{margin:.4rem 0}
+.aha-card figure{margin:.9rem 0 .2rem;background:var(--bg)}
+.tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;border-radius:5px;padding:.12rem .5rem;border:1px solid}
+.tag.t{color:var(--good);border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}
+.tag.r{color:var(--warn);border-color:var(--gold);background:color-mix(in srgb,var(--gold-soft) 22%,transparent)}
+.tag.y{color:var(--fire);border-color:var(--fire);background:color-mix(in srgb,var(--fire) 10%,transparent)}
+.xrefs{display:grid;gap:.6rem;margin-top:.8rem}
+.xref{margin:0;padding:.7rem .95rem .75rem;background:color-mix(in srgb,var(--gold-soft) 26%,var(--panel));border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);border-left:5px solid var(--gold);border-radius:8px}
+.xref.g{background:color-mix(in srgb,var(--water-soft) 16%,var(--panel));border-color:color-mix(in srgb,var(--water) 35%,transparent);border-left-color:var(--water)}
+.xref-ref{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;font-family:'IBM Plex Mono',monospace;font-size:.78rem;font-weight:500;letter-spacing:.04em;color:var(--fg);margin:0 0 .3rem;max-width:none}
+.xref-k{font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;background:var(--gold);color:#1d1a13;border-radius:4px;padding:.1rem .4rem}
+.xref.g .xref-k{background:var(--water);color:#fff}
+.kjv-tag{font-size:.58rem;letter-spacing:.12em;color:var(--muted)}
+.xref-t{margin:0;font-family:Spectral,Georgia,serif;font-style:italic;line-height:1.6;max-width:none}
+.xonly .xrefs{margin-top:.6rem}
+.taglegend{display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:center;font-size:.85rem;color:var(--muted);margin:.8rem 0 0;max-width:none}
+.swipe{display:none}
+@media (max-width:720px){
+  .aha-card{padding:.85rem .85rem 1rem}
+  .xref{padding:.6rem .75rem}
+  .aha-card figure{padding:.6rem;margin-inline:-.35rem}
+  .aha-card figure svg{min-width:560px}
+  .aha-card figure .swipe{display:block;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 .4rem;position:sticky;left:0}
+}
