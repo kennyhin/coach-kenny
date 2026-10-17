@@ -29,6 +29,13 @@ bible-study/
 2. Add chapters as `john/1/index.html` and so on, using the steps above with `john` in the links.
 3. Add a card for the book in `bible-study/index.html` under "Books", and add it to the top nav if you want.
 
+## Aha moments and cross-references (chapter pages)
+- Inside a section, aha moments sit in `<div class="aha-set">` as `<article class="aha-card" id="gN-NNx">` cards (styles in `assets/chapter.css`).
+- Each card has a tag: `tag t` = Text says, `tag r` = One reading, `tag y` = Just a theory.
+- Every point is proven with KJV callouts in `<div class="xrefs">`: `blockquote.xref.g` for the Genesis verse itself, `blockquote.xref` for cross-references. Show the full reference, and quote KJV text exactly (check it against a KJV source, not memory).
+- The Bible is the only reference: no speaker names, attributions, or outside commentary.
+- Genesis 2 has a marked spot at the end of its content for new sections.
+
 ## Notes
 - Scripture quotes are KJV (public domain in the US).
 - Keep private teacher notes out of this repo. They live in the separate private notes site.
