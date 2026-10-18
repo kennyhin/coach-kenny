@@ -52,3 +52,8 @@ h1.title span{background:linear-gradient(90deg,var(--blue),var(--indigo));-webki
 
 /* section headings on the hub and book pages */
 .sec-h{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin:2rem 0 .2rem}
+
+/* Scripture reference links (Bible Gateway, KJV). Keep the text's own look; subtle dotted underline, solid on hover. */
+a.bg-ref{color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;text-decoration:underline dotted;text-decoration-thickness:1px;text-underline-offset:.18em;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent)}
+a.bg-ref:hover{text-decoration-style:solid;text-decoration-color:currentColor}
+a.bg-ref:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:2px;text-decoration:none}

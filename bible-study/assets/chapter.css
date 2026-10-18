@@ -96,7 +96,7 @@
     .chaptabs { flex-direction: row; gap: .5rem; margin-bottom: 0; }
     .chaptab { flex: 1; text-align: center; font-size: 1rem; padding: .45rem; }
     .jump { display: none; }
-    .content { padding-block: 1.4rem 3rem; }
+    .content { padding-block: 1.4rem 3rem; align-self: stretch; width: 100%; }
     h2 { scroll-margin-top: 70px; }
   }
 
