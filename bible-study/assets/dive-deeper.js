@@ -5,7 +5,7 @@
 .dd-sum{margin:.6rem 0 0}
 .dd-sum .dd-line{margin:.35rem 0;font-size:1.02rem}
 .dd-sum ol{margin:.5rem 0 0;padding-left:1.4rem}.dd-sum li{margin:.3rem 0}
-.kp-take{margin:.45rem 0 .2rem;padding:.55rem .8rem;border-left:3px solid #d4af37;background:rgba(212,175,55,.07);border-radius:0 8px 8px 0;font-size:.95rem}.kp-take p{margin:.2rem 0}.kp-take b{color:#d4af37;font-weight:700}
+.kp-take{margin:.45rem 0 .2rem;padding:.55rem .8rem;border-left:3px solid #d4af37;background:rgba(212,175,55,.07);border-radius:0 8px 8px 0;font-size:.95rem}.kp-take p{margin:.2rem 0}.kp-take b{color:inherit;font-weight:700}
 .dd-sum li .tag{margin-left:.45rem;vertical-align:middle}
 .dd-btn{margin:.85rem 0 .3rem;display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;font:600 .78rem/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#0b0b0b;background:#d4af37;border:0;border-radius:999px;padding:.7rem 1.1rem;transition:transform .15s,filter .15s}
 .dd-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}.dd-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
@@ -17,6 +17,15 @@ dialog.dd[open]{animation:ddIn .22s ease-out}dialog.dd::backdrop{background:rgba
 .dd-x{flex:none;width:2.4rem;height:2.4rem;border-radius:50%;border:1px solid #d4af37;background:transparent;color:#d4af37;font-size:1.3rem;cursor:pointer}
 .dd-body{padding:.4rem 1.2rem 1.4rem;overflow:auto}
 .dd-body figure{max-width:100%;overflow-x:auto}
+dialog.dd{--bg:#14110c;--panel:#1d1a13;--fg:#ece4d2;--text:#ece4d2;--muted:#c2b8a3;--line:#3a3326;--good:#9bd69b;--warn:#e8c56e;--fire:#f29a72;--gold:#e0bc4a;--gold-soft:#8a6f2a;--blue:#8fd8fb;--card:#1a1814}
+dialog.dd .dd-body{font-size:1.02rem;line-height:1.6}
+dialog.dd .dd-body a{color:#f0cf6a}
+.tag{font-size:.78rem!important;padding:.15rem .55rem!important;font-weight:700}
+dialog.dd .tag.t{color:#b6e37a!important;border-color:#8cc63f!important;background:rgba(140,198,63,.16)!important}
+dialog.dd .tag.r{color:#f3d98a!important;border-color:#d4af37!important;background:rgba(212,175,55,.16)!important}
+dialog.dd .tag.y{color:#f7b08f!important;border-color:#f29a72!important;background:rgba(242,154,114,.14)!important}
+dialog.dd .vs,dialog.dd .vs a{font-size:.95rem!important;color:#8fd8fb!important;letter-spacing:.08em!important}
+dialog.dd .kp-take b{color:#f0cf6a}
 @media (max-width:640px){dialog.dd{width:100vw;max-width:100vw;max-height:92vh;margin:auto 0 0;border-radius:14px 14px 0 0}}
 @media (prefers-reduced-motion:reduce){dialog.dd[open]{animation:none}}`;
   var st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
