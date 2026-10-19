@@ -157,3 +157,5 @@ a.chaptab[aria-current="page"]{background:var(--gold);color:#1d1a13;border-color
 .kp-item h3::before{content:counter(kp) ". ";color:var(--gold);font-weight:700}
 .kp-h a.bg-ref{color:inherit}
 @media (max-width:640px){.kp-item{padding:.85rem 0 .9rem}}
+
+.kp-take{margin:.45rem 0 .2rem;padding:.55rem .8rem;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:.95rem}.kp-take b{color:var(--gold)}

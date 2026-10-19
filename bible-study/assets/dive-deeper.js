@@ -5,6 +5,7 @@
 .dd-sum{margin:.6rem 0 0}
 .dd-sum .dd-line{margin:.35rem 0;font-size:1.02rem}
 .dd-sum ol{margin:.5rem 0 0;padding-left:1.4rem}.dd-sum li{margin:.3rem 0}
+.kp-take{margin:.45rem 0 .2rem;padding:.55rem .8rem;border-left:3px solid #d4af37;background:rgba(212,175,55,.07);border-radius:0 8px 8px 0;font-size:.95rem}.kp-take p{margin:.2rem 0}.kp-take b{color:#d4af37;font-weight:700}
 .dd-sum li .tag{margin-left:.45rem;vertical-align:middle}
 .dd-btn{margin:.85rem 0 .3rem;display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;font:600 .78rem/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#0b0b0b;background:#d4af37;border:0;border-radius:999px;padding:.7rem 1.1rem;transition:transform .15s,filter .15s}
 .dd-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}.dd-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
@@ -29,7 +30,7 @@ dialog.dd[open]{animation:ddIn .22s ease-out}dialog.dd::backdrop{background:rgba
       if(!lead&&el.tagName==='P'&&!keep(el))lead=el;
     });
     var sum=document.createElement('div');sum.className='dd-sum';
-    if(items.length){var ol=document.createElement('ol');items.forEach(function(a){var h=a.querySelector('h3');if(!h)return;var li=document.createElement('li');li.innerHTML=h.innerHTML;var tg=a.querySelector('.tag');if(tg)li.appendChild(tg.cloneNode(true));ol.appendChild(li)});sum.appendChild(ol)}
+    if(items.length){var ol=document.createElement('ol');items.forEach(function(a){var h=a.querySelector('h3');if(!h)return;var li=document.createElement('li');li.innerHTML=h.innerHTML;var tg=a.querySelector('.tag');if(tg)li.appendChild(tg.cloneNode(true));var tk=a.querySelector('.kp-take');if(tk)li.appendChild(tk.cloneNode(true));ol.appendChild(li)});sum.appendChild(ol)}
     else if(lead){var p=document.createElement('p');p.className='dd-line';p.textContent=firstSentence(lead.textContent);sum.appendChild(p)}
     var btn=document.createElement('button');btn.type='button';btn.className='dd-btn';btn.setAttribute('aria-haspopup','dialog');btn.setAttribute('aria-controls',id);btn.innerHTML='Dive deeper <span aria-hidden="true">&rarr;</span>';
     var dlg=document.createElement('dialog');dlg.className='dd';dlg.id=id;dlg.setAttribute('aria-labelledby',id+'-t');
