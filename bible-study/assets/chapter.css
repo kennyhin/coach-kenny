@@ -119,14 +119,14 @@ a.chaptab[aria-current="page"]{background:var(--gold);color:#1d1a13;border-color
   .chaptab{flex:1 0 auto;white-space:nowrap;min-width:6.5rem}
 }
 
-/* ---- Aha moments + highlighted KJV cross-reference callouts ---- */
-.aha-set{margin:1.7rem 0 .4rem}
-.aha-h{display:flex;align-items:center;gap:.7rem;font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 .2rem;max-width:none}
-.aha-h::after{content:"";flex:1;height:1px;background:var(--line)}
-.aha-card{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:1rem 1.15rem 1.1rem;margin:.9rem 0;scroll-margin-top:90px}
-.aha-card h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(1.25rem,3vw,1.45rem);line-height:1.15;margin:.45rem 0 .35rem;text-wrap:balance}
-.aha-card > p{margin:.4rem 0}
-.aha-card figure{margin:.9rem 0 .2rem;background:var(--bg)}
+/* ---- Key points (numbered, in verse order) + highlighted KJV cross-reference callouts ---- */
+.kp-set{margin:1.7rem 0 .4rem}
+.kp-h{display:flex;align-items:center;gap:.7rem;font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 .2rem;max-width:none}
+.kp-h::after{content:"";flex:1;height:1px;background:var(--line)}
+.kp-item{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:1rem 1.15rem 1.1rem;margin:.9rem 0;scroll-margin-top:90px}
+.kp-item h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(1.25rem,3vw,1.45rem);line-height:1.15;margin:.45rem 0 .35rem;text-wrap:balance}
+.kp-item > p{margin:.4rem 0}
+.kp-item figure{margin:.9rem 0 .2rem;background:var(--bg)}
 .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;border-radius:5px;padding:.12rem .5rem;border:1px solid}
 .tag.t{color:var(--good);border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)}
 .tag.r{color:var(--warn);border-color:var(--gold);background:color-mix(in srgb,var(--gold-soft) 22%,transparent)}
@@ -143,9 +143,19 @@ a.chaptab[aria-current="page"]{background:var(--gold);color:#1d1a13;border-color
 .taglegend{display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:center;font-size:.85rem;color:var(--muted);margin:.8rem 0 0;max-width:none}
 .swipe{display:none}
 @media (max-width:720px){
-  .aha-card{padding:.85rem .85rem 1rem}
+  .kp-item{padding:.85rem .85rem 1rem}
   .xref{padding:.6rem .75rem}
-  .aha-card figure{padding:.6rem;margin-inline:-.35rem}
-  .aha-card figure svg{min-width:560px}
-  .aha-card figure .swipe{display:block;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 .4rem;position:sticky;left:0}
+  .kp-item figure{padding:.6rem;margin-inline:-.35rem}
+  .kp-item figure svg{min-width:560px}
+  .kp-item figure .swipe{display:block;font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 .4rem;position:sticky;left:0}
 }
+
+/* Key points read as part of the page flow, not as competing callout boxes */
+.kp-set{counter-reset:kp}
+.kp-item{counter-increment:kp;background:none;border:0;border-top:1px solid var(--line);border-radius:0;padding:.9rem 0 .4rem;margin:0}
+.kp-item:first-of-type{border-top:0}
+.kp-item h3::before{content:counter(kp) ". ";color:var(--gold);font-weight:700}
+.kp-h a.bg-ref{color:inherit}
+@media (max-width:640px){.kp-item{padding:.85rem 0 .9rem}}
+
+.kp-take{margin:.45rem 0 .2rem;padding:.55rem .8rem;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:.95rem}.kp-take b{color:inherit}
