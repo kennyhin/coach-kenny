@@ -1,11 +1,7 @@
 import assert from "node:assert/strict";
-import { mkdtemp, rm } from "node:fs/promises";
-import { tmpdir } from "node:os";
-import path from "node:path";
+import { readFileSync } from "node:fs";
+import http from "node:http";
 import test from "node:test";
-
-process.env.FUNFRIDAY_STORE = "memory";
-process.env.FUNFRIDAY_PASSCODE = "4242";
 
 const {
   DEFAULT_SESSIONS,
@@ -13,9 +9,12 @@ const {
   formatPacific,
   validateSessions,
 } = await import("./schedule.mjs");
-const { passcodeMatches } = await import("../api/passcode.mjs");
-const { resetScheduleStore } = await import("../api/schedule-store.mjs");
-const { GET, POST, PUT } = await import("../api/funfriday.js");
+const { FUNFRIDAY_WEB_APP_URL } = await import("./config.js");
+const {
+  parseScheduleResponse,
+  scheduleGetRequest,
+  schedulePostRequest,
+} = await import("./remote.js");
 
 function cloneDefaults() {
   return structuredClone(DEFAULT_SESSIONS);
@@ -58,89 +57,131 @@ test("Pacific timestamp uses America/Los_Angeles", () => {
   assert.equal(formatPacific(null), null);
 });
 
-test("passcode check rejects a different length and a wrong code", () => {
-  assert.equal(passcodeMatches("4242", "4242"), true);
-  assert.equal(passcodeMatches("4243", "4242"), false);
-  assert.equal(passcodeMatches("42421", "4242"), false);
-  assert.equal(passcodeMatches("4242", ""), false);
-});
-
 test("validateSessions keeps the default lineup and rejects a bad time", () => {
   const ok = validateSessions(cloneDefaults());
   assert.equal(ok.ok, true);
-  assert.equal(ok.sessions.length, 3);
   assert.equal(ok.sessions[0].kinder[0], "2nd");
-  const bad = validateSessions([{ ...cloneDefaults()[0], start: "25:00" }]);
-  assert.equal(bad.ok, false);
+  assert.equal(validateSessions([{ ...cloneDefaults()[0], start: "25:00" }]).ok, false);
 });
 
-test("the shared store is what every visitor reads", async () => {
-  resetScheduleStore();
-  const first = await GET();
-  assert.equal(first.status, 200);
-  const seeded = await first.json();
-  assert.equal(seeded.sessions[0].start, "13:25");
-  assert.equal(seeded.sessions[2].big[0], "4th");
-  assert.equal(typeof seeded.updatedAt, "string");
+test("the page has one empty web app URL until the script is deployed", () => {
+  assert.equal(FUNFRIDAY_WEB_APP_URL, "");
+  const page = readFileSync(new URL("./board.js", import.meta.url), "utf8");
+  assert.match(page, /FUNFRIDAY_WEB_APP_URL/);
+  assert.doesNotMatch(page, /\/api\/funfriday|vercel|localStorage\.setItem\(LOCAL_KEY/);
+});
 
-  const visitor = await GET();
-  const again = await visitor.json();
-  assert.equal(again.updatedAt, seeded.updatedAt);
-  assert.equal(again.sessions[1].kinder[0], "K");
+test("posts use text/plain and send the passcode in the body", () => {
+  const check = schedulePostRequest("https://script.google.com/macros/s/abc/exec", "4242");
+  assert.equal(check.method, "POST");
+  assert.equal(check.headers["Content-Type"], "text/plain");
+  assert.equal(check.redirect, "follow");
+  assert.deepEqual(JSON.parse(check.body), { passcode: "4242", check: true });
+  assert.equal(check.headers["x-funfriday-passcode"], undefined);
 
-  const denied = await PUT(new Request("http://local/api/funfriday", {
-    method: "PUT",
-    headers: { "content-type": "application/json", "x-funfriday-passcode": "nope" },
-    body: JSON.stringify({ sessions: cloneDefaults() }),
-  }));
-  assert.equal(denied.status, 401);
-  assert.equal((await GET().then((r) => r.json())).updatedAt, seeded.updatedAt);
+  const save = schedulePostRequest("https://script.google.com/macros/s/abc/exec", "4242", cloneDefaults());
+  const body = JSON.parse(save.body);
+  assert.equal(body.passcode, "4242");
+  assert.equal(body.sessions[2].big[0], "4th");
 
-  const next = cloneDefaults();
-  next[0].start = "13:20";
-  next[0].end = "13:30";
-  const saved = await PUT(new Request("http://local/api/funfriday", {
-    method: "PUT",
-    headers: { "content-type": "application/json", "x-funfriday-passcode": "4242" },
-    body: JSON.stringify({ sessions: next }),
-  }));
-  assert.equal(saved.status, 200);
-  const body = await saved.json();
-  assert.equal(body.sessions[0].start, "13:20");
-  assert.notEqual(body.updatedAt, seeded.updatedAt);
+  const get = scheduleGetRequest("https://script.google.com/macros/s/abc/exec");
+  assert.equal(get.method, "GET");
+  assert.match(get.url, /^https:\/\/script\.google\.com\/macros\/s\/abc\/exec\?ts=\d+$/);
+});
 
-  const otherTeacher = await (await GET()).json();
-  assert.equal(otherTeacher.sessions[0].start, "13:20");
-  assert.equal(otherTeacher.sessions[0].kinder[0], "2nd");
+test("parseScheduleResponse maps Apps Script errors", () => {
+  const saved = parseScheduleResponse('{"ok":true,"sessions":[{"name":"Session 1"}],"updatedAt":"2026-10-21T21:41:00.000Z"}');
+  assert.equal(saved.ok, true);
+  assert.equal(saved.updatedAt, "2026-10-21T21:41:00.000Z");
+  assert.equal(parseScheduleResponse('{"ok":false,"error":"bad passcode"}').error, "That code is not right.");
+  assert.match(parseScheduleResponse('{"ok":false,"error":"no passcode"}').error, /PASSCODE/);
+  assert.equal(parseScheduleResponse("<html>login</html>").ok, false);
+});
 
-  const unlock = await POST(new Request("http://local/api/funfriday", {
-    method: "POST",
-    headers: { "x-funfriday-passcode": "4242" },
-  }));
-  assert.equal(unlock.status, 200);
+test("the Apps Script file is the doGet and doPost backend", () => {
+  const gs = readFileSync(new URL("./apps-script/Code.gs", import.meta.url), "utf8");
+  assert.match(gs, /function doGet\(/);
+  assert.match(gs, /function doPost\(/);
+  assert.match(gs, /getProperty\("PASSCODE"\)/);
+  assert.match(gs, /getProperty\("SCHEDULE"\)/);
+  assert.match(gs, /setProperty\("SCHEDULE"/);
+  assert.doesNotMatch(gs, /vercel|BLOB_READ_WRITE_TOKEN/i);
+  for (const session of DEFAULT_SESSIONS) {
+    assert.ok(gs.includes(session.start), session.start);
+    assert.ok(gs.includes(session.end), session.end);
+    assert.ok(gs.includes(session.kinder[0]), session.kinder[0]);
+    assert.ok(gs.includes(session.big[0]), session.big[0]);
+  }
+});
 
-  const dir = await mkdtemp(path.join(tmpdir(), "funfriday-"));
-  process.env.FUNFRIDAY_STORE = "file";
-  process.env.FUNFRIDAY_STORE_PATH = path.join(dir, "schedule.json");
-  const fromFile = await (await GET()).json();
-  assert.equal(fromFile.storage, "file");
-  assert.equal(fromFile.sessions[2].big[0], "4th");
-  const edited = cloneDefaults();
-  edited[2].end = "14:20";
-  const putFile = await PUT(new Request("http://local/api/funfriday", {
-    method: "PUT",
-    headers: { "content-type": "application/json", "x-funfriday-passcode": "4242" },
-    body: JSON.stringify({ sessions: edited }),
-  }));
-  assert.equal(putFile.status, 200);
-  const reread = await (await GET()).json();
-  assert.equal(reread.sessions[2].end, "14:20");
-  await rm(dir, { recursive: true, force: true });
-  process.env.FUNFRIDAY_STORE = "memory";
+test("a web app saves only when the passcode matches, and the next read sees it", async () => {
+  const state = { passcode: "4242", schedule: null };
+  const server = http.createServer((req, res) => {
+    const chunks = [];
+    req.on("data", (chunk) => chunks.push(chunk));
+    req.on("end", () => {
+      const raw = Buffer.concat(chunks).toString("utf8");
+      let status = 200;
+      let payload;
+      if (req.method === "GET") {
+        payload = state.schedule
+          ? { ok: true, sessions: state.schedule.sessions, updatedAt: state.schedule.updatedAt }
+          : { ok: true, sessions: cloneDefaults(), updatedAt: null };
+      } else {
+        const body = JSON.parse(raw);
+        if (body.passcode !== state.passcode) {
+          payload = { ok: false, error: "bad passcode" };
+        } else if (body.check === true) {
+          payload = { ok: true };
+        } else {
+          const valid = validateSessions(body.sessions);
+          if (!valid.ok) payload = { ok: false, error: "bad lineup" };
+          else {
+            state.schedule = { sessions: valid.sessions, updatedAt: "2026-10-21T22:10:00.000Z" };
+            payload = { ok: true, sessions: state.schedule.sessions, updatedAt: state.schedule.updatedAt };
+          }
+        }
+      }
+      res.writeHead(status, { "content-type": "application/json", "cache-control": "no-store" });
+      res.end(JSON.stringify(payload));
+    });
+  });
+  await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const url = "http://127.0.0.1:" + server.address().port + "/exec";
+  try {
+    const firstReq = scheduleGetRequest(url);
+    const first = parseScheduleResponse(await (await fetch(firstReq.url)).text());
+    assert.equal(first.ok, true);
+    assert.equal(first.sessions[0].start, "13:25");
+    assert.equal(first.updatedAt, null);
 
-  const previous = process.env.FUNFRIDAY_PASSCODE;
-  process.env.FUNFRIDAY_PASSCODE = "";
-  const unconfigured = await POST(new Request("http://local/api/funfriday", { method: "POST" }));
-  assert.equal(unconfigured.status, 503);
-  process.env.FUNFRIDAY_PASSCODE = previous;
+    const deniedReq = schedulePostRequest(url, "nope", cloneDefaults());
+    const denied = parseScheduleResponse(await (await fetch(deniedReq.url, {
+      method: deniedReq.method,
+      headers: deniedReq.headers,
+      body: deniedReq.body,
+      redirect: deniedReq.redirect,
+    })).text());
+    assert.equal(denied.error, "That code is not right.");
+    assert.equal(state.schedule, null);
+
+    const next = cloneDefaults();
+    next[2].end = "14:22";
+    const saveReq = schedulePostRequest(url, "4242", next);
+    const saved = parseScheduleResponse(await (await fetch(saveReq.url, {
+      method: saveReq.method,
+      headers: saveReq.headers,
+      body: saveReq.body,
+      redirect: saveReq.redirect,
+    })).text());
+    assert.equal(saved.ok, true);
+    assert.equal(saved.sessions[2].end, "14:22");
+
+    const againReq = scheduleGetRequest(url);
+    const again = parseScheduleResponse(await (await fetch(againReq.url, { cache: "no-store" })).text());
+    assert.equal(again.sessions[2].end, "14:22");
+    assert.equal(again.updatedAt, "2026-10-21T22:10:00.000Z");
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+  }
 });

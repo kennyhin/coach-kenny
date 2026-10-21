@@ -1,3 +1,4 @@
+import { FUNFRIDAY_WEB_APP_URL } from "./config.js";
 import {
   DEFAULT_SESSIONS,
   addMinutes,
@@ -5,15 +6,14 @@ import {
   formatPacific,
   prettyTime,
 } from "./schedule.mjs";
+import { parseScheduleResponse, scheduleGetRequest, schedulePostRequest } from "./remote.js";
 
-const API = "/api/funfriday";
 const LOCAL_KEY = "funfriday-board-v1";
 const PASS_KEY = "funfriday-edit-passcode";
 const DISMISS_KEY = "funfriday-dismiss-local";
 
 let sessions = [];
 let updatedAt = null;
-let storage = "";
 let editing = false;
 let unlocked = false;
 let passcode = "";
@@ -87,7 +87,7 @@ function readLocalDraft() {
 }
 
 function maybeOfferLocalDraft() {
-  if (loadError || !unlocked || storage === "unconfigured") return;
+  if (loadError || !unlocked || !FUNFRIDAY_WEB_APP_URL) return;
   if (sessionStorage.getItem(DISMISS_KEY) === "1") return;
   const draft = readLocalDraft();
   if (!draft || lineupSignature(draft) === lineupSignature(sessions)) return;
@@ -148,7 +148,9 @@ function render() {
 
   document.getElementById("hint").textContent = editing
     ? "Drag grade blocks between yards. Click a name to edit it. Change session times — walk-back is always 5 minutes after. Saves are shared with every teacher."
-    : "Shared lineup. Everyone sees these times.";
+    : (FUNFRIDAY_WEB_APP_URL && !loadError
+      ? "Shared lineup. Everyone sees these times."
+      : "Built-in times on this screen.");
   document.getElementById("add-session").hidden = !editing;
   document.getElementById("reset").hidden = !editing;
   const editBtn = document.getElementById("edit-toggle");
@@ -190,39 +192,41 @@ function queueSave(immediate) {
   return saveTail;
 }
 
+async function postLineup(sessionsOrNull) {
+  const req = schedulePostRequest(FUNFRIDAY_WEB_APP_URL, passcode, sessionsOrNull);
+  const res = await fetch(req.url, {
+    method: req.method,
+    headers: req.headers,
+    body: req.body,
+    redirect: req.redirect,
+  });
+  return parseScheduleResponse(await res.text());
+}
+
 async function persist() {
   const snapshot = structuredClone(sessions);
   renderStatus({ text: "Saving…" });
-  let res;
+  let data;
   try {
-    res = await fetch(API, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-        "x-funfriday-passcode": passcode,
-      },
-      body: JSON.stringify({ sessions: snapshot }),
-    });
+    data = await postLineup(snapshot);
   } catch {
-    renderStatus({ text: "Couldn't reach the server. Try again.", bad: true });
+    renderStatus({ text: "Couldn't reach the lineup. Try again.", bad: true });
     return false;
   }
-  const data = await res.json().catch(() => ({}));
-  if (res.status === 401) {
+  if (!data.ok && data.error === "That code is not right.") {
     passcode = "";
     unlocked = false;
     editing = false;
     sessionStorage.removeItem(PASS_KEY);
     render();
-    openGate(data.error || "That code is not right.");
+    openGate(data.error);
     return false;
   }
-  if (!res.ok) {
+  if (!data.ok) {
     renderStatus({ text: data.error || "Couldn't save.", bad: true });
     return false;
   }
   updatedAt = data.updatedAt;
-  storage = data.storage || storage;
   renderStatus({ text: "Saved" });
   refreshConflicts();
   return true;
@@ -390,18 +394,21 @@ function closeGate() {
 }
 
 async function tryUnlock(code) {
-  let res;
-  try {
-    res = await fetch(API, {
-      method: "POST",
-      headers: { "x-funfriday-passcode": code },
-    });
-  } catch {
-    document.getElementById("edit-error").textContent = "Couldn't reach the server.";
+  if (!FUNFRIDAY_WEB_APP_URL) {
+    document.getElementById("edit-error").textContent = "The shared lineup isn't connected yet.";
     return false;
   }
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) {
+  passcode = code;
+  let data;
+  try {
+    data = await postLineup(null);
+  } catch {
+    passcode = "";
+    document.getElementById("edit-error").textContent = "Couldn't reach the lineup.";
+    return false;
+  }
+  if (!data.ok) {
+    passcode = "";
     const input = document.getElementById("passcode");
     document.getElementById("edit-error").textContent = data.error || "That code is not right.";
     input.value = "";
@@ -434,7 +441,7 @@ document.getElementById("edit-toggle").addEventListener("click", () => {
     render();
     return;
   }
-  openGate("");
+  openGate(FUNFRIDAY_WEB_APP_URL ? "" : "The shared lineup isn't connected yet.");
 });
 
 document.getElementById("edit-form").addEventListener("submit", (e) => {
@@ -476,19 +483,24 @@ document.getElementById("reset").addEventListener("click", () => {
 });
 
 async function boot() {
-  document.getElementById("sessions").textContent = "Loading the shared lineup…";
+  document.getElementById("sessions").textContent = "Loading the lineup…";
+  if (!FUNFRIDAY_WEB_APP_URL) {
+    sessions = structuredClone(DEFAULT_SESSIONS);
+    updatedAt = null;
+    loadError = "These are the built-in times. They are not the shared lineup yet.";
+    render();
+    showTextNotice(loadError);
+    return;
+  }
   try {
-    const res = await fetch(API, { cache: "no-store" });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok || !Array.isArray(data.sessions)) {
+    const req = scheduleGetRequest(FUNFRIDAY_WEB_APP_URL);
+    const res = await fetch(req.url, { method: req.method, redirect: req.redirect, cache: req.cache });
+    const data = parseScheduleResponse(await res.text());
+    if (!data.ok || !Array.isArray(data.sessions)) {
       throw new Error(data.error || "Could not load the shared lineup.");
     }
     sessions = data.sessions;
     updatedAt = data.updatedAt || null;
-    storage = data.storage || "";
-    if (storage === "unconfigured") {
-      loadError = "Shared storage isn't connected yet, so these are the built-in times. They are not saved for other teachers.";
-    }
   } catch (err) {
     sessions = structuredClone(DEFAULT_SESSIONS);
     updatedAt = null;

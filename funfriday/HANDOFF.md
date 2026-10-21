@@ -81,11 +81,18 @@ So:
 
 ## How to edit
 
-Visitors get a read-only lineup. Kenny opens **Edit lineup** and enters `FUNFRIDAY_PASSCODE`. Saves go to one Vercel Blob object (`funfriday/schedule.json`), so every teacher sees the same times. The page shows **Last updated** in Pacific time.
+The page stays on GitHub Pages. Visitors see a read-only lineup. Kenny opens **Edit lineup** and enters the passcode. Saves go to a Google Apps Script web app, the same kind of backend as the Bible Transcript Saver. The page shows **Last updated** in Pacific time.
 
-The built-in sessions are written into that store the first time it is empty. **Reset lineup** publishes those built-in sessions again.
+Until `FUNFRIDAY_WEB_APP_URL` in `funfriday/config.js` is filled in, every visit shows the built-in times and a notice.
 
-`coachkenny.org` is still GitHub Pages, which cannot run `/api/funfriday`. The shared lineup works on the Vercel project. After the Blob store and passcode are set, serve this site from that project (or open its URL). Env names are in `.env.example`.
+Deploy steps are at the top of `funfriday/apps-script/Code.gs`:
+
+1. New project at https://script.google.com. Paste that file over Code.gs.
+2. Script property `PASSCODE` = the edit code.
+3. Deploy as a web app. Execute as **Me**. Who has access: **Anyone**.
+4. Paste the `/exec` URL into `funfriday/config.js` and push. GitHub Pages updates coachkenny.org.
+
+**Reset lineup** publishes the built-in sessions to that same web app.
 
 Print from the browser (Cmd/Ctrl+P) — one letter page.
 
