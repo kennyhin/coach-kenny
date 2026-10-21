@@ -81,9 +81,20 @@ So:
 
 ## How to edit
 
-1. Change `funfriday/index.html` in `kennyhin/coach-kenny` on `main`
-2. GitHub Pages publishes to https://coachkenny.org/funfriday (about 1 minute)
-3. Print from the browser (Cmd/Ctrl+P) — one letter page
+The page stays on GitHub Pages. Visitors see a read-only lineup. Kenny opens **Edit lineup** and enters the passcode. Saves go to a Google Apps Script web app, the same kind of backend as the Bible Transcript Saver. The page shows **Last updated** in Pacific time.
+
+`FUNFRIDAY_WEB_APP_URL` in `funfriday/config.js` is the deployed web app. If that constant is empty, every visit shows the built-in times and a notice.
+
+Deploy steps are at the top of `funfriday/apps-script/Code.gs`:
+
+1. New project at https://script.google.com. Paste that file over Code.gs.
+2. Script property `PASSCODE` = the edit code.
+3. Deploy as a web app. Execute as **Me**. Who has access: **Anyone**.
+4. Paste the `/exec` URL into `funfriday/config.js` and push. GitHub Pages updates coachkenny.org.
+
+**Reset lineup** publishes the built-in sessions to that same web app.
+
+Print from the browser (Cmd/Ctrl+P) — one letter page.
 
 Schedule source if times break: *Copy of 26-27 ES Grade Level Daily Schedules.xlsx* (K–5 schedule tabs).
 
