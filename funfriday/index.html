@@ -382,6 +382,67 @@
       text-transform: uppercase;
       cursor: pointer;
     }
+    .updated {
+      margin: -6px 0 16px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .updated .save-state { color: var(--green); margin-left: 8px; }
+    .updated .save-state.bad { color: #f6d48a; }
+    .notice, .conflict {
+      margin: 0 0 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .notice {
+      border: 1px solid rgba(140,198,63,0.35);
+      background: rgba(140,198,63,0.1);
+      color: #d9f5b8;
+    }
+    .conflict {
+      border: 1px solid rgba(242,169,59,0.5);
+      background: rgba(242,169,59,0.12);
+      color: #f6d48a;
+      white-space: pre-line;
+    }
+    .notice[hidden], .conflict[hidden] { display: none; }
+    .notice button.tool { margin: 0 0 0 8px; vertical-align: middle; }
+    .time-read {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #0d0f13;
+      color: #fff;
+      font: 700 16px/1 Inter, sans-serif;
+    }
+    .grade-locked { cursor: default; }
+    .passcode {
+      width: 100%;
+      margin-top: 4px;
+      border: 1px solid var(--line);
+      background: #0d0f13;
+      color: #fff;
+      font: 700 18px/1 Inter, sans-serif;
+      min-height: 48px;
+      padding: 8px 12px;
+      border-radius: 12px;
+    }
+    .edit-error {
+      min-height: 1.2em;
+      margin: 8px 0 0;
+      color: #f87171;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    #edit-form .ad-ok { background: var(--green); }
+    button.tool[hidden] { display: none !important; }
     @media (max-width: 860px) {
       .wrap { padding: 16px 14px 36px; }
       .layout { grid-template-columns: 1fr; }
@@ -398,7 +459,7 @@
         align-items: stretch;
       }
       .times { width: 100%; }
-      .times input[type="time"] { flex: 1; width: 100%; }
+      .times input[type="time"], .times .time-read { flex: 1; width: 100%; }
     }
     @media (max-width: 520px) {
       .yards { grid-template-columns: 1fr; }
@@ -407,7 +468,7 @@
     }
     @media print {
       body::before { display: none; }
-      .tools, .hint, .ad-scrim { display: none !important; }
+      .tools, .hint, .ad-scrim, #notice { display: none !important; }
       .wrap { padding: 0; max-width: none; }
       .map-card { position: static; }
       .times input { border-color: #333; }
@@ -439,6 +500,17 @@
       <button class="ad-ok" type="button">Got it</button>
     </div>
   </div>
+  <div class="ad-scrim" id="edit-gate" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+    <form class="ad-card" id="edit-form">
+      <button class="ad-close" id="edit-cancel" type="button" aria-label="Close">&times;</button>
+      <p class="ad-kicker">Staff only</p>
+      <h2 id="edit-title">Edit the lineup</h2>
+      <p class="ad-lead">Enter the passcode. Changes are saved for every teacher.</p>
+      <input class="passcode" id="passcode" type="password" autocomplete="current-password" aria-label="Passcode" required>
+      <p class="edit-error" id="edit-error" role="alert"></p>
+      <button class="ad-ok" type="submit">Unlock</button>
+    </form>
+  </div>
   <div class="wrap">
     <header>
       <div>
@@ -447,11 +519,16 @@
       </div>
       <div class="tools">
         <button class="tool" id="show-ad" type="button">Support our teams</button>
-        <button class="tool" id="add-session" type="button">Add session</button>
-        <button class="tool" id="reset" type="button">Reset lineup</button>
+        <button class="tool" id="edit-toggle" type="button" aria-pressed="false">Edit lineup</button>
+        <button class="tool" id="add-session" type="button" hidden>Add session</button>
+        <button class="tool" id="reset" type="button" hidden>Reset lineup</button>
       </div>
     </header>
-    <p class="hint">Drag grade blocks between yards. Click a name to edit it. Change session times — walk-back is always 5 minutes after.</p>
+    <p class="hint" id="hint">Shared lineup. Everyone sees these times.</p>
+    <p class="updated" id="updated"></p>
+    <div class="notice" id="notice" hidden></div>
+    <div class="conflict" id="conflicts" role="status" hidden></div>
+    <noscript><p class="hint">Turn on JavaScript to see the shared lineup.</p></noscript>
 
     <div class="layout">
       <section>
@@ -616,289 +693,6 @@
     </div>
   </div>
 
-  <script>
-    const STORAGE = "funfriday-board-v1";
-    const DEFAULTS = [
-      { name: "Session 1", start: "13:25", end: "13:35", kinder: ["2nd"], big: ["3rd"] },
-      { name: "Session 2", start: "14:00", end: "14:10", kinder: ["K"], big: ["5th"] },
-      { name: "Session 3", start: "14:15", end: "14:25", kinder: ["1st"], big: ["4th"] }
-    ];
-
-    let sessions = load();
-    let drag = null;
-
-    function load() {
-      try {
-        const raw = localStorage.getItem(STORAGE);
-        if (!raw) return structuredClone(DEFAULTS);
-        const parsed = JSON.parse(raw);
-        if (!Array.isArray(parsed) || !parsed.length) return structuredClone(DEFAULTS);
-        return parsed;
-      } catch {
-        return structuredClone(DEFAULTS);
-      }
-    }
-
-    function save() {
-      localStorage.setItem(STORAGE, JSON.stringify(sessions));
-    }
-
-    function pad(n) { return String(n).padStart(2, "0"); }
-
-    function addMinutes(hhmm, mins) {
-      const [h, m] = hhmm.split(":").map(Number);
-      const total = h * 60 + m + mins;
-      const wrapped = ((total % 1440) + 1440) % 1440;
-      return pad(Math.floor(wrapped / 60)) + ":" + pad(wrapped % 60);
-    }
-
-    function pretty(hhmm) {
-      const [h, m] = hhmm.split(":").map(Number);
-      const hour = ((h + 11) % 12) + 1;
-      return hour + ":" + pad(m);
-    }
-
-    function render() {
-      const root = document.getElementById("sessions");
-      root.innerHTML = sessions.map((s, i) => {
-        const walkStart = s.end;
-        const walkEnd = addMinutes(s.end, 5);
-        return `
-          <article class="session" data-session="${i}">
-            <div class="session-top">
-              <div class="session-name">${escapeHtml(s.name)}</div>
-              <div class="times">
-                <label>Start <input type="time" data-field="start" value="${s.start}"></label>
-                <span class="dash">–</span>
-                <label>End <input type="time" data-field="end" value="${s.end}"></label>
-                ${sessions.length > 1 ? `<button class="tool" data-remove="${i}" type="button">Remove</button>` : ""}
-              </div>
-            </div>
-            <p class="walk">Walk back ${pretty(walkStart)}–${pretty(walkEnd)}</p>
-            <div class="yards">
-              ${yardHtml(i, "kinder", "Kinder playground", s.kinder)}
-              ${yardHtml(i, "big", "Big playground", s.big)}
-            </div>
-          </article>
-        `;
-      }).join("");
-      bind();
-    }
-
-    function yardHtml(sessionIdx, yard, label, grades) {
-      const chips = grades.map((g, gi) => `
-        <div class="grade" draggable="true" data-grade="${sessionIdx}:${yard}:${gi}">
-          <input value="${escapeAttr(g)}" maxlength="8" aria-label="${yard} grade">
-        </div>
-      `).join("");
-      return `
-        <div class="yard ${yard}" data-drop="${sessionIdx}:${yard}">
-          <div class="pill">${label}</div>
-          <div class="grades">${chips}<button class="add-grade" data-add="${sessionIdx}:${yard}" type="button">+ Grade</button></div>
-        </div>
-      `;
-    }
-
-    function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, ch => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-      }[ch]));
-    }
-    function escapeAttr(str) {
-      return escapeHtml(str);
-    }
-
-    function bind() {
-      document.querySelectorAll(".times input[type='time']").forEach(input => {
-        const apply = e => {
-          const article = e.target.closest("[data-session]");
-          const idx = Number(article.dataset.session);
-          const field = e.target.dataset.field;
-          sessions[idx][field] = e.target.value || sessions[idx][field];
-          const s = sessions[idx];
-          article.querySelector(".walk").textContent =
-            "Walk back " + pretty(s.end) + "–" + pretty(addMinutes(s.end, 5));
-          save();
-        };
-        input.addEventListener("input", apply);
-        input.addEventListener("change", apply);
-      });
-      document.querySelectorAll("[data-remove]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          sessions.splice(Number(btn.dataset.remove), 1);
-          sessions.forEach((s, i) => { s.name = "Session " + (i + 1); });
-          save();
-          render();
-        });
-      });
-      document.querySelectorAll(".grade").forEach(el => {
-        el.addEventListener("pointerdown", e => {
-          if (e.pointerType === "touch" || e.pointerType === "pen") onPointerDown(e);
-        });
-        el.addEventListener("dragstart", e => {
-          const [si, yard, gi] = el.dataset.grade.split(":");
-          drag = { from: { si: Number(si), yard, gi: Number(gi) } };
-          e.dataTransfer.setData("text/plain", el.dataset.grade);
-          e.dataTransfer.effectAllowed = "move";
-        });
-      });
-      document.querySelectorAll(".yard").forEach(z => {
-        z.addEventListener("dragover", e => {
-          e.preventDefault();
-          z.classList.add("over");
-        });
-        z.addEventListener("dragleave", () => z.classList.remove("over"));
-        z.addEventListener("drop", e => {
-          e.preventDefault();
-          z.classList.remove("over");
-          const payload = e.dataTransfer.getData("text/plain") || "";
-          const from = drag?.from || (() => {
-            const [si, yard, gi] = payload.split(":");
-            return { si: Number(si), yard, gi: Number(gi) };
-          })();
-          const [tsi, tyard] = z.dataset.drop.split(":");
-          moveGrade(from, { si: Number(tsi), yard: tyard });
-          drag = null;
-        });
-      });
-      document.querySelectorAll("[data-add]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const [si, yard] = btn.dataset.add.split(":");
-          sessions[Number(si)][yard].push("Grade");
-          save();
-          render();
-        });
-      });
-      document.querySelectorAll(".grade input").forEach(input => {
-        input.addEventListener("change", e => {
-          const [si, yard, gi] = e.target.closest("[data-grade]").dataset.grade.split(":");
-          sessions[Number(si)][yard][Number(gi)] = e.target.value.trim() || e.target.value;
-          save();
-        });
-        input.addEventListener("pointerdown", e => e.stopPropagation()); // keep so a click can edit the name
-      });
-    }
-
-    function onPointerDown(e) {
-      if (e.button != null && e.button !== 0) return;
-      const el = e.currentTarget;
-      const [si, yard, gi] = el.dataset.grade.split(":");
-      const rect = el.getBoundingClientRect();
-      drag = {
-        from: { si: Number(si), yard, gi: Number(gi) },
-        label: sessions[Number(si)][yard][Number(gi)],
-        startX: e.clientX,
-        startY: e.clientY,
-        offsetX: e.clientX - rect.left,
-        offsetY: e.clientY - rect.top,
-        moved: false,
-        ghost: null,
-        pointerId: e.pointerId
-      };
-      el.setPointerCapture(e.pointerId);
-      el.addEventListener("pointermove", onPointerMove);
-      el.addEventListener("pointerup", onPointerUp);
-      el.addEventListener("pointercancel", onPointerUp);
-    }
-
-    function onPointerMove(e) {
-      if (!drag) return;
-      const dist = Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY);
-      if (!drag.moved && dist < 8) return;
-      if (!drag.moved) {
-        drag.moved = true;
-        const src = e.currentTarget;
-        const ghost = src.cloneNode(true);
-        ghost.classList.add("ghost");
-        ghost.style.width = src.offsetWidth + "px";
-        document.body.appendChild(ghost);
-        drag.ghost = ghost;
-        src.style.opacity = "0.35";
-      }
-      drag.ghost.style.left = (e.clientX - drag.offsetX) + "px";
-      drag.ghost.style.top = (e.clientY - drag.offsetY) + "px";
-      const over = dropzoneAt(e.clientX, e.clientY);
-      document.querySelectorAll(".yard").forEach(z => z.classList.toggle("over", z === over));
-    }
-
-    function onPointerUp(e) {
-      const el = e.currentTarget;
-      el.releasePointerCapture(drag?.pointerId || e.pointerId);
-      el.removeEventListener("pointermove", onPointerMove);
-      el.removeEventListener("pointerup", onPointerUp);
-      el.removeEventListener("pointercancel", onPointerUp);
-      if (!drag) return;
-
-      const over = drag.moved ? dropzoneAt(e.clientX, e.clientY) : null;
-      if (drag.ghost) drag.ghost.remove();
-      document.querySelectorAll(".yard").forEach(z => z.classList.remove("over"));
-      el.style.opacity = "";
-
-      if (over) {
-        const [tsi, tyard] = over.dataset.drop.split(":");
-        moveGrade(drag.from, { si: Number(tsi), yard: tyard });
-      }
-      drag = null;
-    }
-
-    function dropzoneAt(x, y) {
-      const stack = document.elementsFromPoint(x, y);
-      return stack.find(n => n.classList?.contains("yard")) || null;
-    }
-
-    function moveGrade(from, to) {
-      if (from.si === to.si && from.yard === to.yard) return;
-      const item = sessions[from.si][from.yard].splice(from.gi, 1)[0];
-      sessions[to.si][to.yard].push(item);
-      save();
-      render();
-    }
-
-    document.getElementById("add-session").addEventListener("click", () => {
-      const last = sessions[sessions.length - 1];
-      const start = addMinutes(last.end, 5);
-      const end = addMinutes(start, 10);
-      sessions.push({
-        name: "Session " + (sessions.length + 1),
-        start,
-        end,
-        kinder: [],
-        big: []
-      });
-      save();
-      render();
-    });
-
-    document.getElementById("reset").addEventListener("click", () => {
-      sessions = structuredClone(DEFAULTS);
-      save();
-      render();
-    });
-
-    render();
-
-    (function supportAd() {
-      const KEY = "funfriday-preseason-ad-v1";
-      const scrim = document.getElementById("support-ad");
-      const afterEvents = new Date("2026-09-06T00:00:00").getTime();
-      if (Date.now() >= afterEvents) return;
-
-      const open = () => {
-        scrim.classList.add("open");
-        document.body.style.overflow = "hidden";
-      };
-      const close = () => {
-        scrim.classList.remove("open");
-        document.body.style.overflow = "";
-        localStorage.setItem(KEY, "1");
-      };
-
-      if (!localStorage.getItem(KEY)) open();
-      scrim.querySelector(".ad-close").addEventListener("click", close);
-      scrim.querySelector(".ad-ok").addEventListener("click", close);
-      scrim.addEventListener("click", e => { if (e.target === scrim) close(); });
-      document.getElementById("show-ad").addEventListener("click", open);
-    })();
-  </script>
+  <script type="module" src="./board.js"></script>
 </body>
 </html>

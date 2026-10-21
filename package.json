@@ -5,9 +5,12 @@
   "description": "coachkenny.org static site",
   "scripts": {
     "dev": "node server/transcriber.mjs",
-    "test": "node --test bible-study/transcriber/text.test.js"
+    "test": "node --test bible-study/transcriber/text.test.js funfriday/schedule.test.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.8.2"
   }
 }

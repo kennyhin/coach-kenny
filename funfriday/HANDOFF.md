@@ -81,9 +81,13 @@ So:
 
 ## How to edit
 
-1. Change `funfriday/index.html` in `kennyhin/coach-kenny` on `main`
-2. GitHub Pages publishes to https://coachkenny.org/funfriday (about 1 minute)
-3. Print from the browser (Cmd/Ctrl+P) — one letter page
+Visitors get a read-only lineup. Kenny opens **Edit lineup** and enters `FUNFRIDAY_PASSCODE`. Saves go to one Vercel Blob object (`funfriday/schedule.json`), so every teacher sees the same times. The page shows **Last updated** in Pacific time.
+
+The built-in sessions are written into that store the first time it is empty. **Reset lineup** publishes those built-in sessions again.
+
+`coachkenny.org` is still GitHub Pages, which cannot run `/api/funfriday`. The shared lineup works on the Vercel project. After the Blob store and passcode are set, serve this site from that project (or open its URL). Env names are in `.env.example`.
+
+Print from the browser (Cmd/Ctrl+P) — one letter page.
 
 Schedule source if times break: *Copy of 26-27 ES Grade Level Daily Schedules.xlsx* (K–5 schedule tabs).
 
