@@ -83,7 +83,7 @@ So:
 
 The page stays on GitHub Pages. Visitors see a read-only lineup. Kenny opens **Edit lineup** and enters the passcode. Saves go to a Google Apps Script web app, the same kind of backend as the Bible Transcript Saver. The page shows **Last updated** in Pacific time.
 
-Until `FUNFRIDAY_WEB_APP_URL` in `funfriday/config.js` is filled in, every visit shows the built-in times and a notice.
+`FUNFRIDAY_WEB_APP_URL` in `funfriday/config.js` is the deployed web app. If that constant is empty, every visit shows the built-in times and a notice.
 
 Deploy steps are at the top of `funfriday/apps-script/Code.gs`:
 

@@ -64,8 +64,11 @@ test("validateSessions keeps the default lineup and rejects a bad time", () => {
   assert.equal(validateSessions([{ ...cloneDefaults()[0], start: "25:00" }]).ok, false);
 });
 
-test("the page has one empty web app URL until the script is deployed", () => {
-  assert.equal(FUNFRIDAY_WEB_APP_URL, "");
+test("the page reads the deployed web app URL from one constant", () => {
+  assert.equal(
+    FUNFRIDAY_WEB_APP_URL,
+    "https://script.google.com/macros/s/AKfycbzq7QQgfXx6zDP1pXIyd4RS5qz_kR3kNKezC1ag4W8pL7h69XEPHi35WErQTLHW_I-HLg/exec"
+  );
   const page = readFileSync(new URL("./board.js", import.meta.url), "utf8");
   assert.match(page, /FUNFRIDAY_WEB_APP_URL/);
   assert.doesNotMatch(page, /\/api\/funfriday|vercel|localStorage\.setItem\(LOCAL_KEY/);
