@@ -87,8 +87,16 @@ function readStored_() {
   var raw = PropertiesService.getScriptProperties().getProperty("SCHEDULE");
   if (!raw) return null;
   var doc = JSON.parse(raw);
-  var sessions = validateSessions_(doc.sessions);
-  if (!sessions) throw new Error("stored");
+  var cleaned = cleanSessions_(doc.sessions);
+  if (!cleaned) throw new Error("stored");
+  var sessions = orderSessions_(cleaned);
+  // Re-sort on load and write that order back so every viewer shares it.
+  if (sessionSignature_(cleaned) !== sessionSignature_(sessions)) {
+    PropertiesService.getScriptProperties().setProperty("SCHEDULE", JSON.stringify({
+      sessions: sessions,
+      updatedAt: typeof doc.updatedAt === "string" ? doc.updatedAt : null
+    }));
+  }
   return {
     sessions: sessions,
     updatedAt: typeof doc.updatedAt === "string" ? doc.updatedAt : null
@@ -106,6 +114,12 @@ function cleanGrades_(value) {
 }
 
 function validateSessions_(input) {
+  var sessions = cleanSessions_(input);
+  if (!sessions) return null;
+  return orderSessions_(sessions);
+}
+
+function cleanSessions_(input) {
   if (!Array.isArray(input) || input.length < 1 || input.length > 12) return null;
   var sessions = [];
   for (var i = 0; i < input.length; i++) {
@@ -122,4 +136,52 @@ function validateSessions_(input) {
     sessions.push({ name: name, start: item.start, end: item.end, kinder: kinder, big: big });
   }
   return sessions;
+}
+
+/** 1:25 and 13:25 are both 1:25 PM, which sorts before 2:00 PM. 12:xx is noon. */
+function afternoonMinutes_(hhmm) {
+  if (typeof hhmm !== "string") return null;
+  var match = /^(\d{1,2}):([0-5]\d)$/.exec(hhmm.trim());
+  if (!match) return null;
+  var hour = Number(match[1]);
+  var minute = Number(match[2]);
+  if (hour > 23) return null;
+  if (hour >= 1 && hour <= 11) hour += 12;
+  return hour * 60 + minute;
+}
+
+function orderSessions_(sessions) {
+  var decorated = [];
+  for (var i = 0; i < sessions.length; i++) {
+    decorated.push({ session: sessions[i], index: i });
+  }
+  decorated.sort(function (a, b) {
+    var am = afternoonMinutes_(a.session.start);
+    var bm = afternoonMinutes_(b.session.start);
+    var aKey = am == null ? 100000 : am;
+    var bKey = bm == null ? 100000 : bm;
+    if (aKey !== bKey) return aKey - bKey;
+    return a.index - b.index;
+  });
+  var ordered = [];
+  for (var j = 0; j < decorated.length; j++) {
+    var session = decorated[j].session;
+    ordered.push({
+      name: "Session " + (j + 1),
+      start: session.start,
+      end: session.end,
+      kinder: session.kinder.slice(),
+      big: session.big.slice()
+    });
+  }
+  return ordered;
+}
+
+function sessionSignature_(sessions) {
+  var lines = [];
+  for (var i = 0; i < sessions.length; i++) {
+    var s = sessions[i];
+    lines.push([s.name, s.start, s.end, s.kinder.join("\n"), s.big.join("\n")].join("\t"));
+  }
+  return lines.join("\n");
 }

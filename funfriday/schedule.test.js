@@ -5,8 +5,12 @@ import test from "node:test";
 
 const {
   DEFAULT_SESSIONS,
+  addMinutes,
+  afternoonMinutes,
   findConflicts,
   formatPacific,
+  orderSessions,
+  prettyTime,
   validateSessions,
 } = await import("./schedule.mjs");
 const { FUNFRIDAY_WEB_APP_URL } = await import("./config.js");
@@ -64,6 +68,68 @@ test("validateSessions keeps the default lineup and rejects a bad time", () => {
   assert.equal(validateSessions([{ ...cloneDefaults()[0], start: "25:00" }]).ok, false);
 });
 
+test("sessions sort by afternoon start, renumber, and keep walk-back with the session", () => {
+  const stored = [
+    { name: "Session 1", start: "13:25", end: "13:35", kinder: ["2nd"], big: ["3rd"] },
+    { name: "Session 2", start: "14:00", end: "14:10", kinder: ["K"], big: [""] },
+    { name: "Session 3", start: "14:15", end: "14:25", kinder: ["1st"], big: ["4th"] },
+    { name: "Session 4", start: "13:45", end: "13:55", kinder: [], big: ["5th"] },
+  ];
+  const ordered = orderSessions(stored);
+  assert.deepEqual(ordered.map((s) => s.name), ["Session 1", "Session 2", "Session 3", "Session 4"]);
+  assert.deepEqual(ordered.map((s) => s.start), ["13:25", "13:45", "14:00", "14:15"]);
+  assert.deepEqual(ordered.map((s) => prettyTime(s.start)), ["1:25", "1:45", "2:00", "2:15"]);
+  assert.equal(ordered[1].big[0], "5th");
+  assert.equal(ordered[1].end, "13:55");
+  assert.equal(addMinutes(ordered[1].end, 5), "14:00");
+  assert.equal(prettyTime(addMinutes(ordered[1].end, 5)), "2:00");
+  assert.deepEqual(ordered[2].kinder, ["K"]);
+  assert.deepEqual(ordered[2].big, [""]);
+  assert.equal(ordered[2].end, "14:10");
+  assert.equal(ordered[3].big[0], "4th");
+
+  const saved = validateSessions(stored);
+  assert.equal(saved.ok, true);
+  assert.deepEqual(saved.sessions.map((s) => s.start), ["13:25", "13:45", "14:00", "14:15"]);
+  assert.equal(saved.sessions[1].name, "Session 2");
+  assert.equal(saved.sessions[1].big[0], "5th");
+});
+
+test("12-hour afternoon times sort noon, then 1:25, then 2:00", () => {
+  assert.equal(afternoonMinutes("1:25"), afternoonMinutes("13:25"));
+  assert.equal(afternoonMinutes("01:25"), afternoonMinutes("13:25"));
+  assert.equal(afternoonMinutes("2:00"), afternoonMinutes("14:00"));
+  assert.ok(afternoonMinutes("12:50") < afternoonMinutes("1:25"));
+  assert.ok(afternoonMinutes("1:25") < afternoonMinutes("2:00"));
+  assert.ok(1 * 60 + 25 < 12 * 60 + 50);
+
+  const ordered = orderSessions([
+    { name: "Session 9", start: "2:00", end: "2:10", kinder: ["K"], big: [] },
+    { name: "Session 8", start: "1:25", end: "1:35", kinder: ["2nd"], big: ["3rd"] },
+    { name: "Session 7", start: "12:50", end: "13:00", kinder: [], big: ["1st"] },
+  ]);
+  assert.deepEqual(ordered.map((s) => s.start), ["12:50", "1:25", "2:00"]);
+  assert.deepEqual(ordered.map((s) => s.name), ["Session 1", "Session 2", "Session 3"]);
+  assert.equal(ordered[0].big[0], "1st");
+  assert.equal(ordered[0].end, "13:00");
+  assert.equal(ordered[1].end, "1:35");
+  assert.equal(ordered[1].kinder[0], "2nd");
+  assert.equal(ordered[2].kinder[0], "K");
+  assert.equal(ordered[2].end, "2:10");
+});
+
+test("equal start times keep their earlier order", () => {
+  const ordered = orderSessions([
+    { name: "first", start: "13:45", end: "13:50", kinder: ["K"], big: [] },
+    { name: "second", start: "13:45", end: "13:55", kinder: [], big: ["5th"] },
+  ]);
+  assert.equal(ordered[0].kinder[0], "K");
+  assert.equal(ordered[0].end, "13:50");
+  assert.equal(ordered[1].big[0], "5th");
+  assert.equal(ordered[1].end, "13:55");
+  assert.deepEqual(ordered.map((s) => s.name), ["Session 1", "Session 2"]);
+});
+
 test("the page reads the deployed web app URL from one constant", () => {
   assert.equal(
     FUNFRIDAY_WEB_APP_URL,
@@ -71,6 +137,8 @@ test("the page reads the deployed web app URL from one constant", () => {
   );
   const page = readFileSync(new URL("./board.js", import.meta.url), "utf8");
   assert.match(page, /FUNFRIDAY_WEB_APP_URL/);
+  assert.match(page, /orderSessions\(data\.sessions\)/);
+  assert.match(page, /sessions = orderSessions\(sessions\)/);
   assert.doesNotMatch(page, /\/api\/funfriday|vercel|localStorage\.setItem\(LOCAL_KEY/);
 });
 
@@ -108,6 +176,10 @@ test("the Apps Script file is the doGet and doPost backend", () => {
   assert.match(gs, /getProperty\("PASSCODE"\)/);
   assert.match(gs, /getProperty\("SCHEDULE"\)/);
   assert.match(gs, /setProperty\("SCHEDULE"/);
+  assert.match(gs, /function afternoonMinutes_/);
+  assert.match(gs, /if \(hour >= 1 && hour <= 11\) hour \+= 12/);
+  assert.match(gs, /orderSessions_\(cleaned\)/);
+  assert.match(gs, /return orderSessions_\(sessions\)/);
   assert.doesNotMatch(gs, /vercel|BLOB_READ_WRITE_TOKEN/i);
   for (const session of DEFAULT_SESSIONS) {
     assert.ok(gs.includes(session.start), session.start);
@@ -184,6 +256,35 @@ test("a web app saves only when the passcode matches, and the next read sees it"
     const again = parseScheduleResponse(await (await fetch(againReq.url, { cache: "no-store" })).text());
     assert.equal(again.sessions[2].end, "14:22");
     assert.equal(again.updatedAt, "2026-10-21T22:10:00.000Z");
+
+    const shuffled = [
+      { name: "Session 1", start: "13:25", end: "13:35", kinder: ["2nd"], big: ["3rd"] },
+      { name: "Session 2", start: "14:00", end: "14:10", kinder: ["K"], big: [""] },
+      { name: "Session 3", start: "14:15", end: "14:25", kinder: ["1st"], big: ["4th"] },
+      { name: "Session 4", start: "13:45", end: "13:55", kinder: [], big: ["5th"] },
+    ];
+    const sortReq = schedulePostRequest(url, "4242", shuffled);
+    const sortedSave = parseScheduleResponse(await (await fetch(sortReq.url, {
+      method: sortReq.method,
+      headers: sortReq.headers,
+      body: sortReq.body,
+      redirect: sortReq.redirect,
+    })).text());
+    assert.equal(sortedSave.ok, true);
+    assert.deepEqual(sortedSave.sessions.map((s) => s.start), ["13:25", "13:45", "14:00", "14:15"]);
+    assert.equal(sortedSave.sessions[1].name, "Session 2");
+    assert.equal(sortedSave.sessions[1].big[0], "5th");
+    assert.equal(sortedSave.sessions[1].end, "13:55");
+
+    const sortedReadReq = scheduleGetRequest(url);
+    const sortedRead = parseScheduleResponse(await (await fetch(sortedReadReq.url, { cache: "no-store" })).text());
+    assert.deepEqual(sortedRead.sessions.map((s) => [s.name, s.start, s.end]), [
+      ["Session 1", "13:25", "13:35"],
+      ["Session 2", "13:45", "13:55"],
+      ["Session 3", "14:00", "14:10"],
+      ["Session 4", "14:15", "14:25"],
+    ]);
+    assert.equal(sortedRead.sessions[1].big[0], "5th");
   } finally {
     await new Promise((resolve) => server.close(resolve));
   }
