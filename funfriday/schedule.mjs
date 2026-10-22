@@ -18,6 +18,52 @@ export function toMinutes(hhmm) {
   return h * 60 + m;
 }
 
+/** Minutes from midnight on the afternoon clock the page shows.
+ *  Stored times are 24-hour (13:25). The labels are 12-hour with no AM/PM
+ *  (1:25, 2:00). 1:25 and 01:25 are 1:25 PM, the same instant as 13:25,
+ *  and that sorts before 2:00 PM. 12:50 is noon, so it sorts before 1:25,
+ *  not after it the way a morning reading of "1:25" would.
+ */
+export function afternoonMinutes(hhmm) {
+  if (typeof hhmm !== "string") return null;
+  const match = /^(\d{1,2}):([0-5]\d)$/.exec(hhmm.trim());
+  if (!match) return null;
+  let hour = Number(match[1]);
+  const minute = Number(match[2]);
+  if (hour > 23) return null;
+  if (hour >= 1 && hour <= 11) hour += 12;
+  return hour * 60 + minute;
+}
+
+/** Earliest start first. Labels become Session 1, 2, 3… in that order.
+ *  End time (and the walk-back that follows it) stays on the same session.
+ *  Equal starts keep their previous order.
+ */
+export function orderSessions(sessions) {
+  if (!Array.isArray(sessions)) return [];
+  const decorated = [];
+  for (let i = 0; i < sessions.length; i++) {
+    const session = sessions[i];
+    if (!session || typeof session !== "object") continue;
+    decorated.push({ session, index: i });
+  }
+  decorated.sort((a, b) => {
+    const am = afternoonMinutes(a.session.start);
+    const bm = afternoonMinutes(b.session.start);
+    const aKey = am == null ? 100000 : am;
+    const bKey = bm == null ? 100000 : bm;
+    if (aKey !== bKey) return aKey - bKey;
+    return a.index - b.index;
+  });
+  return decorated.map(({ session }, i) => ({
+    name: "Session " + (i + 1),
+    start: session.start,
+    end: session.end,
+    kinder: Array.isArray(session.kinder) ? session.kinder.slice() : [],
+    big: Array.isArray(session.big) ? session.big.slice() : [],
+  }));
+}
+
 export function prettyTime(hhmm) {
   const mins = toMinutes(hhmm);
   if (mins == null) return "";
@@ -86,7 +132,7 @@ export function validateSessions(input) {
       : "Session " + (i + 1);
     sessions.push({ name, start: item.start, end: item.end, kinder: kinder.grades, big: big.grades });
   }
-  return { ok: true, sessions };
+  return { ok: true, sessions: orderSessions(sessions) };
 }
 
 function gradeList(grades) {

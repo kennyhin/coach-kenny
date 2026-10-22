@@ -4,6 +4,7 @@ import {
   addMinutes,
   findConflicts,
   formatPacific,
+  orderSessions,
   prettyTime,
 } from "./schedule.mjs";
 import { parseScheduleResponse, scheduleGetRequest, schedulePostRequest } from "./remote.js";
@@ -90,7 +91,7 @@ function maybeOfferLocalDraft() {
   if (loadError || !unlocked || !FUNFRIDAY_WEB_APP_URL) return;
   if (sessionStorage.getItem(DISMISS_KEY) === "1") return;
   const draft = readLocalDraft();
-  if (!draft || lineupSignature(draft) === lineupSignature(sessions)) return;
+  if (!draft || lineupSignature(orderSessions(draft)) === lineupSignature(sessions)) return;
   const el = document.getElementById("notice");
   el.hidden = false;
   el.replaceChildren();
@@ -105,7 +106,7 @@ function maybeOfferLocalDraft() {
   dismiss.className = "tool";
   dismiss.textContent = "Dismiss";
   publish.addEventListener("click", async () => {
-    sessions = draft;
+    sessions = orderSessions(draft);
     editing = true;
     render();
     const ok = await (saveTail = saveTail.then(() => persist(), () => persist()));
@@ -119,7 +120,8 @@ function maybeOfferLocalDraft() {
   el.append(publish, dismiss);
 }
 
-function render() {
+function render(statusExtra) {
+  sessions = orderSessions(sessions);
   const root = document.getElementById("sessions");
   root.innerHTML = sessions.map((s, i) => {
     const walkStart = s.end;
@@ -157,7 +159,7 @@ function render() {
   editBtn.textContent = editing ? "Done editing" : "Edit lineup";
   editBtn.setAttribute("aria-pressed", editing ? "true" : "false");
   refreshConflicts();
-  renderStatus();
+  renderStatus(statusExtra);
   bind();
 }
 
@@ -204,7 +206,10 @@ async function postLineup(sessionsOrNull) {
 }
 
 async function persist() {
+  const before = lineupSignature(sessions);
+  sessions = orderSessions(sessions);
   const snapshot = structuredClone(sessions);
+  if (lineupSignature(sessions) !== before) render();
   renderStatus({ text: "Saving…" });
   let data;
   try {
@@ -247,7 +252,14 @@ function bind() {
       queueSave(false);
     };
     input.addEventListener("input", apply);
-    input.addEventListener("change", apply);
+    input.addEventListener("change", (e) => {
+      apply(e);
+      const ordered = orderSessions(sessions);
+      if (lineupSignature(ordered) !== lineupSignature(sessions)) {
+        sessions = ordered;
+        render();
+      }
+    });
   });
   document.querySelectorAll("[data-remove]").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -499,7 +511,7 @@ async function boot() {
     if (!data.ok || !Array.isArray(data.sessions)) {
       throw new Error(data.error || "Could not load the shared lineup.");
     }
-    sessions = data.sessions;
+    sessions = orderSessions(data.sessions);
     updatedAt = data.updatedAt || null;
   } catch (err) {
     sessions = structuredClone(DEFAULT_SESSIONS);
