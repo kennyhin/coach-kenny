@@ -44,7 +44,9 @@ dialog.dd .kp-take b{color:#f0cf6a}
     var btn=document.createElement('button');btn.type='button';btn.className='dd-btn';btn.setAttribute('aria-haspopup','dialog');btn.setAttribute('aria-controls',id);btn.innerHTML='Dive deeper <span aria-hidden="true">&rarr;</span>';
     var dlg=document.createElement('dialog');dlg.className='dd';dlg.id=id;dlg.setAttribute('aria-labelledby',id+'-t');
     dlg.innerHTML='<div class="dd-head"><h2 id="'+id+'-t"></h2><button type="button" class="dd-x" aria-label="Close">&times;</button></div><div class="dd-body"></div>';
-    dlg.querySelector('h2').textContent=h2.textContent.replace(/^\s*\d+\s*/,'');
+    var titleNode=h2.cloneNode(true);var num=titleNode.querySelector('.n');
+    if(num){var label=num.textContent.trim();num.remove();if(label&&!/^\d+$/.test(label))titleNode.insertBefore(document.createTextNode(label+' '),titleNode.firstChild);}
+    dlg.querySelector('h2').textContent=titleNode.textContent.replace(/^\s*\d+\s*/,'').replace(/\s+/g,' ').trim();
     var body=dlg.querySelector('.dd-body');
     var anchor=nodes.filter(keep).pop()||h2;
     nodes.forEach(function(el){if(!keep(el))body.appendChild(el)});
