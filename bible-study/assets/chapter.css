@@ -63,7 +63,8 @@
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.05; text-wrap: balance; margin: 0 0 .4rem; }
   .sub { color: var(--muted); font-size: 1.02rem; max-width: 60ch; margin: 0; }
 
-  .chapter-head { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--fg); background: var(--gold-soft); display: inline-block; padding: .4rem .75rem; border-radius: 6px; margin: 1.6rem 0 .3rem; }
+  /* --gold-soft stays a light bar in both schemes; --fg turns cream in dark mode, so the label is ink. */
+  .chapter-head { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: #1d1a13; background: var(--gold-soft); display: inline-block; padding: .4rem .75rem; border-radius: 6px; margin: 1.6rem 0 .3rem; }
   .chapter-head.two { background: var(--deep); color: var(--gold-soft); }
   .chapter-sub { color: var(--muted); font-style: italic; margin: 0 0 .5rem; max-width: 62ch; }
 
