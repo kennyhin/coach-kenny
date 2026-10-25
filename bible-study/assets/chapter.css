@@ -160,3 +160,14 @@ a.chaptab[aria-current="page"]{background:var(--gold);color:#1d1a13;border-color
 @media (max-width:640px){.kp-item{padding:.85rem 0 .9rem}}
 
 .kp-take{margin:.45rem 0 .2rem;padding:.55rem .8rem;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;font-size:.95rem}.kp-take b{color:inherit}
+
+/* Expandable context: ink on the gold pill in both color schemes. */
+.ctx{margin:1rem 0 1.15rem}
+.ctx>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:.45rem;font:600 .78rem/1 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:#1d1a13;background:var(--gold);border-radius:999px;padding:.7rem 1.1rem}
+.ctx>summary::-webkit-details-marker{display:none}
+.ctx>summary::marker{content:""}
+.ctx>summary::after{content:"\2192"}
+.ctx[open]>summary::after{content:"\2193"}
+.ctx>summary:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.ctx-body{margin-top:.85rem;padding:.15rem 0 .2rem 1rem;border-left:3px solid var(--gold)}
+.ctx-body p{margin:.55rem 0;max-width:64ch}
