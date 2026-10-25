@@ -13,6 +13,7 @@ bible-study/
     index.html          Book page: one card per chapter (+ redirects old #chap-1 / #g1-.. links)
     1/index.html        Genesis 1
     2/index.html        Genesis 2
+    gap-theory/index.html  The Gap Theory (a reading of Genesis 1:1–2, linked beside the chapters)
   key-points/index.html First page, last page (Genesis / Jesus / Revelation)
 ```
 
