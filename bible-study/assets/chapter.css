@@ -170,4 +170,10 @@ a.chaptab[aria-current="page"]{background:var(--gold);color:#1d1a13;border-color
 .ctx[open]>summary::after{content:"\2193"}
 .ctx>summary:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
 .ctx-body{margin-top:.85rem;padding:.15rem 0 .2rem 1rem;border-left:3px solid var(--gold)}
-.ctx-body p{margin:.55rem 0;max-width:64ch}
+.ctx-body p,.ctx-body li{margin:.55rem 0;max-width:64ch}
+.ctx-body ul{margin:.35rem 0 .5rem;padding:0 0 0 1.15rem}
+.ctx-body li b{font-weight:600}
+.heavens{margin:1.2rem 0 .2rem}
+.heavens h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(1.25rem,3vw,1.45rem);margin:0 0 .35rem}
+.heavens ul{margin:.35rem 0 .7rem;padding:0 0 0 1.15rem}
+.heavens li{margin:.55rem 0;max-width:64ch}
