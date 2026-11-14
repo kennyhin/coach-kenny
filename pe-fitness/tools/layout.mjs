@@ -5,6 +5,8 @@
 // Data source: none (static strings); PDF list comes from source/benchmarks.md "Sources" table.
 // Follows: design-spec.md § THEME (type update Nov 14: Montserrat headings, Anton only for .score) (Hero, Section nav, Icons, Buttons) and § 1 Accessibility;
 //   markup classes mirror the SLAM Design Bot mockups (design/overview.html, benchmarks.html).
+// Audience (Nov 14 update): families, teachers and principals. Roll Call is a private teacher tool and is
+//   intentionally NOT linked from these public pages (removed from the header nav).
 // Used by: build-overview.mjs, build-benchmarks.mjs, build-lessons.mjs (run tools/build-all.mjs).
 
 import { readFileSync, statSync } from 'node:fs';
@@ -30,7 +32,6 @@ export const icon = (k) => ICONS[k];
 export const iconTile = (k, label) =>
   `<span class="icon-tile ${k}"${label ? ` role="img" aria-label="${esc(label)}"` : ' aria-hidden="true"'}>${ICONS[k]}</span>`;
 
-export const ROLLCALL = 'https://rollcall.coachkenny.org';
 export const WH_FITNESS = 'https://www.whitehouse.gov/fitness/';
 
 // External link helper: visible ↗ plus screen-reader "(opens in a new tab)" (spec § 1).
@@ -74,7 +75,7 @@ export function page({ title, desc, current, up = '', hero, heroTall = false, bo
     ['overview', 'Overview', `${up}index.html`],
     ['benchmarks', 'Benchmarks', `${up}benchmarks.html`],
     ['lessons', 'Lessons', `${up}lessons/index.html`],
-    ['rollout', 'Rollout plan', `${up}rollout.html`],
+    ['rollout', 'Timeline', `${up}rollout.html`],
   ].map(([k, t, h]) => `<a href="${h}"${k === current ? ' class="is-current" aria-current="page"' : ''}>${t}</a>`).join('\n        ');
   return `<!DOCTYPE html>
 <!--
@@ -107,7 +108,6 @@ export function page({ title, desc, current, up = '', hero, heroTall = false, bo
       </a>
       <nav class="section-nav" aria-label="Presidential Fitness section">
         ${nav}
-        <a href="${ROLLCALL}" target="_blank" rel="noopener"><span class="icon-inline" aria-hidden="true" style="display:inline-flex;width:18px;height:18px">${ICONS.rollcall}</span>Roll Call <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
         <a href="${up}../index.html">Home</a>
       </nav>
     </div>
@@ -131,7 +131,7 @@ ${body}
     <div class="wrap">
       <p>Coach K. Hin · SLAM Academy · K–5 Physical Education</p>
       <p>Benchmarks from the official White House Presidential Physical Fitness Test · ${ext(WH_FITNESS, 'whitehouse.gov/fitness')}</p>
-      <p>No student names or scores on these pages. <a href="${up}../index.html">coachkenny.org home</a></p>
+      <p>We never post student names or scores on this site. <a href="${up}../index.html">coachkenny.org home</a></p>
     </div>
   </footer>
   <script src="${up}js/fitness.js" defer></script>

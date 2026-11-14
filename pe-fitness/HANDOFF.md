@@ -2,15 +2,34 @@
 
 Built Saturday, Nov 14, 2026 (PT) by Grok Bot (executor) on branch `feat/pe-presidential-fitness`. Kenny asked to "build using grok for now" while his Claude limit reset, so Claude Code was not used. This file is here so Claude Code can pick up the work.
 
-**Status:** draft only. Not pushed, merged or deployed. Nothing on coachkenny.org changes until Kenny approves.
+**Status:** the first version is live (PRs #39 and #40, merged on Kenny's "Go live").
 
-## What was built
+## Update, Nov 14, 2026 (PT): family-facing rewrite (branch `feat/pe-fitness-parent-friendly`, not pushed)
+Kenny asked that the section read for **parents, teachers and principals** ("I know what my kid is doing"), with no
+teacher-style mini-comments. He loves the look, so **design, CSS and JS are unchanged**; only the words and some blocks changed.
+- **Lesson pages are no longer word-for-word teacher plans.** Public text now lives in `tools/source/family-lessons.mjs`
+  (per slug: `title`, `summary`, `steps` = what your child does in class, `why`, `home` = try it at home).
+  `tools/source/lessons/*.md` stay in the repo as the teacher plans (Planbook template) and still supply order, group,
+  "When" and grade band, but their body text is not rendered. Removed from public lesson pages: equipment checklist,
+  Print button, objective with form-check percentages, Teacher/Students badges, Kagan, exit ticket, reminders, Nevada standards.
+- **Overview, Lessons list, Benchmarks and Timeline copy** rewritten in plain, warm language (why we do it, what the
+  awards mean, how you can help at home). Dates are labeled "Planned" (from rollout-plan.md's suggested window).
+- **`rollout.html` is now the family "Timeline" page** (nav label "Timeline"): who takes part, when (planned timeline +
+  spring backup), what each of the six events looks like, how to help, after testing. Big-class station logistics removed.
+- **Roll Call removed from the public section** (header nav link, overview quick link and both Roll Call cards). It is a
+  private teacher tool; it is still on the coachkenny.org homepage grid.
+- **Benchmark tables untouched**: the BENCHMARKS:START/END block is byte-identical to main; 312/312 cells re-checked against benchmarks.csv.
+- Root `index.html`: **Bible Study card removed** from the homepage grid (Kenny: it might conflict with some people's beliefs).
+  The `/bible-study/` pages themselves are unchanged and still reachable by URL.
+- Screenshots: `/workspace/pe-fitness-preview/screenshots-v2/` (script `/workspace/pe-fitness-preview/shoot-v2.mjs`, static server on 8793).
+
+## What was built (original Nov 14 build; see the update above for what changed)
 The static section `/pe-fitness/` (plain HTML, CSS and vanilla JS, no build step needed to serve) has these pages:
-- `index.html` is the overview. It covers who tests (grades 3–5) versus preview only (K–2), the 3 categories as stacked boards with an OR chip, how awards work (official wording), a preview of 4 lessons, the 4-step rollout, quick links, the Roll Call card and the official documents.
+- `index.html` is the overview. It covers who tests (grades 3–5) versus preview only (K–2), the 3 categories as stacked boards with an OR chip, how awards work (official wording), a preview of 4 lessons, the 4-step timeline, how to help at home, quick links and the official documents.
 - `benchmarks.html` has a quick look (pick award level, group and age; JS only) above 4 full tables (Presidential/National × Boys/Girls, ages 5–17+). The picker chooses which table shows, and the URL hash keeps the choice (`#national-girls`). Without JS, all 4 tables show stacked.
 - `lessons/index.html` lists the 16 lessons in 3 groups, with filter chips (JS only).
-- `lessons/<slug>.html` holds the 16 lesson pages. Each has a breadcrumb, a header card with an equipment checklist and a Print button, the objective callout, the template sections, a Reminders callout (red), a Standards callout (navy), a table of contents (sticky at 900px and wider, `<details>` below that) and prev/next links.
-- `rollout.html` covers who tests, when (bullets plus a vertical timeline with a dashed backup branch), practice, the big-class station grid (2 per category), after testing and the Roll Call card.
+- `lessons/<slug>.html` holds the 16 lesson pages. Each has a breadcrumb, a header card with a one-line summary, "What your child does in class", "Why it matters", "Try it at home", a table of contents (sticky at 900px and wider, `<details>` below that) and prev/next links.
+- `rollout.html` ("Timeline") covers who takes part, when (vertical timeline with a dashed backup branch), the six events (station grid, 2 per category), how to help and after testing.
 - `official/` holds the 4 official PDFs, copied as-is: the test chart and 3 certificates.
 - Root `index.html` gets one homepage card ("PE Program / Presidential Fitness") right after the Roll Call card. Nothing else changed there.
 
@@ -28,9 +47,9 @@ pe-fitness/
     layout.mjs           shared <head>, header + pill nav, hero, footer, official-docs block, icons, ext links
     build-overview.mjs   → index.html
     build-benchmarks.mjs → benchmarks.html (tables between <!-- BENCHMARKS:START/END -->, plus #pf-data JSON)
-    build-lessons.mjs    → lessons/index.html, 16 lesson pages, rollout.html
+    build-lessons.mjs    → lessons/index.html, 16 lesson pages, rollout.html (Timeline)
     icons/*.svg          Lucide-style icons from design/icons (inlined into pages at build time)
-    source/              committed copies of the content sources (see below)
+    source/              content sources; family-lessons.mjs = public lesson text (see below)
   HANDOFF.md
 ```
 **Edit the tools or the source files, then re-run `build-all.mjs`.** Don't hand-edit the generated HTML; every generated file starts with a comment that says this.
@@ -38,8 +57,9 @@ pe-fitness/
 ## Where the content and data come from
 - `tools/source/benchmarks.csv` is a byte-identical copy of `/workspace/presidential-fitness/benchmarks.csv` (extracted Nov 14, 2026 from whitehouse.gov/fitness and the Presidential Award PDF). Every table cell and quick-look number comes from it. A check on Nov 14 matched all 312 cells with 0 mismatches.
 - `tools/source/benchmarks.md` holds the official award wording, the note that National comes from the website only (not in the PDF), and the PDF URLs.
-- `tools/source/lessons/*.md` (16 lessons plus `index.md`) are converted word for word. The only edits turn box paths (`/workspace/presidential-fitness/benchmarks.md`), bare `benchmarks.md` mentions and `official/` mentions into site links ("the Benchmarks page" and so on).
-- `tools/source/rollout-plan.md` is also converted word for word. The 5 timeline cards quote phrases from it, and their pill labels come from design-spec § 6.
+- `tools/source/family-lessons.mjs` is the public lesson text (see the Nov 14 update above).
+- `tools/source/lessons/*.md` (16 lessons plus `index.md`) are the teacher plans: only order, group, When and grade band are read.
+- `tools/source/rollout-plan.md` is the teacher rollout plan; the Timeline page copy in `build-lessons.mjs` `rollout()` is a plain-language version of it.
 - **Age 5 has no official benchmarks** (the CSV says `missing`). The tables show "No official number" across the age-5 row, and the quick look shows a red "No official number" callout when age 5 is picked. Kindergarteners who are 5 do preview stations only.
 - Design sources: `/workspace/pe-fitness-preview/design/design-spec.md` (its THEME section wins on color and type), `design-direction.md`, the mockups `overview.html`, `benchmarks.html` and `homepage-card.html`, and `pe-fitness-mock.css`.
 
@@ -96,4 +116,5 @@ pe-fitness/
 2. If Kenny wants copy changes, edit `tools/*.mjs` or `tools/source/*`, then run `node pe-fitness/tools/build-all.mjs`.
 3. Re-run the link check (`node /workspace/pe-fitness-preview/linkcheck.mjs`) and the screenshots (`node /workspace/pe-fitness-preview/shoot.mjs`, which needs a static server on 8792).
 4. Push the branch and open a **draft** PR (body at `/workspace/pe-fitness-preview/PR_BODY.md`). No merge or deploy without Kenny's OK.
-5. No student names or scores, ever. Roll Call (https://rollcall.coachkenny.org) is where scores live.
+5. No student names or scores, ever. Scores live in Roll Call (private teacher tool, deliberately not linked from these public pages).
+6. Keep public copy family-facing: no teacher asides, box paths, score-sheet or Roll Call details.

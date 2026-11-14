@@ -6,6 +6,7 @@
 //   tools/source/benchmarks.md. "missing" (age 5 only) renders as "No official number".
 // Follows: design-spec.md § 3 Benchmarks page + § THEME → Tables; layout per design-direction.md
 //   "Benchmark tables" and design/benchmarks.html (pick level / group / age → status banner → 3 boards).
+// Copy (Nov 14 update): family-facing wording; numbers/table markup unchanged.
 // Output: the 4 full tables live between <!-- BENCHMARKS:START --> and <!-- BENCHMARKS:END --> and the same
 //   rows are embedded as <script type="application/json" id="pf-data"> for the quick look (js/fitness.js).
 
@@ -87,7 +88,7 @@ const boards = CATS.map(([cat, num, name, cls]) => {
   const [a, b] = EVENTS.filter((e) => e.cat === cat);
   const choice = (e) => `<div class="choice"><p class="label">${e.label}</p><p class="score" data-event="${e.id}">${esc(data[DEF.sex][DEF.level][DEF.age][e.id])}</p><p class="unit">${e.unit} · ${dirWords(direction[e.id])}</p></div>`;
   return `          <article class="cat-board${cls}">
-            <div class="cat-head"><h3><span class="num">${num}</span> ${icon(cat)}${name}</h3><span class="hint">Pick one — hit it</span></div>
+            <div class="cat-head"><h3><span class="num">${num}</span> ${icon(cat)}${name}</h3><span class="hint">Pick one</span></div>
             <div class="cat-choices">
               ${choice(a)}
               <div class="rule-col" aria-hidden="true"></div>
@@ -109,33 +110,33 @@ ${SEXES.flatMap((s) => LEVELS.map((l) => table(s, l))).join('\n')}
 const body = `
     <div class="wrap">
       <div class="callout-row">
-        <div class="callout green"><span class="lead">Age on test day</span><p>Targets go by <strong>age on test day</strong>, not grade. (The White House does not define age yet; this is our school rule.)</p></div>
-        <div class="callout red"><span class="lead"><span class="diamond" aria-hidden="true"></span> Age 5 has no official numbers</span><p>The official chart starts at age 6. Kindergarteners who are 5 do preview stations only, so their row says “No official number.”</p></div>
-        <div class="callout navy"><span class="lead">Where the numbers come from</span><p>Presidential numbers come from the ${ext('official/Presidential-Physical-Fitness-Test.pdf', 'official PDF')} and the ${ext(WH_FITNESS, 'White House fitness page')}. National numbers come from the White House fitness page only, not the PDF.</p></div>
+        <div class="callout green"><span class="lead">Age on test day</span><p>Targets go by your child’s <strong>age on test day</strong>, not their grade.</p></div>
+        <div class="callout red"><span class="lead"><span class="diamond" aria-hidden="true"></span> Age 5 has no official numbers</span><p>The official chart starts at age 6. Five-year-olds take part in the fun K–2 preview instead, so their row says “No official number.”</p></div>
+        <div class="callout navy"><span class="lead">Where the numbers come from</span><p>Every number is copied exactly from the official White House chart. Presidential targets are on the ${ext('official/Presidential-Physical-Fitness-Test.pdf', 'official PDF')}; National targets are on the ${ext(WH_FITNESS, 'White House fitness page')}.</p></div>
       </div>
     </div>
 
     <section class="section" id="age-quick-look" aria-labelledby="ql-h" hidden data-js-only>
       <div class="wrap">
         <p class="section-kicker">Quick look by age</p>
-        <h2 id="ql-h">Find one child’s targets</h2>
-        <p class="section-intro">Pick an award level, a group and an age. Hit one target in each category to earn the award.</p>
+        <h2 id="ql-h">Look up your child’s targets</h2>
+        <p class="section-intro">Pick an award level, boys or girls, and your child’s age. To earn the award, your child needs to hit one target in each category (not every event).</p>
         <div class="pick">
-          <p class="pick-label" id="lvl-l"><span class="diamond" aria-hidden="true"></span> Pick your award level</p>
+          <p class="pick-label" id="lvl-l"><span class="diamond" aria-hidden="true"></span> Award level</p>
           <div class="level-row" role="group" aria-labelledby="lvl-l">
             <button type="button" class="level is-on" data-level="Presidential" aria-pressed="true"><span class="ttl">Presidential</span><span class="sub">Top tier</span></button>
             <button type="button" class="level tier-n" data-level="National" aria-pressed="false"><span class="ttl">National</span><span class="sub">Solid achievement</span></button>
           </div>
         </div>
         <div class="pick">
-          <p class="pick-label" id="grp-l"><span class="diamond" aria-hidden="true"></span> Pick your group</p>
+          <p class="pick-label" id="grp-l"><span class="diamond" aria-hidden="true"></span> Boys or girls</p>
           <div class="group-row" role="group" aria-labelledby="grp-l">
             <button type="button" class="group boys is-on" data-sex="Boys" aria-pressed="true"><span class="ttl">Boys</span></button>
             <button type="button" class="group girls" data-sex="Girls" aria-pressed="false"><span class="ttl">Girls</span></button>
           </div>
         </div>
         <div class="pick">
-          <p class="pick-label" id="age-l"><span class="diamond" aria-hidden="true"></span> Pick your age</p>
+          <p class="pick-label" id="age-l"><span class="diamond" aria-hidden="true"></span> Age on test day</p>
           <div class="age-grid" role="group" aria-labelledby="age-l">
             ${ageButtons}
             <label class="sr-only" for="age-older">Older ages</label>
@@ -146,7 +147,7 @@ const body = `
           <p id="ql-status">Showing Presidential targets for Boys, age 10</p>
           <span class="code" id="ql-code">B-10</span>
         </div>
-        <div class="callout red" id="ql-missing" hidden><span class="lead"><span class="diamond" aria-hidden="true"></span> No official number</span><p>Age 5 has no official benchmarks. Kindergarteners who are 5 do preview stations only.</p></div>
+        <div class="callout red" id="ql-missing" hidden><span class="lead"><span class="diamond" aria-hidden="true"></span> No official number</span><p>The official chart starts at age 6. Five-year-olds take part in the fun K–2 preview instead.</p></div>
         <div class="cat-boards" id="ql-boards">
 ${boards}
         </div>
@@ -157,9 +158,9 @@ ${boards}
       <div class="wrap">
         <p class="section-kicker">Full tables</p>
         <h2 id="ft-h">All ages, 5 to 17+</h2>
-        <p class="section-intro">One table for each award level and group. On a phone, swipe the table sideways; the Age column stays put. <span data-js-only hidden>The award level and group you picked above choose which table shows. Jump to: <a href="#presidential-boys">Presidential · Boys</a>, <a href="#presidential-girls">Presidential · Girls</a>, <a href="#national-boys">National · Boys</a>, <a href="#national-girls">National · Girls</a>.</span></p>
+        <p class="section-intro">One table for each award level, for boys and for girls. On a phone, swipe the table sideways; the Age column stays put. <span data-js-only hidden>The choices you made above pick which table shows. Jump to: <a href="#presidential-boys">Presidential · Boys</a>, <a href="#presidential-girls">Presidential · Girls</a>, <a href="#national-boys">National · Boys</a>, <a href="#national-girls">National · Girls</a>.</span></p>
 ${generated}
-        <p class="chart-note">Source: ${ext(WH_FITNESS, 'whitehouse.gov/fitness')} and the official Presidential Award PDF. Extracted November 14, 2026. No numbers were invented.</p>
+        <p class="chart-note">Source: ${ext(WH_FITNESS, 'whitehouse.gov/fitness')} and the official Presidential Award PDF. Numbers copied exactly from the official chart (checked November 14, 2026).</p>
       </div>
     </section>
 
@@ -168,7 +169,7 @@ ${officialDocs('')}
 
 const hero = `<p class="eyebrow">${eyebrow}</p>
           <h1>Benchmarks</h1>
-          <p class="lede">The official targets by age and sex. Hit one target in each category to earn the award.</p>
+          <p class="lede">The official award targets by age, for boys and girls. Your child needs to hit one target in each category to earn an award.</p>
           <div class="chips">
             <span class="badge badge-tier-p">Presidential · Top tier</span>
             <span class="badge badge-tier-n">National · Solid achievement</span>
