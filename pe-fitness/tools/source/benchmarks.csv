@@ -1,0 +1,313 @@
+event,category,sex,age,level,target,unit,direction
+curl-ups,Core & Abdominal Strength,Boys,5,Presidential,missing,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,5,National,missing,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,6,Presidential,33,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,6,National,22,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,7,Presidential,36,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,7,National,28,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,8,Presidential,40,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,8,National,31,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,9,Presidential,41,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,9,National,32,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,10,Presidential,45,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,10,National,35,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,11,Presidential,47,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,11,National,37,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,12,Presidential,50,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,12,National,40,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,13,Presidential,53,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,13,National,42,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,14,Presidential,56,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,14,National,45,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,15,Presidential,57,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,15,National,45,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,16,Presidential,57,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,16,National,45,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,17+,Presidential,57,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Boys,17+,National,45,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,5,Presidential,missing,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,5,National,missing,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,6,Presidential,32,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,6,National,23,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,7,Presidential,34,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,7,National,25,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,8,Presidential,38,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,8,National,29,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,9,Presidential,39,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,9,National,30,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,10,Presidential,40,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,10,National,30,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,11,Presidential,42,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,11,National,32,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,12,Presidential,45,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,12,National,35,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,13,Presidential,46,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,13,National,37,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,14,Presidential,47,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,14,National,37,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,15,Presidential,48,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,15,National,37,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,16,Presidential,48,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,16,National,37,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,17+,Presidential,48,reps in 1 minute,at least
+curl-ups,Core & Abdominal Strength,Girls,17+,National,37,reps in 1 minute,at least
+plank,Core & Abdominal Strength,Boys,5,Presidential,missing,seconds,at least
+plank,Core & Abdominal Strength,Boys,5,National,missing,seconds,at least
+plank,Core & Abdominal Strength,Boys,6,Presidential,73,seconds,at least
+plank,Core & Abdominal Strength,Boys,6,National,42,seconds,at least
+plank,Core & Abdominal Strength,Boys,7,Presidential,90,seconds,at least
+plank,Core & Abdominal Strength,Boys,7,National,50,seconds,at least
+plank,Core & Abdominal Strength,Boys,8,Presidential,95,seconds,at least
+plank,Core & Abdominal Strength,Boys,8,National,63,seconds,at least
+plank,Core & Abdominal Strength,Boys,9,Presidential,109,seconds,at least
+plank,Core & Abdominal Strength,Boys,9,National,63,seconds,at least
+plank,Core & Abdominal Strength,Boys,10,Presidential,119,seconds,at least
+plank,Core & Abdominal Strength,Boys,10,National,65,seconds,at least
+plank,Core & Abdominal Strength,Boys,11,Presidential,119,seconds,at least
+plank,Core & Abdominal Strength,Boys,11,National,71,seconds,at least
+plank,Core & Abdominal Strength,Boys,12,Presidential,127,seconds,at least
+plank,Core & Abdominal Strength,Boys,12,National,71,seconds,at least
+plank,Core & Abdominal Strength,Boys,13,Presidential,134,seconds,at least
+plank,Core & Abdominal Strength,Boys,13,National,83,seconds,at least
+plank,Core & Abdominal Strength,Boys,14,Presidential,134,seconds,at least
+plank,Core & Abdominal Strength,Boys,14,National,90,seconds,at least
+plank,Core & Abdominal Strength,Boys,15,Presidential,156,seconds,at least
+plank,Core & Abdominal Strength,Boys,15,National,98,seconds,at least
+plank,Core & Abdominal Strength,Boys,16,Presidential,156,seconds,at least
+plank,Core & Abdominal Strength,Boys,16,National,98,seconds,at least
+plank,Core & Abdominal Strength,Boys,17+,Presidential,156,seconds,at least
+plank,Core & Abdominal Strength,Boys,17+,National,98,seconds,at least
+plank,Core & Abdominal Strength,Girls,5,Presidential,missing,seconds,at least
+plank,Core & Abdominal Strength,Girls,5,National,missing,seconds,at least
+plank,Core & Abdominal Strength,Girls,6,Presidential,71,seconds,at least
+plank,Core & Abdominal Strength,Girls,6,National,41,seconds,at least
+plank,Core & Abdominal Strength,Girls,7,Presidential,92,seconds,at least
+plank,Core & Abdominal Strength,Girls,7,National,56,seconds,at least
+plank,Core & Abdominal Strength,Girls,8,Presidential,92,seconds,at least
+plank,Core & Abdominal Strength,Girls,8,National,60,seconds,at least
+plank,Core & Abdominal Strength,Girls,9,Presidential,105,seconds,at least
+plank,Core & Abdominal Strength,Girls,9,National,66,seconds,at least
+plank,Core & Abdominal Strength,Girls,10,Presidential,105,seconds,at least
+plank,Core & Abdominal Strength,Girls,10,National,66,seconds,at least
+plank,Core & Abdominal Strength,Girls,11,Presidential,105,seconds,at least
+plank,Core & Abdominal Strength,Girls,11,National,67,seconds,at least
+plank,Core & Abdominal Strength,Girls,12,Presidential,127,seconds,at least
+plank,Core & Abdominal Strength,Girls,12,National,69,seconds,at least
+plank,Core & Abdominal Strength,Girls,13,Presidential,127,seconds,at least
+plank,Core & Abdominal Strength,Girls,13,National,69,seconds,at least
+plank,Core & Abdominal Strength,Girls,14,Presidential,134,seconds,at least
+plank,Core & Abdominal Strength,Girls,14,National,79,seconds,at least
+plank,Core & Abdominal Strength,Girls,15,Presidential,145,seconds,at least
+plank,Core & Abdominal Strength,Girls,15,National,79,seconds,at least
+plank,Core & Abdominal Strength,Girls,16,Presidential,145,seconds,at least
+plank,Core & Abdominal Strength,Girls,16,National,79,seconds,at least
+plank,Core & Abdominal Strength,Girls,17+,Presidential,145,seconds,at least
+plank,Core & Abdominal Strength,Girls,17+,National,79,seconds,at least
+one-mile run,Cardiorespiratory Fitness,Boys,5,Presidential,missing,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,5,National,missing,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,6,Presidential,10:15,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,6,National,12:36,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,7,Presidential,9:22,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,7,National,11:40,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,8,Presidential,8:48,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,8,National,11:05,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,9,Presidential,8:31,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,9,National,10:30,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,10,Presidential,7:57,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,10,National,9:48,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,11,Presidential,7:32,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,11,National,9:20,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,12,Presidential,7:11,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,12,National,8:40,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,13,Presidential,6:50,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,13,National,8:06,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,14,Presidential,6:26,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,14,National,7:44,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,15,Presidential,6:20,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,15,National,7:30,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,16,Presidential,6:08,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,16,National,7:10,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,17+,Presidential,6:06,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Boys,17+,National,7:04,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,5,Presidential,missing,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,5,National,missing,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,6,Presidential,11:20,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,6,National,13:12,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,7,Presidential,10:36,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,7,National,12:56,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,8,Presidential,10:02,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,8,National,12:30,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,9,Presidential,9:30,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,9,National,11:52,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,10,Presidential,9:19,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,10,National,11:22,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,11,Presidential,9:02,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,11,National,11:17,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,12,Presidential,8:23,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,12,National,11:05,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,13,Presidential,8:13,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,13,National,10:23,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,14,Presidential,7:59,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,14,National,10:06,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,15,Presidential,7:59,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,15,National,9:58,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,16,Presidential,7:59,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,16,National,9:58,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,17+,Presidential,7:59,min:sec,at most
+one-mile run,Cardiorespiratory Fitness,Girls,17+,National,9:58,min:sec,at most
+20m beep test,Cardiorespiratory Fitness,Boys,5,Presidential,missing,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,5,National,missing,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,6,Presidential,27,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,6,National,10,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,7,Presidential,32,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,7,National,14,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,8,Presidential,39,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,8,National,19,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,9,Presidential,47,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,9,National,23,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,10,Presidential,55,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,10,National,26,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,11,Presidential,60,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,11,National,31,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,12,Presidential,65,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,12,National,37,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,13,Presidential,70,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,13,National,42,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,14,Presidential,75,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,14,National,44,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,15,Presidential,81,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,15,National,46,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,16,Presidential,84,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,16,National,48,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,17+,Presidential,84,laps,at least
+20m beep test,Cardiorespiratory Fitness,Boys,17+,National,50,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,5,Presidential,missing,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,5,National,missing,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,6,Presidential,22,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,6,National,10,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,7,Presidential,25,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,7,National,12,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,8,Presidential,29,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,8,National,15,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,9,Presidential,35,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,9,National,18,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,10,Presidential,41,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,10,National,21,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,11,Presidential,46,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,11,National,24,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,12,Presidential,49,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,12,National,26,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,13,Presidential,50,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,13,National,26,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,14,Presidential,50,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,14,National,27,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,15,Presidential,50,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,15,National,28,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,16,Presidential,50,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,16,National,28,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,17+,Presidential,50,laps,at least
+20m beep test,Cardiorespiratory Fitness,Girls,17+,National,28,laps,at least
+right-angle push-ups,Upper Body Strength,Boys,5,Presidential,missing,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,5,National,missing,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,6,Presidential,9,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,6,National,7,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,7,Presidential,14,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,7,National,8,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,8,Presidential,17,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,8,National,9,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,9,Presidential,18,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,9,National,12,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,10,Presidential,22,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,10,National,14,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,11,Presidential,27,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,11,National,15,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,12,Presidential,31,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,12,National,18,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,13,Presidential,39,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,13,National,24,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,14,Presidential,40,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,14,National,24,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,15,Presidential,42,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,15,National,30,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,16,Presidential,44,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,16,National,30,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,17+,Presidential,53,reps,at least
+right-angle push-ups,Upper Body Strength,Boys,17+,National,37,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,5,Presidential,missing,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,5,National,missing,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,6,Presidential,9,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,6,National,6,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,7,Presidential,14,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,7,National,8,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,8,Presidential,17,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,8,National,9,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,9,Presidential,18,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,9,National,12,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,10,Presidential,20,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,10,National,13,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,11,Presidential,20,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,11,National,13,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,12,Presidential,20,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,12,National,13,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,13,Presidential,21,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,13,National,13,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,14,Presidential,21,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,14,National,13,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,15,Presidential,21,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,15,National,15,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,16,Presidential,24,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,16,National,15,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,17+,Presidential,25,reps,at least
+right-angle push-ups,Upper Body Strength,Girls,17+,National,16,reps,at least
+pull-ups,Upper Body Strength,Boys,5,Presidential,missing,reps,at least
+pull-ups,Upper Body Strength,Boys,5,National,missing,reps,at least
+pull-ups,Upper Body Strength,Boys,6,Presidential,2,reps,at least
+pull-ups,Upper Body Strength,Boys,6,National,1,reps,at least
+pull-ups,Upper Body Strength,Boys,7,Presidential,4,reps,at least
+pull-ups,Upper Body Strength,Boys,7,National,1,reps,at least
+pull-ups,Upper Body Strength,Boys,8,Presidential,5,reps,at least
+pull-ups,Upper Body Strength,Boys,8,National,1,reps,at least
+pull-ups,Upper Body Strength,Boys,9,Presidential,5,reps,at least
+pull-ups,Upper Body Strength,Boys,9,National,2,reps,at least
+pull-ups,Upper Body Strength,Boys,10,Presidential,6,reps,at least
+pull-ups,Upper Body Strength,Boys,10,National,2,reps,at least
+pull-ups,Upper Body Strength,Boys,11,Presidential,6,reps,at least
+pull-ups,Upper Body Strength,Boys,11,National,2,reps,at least
+pull-ups,Upper Body Strength,Boys,12,Presidential,7,reps,at least
+pull-ups,Upper Body Strength,Boys,12,National,2,reps,at least
+pull-ups,Upper Body Strength,Boys,13,Presidential,7,reps,at least
+pull-ups,Upper Body Strength,Boys,13,National,3,reps,at least
+pull-ups,Upper Body Strength,Boys,14,Presidential,10,reps,at least
+pull-ups,Upper Body Strength,Boys,14,National,5,reps,at least
+pull-ups,Upper Body Strength,Boys,15,Presidential,11,reps,at least
+pull-ups,Upper Body Strength,Boys,15,National,6,reps,at least
+pull-ups,Upper Body Strength,Boys,16,Presidential,11,reps,at least
+pull-ups,Upper Body Strength,Boys,16,National,7,reps,at least
+pull-ups,Upper Body Strength,Boys,17+,Presidential,13,reps,at least
+pull-ups,Upper Body Strength,Boys,17+,National,8,reps,at least
+pull-ups,Upper Body Strength,Girls,5,Presidential,missing,reps,at least
+pull-ups,Upper Body Strength,Girls,5,National,missing,reps,at least
+pull-ups,Upper Body Strength,Girls,6,Presidential,2,reps,at least
+pull-ups,Upper Body Strength,Girls,6,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,7,Presidential,2,reps,at least
+pull-ups,Upper Body Strength,Girls,7,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,8,Presidential,2,reps,at least
+pull-ups,Upper Body Strength,Girls,8,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,9,Presidential,2,reps,at least
+pull-ups,Upper Body Strength,Girls,9,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,10,Presidential,3,reps,at least
+pull-ups,Upper Body Strength,Girls,10,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,11,Presidential,3,reps,at least
+pull-ups,Upper Body Strength,Girls,11,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,12,Presidential,3,reps,at least
+pull-ups,Upper Body Strength,Girls,12,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,13,Presidential,3,reps,at least
+pull-ups,Upper Body Strength,Girls,13,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,14,Presidential,3,reps,at least
+pull-ups,Upper Body Strength,Girls,14,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,15,Presidential,3,reps,at least
+pull-ups,Upper Body Strength,Girls,15,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,16,Presidential,3,reps,at least
+pull-ups,Upper Body Strength,Girls,16,National,1,reps,at least
+pull-ups,Upper Body Strength,Girls,17+,Presidential,3,reps,at least
+pull-ups,Upper Body Strength,Girls,17+,National,1,reps,at least
