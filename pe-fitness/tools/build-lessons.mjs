@@ -1,14 +1,15 @@
 // pe-fitness/tools/build-lessons.mjs — generates lessons/index.html, the 16 lessons/<slug>.html pages,
-// and rollout.html (the family "Timeline" page).
+// and rollout.html (the "Timeline" page).
 //
-// Purpose: FAMILY-FACING pages. Kenny (Nov 14, 2026): write it so parents, teachers and principals can
-//   read it and think "I know what my kid is doing"; no teacher asides or mini-comments.
+// Purpose: NEUTRAL-VOICE pages for Coach Kenny's PE class (Kenny, Nov 14, 2026): kids, parents, teachers and
+//   principals can all read them. "In class we...", "Students practice...", "Practice at home"; short and
+//   clear for a 3rd-5th grader. Never address parents ("your child"). No teacher asides or mini-comments.
 // Data sources:
 //   - tools/source/lessons/index.md → lesson ORDER, group, "When" (week/day). Its tables are parsed below.
 //   - tools/source/lessons/<slug>.md → only the header lines (Title, Grade band, When) are read.
 //     The rest of each .md is the TEACHER plan (Planbook template); it stays in the repo but is not shown.
 //   - tools/source/family-lessons.mjs → the public text for every lesson page (summary, in-class steps,
-//     why it matters, try at home). Edit there to change what families read.
+//     why it matters, practice at home). Edit there to change what students and readers see.
 //   - Timeline/rollout copy is written directly in rollout() below, based on tools/source/rollout-plan.md
 //     (dates are "planned", matching the plan's suggested window; backup window spring 2027).
 // Follows: design-spec.md § 4 Lessons list, § 5 Lesson page, § 6 Rollout plan (layout/classes unchanged).
@@ -61,7 +62,7 @@ const isK2 = (band) => /K-2/.test(band);
 const GROUP_TAG = (band) => (isK2(band)
   ? '<span class="badge badge-preview">Grades K–2 · Just for fun</span>'
   : '<span class="badge badge-tested">Grades 3–5</span>');
-// Family-friendly "when" label: "Week 1 Day 1" → "Week 1 · Class 1"; testing days stay as written.
+// Plain "when" label: "Week 1 Day 1" → "Week 1 · Class 1"; testing days stay as written.
 const whenLabel = (w) => w.replace(/^Week (\d+) Day (\d+)$/, 'Week $1 · Class $2').replace(/^Testing Day 4 \(Makeup\)$/, 'Makeup day');
 
 const lessons = order.map((o) => {
@@ -81,7 +82,7 @@ function lessonPage(L, i) {
   const pn = (L2, dir, cls) => L2
     ? `<a class="${cls}" href="${L2.slug}.html"><span class="dir">${dir === 'prev' ? '← Previous' : 'Next →'}</span><span class="t">${esc(L2.title)}</span></a>`
     : `<a class="${cls}" href="index.html"><span class="dir">${dir === 'prev' ? '← Back' : 'Done →'}</span><span class="t">All lessons</span></a>`;
-  const toc = [['in-class', 'In class'], ['why', 'Why it matters'], ['home', 'Try it at home']]
+  const toc = [['in-class', 'In class'], ['why', 'Why it matters'], ['home', 'Practice at home']]
     .map(([id, t]) => `<li><a href="#${id}">${t}</a></li>`).join('');
   const hero = `<p class="eyebrow">${eyebrow}</p>
           <p class="lede" style="margin-bottom:0">${k2 ? 'K–2 preview' : 'Grades 3–5'} · ${esc(L.whenLabel)}</p>`;
@@ -101,10 +102,10 @@ function lessonPage(L, i) {
           </article>
           <details class="toc toc-mobile"><summary>On this page</summary><ul>${toc}</ul></details>
           <div class="reading">
-          <section aria-labelledby="in-class"><h2 id="in-class"><span class="diamond" aria-hidden="true"></span>What your child does in class</h2>
+          <section aria-labelledby="in-class"><h2 id="in-class"><span class="diamond" aria-hidden="true"></span>What we do in class</h2>
             <ol class="rounds">${L.steps.map(([lead, t]) => `<li><strong>${esc(lead)}:</strong> ${esc(t)}</li>`).join('')}</ol></section>
           <section aria-labelledby="why"><h2 id="why"><span class="diamond" aria-hidden="true"></span>Why it matters</h2><p>${esc(L.why)}</p></section>
-          <section aria-labelledby="home"><h2 id="home"><span class="diamond" aria-hidden="true"></span>Try it at home</h2>
+          <section aria-labelledby="home"><h2 id="home"><span class="diamond" aria-hidden="true"></span>Practice at home</h2>
             <div class="callout green prose"><ul>${L.home.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div></section>
           </div>
           <nav class="prevnext" aria-label="Lesson navigation">${pn(prev, 'prev', 'prev')}${pn(next, 'next', 'next')}</nav>
@@ -118,9 +119,9 @@ function lessonPage(L, i) {
     title: `${L.title} — Presidential Fitness — Coach Kenny`,
     desc: `${k2 ? 'K–2 preview' : 'Grades 3–5'} PE, ${L.whenLabel}: ${L.summary}`,
     current: 'lessons', up, hero, body: bodyHtml,
-    comment: `pe-fitness/lessons/${L.slug}.html — family-facing summary of lesson ${L.order} of 16 (${L.band}, ${L.when}).
+    comment: `pe-fitness/lessons/${L.slug}.html — neutral-voice summary of lesson ${L.order} of 16 (${L.band}, ${L.when}).
 Data: tools/source/family-lessons.mjs ("${L.slug}"); order/When from tools/source/lessons/index.md.
-Design: design-spec.md § 5 Lesson page (teacher-only blocks removed for families, Nov 14).`,
+Design: design-spec.md § 5 Lesson page (teacher-only blocks removed; neutral voice, Nov 14).`,
   });
 }
 
@@ -131,7 +132,7 @@ function lessonsIndex() {
   const meta = {
     0: { key: '35', name: 'Grades 3–5: Practice weeks', desc: 'About four weeks of learning and practicing each event before the real test.', badge: '<span class="badge badge-tested">Grades 3–5</span>' },
     1: { key: '35', name: 'Grades 3–5: Test days', desc: 'The official test, one category per PE class, plus a makeup day for anyone who was absent.', badge: '<span class="badge badge-tested">Grades 3–5</span>' },
-    2: { key: 'k2', name: 'Grades K–2: Fun preview', desc: 'Younger kids try mini versions of the events during the same weeks. No scores, no testing, no awards.', badge: '<span class="badge badge-preview">Grades K–2 · Just for fun</span>' },
+    2: { key: 'k2', name: 'Grades K–2: Fun preview', desc: 'Younger students try mini versions of the events during the same weeks. No scores, no testing, no awards.', badge: '<span class="badge badge-preview">Grades K–2 · Just for fun</span>' },
   };
   const groupsHtml = G.map((g, gi) => {
     const m = meta[gi];
@@ -154,7 +155,7 @@ function lessonsIndex() {
   }).join('\n        ');
   const hero = `<p class="eyebrow">${eyebrow}</p>
           <h1>Lessons</h1>
-          <p class="lede" style="margin-bottom:0">What your child does in PE, class by class, from the first practice to test day.</p>`;
+          <p class="lede" style="margin-bottom:0">What we learn in PE, class by class, from the first practice to test day.</p>`;
   const body = `
     <section class="section" aria-labelledby="about-h" style="padding-bottom:0">
       <div class="wrap">
@@ -162,7 +163,7 @@ function lessonsIndex() {
         <div class="callout green prose">
           <p><strong>Grades 3–5</strong> spend about four weeks learning and practicing each event, then take the official test over three PE classes in early February.</p>
           <p><strong>Grades K–2</strong> get a fun preview of the same events during the practice weeks. They are not tested or scored.</p>
-          <p>Tap any lesson to see what happens in class, why it matters, and an easy way to practice at home.</p>
+          <p>Tap any lesson to see what we do in class, why it matters, and an easy way to practice at home.</p>
         </div>
         <div class="filter-row" role="group" aria-label="Filter lessons" data-js-only hidden>
           <button type="button" class="filter-chip" data-filter="all" aria-pressed="true">All</button>
@@ -176,24 +177,24 @@ function lessonsIndex() {
 `;
   return page({
     title: 'Lessons — Presidential Fitness — Coach Kenny',
-    desc: 'What your child does in PE for the Presidential Fitness Test, class by class: grades 3–5 practice and test days, and the K–2 fun preview.',
+    desc: 'What we learn in PE for the Presidential Fitness Test, class by class: grades 3–5 practice and test days, and the K–2 fun preview.',
     current: 'lessons', up, hero, body,
-    comment: `pe-fitness/lessons/index.html — family-facing list of the 16 lessons, grouped as in the source index.
+    comment: `pe-fitness/lessons/index.html — neutral-voice list of the 16 lessons, grouped as in the source index.
 Data: order/When from tools/source/lessons/index.md; titles + summaries from tools/source/family-lessons.mjs.
 Design: design-spec.md § 4 Lessons list; design-direction.md "Lesson cards".`,
   });
 }
 
-// ---- Timeline page (rollout.html): what families can expect and when ----
+// ---- Timeline page (rollout.html): what to expect and when ----
 // Dates follow tools/source/rollout-plan.md (suggested window, not locked) and are labeled "Planned".
 function rollout() {
   const up = '';
   const timeline = [
-    ['Planned: Jan. 5–29, 2027', 'Practice weeks', 'Grades 3–5 learn each event and practice it in PE, about three to four weeks. Grades K–2 get their fun preview during these same weeks.'],
+    ['Planned: Jan. 5–29, 2027', 'Practice weeks', 'Grades 3–5 learn each event and practice it in PE, about three to four weeks. Grades K–2 do their fun preview during these same weeks.'],
     ['End of January', 'Practice test day', 'A dress rehearsal so test day feels familiar. Practice results do not count.'],
     ['Planned: Feb. 1–12, 2027', 'Official test days (grades 3–5)', 'One category per PE class: core one day, cardio another, upper body another.'],
     ['The week after', 'Makeup day', 'For anyone who was absent or had an attempt interrupted.'],
-    ['After testing', 'Certificates come home', 'Award and participation certificates go home for grades 3–5, all at the same time.'],
+    ['After testing', 'Certificates are handed out', 'Award and participation certificates are handed out to grades 3–5, all at the same time.'],
   ];
   const events = [
     ['core', 'Core', [['Curl-ups', 'As many good curl-ups as possible in one minute, with a partner counting.'], ['Plank', 'Hold a straight-body plank on the forearms for as long as possible.']]],
@@ -202,15 +203,15 @@ function rollout() {
   ];
   const hero = `<p class="eyebrow">${eyebrow}</p>
           <h1>Timeline</h1>
-          <p class="lede" style="margin-bottom:0">What to expect, when it happens, and how you can help.</p>`;
+          <p class="lede" style="margin-bottom:0">What to expect, when it happens, and how to get ready.</p>`;
   const body = `
     <section class="section" aria-labelledby="who-h">
       <div class="wrap">
         <p class="section-kicker">Who takes part</p>
         <h2 id="who-h">Who takes part</h2>
         <div class="two-up">
-          <article class="card-box"><span class="badge badge-tested">Grades 3–5</span><h3>Grades 3–5 take the test</h3><p>Students pick one event in each of three categories: core, cardio and upper body. Targets are based on each child’s age on test day, not their grade.</p><p>Hitting the target in all three categories earns the <strong>Presidential Award</strong> (top tier) or the <strong>National Award</strong>. Every student who finishes the test can receive a <strong>Certificate of Participation</strong>.</p></article>
-          <article class="card-box"><span class="badge badge-preview">Grades K–2 · Just for fun</span><h3>K–2 get a preview</h3><p>During the same weeks, younger kids try short, kid-sized versions of the events: a few curl-ups, a short plank, short runs and wall push-ups.</p><p>There is no testing, no scoring and no awards for K–2. It is all about having fun and getting excited for 3rd grade.</p><blockquote>“In 3rd grade you’ll get to try the Presidential Fitness Test!”</blockquote></article>
+          <article class="card-box"><span class="badge badge-tested">Grades 3–5</span><h3>Grades 3–5 take the test</h3><p>Students pick one event in each of three categories: core, cardio and upper body. Targets are based on age on test day, not grade.</p><p>Hitting the target in all three categories earns the <strong>Presidential Award</strong> (top tier) or the <strong>National Award</strong>. Every student who finishes the test can get a <strong>Certificate of Participation</strong>.</p></article>
+          <article class="card-box"><span class="badge badge-preview">Grades K–2 · Just for fun</span><h3>K–2 get a preview</h3><p>During the same weeks, K–2 students try short, kid-sized versions of the events: a few curl-ups, a short plank, short runs and wall push-ups.</p><p>There is no testing, no scoring and no awards for K–2. It is all about having fun and getting excited for 3rd grade.</p><blockquote>“In 3rd grade you’ll get to try the Presidential Fitness Test!”</blockquote></article>
         </div>
       </div>
     </section>
@@ -242,12 +243,12 @@ function rollout() {
     <section class="section" aria-labelledby="help-h" style="padding-top:0">
       <div class="wrap">
         <p class="section-kicker">At home</p>
-        <h2 id="help-h">How you can help</h2>
+        <h2 id="help-h">Practice at home</h2>
         <div class="callout green prose"><ul>
-          <li>Send your child in sneakers and comfortable clothes on PE days, with a water bottle.</li>
+          <li>Wear sneakers and comfortable clothes on PE days, and bring a water bottle.</li>
           <li>A good night’s sleep and breakfast make a real difference, especially on test days.</li>
-          <li>Get moving together: family walks, playground time, or a quick plank challenge.</li>
-          <li>Praise effort, not numbers. Trying their best is what we celebrate.</li>
+          <li>Keep moving: walks, playground time, or a quick plank challenge with a friend.</li>
+          <li>Effort matters more than numbers. Trying your best is what we celebrate.</li>
         </ul></div>
       </div>
     </section>
@@ -256,7 +257,7 @@ function rollout() {
       <div class="wrap">
         <div class="award-board" style="text-align:left">
           <h2 id="after-h">After testing</h2>
-          <p>Coach Kenny checks each child’s results against the official targets for their age. Certificates for grades 3–5 then go home together. Results stay private: no student names or scores are ever posted on this site.</p>
+          <p>Coach Kenny checks each student’s results against the official targets for their age. Then certificates for grades 3–5 are handed out together. Results stay private: no student names or scores are ever posted on this site.</p>
           <a class="btn" href="index.html#docs-h">See the certificates</a>
         </div>
       </div>
@@ -264,9 +265,9 @@ function rollout() {
 `;
   return page({
     title: 'Timeline — Presidential Fitness — Coach Kenny',
-    desc: 'When the Presidential Fitness Test happens at SLAM, who takes part, what each event looks like and how families can help.',
+    desc: 'When the Presidential Fitness Test happens at SLAM, who takes part, what each event looks like and how to get ready.',
     current: 'rollout', up, hero, body,
-    comment: `pe-fitness/rollout.html — family-facing "Timeline": who takes part, when, the six events, how to help, after testing.
+    comment: `pe-fitness/rollout.html — neutral-voice "Timeline": who takes part, when, the six events, practice at home, after testing.
 Data: copy written in tools/build-lessons.mjs rollout(), based on tools/source/rollout-plan.md (planned dates).
 Design: design-spec.md § 6 Rollout plan; design-direction.md "Rollout timeline". Private teacher-tool card removed for the public page.`,
   });

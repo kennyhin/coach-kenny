@@ -4,6 +4,19 @@ Built Saturday, Nov 14, 2026 (PT) by Grok Bot (executor) on branch `feat/pe-pres
 
 **Status:** the first version is live (PRs #39 and #40, merged on Kenny's "Go live").
 
+## Update, Nov 14 (neutral voice) (branch `feat/pe-fitness-neutral-voice`, not pushed)
+Kenny said the section was too parent-focused ("your child", "what your kid does", "how you can help"). All public wording is now
+**neutral**, so kids, parents, teachers and principals can read it, framed as Coach Kenny's PE class page ("what we learn in PE").
+- Voice: "In class we...", "Students practice...", "Why it matters", "Practice at home". Short, friendly words a 3rd-5th grader can read.
+  No second-person parent framing anywhere (`rg -i "your child|your kid" pe-fitness --glob '*.html'` returns nothing).
+- Edited only copy: `tools/source/family-lessons.mjs` (summaries, why, home), `build-overview.mjs`, `build-lessons.mjs`
+  (lesson pages, Lessons list, Timeline), `build-benchmarks.mjs` (callouts and lede), plus header comments. Then rebuilt with
+  `node pe-fitness/tools/build-all.mjs`. Generated HTML was not hand-edited.
+- Headings changed: "What your child does in class" → "What we do in class"; "Try it at home" / "How you can help" → "Practice at home".
+- Unchanged: design, CSS, JS, layout, and the benchmark tables (312/312 values still match benchmarks.csv).
+- Still excluded: teacher notes, Roll Call links, box paths, standards, percentages, Kagan, exit tickets, student names or scores, White House seal.
+- Known test failure unchanged: "Bible Study links to the PIN-locked transcriber".
+
 ## Update, Nov 14, 2026 (PT): family-facing rewrite (branch `feat/pe-fitness-parent-friendly`, not pushed)
 Kenny asked that the section read for **parents, teachers and principals** ("I know what my kid is doing"), with no
 teacher-style mini-comments. He loves the look, so **design, CSS and JS are unchanged**; only the words and some blocks changed.
