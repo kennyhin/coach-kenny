@@ -5,7 +5,7 @@
 // Data source: none (static strings); PDF list comes from source/benchmarks.md "Sources" table.
 // Follows: design-spec.md § THEME (type update Nov 14: Montserrat headings, Anton only for .score) (Hero, Section nav, Icons, Buttons) and § 1 Accessibility;
 //   markup classes mirror the SLAM Design Bot mockups (design/overview.html, benchmarks.html).
-// Audience (Nov 14 update): families, teachers and principals. Roll Call is a private teacher tool and is
+// Audience (Nov 14 update, neutral voice): students, parents, teachers and principals. Roll Call is a private teacher tool and is
 //   intentionally NOT linked from these public pages (removed from the header nav).
 // Used by: build-overview.mjs, build-benchmarks.mjs, build-lessons.mjs (run tools/build-all.mjs).
 

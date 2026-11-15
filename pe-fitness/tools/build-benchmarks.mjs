@@ -6,7 +6,7 @@
 //   tools/source/benchmarks.md. "missing" (age 5 only) renders as "No official number".
 // Follows: design-spec.md § 3 Benchmarks page + § THEME → Tables; layout per design-direction.md
 //   "Benchmark tables" and design/benchmarks.html (pick level / group / age → status banner → 3 boards).
-// Copy (Nov 14 update): family-facing wording; numbers/table markup unchanged.
+// Copy (Nov 14 update): neutral voice for students, parents and teachers (no "your child"); numbers/table markup unchanged.
 // Output: the 4 full tables live between <!-- BENCHMARKS:START --> and <!-- BENCHMARKS:END --> and the same
 //   rows are embedded as <script type="application/json" id="pf-data"> for the quick look (js/fitness.js).
 
@@ -110,7 +110,7 @@ ${SEXES.flatMap((s) => LEVELS.map((l) => table(s, l))).join('\n')}
 const body = `
     <div class="wrap">
       <div class="callout-row">
-        <div class="callout green"><span class="lead">Age on test day</span><p>Targets go by your child’s <strong>age on test day</strong>, not their grade.</p></div>
+        <div class="callout green"><span class="lead">Age on test day</span><p>Targets go by <strong>age on test day</strong>, not grade.</p></div>
         <div class="callout red"><span class="lead"><span class="diamond" aria-hidden="true"></span> Age 5 has no official numbers</span><p>The official chart starts at age 6. Five-year-olds take part in the fun K–2 preview instead, so their row says “No official number.”</p></div>
         <div class="callout navy"><span class="lead">Where the numbers come from</span><p>Every number is copied exactly from the official White House chart. Presidential targets are on the ${ext('official/Presidential-Physical-Fitness-Test.pdf', 'official PDF')}; National targets are on the ${ext(WH_FITNESS, 'White House fitness page')}.</p></div>
       </div>
@@ -119,8 +119,8 @@ const body = `
     <section class="section" id="age-quick-look" aria-labelledby="ql-h" hidden data-js-only>
       <div class="wrap">
         <p class="section-kicker">Quick look by age</p>
-        <h2 id="ql-h">Look up your child’s targets</h2>
-        <p class="section-intro">Pick an award level, boys or girls, and your child’s age. To earn the award, your child needs to hit one target in each category (not every event).</p>
+        <h2 id="ql-h">Look up your targets</h2>
+        <p class="section-intro">Pick an award level, boys or girls, and an age. To earn the award, a student needs to hit one target in each category (not every event).</p>
         <div class="pick">
           <p class="pick-label" id="lvl-l"><span class="diamond" aria-hidden="true"></span> Award level</p>
           <div class="level-row" role="group" aria-labelledby="lvl-l">
@@ -169,7 +169,7 @@ ${officialDocs('')}
 
 const hero = `<p class="eyebrow">${eyebrow}</p>
           <h1>Benchmarks</h1>
-          <p class="lede">The official award targets by age, for boys and girls. Your child needs to hit one target in each category to earn an award.</p>
+          <p class="lede">The official award targets by age, for boys and girls. A student needs to hit one target in each category to earn an award.</p>
           <div class="chips">
             <span class="badge badge-tier-p">Presidential · Top tier</span>
             <span class="badge badge-tier-n">National · Solid achievement</span>
