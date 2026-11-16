@@ -495,7 +495,7 @@ export function renderFitnessLeaderboardsHTML(pagePayload) {
       <p class="mile-lb-note">${esc(BOARD_NOTE)}</p>
       <div class="lb-cat-nav-wrap">${categoryNavHtml()}</div>
       ${categories}
-      <p class="mile-lb-foot">Boards are grouped by the official Presidential Fitness categories and by each student's age on test day. We list first name and last initial, homeroom, score or time, and age group. We never post full names, IDs, or birthdates.</p>
+      <p class="mile-lb-foot">Boards are grouped by the official Presidential Fitness categories and by each student's age on test day. We list first name and last initial, homeroom, score or time, and age group. We never post full names, IDs, or birthdates. Boards show each runner's age group on test day.</p>
     </div>
   </section>`;
 }

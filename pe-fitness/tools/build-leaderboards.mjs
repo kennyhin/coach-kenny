@@ -40,7 +40,7 @@ const html = page({
     ...(existsSync(path.join(SECTION, 'js/leaderboard-config.js')) ? ['js/leaderboard-config.js'] : []),
     'js/leaderboards.js',
   ],
-  footerNote: 'Leaderboards are grouped by the official Presidential Fitness categories and by each student\'s age on test day. We list first name and last initial, homeroom, score or time, and age group. We never post full names, IDs, or birthdates.',
+  footerNote: 'Leaderboards are grouped by the official Presidential Fitness categories and by each student\'s age on test day. We list first name and last initial, homeroom, score or time, and age group. We never post full names, IDs, or birthdates. Boards show each runner\'s age group on test day.',
   comment: `Leaderboards page. Edit pe-fitness/tools/build-leaderboards.mjs, pe-fitness/tools/mile-leaderboard.mjs, and pe-fitness/data/mile-leaderboard.json (sample data only), then re-run:
     node pe-fitness/tools/build-all.mjs`,
 });
