@@ -1124,3 +1124,146 @@ button.age { font-family: var(--font-ui); font-weight: 800; font-size: 20px; }
 
 /* Keep absolutely-positioned .sr-only text inside the scrolling pill nav; otherwise it widens the page on phones. */
 .section-nav, .section-nav a { position: relative; }
+
+/* ===================== Part 3: mile run award leaderboard ===================== */
+body.mile-lb-page {
+  background: #231F20;
+  background-image: none;
+  color: #fff;
+}
+body.mile-lb-page .site-footer {
+  background: #231F20;
+  color: #bbb;
+  border-top: 0;
+}
+body.mile-lb-page .site-footer a { color: #fff; }
+body.mile-lb-page .pf-divider { display: none; }
+
+.mile-lb {
+  background: #231F20;
+  color: #fff;
+  padding: 28px 0 48px;
+}
+.mile-lb-inner {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.mile-lb-head h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.1;
+  margin: 0;
+  color: #fff;
+  letter-spacing: -0.03em;
+}
+.mile-lb-head h1 b { color: var(--green); font-weight: 800; }
+.mile-lb-head p {
+  margin: 6px 0 0;
+  color: #ccc;
+  font-size: 15px;
+}
+.mile-lb-rule {
+  height: 6px;
+  background: var(--green);
+  margin: 22px 0 18px;
+}
+.mile-lb-status {
+  border-radius: 12px;
+  padding: 16px 18px 14px;
+  margin: 0 0 20px;
+  color: var(--ink);
+}
+.mile-lb-status.is-sample { background: #fff6d8; border: 3px solid var(--gold); }
+.mile-lb-status.is-live { background: #e9f8e3; border: 3px solid var(--green); }
+.mile-lb-kicker {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+.mile-lb-status h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+.mile-lb-status p:last-child { margin: 0; }
+.mile-lb-cols {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.mile-lb-col {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  color: var(--ink);
+  border-radius: 14px;
+  padding: 18px;
+}
+.mile-lb-col h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 26px;
+  margin: 0;
+  color: var(--ink);
+}
+.mile-lb-col h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  margin: 14px 0 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mile-lb-col h3 span { opacity: 0.85; font-weight: 800; }
+.mile-lb-col h3.p { background: var(--navy); }
+.mile-lb-col h3.n { background: var(--green); color: var(--ink); }
+.mile-lb-col h3.n span { color: var(--ink); opacity: 0.75; }
+.mile-lb-col table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.mile-lb-col td {
+  padding: 3px 6px;
+  border-bottom: 1px solid #eee;
+  vertical-align: baseline;
+}
+.mile-lb-col td.rk { width: 22px; color: var(--gray); font-variant-numeric: tabular-nums; }
+.mile-lb-col td.nm { font-weight: 600; overflow-wrap: anywhere; padding-right: 8px; }
+.mile-lb-col td.hr { color: var(--gray); font-size: 12px; }
+.mile-lb-col td.t {
+  text-align: right;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.mile-lb-empty { color: var(--gray); font-size: 13px; margin: 4px 6px 10px; }
+.mile-lb-foot {
+  margin: 18px 0 0;
+  color: #bbb;
+  font-size: 12px;
+  max-width: 52rem;
+}
+@media (max-width: 900px) {
+  .mile-lb-cols { flex-direction: column; }
+  .mile-lb-inner { padding: 0 16px; }
+  .mile-lb-col h2 { font-size: 22px; }
+}
+@media print {
+  body.mile-lb-page, .mile-lb { background: #fff !important; color: #000 !important; }
+  .mile-lb-head h1, .mile-lb-head p, .mile-lb-foot { color: #000 !important; }
+  .mile-lb-col { border: 1px solid #000; }
+}

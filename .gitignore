@@ -5,3 +5,8 @@ node_modules/
 !.env.example
 .netlify/
 .vercel/
+
+# Live Presidential Fitness scores must never be committed to this public repo.
+pe-fitness/data/mile-leaderboard.real.json
+pe-fitness/data/mile-leaderboard-live.json
+pe-fitness/data/real/

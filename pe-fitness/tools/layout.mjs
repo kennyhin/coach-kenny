@@ -67,13 +67,15 @@ ${DOCS.map(([f, t, u]) => `            <li><a href="${up}official/${f}">${esc(t)
 
 /**
  * Full page wrapper.
- * opts: { title, desc, current: 'overview'|'benchmarks'|'lessons'|'rollout', up: '' | '../',
- *         hero: html (inside .hero-board), heroTall: bool, body: html, scripts: bool, header comment }
+ * opts: { title, desc, current: 'overview'|'benchmarks'|'leaderboards'|'lessons'|'rollout', up: '' | '../',
+ *         hero: html (inside .hero-board), heroTall: bool, omitHero: bool, bodyClass: string,
+ *         body: html, extraScripts: string[], footerNote, header comment }
  */
-export function page({ title, desc, current, up = '', hero, heroTall = false, body, comment }) {
+export function page({ title, desc, current, up = '', hero, heroTall = false, omitHero = false, bodyClass = '', body, comment, extraScripts = [], footerNote }) {
   const nav = [
     ['overview', 'Overview', `${up}index.html`],
     ['benchmarks', 'Benchmarks', `${up}benchmarks.html`],
+    ['leaderboards', 'Leaderboards', `${up}leaderboards.html`],
     ['lessons', 'Lessons', `${up}lessons/index.html`],
     ['rollout', 'Timeline', `${up}rollout.html`],
   ].map(([k, t, h]) => `<a href="${h}"${k === current ? ' class="is-current" aria-current="page"' : ''}>${t}</a>`).join('\n        ');
@@ -96,7 +98,7 @@ export function page({ title, desc, current, up = '', hero, heroTall = false, bo
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${up}css/fitness.css" />
 </head>
-<body>
+<body${bodyClass ? ` class="${bodyClass}"` : ''}>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="pf-stripe-thin" aria-hidden="true"></div>
@@ -114,7 +116,7 @@ export function page({ title, desc, current, up = '', hero, heroTall = false, bo
   </header>
 
   <main id="main">
-    <div class="wrap">
+    ${omitHero ? '' : `<div class="wrap">
       <div class="hero-stack">
         <section class="hero-board${heroTall ? ' tall' : ''}">
           <img class="hero-logo" src="${up}img/slam-script-green-nevada.png" alt="SLAM! Nevada logo" width="120" height="82" />
@@ -122,7 +124,7 @@ export function page({ title, desc, current, up = '', hero, heroTall = false, bo
         </section>
         <div class="pf-stripe" aria-hidden="true"></div>
       </div>
-    </div>
+    </div>`}
 ${body}
   </main>
 
@@ -131,10 +133,11 @@ ${body}
     <div class="wrap">
       <p>Coach K. Hin · SLAM Academy · K–5 Physical Education</p>
       <p>Benchmarks from the official White House Presidential Physical Fitness Test · ${ext(WH_FITNESS, 'whitehouse.gov/fitness')}</p>
-      <p>We never post student names or scores on this site. <a href="${up}../index.html">coachkenny.org home</a></p>
+      <p>${footerNote ?? "Class leaderboards, when turned on, list first name and last initial only. We never post full names, IDs, ages or birthdates."} <a href="${up}../index.html">coachkenny.org home</a></p>
     </div>
   </footer>
   <script src="${up}js/fitness.js" defer></script>
+  ${extraScripts.map((src) => `<script src="${up}${src}" defer></script>`).join("\n  ")}
 </body>
 </html>
 `;
