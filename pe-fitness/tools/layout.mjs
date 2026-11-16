@@ -133,7 +133,7 @@ ${body}
     <div class="wrap">
       <p>Coach K. Hin · SLAM Academy · K–5 Physical Education</p>
       <p>Benchmarks from the official White House Presidential Physical Fitness Test · ${ext(WH_FITNESS, 'whitehouse.gov/fitness')}</p>
-      <p>${footerNote ?? "Class leaderboards, when turned on, list first name and last initial only. We never post full names, IDs, ages or birthdates."} <a href="${up}../index.html">coachkenny.org home</a></p>
+      <p>${footerNote ?? "Class leaderboards, when turned on, list first name and last initial only. Boards are grouped by official Presidential Fitness category and by age on test day. We never post full names, IDs, or birthdates."} <a href="${up}../index.html">coachkenny.org home</a></p>
     </div>
   </footer>
   <script src="${up}js/fitness.js" defer></script>

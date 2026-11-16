@@ -10,7 +10,8 @@
       "homeroom": "Cole",
       "time": "7:44",
       "timeSeconds": 464,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 8
     },
     {
       "name": "Milo B.",
@@ -18,7 +19,8 @@
       "homeroom": "Cole",
       "time": "7:51",
       "timeSeconds": 471,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 8
     },
     {
       "name": "Nico G.",
@@ -26,7 +28,8 @@
       "homeroom": "Patel",
       "time": "8:06",
       "timeSeconds": 486,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 8
     },
     {
       "name": "Sasha B.",
@@ -34,7 +37,8 @@
       "homeroom": "Cole",
       "time": "8:19",
       "timeSeconds": 499,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 8
     },
     {
       "name": "Jonah R.",
@@ -42,7 +46,8 @@
       "homeroom": "Cruz",
       "time": "8:28",
       "timeSeconds": 508,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 8
     },
     {
       "name": "Ivy B.",
@@ -50,7 +55,8 @@
       "homeroom": "Cole",
       "time": "8:40",
       "timeSeconds": 520,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 8
     },
     {
       "name": "Lila G.",
@@ -58,7 +64,8 @@
       "homeroom": "Patel",
       "time": "9:02",
       "timeSeconds": 542,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Theo B.",
@@ -66,7 +73,8 @@
       "homeroom": "Cole",
       "time": "9:18",
       "timeSeconds": 558,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Owen G.",
@@ -74,7 +82,8 @@
       "homeroom": "Patel",
       "time": "9:33",
       "timeSeconds": 573,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Cam Y.",
@@ -82,7 +91,8 @@
       "homeroom": "Brooks",
       "time": "9:47",
       "timeSeconds": 587,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Vera R.",
@@ -90,7 +100,8 @@
       "homeroom": "Cruz",
       "time": "10:05",
       "timeSeconds": 605,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Noa Y.",
@@ -98,7 +109,8 @@
       "homeroom": "Brooks",
       "time": "10:22",
       "timeSeconds": 622,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Piper G.",
@@ -106,7 +118,8 @@
       "homeroom": "Patel",
       "time": "10:41",
       "timeSeconds": 641,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Eli P.",
@@ -114,7 +127,8 @@
       "homeroom": "Shaw",
       "time": "10:58",
       "timeSeconds": 658,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Remi O.",
@@ -122,7 +136,8 @@
       "homeroom": "Kline",
       "time": "11:16",
       "timeSeconds": 676,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Kai O.",
@@ -130,7 +145,8 @@
       "homeroom": "Kline",
       "time": "11:34",
       "timeSeconds": 694,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Willa O.",
@@ -138,7 +154,8 @@
       "homeroom": "Kline",
       "time": "11:55",
       "timeSeconds": 715,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Quinn R.",
@@ -146,7 +163,8 @@
       "homeroom": "Cruz",
       "time": "12:12",
       "timeSeconds": 732,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 8
     },
     {
       "name": "Jayden P.",
@@ -154,7 +172,8 @@
       "homeroom": "Nguyen",
       "time": "7:21",
       "timeSeconds": 441,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 9
     },
     {
       "name": "Mia P.",
@@ -162,7 +181,8 @@
       "homeroom": "Nguyen",
       "time": "7:38",
       "timeSeconds": 458,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 9
     },
     {
       "name": "Nora P.",
@@ -170,7 +190,8 @@
       "homeroom": "Nguyen",
       "time": "7:56",
       "timeSeconds": 476,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 9
     },
     {
       "name": "Dax O.",
@@ -178,7 +199,8 @@
       "homeroom": "Ortiz",
       "time": "8:11",
       "timeSeconds": 491,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 9
     },
     {
       "name": "Maren Y.",
@@ -186,7 +208,8 @@
       "homeroom": "Diaz",
       "time": "8:27",
       "timeSeconds": 507,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 9
     },
     {
       "name": "Ellis Y.",
@@ -194,7 +217,8 @@
       "homeroom": "Diaz",
       "time": "8:44",
       "timeSeconds": 524,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 9
     },
     {
       "name": "Quinn O.",
@@ -202,7 +226,8 @@
       "homeroom": "Ortiz",
       "time": "9:04",
       "timeSeconds": 544,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Remy D.",
@@ -210,7 +235,8 @@
       "homeroom": "Diaz",
       "time": "9:21",
       "timeSeconds": 561,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Brook N.",
@@ -218,7 +244,8 @@
       "homeroom": "Nguyen",
       "time": "9:39",
       "timeSeconds": 579,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Shiloh K.",
@@ -226,7 +253,8 @@
       "homeroom": "Kline",
       "time": "9:52",
       "timeSeconds": 592,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Rowan S.",
@@ -234,7 +262,8 @@
       "homeroom": "Shaw",
       "time": "10:08",
       "timeSeconds": 608,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Eden C.",
@@ -242,7 +271,8 @@
       "homeroom": "Cruz",
       "time": "10:24",
       "timeSeconds": 624,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Skye B.",
@@ -250,7 +280,8 @@
       "homeroom": "Brooks",
       "time": "10:41",
       "timeSeconds": 641,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Harper L.",
@@ -258,7 +289,8 @@
       "homeroom": "Cole",
       "time": "10:59",
       "timeSeconds": 659,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Frankie P.",
@@ -266,7 +298,8 @@
       "homeroom": "Patel",
       "time": "11:15",
       "timeSeconds": 675,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Jordan N.",
@@ -274,7 +307,8 @@
       "homeroom": "Nguyen",
       "time": "11:33",
       "timeSeconds": 693,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Reese O.",
@@ -282,7 +316,8 @@
       "homeroom": "Ortiz",
       "time": "11:48",
       "timeSeconds": 708,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 9
     },
     {
       "name": "Luca S.",
@@ -290,7 +325,8 @@
       "homeroom": "Shaw",
       "time": "7:18",
       "timeSeconds": 438,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 10
     },
     {
       "name": "Amari K.",
@@ -298,7 +334,8 @@
       "homeroom": "Kline",
       "time": "7:36",
       "timeSeconds": 456,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 10
     },
     {
       "name": "Sage P.",
@@ -306,7 +343,8 @@
       "homeroom": "Patel",
       "time": "7:49",
       "timeSeconds": 469,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 10
     },
     {
       "name": "River S.",
@@ -314,7 +352,8 @@
       "homeroom": "Shaw",
       "time": "8:04",
       "timeSeconds": 484,
-      "level": "Presidential"
+      "level": "Presidential",
+      "ageGroup": 10
     },
     {
       "name": "Dakota C.",
@@ -322,7 +361,8 @@
       "homeroom": "Cruz",
       "time": "8:22",
       "timeSeconds": 502,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 10
     },
     {
       "name": "Phoenix L.",
@@ -330,7 +370,8 @@
       "homeroom": "Cole",
       "time": "8:41",
       "timeSeconds": 521,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 10
     },
     {
       "name": "Emery B.",
@@ -338,7 +379,8 @@
       "homeroom": "Brooks",
       "time": "9:00",
       "timeSeconds": 540,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 10
     },
     {
       "name": "Tatum D.",
@@ -346,7 +388,8 @@
       "homeroom": "Diaz",
       "time": "9:17",
       "timeSeconds": 557,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 10
     },
     {
       "name": "Quinn K.",
@@ -354,7 +397,8 @@
       "homeroom": "Kline",
       "time": "9:35",
       "timeSeconds": 575,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 10
     },
     {
       "name": "Sidney N.",
@@ -362,7 +406,8 @@
       "homeroom": "Nguyen",
       "time": "9:54",
       "timeSeconds": 594,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 10
     },
     {
       "name": "Cameron O.",
@@ -370,7 +415,8 @@
       "homeroom": "Ortiz",
       "time": "10:12",
       "timeSeconds": 612,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 10
     },
     {
       "name": "Hayden S.",
@@ -378,7 +424,8 @@
       "homeroom": "Shaw",
       "time": "10:31",
       "timeSeconds": 631,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 11
     },
     {
       "name": "Parker P.",
@@ -386,7 +433,8 @@
       "homeroom": "Patel",
       "time": "10:49",
       "timeSeconds": 649,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 11
     },
     {
       "name": "Finley C.",
@@ -394,7 +442,8 @@
       "homeroom": "Cruz",
       "time": "11:07",
       "timeSeconds": 667,
-      "level": "National"
+      "level": "National",
+      "ageGroup": 11
     }
   ]
 }
